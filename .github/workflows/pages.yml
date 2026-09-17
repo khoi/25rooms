@@ -25,6 +25,17 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Version page assets
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const entrypoint = 'dist/index.html';
+          let html = readFileSync(entrypoint, 'utf8');
+          for (const asset of ['style.css', 'main.js']) {
+            html = html.replace(`"./${asset}"`, `"./${asset}?v=${process.env.GITHUB_SHA}"`);
+          }
+          writeFileSync(entrypoint, html);
+          JS
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
