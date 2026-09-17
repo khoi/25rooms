@@ -14,7 +14,7 @@ const caption = document.querySelector('#room-caption');
 for (const link of document.querySelectorAll('[data-collection]')) {
   if (link.dataset.collection === collection) link.setAttribute('aria-current', 'page');
 }
-document.title = collection === 'new' ? 'a small light, somewhere else' : 'a small light, room by room';
+document.title = collection === 'new' ? 'a small light, somewhere else' : 'a small light, original';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#262320');
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 100);
