@@ -82,7 +82,7 @@ function roomZoom(room) {
 
 function moveCamera(target, duration = 1100) {
   velocity.x = velocity.y = 0;
-  target.zoom = clamp(target.zoom, minimumZoom, maximumZoom);
+  target.zoom = clamp(target.zoom, fitTarget().zoom, maximumZoom);
   if (reduceMotion || duration <= 0) { Object.assign(view, target); tween = null; return; }
   tween = { from: { ...view }, to: target, start: performance.now(), duration };
 }
@@ -219,7 +219,7 @@ stage.addEventListener('pointermove', event => {
   if (pointers.size >= 2 && pinch) {
     const [a, b] = [...pointers.values()];
     const x = (a.x + b.x) / 2, y = (a.y + b.y) / 2;
-    view.zoom = clamp(pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / Math.max(1, pinch.distance), minimumZoom, maximumZoom);
+    view.zoom = clamp(pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y) / Math.max(1, pinch.distance), fitTarget().zoom, maximumZoom);
     view.x = pinch.anchor.x - (x - width / 2) / view.zoom; view.y = pinch.anchor.y - (y - height / 2) / view.zoom;
     return;
   }
@@ -248,7 +248,7 @@ stage.addEventListener('wheel', event => {
   event.preventDefault(); interrupt(); velocity.x = velocity.y = 0;
   const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? height : 1);
   const anchor = toWorld(event.clientX, event.clientY);
-  view.zoom = clamp(view.zoom * Math.exp(-clamp(delta, -600, 600) * .0015), minimumZoom, maximumZoom);
+  view.zoom = clamp(view.zoom * Math.exp(-clamp(delta, -600, 600) * .0015), fitTarget().zoom, maximumZoom);
   view.x = anchor.x - (event.clientX - width / 2) / view.zoom;
   view.y = anchor.y - (event.clientY - height / 2) / view.zoom;
 }, { passive: false });
@@ -267,8 +267,8 @@ addEventListener('keydown', event => {
   else if (['arrowright', 'd'].includes(key)) view.x += step;
   else if (['arrowup', 'w'].includes(key)) view.y -= step;
   else if (['arrowdown', 's'].includes(key)) view.y += step;
-  else if (['+', '='].includes(key)) view.zoom = clamp(view.zoom * 1.2, minimumZoom, maximumZoom);
-  else if (['-', '_'].includes(key)) view.zoom = clamp(view.zoom / 1.2, minimumZoom, maximumZoom);
+  else if (['+', '='].includes(key)) view.zoom = clamp(view.zoom * 1.2, fitTarget().zoom, maximumZoom);
+  else if (['-', '_'].includes(key)) view.zoom = clamp(view.zoom / 1.2, fitTarget().zoom, maximumZoom);
   else if (key === ' ') setTour(!tour);
   else viewAll();
 });
@@ -315,6 +315,13 @@ renderer.setAnimationLoop(now => {
   } else if (!pointers.size) {
     view.x += velocity.x * delta; view.y += velocity.y * delta;
     velocity.x *= Math.exp(-delta / 200); velocity.y *= Math.exp(-delta / 200);
+  }
+  const overview = fitTarget();
+  view.zoom = clamp(view.zoom, overview.zoom, maximumZoom);
+  if (view.zoom <= overview.zoom + .000001) {
+    view.x = overview.x;
+    view.y = overview.y;
+    velocity.x = velocity.y = 0;
   }
   updateArtwork(now);
   camera.position.set(view.x, -view.y, 10);
