@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, boundBook, satchel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, windowOn, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -49,6 +50,59 @@ function gameTable(H, R) {
   const [x, y] = H.p(7.06, 4.54, 1.14);
   oval(H, R, x, y, 10, 5, 'coral', .6);
   for (let k = 0; k < 3; k++) H.dot(x - 5 + k * 5, y - k % 2 * 2, 2.1, 'sun', .8);
+}
+
+function eastHarlemDominoesDetails(H, R) {
+  table(H, R, 0.62, 8.76, 2.19, 1.27, 0.65, 'teal');
+  shallowTray(H, R, 0.79, 8.91, 1.83, 0.95, 0.79, 'paper');
+  for (let n = 0; n < 4; n++) glass(H, R, 1.08 + (n % 2) * 0.97, 9.2 + Math.floor(n / 2) * 0.4, 1.02, n === 2 ? 'sun' : 'coral');
+  foldedCloth(H, R, 0.8, 8.91, 1.79, 0.92, 0.15, 'paper', 'teal');
+  box(H, R, 10.01, 7.05, 1.37, 1.19, 0.04, 0.7, 'teal', 0.58);
+  shape(H, R, H.tile(10.15, 7.19, 1.1, 0.91, 0.79), 'paper', 1, 0.6);
+  for (let n = 0; n < 6; n++) {
+    box(H, R, 10.28 + (n % 3) * 0.28, 7.37 + Math.floor(n / 3) * 0.34, 0.2, 0.27, 0.81, 0.08, 'paper', 1);
+    H.dot(...H.p(10.37 + (n % 3) * 0.28, 7.5 + Math.floor(n / 3) * 0.34, 0.91), 1.1, 'blue');
+  }
+  for (const j of [6.25, 6.78]) {
+    stroke(H, R, [H.p(0.76, j, 0.03), H.p(0.76, j + 0.5, 1.15), H.p(1.55, j + 0.5, 1.15), H.p(1.55, j, 0.03)], 'blue', 1.8);
+    box(H, R, 0.81, j + 0.14, 0.68, 0.13, 0.92, 0.32, 'sun', 0.5);
+  }
+  const [x, y] = H.p(6.52, 0.26, 2.31);
+  shape(
+    H,
+    R,
+    [
+      [x - 15, y],
+      [x + 15, y],
+      [x + 15, y - 22],
+      [x - 15, y - 22]
+    ],
+    'teal',
+    0.55,
+    0.7
+  );
+  oval(H, R, x - 7, y - 11, 6, 6, 'blue', 0.6);
+  for (let n = 0; n < 3; n++)
+    H.line(
+      R,
+      [
+        [x + 3, y - 17 + n * 5],
+        [x + 11, y - 17 + n * 5]
+      ],
+      'paper',
+      0.8
+    );
+  H.line(
+    R,
+    [
+      [x + 10, y - 22],
+      [x + 21, y - 44]
+    ],
+    'blue',
+    1
+  );
+  satchel(H, R, 8.47, 10.68, 0.03, 'coral', 0.8);
+  boundBook(H, R, 3.62, 2.61, 0.8, 0.46, 0.68, 'sun');
 }
 
 const room = world('new-york-east-harlem-dominoes', 'East Harlem · The Last Double', { floor: 'coral', tone: .2, wall: 'paper', wallTone: .9, height: 3.53, head: 20 }, (H, R) => {
@@ -107,6 +161,7 @@ const room = world('new-york-east-harlem-dominoes', 'East Harlem · The Last Dou
   stroke(H, R, [[x - 4, y - 2], [x - 1, y - 20], [x + 5, y - 25]], 'teal', 1.4);
   oval(H, R, x + 7, y - 25, 4, 3, 'coral', .75);
   stroke(H, R, [H.p(.23, 9.38, 3.2), H.p(5.39, 7.98, 3.05), H.p(10.85, .24, 3.26)], 'blue', .8);
+  eastHarlemDominoesDetails(H, R);
 }, (H, R, t) => {
   H.at(5.78, 3.53, 0, h => actor(h, R, 5.78, 3.53, t, 'newYorkDominoTap', { shirt: ['paper', 1], hairStyle: 'cap', face: 'se' }, .2, 1.27, 'elder'));
   H.at(3.53, 5.59, 0, h => actor(h, R, 3.53, 5.59, 0, 'sit', { shirt: ['coral', .69], hairStyle: 'curly', face: 'se' }, .2, 1.32));

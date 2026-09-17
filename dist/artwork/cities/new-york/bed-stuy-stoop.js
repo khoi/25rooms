@@ -1,4 +1,5 @@
-import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
+import { shallowTray, foldedCloth, handTool, servicePipe, slattedCrate } from '../furnishings.js';
+import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, wallRect, wallPt, windowOn, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -40,6 +41,71 @@ function stairRail(H, R, i) {
     top.push(H.p(i, j, z + .94));
   }
   H.line(R, top, 'blue', 3.2, { amp: .07 });
+}
+
+function bedStuyStoopDetails(H, R) {
+  box(H, R, 8.06, 0.43, 3.36, 0.74, 0.04, 0.11, 'blue', 0.62);
+  shape(H, R, H.faceI(8.23, 0.47, 2.98, 0.19, 1.35), 'teal', 0.3, 0.7);
+  for (let n = 0; n < 7; n++) H.line(R, [H.p(8.39 + n * 0.43, 0.53, 0.23), H.p(8.39 + n * 0.43, 0.53, 1.26)], 'blue', 1.4);
+  H.line(R, [H.p(8.2, 0.57, 0.86), H.p(11.25, 0.57, 0.86)], 'blue', 1.7);
+  table(H, R, 9.48, 7.61, 1.72, 0.92, 0.61, 'teal');
+  foldedCloth(H, R, 9.64, 7.73, 0.64, 0.59, 0.75, 'coral', 'paper');
+  shallowTray(H, R, 10.43, 7.75, 0.55, 0.58, 0.75, 'sun');
+  handTool(H, R, 10.7, 8.02, 0.94, 'trowel', 'teal');
+  slattedCrate(H, R, 1.12, 8.49, 1.48, 1.16, 0.02, 0.59, 'sun');
+  for (let n = 0; n < 3; n++) pot(H, R, 1.42 + n * 0.36, 8.94, 0.68, 6, 'coral', false);
+  const [x, y] = H.p(1.3, 10.4, 0.03);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x + 4, y - 53]
+    ],
+    'sun',
+    2.2
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 12, y],
+      [x + 12, y],
+      [x + 7, y - 16],
+      [x - 6, y - 17]
+    ],
+    'teal',
+    0.6,
+    0.7
+  );
+  for (let n = 0; n < 6; n++)
+    H.line(
+      R,
+      [
+        [x - 9 + n * 3.6, y],
+        [x - 5 + n * 2, y - 13]
+      ],
+      'blue',
+      0.7
+    );
+  box(H, R, 7.45, 0.31, 0.49, 0.18, 2.68, 0.76, 'blue', 0.6);
+  for (let n = 0; n < 3; n++) H.dot(...H.p(7.67, 0.51, 2.83 + n * 0.18), 1.7, 'sun');
+  servicePipe(
+    H,
+    R,
+    [
+      [11.54, 0.3, 0.14],
+      [11.54, 0.3, 2.11],
+      [11.54, 0.3, 4.54]
+    ],
+    'teal',
+    2.4
+  );
+  for (const [i, j] of [
+    [8.49, 10.8],
+    [9.43, 11.1],
+    [2.96, 10.92]
+  ])
+    shape(H, R, H.tile(i, j, 0.28, 0.14, 0.04), 'sun', 0.4, 0.3);
 }
 
 const room = world('new-york-bed-stuy-stoop', 'Bedford-Stuyvesant · The Extra Step', {
@@ -123,6 +189,7 @@ const room = world('new-york-bed-stuy-stoop', 'Bedford-Stuyvesant · The Extra S
   const [lx, ly] = H.p(7.56, 1.02, 2.77);
   H.line(R, [[lx, ly - 10], [lx + 13, ly - 10], [lx + 13, ly + 6]], 'blue', 1.8);
   shape(H, R, [[lx + 5, ly + 1], [lx + 22, ly + 1], [lx + 19, ly + 18], [lx + 8, ly + 18]], 'sun', .56, .8);
+  bedStuyStoopDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   const tilt = u < .26 ? Math.max(0, (u - .13) / .13) : u < .58 ? 1 : Math.max(0, 1 - (u - .58) / .16);

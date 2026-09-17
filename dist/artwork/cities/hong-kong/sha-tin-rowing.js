@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -52,6 +53,46 @@ function trestle(H, R, i, j, z = .87) {
   H.line(R, [H.p(i - .43, j, z), H.p(i + .43, j, z)], 'teal', 3.8);
   H.line(R, [H.p(i - .3, j, .2), H.p(i + .3, j, .2)], 'blue', 1.4);
   H.line(R, [H.p(i - .31, j, z + .04), H.p(i - .27, j, z - .08), H.p(i + .27, j, z - .08), H.p(i + .31, j, z + .04)], 'sun', 1.2);
+}
+
+function shaTinRowingDetails(H, R) {
+  shelfUnit(H, R, 8.22, 0.41, 3.1, 1.04, 0.04, [0.13, 1.0, 1.87], 'teal');
+  for (let n = 0; n < 3; n++) satchel(H, R, 8.76 + n * 0.93, 0.89, 0.32, ['sun', 'coral', 'blue'][n], 0.66);
+  foldedCloth(H, R, 8.43, 0.54, 1.11, 0.74, 1.15, 'paper', 'teal');
+  shallowTray(H, R, 9.81, 0.55, 1.24, 0.75, 1.15, 'paper');
+  handTool(H, R, 10.29, 0.94, 1.35, 'spanner', 'coral');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 8.78 + n * 0.89, 0.87, 2.02, 6, 18, ['teal', 'sun', 'paper'][n]);
+  drawerUnit(H, R, 1.76, 9.67, 2.69, 1.52, 1.0, 3, 'sun');
+  shallowTray(H, R, 1.91, 9.82, 2.34, 1.14, 1.17, 'teal');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(2.23 + n * 0.54, 10.29, 1.39);
+    oval(H, R, x, y, 6, 5, n === 2 ? 'teal' : 'blue', 0.6);
+    oval(H, R, x, y, 3, 2, 'paper', 1);
+    H.line(
+      R,
+      [
+        [x, y - 4],
+        [x + 3, y - 16]
+      ],
+      'sun',
+      2
+    );
+  }
+  boundBook(H, R, 6.52, 1.52, 1.07, 0.76, 0.06, 'teal');
+  coiledLine(H, R, 7.31, 10.73, 0.04, 18, 'coral');
+  slattedCrate(H, R, 8.2, 9.48, 1.44, 1.31, 0.04, 0.54, 'teal');
+  for (let n = 0; n < 3; n++) foldedCloth(H, R, 8.35, 9.61, 1.1, 0.97, 0.61 + n * 0.12, 'paper', 'blue');
+  servicePipe(
+    H,
+    R,
+    [
+      [11.66, 7.78, 0.16],
+      [11.66, 7.78, 1.63],
+      [11.23, 7.78, 1.63]
+    ],
+    'teal',
+    2.5
+  );
 }
 
 const room = world('hong-kong-sha-tin-rowing', 'Sha Tin · Oars in parallel', { floor: 'paper', tone: .58, wall: 'teal', wallTone: .22, height: 3.7, head: 20 }, (H, R) => {
@@ -113,6 +154,7 @@ const room = world('hong-kong-sha-tin-rowing', 'Sha Tin · Oars in parallel', { 
   shape(H, R, [[bx - 9, by - 7], [bx + 9, by - 7], [bx + 9, by - 19], [bx - 9, by - 19]], 'sun', .38, .65);
   for (let q = 0; q < 6; q++) H.line(R, [H.p(4.7 + q * .36, 11.02, .025), H.p(4.7 + q * .36, 11.49, .025)], 'teal', 1.2, { tone: .5 });
   H.line(R, [H.p(3.0, 2.92, .02), H.p(3.0, 10.36, .02)], 'sun', 2, { tone: .6 });
+  shaTinRowingDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), lift = u < .13 ? 0 : u < .27 ? (1 - Math.cos((u - .13) / .14 * Math.PI)) / 2 : u < .58 ? 1 : u < .75 ? (1 + Math.cos((u - .58) / .17 * Math.PI)) / 2 : 0;
   H.at(5.95, 6.48, 0, HH => actor(HH, R, 5.95 + lift * .13, 6.48 - lift * .1, t, 'hongKongOarInspect', { shirt: ['teal', .76], pants: ['blue', .7], hairStyle: 'pony', prop(h, r, p) {

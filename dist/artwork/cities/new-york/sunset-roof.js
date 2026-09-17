@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -38,6 +39,30 @@ function basket(H, R, i, j) {
   H.line(R, [[x - 23, y - 7], [x + 22, y - 7]], 'blue', 1.1);
 }
 
+function sunsetRoofDetails(H, R) {
+  table(H, R, 9.11, 6.28, 2.17, 1.53, 0.81, 'teal');
+  shallowTray(H, R, 9.28, 6.46, 1.8, 1.14, 0.95, 'sun');
+  for (let n = 0; n < 8; n++) {
+    const i = 9.47 + (n % 4) * 0.39,
+      j = 6.67 + Math.floor(n / 4) * 0.43;
+    box(H, R, i, j, 0.29, 0.31, 1.15, 0.16, 'blue', 0.45);
+    if (n !== 5) leaf(H, R, ...H.p(i + 0.15, j + 0.15, 1.33), 0.35, n * 0.4, 'teal');
+  }
+  slattedCrate(H, R, 9.37, 6.52, 1.45, 0.97, 0.03, 0.58, 'sun');
+  handTool(H, R, 9.01, 6.73, 1.0, 'trowel', 'coral');
+  for (const i of [8.69, 9.19, 9.69]) {
+    H.line(R, [H.p(i, 0.44, 1.4), H.p(i, 0.44, 2.64)], 'sun', 2);
+    H.line(R, [H.p(i - 0.16, 0.44, 2.57), H.p(i + 0.16, 0.44, 2.57)], 'blue', 2);
+  }
+
+  box(H, R, 4.1, 10.51, 1.88, 0.77, 0.03, 0.24, 'sun', 0.46);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(4.29 + n * 0.31, 10.61, 0.3), H.p(4.29 + n * 0.31, 11.19, 0.3)], 'teal', 2);
+  foldedCloth(H, R, 2.94, 10.59, 0.85, 0.58, 0.05, 'paper', 'teal');
+  shallowTray(H, R, 10.16, 9.27, 1.14, 1.23, 0.03, 'teal');
+  for (let n = 0; n < 3; n++) leaf(H, R, ...H.p(10.46 + n * 0.26, 9.84, 0.25), 0.58, n * 0.5, 'coral');
+  boundBook(H, R, 9.46, 4.45, 0.79, 0.56, 1.54, 'teal');
+}
+
 const room = world('new-york-sunset-roof', 'Sunset Park · Above the Loading Bays', {
   floor: 'paper', tone: .88, wall: false,
 }, (H, R) => {
@@ -56,6 +81,8 @@ const room = world('new-york-sunset-roof', 'Sunset Park · Above the Loading Bay
   for (const i of [.5, 11.5]) box(H, R, i, .06, .13, .5, 1.35, 1.45, 'teal', .7);
   for (let i = 1.2; i < 12; i += 2.2) H.line(R, [H.p(i, .7, .025), H.p(i, 11.75, .025)], 'blue', .6, { tone: .26 });
   for (let j = 1; j < 12; j += 2.2) H.line(R, [H.p(.55, j, .025), H.p(11.7, j, .025)], 'blue', .6, { tone: .26 });
+  servicePipe(H, R, [[10.88, 2.14, .42], [11.34, 2.14, .42], [11.34, 2.14, .08], [11.34, 8.23, .08], [8.66, 8.23, .08]], 'teal', 2.1);
+  oval(H, R, ...H.p(11.34, 2.14, .43), 5, 5, 'coral', .7);
   bed(H, R, 1.05, 1.16, 7.45, 1.7);
   bed(H, R, 1.05, 4.04, 5.6, 1.78, 1);
   bed(H, R, 1.05, 7.64, 5.6, 1.77);
@@ -93,6 +120,7 @@ const room = world('new-york-sunset-roof', 'Sunset Park · Above the Loading Bay
   shape(H, R, [H.p(4.12, 10.18, .11), H.p(4.45, 10.18, .11), H.p(4.39, 10.71, .03), H.p(4.22, 10.84, .03)], 'blue', .75, .7);
   box(H, R, 7.22, 9.56, .78, 1.13, .04, .16, 'coral', .5);
   for (let q = 0; q < 4; q++) H.line(R, [H.p(7.34 + q * .15, 9.74, .23), H.p(7.32 + q * .15, 10.45, .23)], 'paper', .8);
+  sunsetRoofDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(7.45, 8.3, 0, HH => actor(HH, R, 7.45, 8.3, t, 'newYorkRoofHarvest', {

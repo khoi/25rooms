@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -49,6 +50,62 @@ function consoleDesk(H, R) {
   for (let q = 0; q < 4; q++) H.line(R, [H.p(7.32, 3.4 + q * .15, 1.48), H.p(8.05, 3.4 + q * .15, 1.48)], q === 2 ? 'coral' : 'blue', .6);
 }
 
+function theaterBoothDetails(H, R) {
+  drawerUnit(H, R, 1.03, 6.07, 2.65, 1.27, 1.54, 5, 'blue');
+  for (let n = 0; n < 5; n++) {
+    const z = 0.24 + n * 0.25;
+    for (let k = 0; k < 5; k++) H.dot(...H.p(1.25 + k * 0.27, 7.38, z), 1.7, k === n ? 'coral' : 'teal');
+    H.line(R, [H.p(2.7, 7.38, z), H.p(3.39, 7.38, z)], 'paper', 0.8);
+  }
+  coiledLine(H, R, 2.29, 6.73, 1.76, 17, 'coral');
+  table(H, R, 4.33, 9.41, 3.4, 1.7, 0.64, 'blue');
+  shallowTray(H, R, 4.5, 9.59, 1.51, 1.3, 0.78, 'teal');
+  for (let n = 0; n < 3; n++) shape(H, R, H.tile(4.66 + n * 0.26, 9.81, 0.58, 0.84, 0.98 + n * 0.025), ['coral', 'sun', 'teal'][n], 0.3, 0.5);
+  const [x, y] = H.p(6.8, 10.28, 0.8);
+  oval(H, R, x, y - 5, 13, 13, 'blue', 0.8);
+  oval(H, R, x, y - 5, 8, 8, 'paper', 0.9);
+  H.line(
+    R,
+    [
+      [x - 13, y - 5],
+      [x - 19, y + 1],
+      [x - 19, y + 15],
+      [x + 16, y + 15],
+      [x + 16, y - 7]
+    ],
+    'teal',
+    2.4
+  );
+  H.line(
+    R,
+    [
+      [x, y + 15],
+      [x, y + 24]
+    ],
+    'blue',
+    2
+  );
+  boundBook(H, R, 4.82, 9.78, 1.72, 1.01, 0.16, 'coral');
+  for (const i of [8.04, 8.44]) {
+    H.line(R, [H.p(i, 0.25, 2.3), H.p(i, 0.25, 3.09)], 'teal', 1.3);
+    oval(H, R, ...H.p(i, 0.29, 2.34), 5, 8, 'blue', 0.9);
+  }
+  stroke(H, R, [H.p(8.03, 0.28, 2.36), H.p(8.24, 0.29, 2.13), H.p(8.44, 0.28, 2.36)], 'paper', 1.2);
+  servicePipe(
+    H,
+    R,
+    [
+      [0.14, 5.29, 0.1],
+      [0.14, 5.29, 3.3],
+      [0.14, 0.16, 3.3],
+      [7.36, 0.16, 3.3]
+    ],
+    'teal',
+    2.6
+  );
+  foldedCloth(H, R, 10.07, 8.99, 0.76, 0.92, 0.95, 'paper', 'coral');
+}
+
 const room = world('new-york-theater-booth', 'Theater District · Before the Cue', {
   floor: 'blue', tone: .38, wall: 'blue', wallTone: .68, height: 3.8,
 }, (H, R) => {
@@ -85,6 +142,7 @@ const room = world('new-york-theater-booth', 'Theater District · Before the Cue
     const a = q / 5 * Math.PI * 2;
     H.line(R, [H.p(8.64, 6.07, .09), H.p(8.64 + Math.cos(a) * .58, 6.07 + Math.sin(a) * .58, .03)], 'blue', 1.6);
   }
+  theaterBoothDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), light = u < .16 ? 0 : u < .34 ? (1 - Math.cos((u - .16) / .18 * Math.PI)) / 2 : u < .66 ? 1 : u < .86 ? (1 + Math.cos((u - .66) / .2 * Math.PI)) / 2 : 0;
   stage(H, R, light);

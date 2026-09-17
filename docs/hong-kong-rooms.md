@@ -8,6 +8,8 @@ The shared palette remains paper, blue, teal, coral, and sun. Thin blue outlines
 
 The animated action in each entry has a reversible inspection gesture or an explicit return through a door, screen, or storage area. Secondary motion stays quieter than the hands. Every room includes a still pose for reduced motion. A coral strap appears on a few unrelated possessions as a restrained color connection; it does not imply one person makes the whole journey.
 
+This revision develops the existing 25 scenes in place. Each room combines its original focal activity with additional construction, storage, supporting tools and personal possessions. The new layouts and objects are original design choices. Repeated books, containers, tiles and fasteners count as groups when assessing detail; their number alone does not establish richness.
+
 ## 1. First rope ashore — Aberdeen mooring deck
 
 ID: `hong-kong-aberdeen-mooring`.
@@ -21,6 +23,10 @@ Group a coiled spare line, rubber fenders, a boathook, a life ring, a secured fu
 Over 16 seconds, the worker lifts slack from the already secured line, lays it in a broad coil, pauses to inspect the connection, then lifts and relays the same loose section. The mooring stays attached throughout. Hull bobbing remains slight; rope tension follows the boat. In the still pose, the worker holds the loose coil beside the secured mooring line.
 
 Low sun enters from the water at rear right, catching rope and knuckles. The thermos sits improbably straight on a wedge of folded cloth. This opening room introduces the harbour through maintenance and touch, with no fish auction or passenger spectacle.
+
+A dockside maintenance tray contains a spanner, a stiff brush, an open paint tin and its separate lid. A valve, coiled wash hose and boarding ladder connect the shore work to the water. On the boat, a fitted deck hatch has corner fasteners and a recessed pull; a striped hand cloth rests on the slatted mat. A small parts tray keeps two spare fittings away from the loose rope. The canopy repair is a coral rectangle with contrasting stitches. Discover the mismatched hatch screw, the paint lid beside the brush, and the cloth kept above the wet deck. The dock aisle stays open between the rope worker and the ladder.
+
+Read the room through five connected areas: covered boat storage at the rear, the fitted hatch amidships, the rope worker beside the gunwale, shore maintenance at the right, and the boarding ladder near the foreground. Make the hatch lip heavier than its fasteners, the rope thicker than the canopy stitches, and the shore tools darker than the wet planks so those scales remain distinct.
 
 ## 2. Bell before departure — Kennedy Town tram terminus
 
@@ -36,6 +42,10 @@ In a 20-second loop, the stationary driver looks into the mirror, checks the doo
 
 Morning light comes from the open platform side and leaves the lower cab cooler than the upstairs windows. A single glove is tucked behind the driver's flask. This room earns its place through vertical compression and a worker's pause before movement, distinct from a long horizontal train carriage.
 
+The terminus gains a driver’s rest bench with a folded jacket and small bag, separated from a shallow maintenance tray with a spanner, oil can and coiled lead. Along the near tram body, vent panels, lamp housings, riveted trim and an access strip make the vehicle feel assembled. An upper-deck book sits beside the stored belongings. A curb drain gives the open foreground a purpose. Discover the jacket’s contrasting seam, the spare lead tucked beside the tool tray, and one lamp rim with newer paint. Keep the driver controls, boarding opening and stair unobstructed; the maintenance objects are parked beyond the tram’s passenger route.
+
+The tram remains the tallest object. Place platform supplies low on the near side, reserve the driver’s corner for controls and reflective glass, and keep the upstairs belongings below the window line. The long trim strip links the exterior panels. The drain and bench occupy opposite foreground ends, leaving a broad approach rather than filling the whole terminus with furniture.
+
 ## 3. The long pour — Sheung Wan milk-tea station
 
 ID: `hong-kong-sheung-wan-milk-tea`.
@@ -49,6 +59,10 @@ Place tea tins, a scoop, two brewing pots, the hanging filter, a drip tray, a mi
 Over 18 seconds, the maker raises the filled pot, pours through the supported filter into the receiving pot, lowers the emptied pot, then pours through the receiving pot's side spout back into the original vessel. The supported filter stays with its pot throughout. Both vessels remain visible and the stream starts only when their positions align. The loop returns with liquid in the original vessel. Steam rises behind the forearm. The still pose holds the raised pot above a readable stream entering the supported filter.
 
 Cool steel catches paper light from the left window; a sun-colored strip warms the tea. One saucer is a slightly different diameter. The room concentrates on a practiced preparation gesture, giving food culture a process and a worker instead of a table crowded with dishes.
+
+A narrow wall rack above the wet end holds tea tins, folded service cloths and a raised utensil tray. The dry side gains a shallow drawer unit for service supplies, a divided tray of wrapped portions, and a closed tally book with a pencil laid across its corner. Plumbing turns around the wall to a towel rail; a low removable duckboard sits beside the drain. A scoop rests with its bowl visible next to the tea tins. Discover the cloth’s contrasting stripe, the pencil extending beyond the book, and the open utensil spacing that lets each handle read separately. These additions reinforce the division between wet preparation, dry service, storage, circulation and the waiting customer.
+
+From the open front, the eye crosses the drain and duckboard before reaching the worker, then the tea pots and overhead extraction hood. The new dry cupboard sits to the right of this route; the tall supply shelf stays at the opposite wet end. Drawer pulls, pot handles and spoon stems have different weights, so the smaller service supplies do not merge into the main gesture.
 
 ## 4. A basket of greens — North Point produce stall
 
@@ -64,6 +78,10 @@ During a 15-second loop, the seller lifts one reusable basket onto the scale, ad
 
 Sunlight reaches the front tomatoes, while the greens sit under teal shade. One escaped spring onion lies across the seller's clean towel. This stall provides an exchange at street level, with produce and sloping display geometry that distinguish it from the tea room and the flower shop.
 
+Behind the seller, an open rack separates spare produce crates, a striped wiping cloth, a capped water vessel and a personal lunch bag. The foreground gains a low sorting tray for ginger, a brush on a washable board, and a shallow holder of folded paper sleeves. A wash hose leads back to a visible wall tap; paired boots wait outside the customer’s path. Discover the single knobbly ginger piece, the cloth beside the brush on the washable board, and the lunch bag stored above splashes. These objects form storage, washing and packing clusters around the existing display and weighing point. The open central gap continues to serve the basket exchange.
+
+The shelf forms a tall rear-right anchor opposite the sloping produce display. Keep the low ginger tray near the foreground, with the packing sleeves on the other side of the customer approach. The tap and hose remain close to the wash wall. Crate slats, woven sacks, smooth roots and damp leaves each need a different contour rather than one texture used everywhere.
+
 ## 5. A table unfolds — Choi Hung neighbourhood home
 
 ID: `hong-kong-choi-hung-breakfast`.
@@ -77,6 +95,10 @@ Include a rice cooker, a covered breakfast bowl, a kettle, two mugs, a dish rack
 In a 22-second study, an adult lowers the empty table, unfolds its support, tests it with one palm, pauses while a child brings a stool close, then reverses the demonstration: stool withdraws, support folds, table rises. It is a furniture check before serving, so bowls never float through the folding top. The child's foot rocks beside the backpack. The still pose uses the table fully open with both people ready to sit.
 
 Sun light enters high from the left, crossing teal cabinet doors and a coral stool seat. Two mugs have mismatched handles. This domestic scene is about making room for someone else, distinct from the stilt-house work deck and the final solitary aquarium corner.
+
+The home gains a low family shelf at the entrance: children’s books on its bottom tier, folded towels and a small repair tray above, then a framed picture and sewing tin on top. A padded storage box offers a second place to sit without occupying the folding table’s sweep. Beside the fan, a drawer unit carries a closed notebook and reading glasses. Slippers sit on a narrow mat rather than in the middle of the room. Exposed surface conduit follows the wall. Discover the bookmark projecting from one book, the towels separated from the repair tray, and the pale seams around the storage cushion. Domestic detail is concentrated along the edges, leaving room for the child’s stool movement.
+
+The entrance shelf and padded box bring detail toward the viewer, balancing the high kitchen cupboards and window grille. Place the reading drawer beside the fan, with the family shelf across the room beside the shoes. Keep the middle floor quiet for the table-and-stool demonstration. Books, glasses, towels, repair supplies and slippers describe different habits and remain separate from the breakfast equipment.
 
 ## 6. Water between stems — Mong Kok flower shop
 
@@ -92,6 +114,10 @@ In a 14-second loop, the florist turns a paper-sleeved bunch between both hands 
 
 Paper blossoms and coral petals catch light from the street at front left, against teal rear foliage. One bent flower is supported with a tiny splint. This is a room about preserving fragile stock, with an upright, irregular composition quite unlike the produce stall's low stepped wedge.
 
+A supply cabinet beside the drain supports an open cutting tray: closed scissors, twine and short stem-support stakes sit within reach but outside the wrapping surface. A narrow three-tier stand holds plant-care containers, clean cloths and colored ribbon coils. A slatted delivery crate protects spare glass vases; a shallow offcut board collects stripped stems. The tap and drainage area form a fifth cluster at the threshold. Discover the narrow stake saved for a weak stem, a vase with a different rim, and a loose ribbon tail. The supplies use vertical and low foreground space, preserving the florist’s bouquet silhouette and the customer’s view through the bucket arc.
+
+The flower buckets retain the tallest irregular outlines. Keep the ribbon stand compact against the side boundary and the supply cabinet below shoulder height. Low glass-vase storage gives the foreground a transparent rhythm, while the cutting tray concentrates fine tools on one solid surface. A clear diagonal from the entrance to the wrapping table links display, selection, preparation and cleanup without crossing the customer’s bag.
+
 ## 7. Twelve blue metres — Sham Shui Po fabric counter
 
 ID: `hong-kong-sham-shui-po-fabric`.
@@ -105,6 +131,10 @@ Include striped cotton, plain twill, a translucent offcut, a wooden yardstick wi
 Over 16 seconds, the seller anchors one end of the tape, stretches it across the uncut cloth, checks the far edge, then gathers the same tape back. The customer compares a fan of swatches while the seller alone anchors the tape. Nothing is cut, so the loop preserves both fabric length and prop positions. The fan turns slowly behind the bolt wall. Reduced motion holds the tape extended between two clearly planted hands.
 
 Warm light from the front picks out the cloth fold, while the shelves remain blue. A swatch clipped to the customer's bag almost matches the measured fabric. This scene gives material choice its own long horizontal geometry, rather than repeating the clothing design or sewing activity of another collection.
+
+A haberdashery chest fills the formerly empty entrance wall. Its shallow drawers sit below an open button tray, with clearly visible button holes, and spools arranged by thread color. Above the rear sample table, two narrow shelves carry folded remnants and small fastening tins. A customer’s low selection table holds a bound swatch album and a scissor tray, with folded sample cloth stored underneath. A reusable bag waits by its leg. Discover the loose thread loop on the floor, a bookmark protruding from the album, and a single pale button among darker stock. These additions connect measuring, choosing, storing and packing rather than simply multiplying fabric bolts.
+
+The main measuring table stretches across the middle, with the new haberdashery chest at the front-left edge and the sample table further right. The high remnant shelf balances the large wall of bolts. Give buttons punched centers, spools visible end flanges and swatches contrasting bound edges. Keep the measuring tape brighter than these smaller marks so the seller’s action remains the first close-range discovery.
 
 ## 8. One fresh layer — Kwun Tong print studio
 
@@ -120,6 +150,10 @@ The 16-second loop is a pressure-and-position rehearsal with a clean practice sc
 
 Cool daylight enters high from rear left, with sun-colored edge light on the paper stack. One test print hangs upside down. This room represents contemporary creative work through a large mechanical rectangle and a two-handed stroke, distinct from textile selection and delicate porcelain brushwork.
 
+The print studio gains a flat-file cabinet for paper stock and a tool tray carrying a brush and mixing spatula. Bound sample books lie on the cabinet rather than on the press. A narrow wash-side rack separates ink containers, folded cleanup cloths and spare squeegees. Three clipped proof sheets make the rear wall an inspection surface. At the foreground, upright spare frames sit in a slatted rack beside a coiled power lead. Discover one reversed proof, ink color on a spare tool edge, and a projecting album marker. The press, drying rack, mixing station, wash station and paper storage now form a connected working circuit, with the operator’s arm and screen hinge left visible.
+
+Paper storage runs along the rear, the press holds the middle, and the spare-frame crate belongs near the front-left edge. The wash rack occupies the side wall between window and sink. Keep drying sheets flat and spare frames upright; that change of orientation supplies depth. Clipped proofs sit above the bench, where their broad printed curves remain visible beyond the operator’s moving hands.
+
 ## 9. The knot holds — Tsuen Wan bamboo-theatre workshop
 
 ID: `hong-kong-tsuen-wan-bamboo`.
@@ -133,6 +167,10 @@ Include bamboo nodes, fir blocks, a sample joint, coiled binding strips, a lidde
 During a 16-second loop, a learner pulls an already threaded practice binding snug, checks the supported crossing, then releases its slack for another attempt while the instructor points beside the joint. The sequence studies tension rather than presenting an unverified knot as a construction tutorial. All load stays on the teaching stand. Reduced motion holds both hands beside the threaded practice binding, ready to test the joint. A loose strip and a roof-edge shadow move quietly.
 
 Side light from the open right edge warms sun-colored poles against a teal wall. One short practice pole bears several differently colored trial bindings. This room makes collective building skill visible through a tall empty framework, distinct from the opera room's performance and the fire dragon's dense organic curve.
+
+A small sample station at the front holds short bamboo joints with three contrasting bindings. Behind the working trestle, an open supply rack carries cord coils, folded protective cloth and a hammer-and-brush tray. Cut pole sections are held upright in a braced crate; a slim sorting stand separates prepared ties. A personal tool bag and covered flask sit near the rest bench. Discover the hollow end of a saved offcut, the loose tail on a practice knot, and the different binding on the sample nearest the viewer. These are proposed workshop possessions; the source establishes bamboo theatre construction, not this exact inventory. The broad central clearance remains necessary for handling long poles.
+
+The bamboo framework should still dominate at overview scale. The sample-joint table introduces a low foreground plane, the offcut crate sits toward the rear, and the supply rack fills the opposite back corner. Make hollow pole ends, binding bands and trestle feet legible before adding fine fibers. The empty strip through the middle has a working purpose: it is where long poles can be carried and turned.
 
 ## 10. A quiet rim of color — Kowloon Bay porcelain bench
 
@@ -148,6 +186,10 @@ Over 18 seconds, the painter raises the brush to inspect its tip, lowers it near
 
 Paper porcelain glows beneath left daylight, against deep blue shelf recesses. One practice saucer has a small uneven flower. This scene earns its place through patient wrist-scale work and circular geometry, in deliberate contrast to the broad screen-printing stroke.
 
+A finishing cabinet brings packaging and inspection into the foreground. Its top separates small decorated test saucers, a clean folded cloth and an open pigment tin with its lid set beside it. Rear shelves carry closed color containers and three standing pattern studies, including one deliberately uneven floral trial. A reference album and brush tray occupy the low side of the work area. A wash basin sits beneath a visible supply pipe. Discover the imperfect sample petal, the gradient of test strokes in the brush tray, and the album’s protruding marker. The five clusters are blank storage, painting, color preparation, inspection and packing; open floor separates fragile finished ware from the painter’s chair.
+
+The finishing cabinet occupies the front-right corner opposite the trolley, extending the room’s activity beyond the painting bench. The rear color shelf stays below the window’s strongest light. Display blank, practiced and finished surfaces separately: an undecorated white rim, an uneven floral trial, and a completed patterned saucer. This progression gives the contents a relationship and keeps the many circular objects from feeling interchangeable.
+
 ## 11. Before the entrance — Yau Ma Tei opera rehearsal wing
 
 ID: `hong-kong-yau-ma-tei-opera`.
@@ -161,6 +203,10 @@ Include rehearsal sleeves, a plain contemporary practice top, soft shoes, a fold
 In a 14-second loop, the performer raises the forearm, lets the long sleeve follow a broad curve, pauses at the gesture's end, and lowers it until the cloth settles beside the body. A teacher seated by the bench gives a small matching hand cue. The sleeve never passes through the curtain or the teacher. Reduced motion holds the performer's hands gathered at the waist, with both long sleeves falling and the seated teacher watching. The fan turns slowly behind the empty chair.
 
 Sun-colored sidelight enters from stage left, with blue shadow beneath the curtain. One shoe has a different shade of repaired binding. This scene makes the quiet rehearsal preceding a public art form visible, distinct from the bamboo theatre's structural preparation and the fire dragon's seasonal community work.
+
+A wardrobe repair chest now anchors the front right. Its open tray separates thread coils from scissors, while folded practice cloths occupy the other half of the top. Small storage tins sit above the mirror, and a narrow bench keeps fresh towels off the floor. A script album and personal bag sit beside the coach, with an abstract rehearsal image on the rear wall. Surface wiring connects a modest wall light. Discover one contrasting repair thread, a folded cloth with unequal corners, and the coach’s place marker. The costume rail, dressing surface, rehearsal square, coaching corner and mending station form five distinct areas; the sleeve movement keeps the center clear.
+
+The rehearsal square is the deliberate quiet center. Build richness around its perimeter: mirror and cosmetics at the back, costumes along the side, trunks and towels near the entrance, repair chest at front right, and the coach’s little table between them. Keep the chest below the sweeping sleeves. Brighter thread and cloth edges invite close viewing without making the storage compete with the performer.
 
 ## 12. Across the working water — Victoria Harbour ferry deck
 
@@ -176,6 +222,10 @@ During a 16-second loop, a seated passenger raises binoculars, follows one dista
 
 Reflected water gives the underside of the canopy a cool flicker. A shopping bag contains one long leafy stem that nearly reaches the rail. The room offers shared travel without a meal, spectacle, or busy docking action; ordinary possessions make the broad harbour feel close.
 
+A compact maintenance cupboard near the rear supports a covered vessel and a tray containing a spare spanner and folded wiping cloth. The foreground gains a slatted luggage platform with a bag and closed book, leaving the passenger aisle free. A caged bulkhead light follows visible conduit along the outer structure. Drain channels and fastening plates explain how the deck meets its fittings. Discover the repaired bag pocket, the book’s projecting marker, and a short spare line coiled behind the cupboard. These additions develop the vessel’s construction and everyday care while leaving the harbour view, long benches and seated passengers as the dominant composition.
+
+Long benches and parallel overhead supports set the ferry’s rhythm. Place the luggage platform near the open front-right edge and the maintenance cupboard beyond the seated group. The caged lamp belongs to the outer structure, not the skyline. Drain slots and fastening plates add low detail without becoming loose floor clutter. The observer’s view across the water remains the largest uninterrupted opening in the scene.
+
 ## 13. Oars in parallel — Sha Tin rowing boathouse
 
 ID: `hong-kong-sha-tin-rowing`.
@@ -189,6 +239,10 @@ Include padded rack arms, two broad oar blades, narrow sculling blades, riggers 
 In a 16-second loop, one athlete lifts a single oar from its waist-high cradle, rotates it slightly to inspect the blade edge, then seats it carefully back on both supports. Another athlete waits clear of its swing. The oar never leaves the hands before it meets the rack. Reduced motion holds the same oar low across its padded supports in the athlete's hands. Water glints move faintly through the doorway and a hanging strap sways.
 
 Left daylight gives the pale shell a clean, bright line above teal shadows. A cloth is pegged to dry on the least convenient rack corner. The sport reads through long equipment and careful handling, distinct from the kayak scene's rounded hull, rinsing gesture, and shore-level water.
+
+An equipment rack adds personal dry bags, folded towels, covered bottles and a small spanner tray beside the boat storage. At the front, a low repair cabinet displays spare oarlock collars with pins, each large enough to read individually. A cord coil, towel crate and wall wash fitting establish the return-from-water routine. A closed training notebook rests away from the wet fittings. Discover one replacement collar in a different finish, the patched dry-bag pocket, and a towel folded with its stripe reversed. The long central corridor remains clear for carrying oars; secondary detail sits at the ends and sides, reinforcing the room’s strong parallel lines.
+
+The oars and shells make a high horizontal band at the back. Use the spare-parts cabinet as a lower counterweight at the front, with the towel crate opposite it. The personal equipment rack occupies the rear-right wall. Separate circular collars, narrow pins, soft bags and long rigid blades by silhouette. Preserve enough open floor to understand how equipment reaches the river without being threaded between unrelated furniture.
 
 ## 14. One more breath of air — Tai Po cycle-service kiosk
 
@@ -204,6 +258,10 @@ Over 16 seconds, a mechanic braces the pump base with both feet, makes two measu
 
 Warm path light reaches the coral pump while the work panel sits in teal shade. A child's tiny bell hangs beside an oversized wrench. The room contributes everyday outdoor mobility through air and effort, distinct from a wheel-truing repair scene or the long sporting oars next door.
 
+A repair rack brings inner-tube coils, lubricant containers and a brush-and-spanner tray together under the kiosk’s side wall. A foreground parts cabinet has shallow drawers and an open patch tray, with a clean cloth laid beside the small parts. A short bicycle parking rail establishes where customers wait without obstructing the pump stroke. The rider’s bag rests near this rail; two compact parts boxes sit on the rear counter. Discover the lone coral patch among dark rubber pieces, a thread on the wiping cloth, and the bag’s replaced pocket panel. Storage, repair, inflation, waiting and parking now read as separate but connected zones.
+
+The parts cabinet stays low in the foreground, the repair rack fills the side edge, and the parking rail defines the waiting area. Keep the pump and wheel isolated in the center. Inner tubes read as dark rings, repair patches as small flat shapes, and lubricant containers as upright vessels. The distinct forms explain what the mechanic uses before the viewer notices the small color differences between them.
+
 ## 15. Salt rinsed away — Sai Kung kayak storage bay
 
 ID: `hong-kong-sai-kung-kayak`.
@@ -217,6 +275,10 @@ Include a paddle, buoyancy aids on a rail, spray decks on hooks, a sponge, a was
 In a 16-second loop, a worker aims a low stream into the kayak's exterior curve, sweeps the nozzle toward the bow, lowers the flow, and returns the hand along the same path. The hull remains firmly supported. Drain water is a faint moving streak rather than an expanding puddle. A second person lifts their paddle clear of the rinse area. Reduced motion holds the nozzle toward the stationary hull with the spray off, ready for the rinse sweep.
 
 Late light enters from the water at front right, warming paper spray and coral plastic against teal racks. One sandal has been carefully parked inside the empty gear tray. This coastal work scene emphasizes cleaning and rounded equipment, with a wider, lower composition than the rowing boathouse.
+
+The rinse bay now includes a tall dry-storage rack with throw-line coils, folded towels and compact dry bags. A repair tray holds a spanner and open maintenance tin; a slatted crate separates protective helmets from the wet kayak. The hose connects to a visible pipe and colored valve. A low shoe tray collects water shoes near the exit, while a closed inspection book sits on the existing side bench. Discover the dry bag’s repaired pocket, the helmet with a pale strap, and the separate tin lid in the service tray. High dry storage contrasts with low wet equipment, and the kayak’s drainage path remains open from bow to floor channel.
+
+Read the kayak bay from dry to wet: elevated bags and towels, shoulder-height flotation storage, the hull on its cradles, the rinse hose and drain, then shoes at the exit. The helmet crate sits aside from the worker’s stance. The netting, straps and repair tools stay smaller than the kayak cockpit. Keep the water channel continuous so the scene explains where the rinse water goes.
 
 ## 16. A gap in the reeds — Tin Shui Wai wetland hide
 
@@ -232,6 +294,10 @@ Over 14 seconds, the observer lifts binoculars, tracks a small movement across t
 
 Cool outdoor paper light outlines the figures against blue timber. A coral lens cap dangles much farther than necessary from its strap. This room introduces patient shared attention and near-silence, distinct from a park picnic, aquarium, or open waterfront drawing scene.
 
+A compact reference shelf brings field guides, a lens-cap tray, cleaning cloth and covered flask into the hide. A small original bird study stands on the top shelf. Wall hooks hold a bag away from the observation ledge, and a boot tray separates muddy footwear from the timber floor. Shutter latches and a rainwater downpipe make the shelter more than a viewing slit. Discover two differently sized lens caps, the brush beside the notebook, and the turned-down corner of a cloth. Observation, note-taking, equipment care, wet storage and reference material form five quiet clusters; the broad space behind the observer remains clear for changing position without disturbing the view.
+
+The viewing slit remains the strongest horizontal opening. The equipment shelf fills the rearward side of the entrance, not the bird view, while boots and umbrella stay at floor level. Reference books and optical pieces occupy different shelves. The pale lens cloth gives the dark caps a readable background. Seat tops, ledge edges and shutter hardware should remain visible even with the observer frozen in the still pose.
+
 ## 17. Shells after the tide — Lau Fau Shan oyster shed
 
 ID: `hong-kong-lau-fau-shan-oysters`.
@@ -245,6 +311,10 @@ Include ridged oyster shells, perforated baskets, shallow trays, a rinse basin, 
 In a 14-second loop, the seated worker raises one large closed shell, tilts it to inspect both sides, then returns it to a low held position over the sorting edge. A colleague holds an empty basket ready but does not receive an endless supply. Small drops fall into the rinse basin and stop during the inspection pause. Reduced motion holds the seated worker's closed shell low above the sorting edge, ready for inspection.
 
 Low sun from rear left warms the shell edges and the worker's coral sleeve. The shed interior stays teal and blue. One glove is clipped to a basket handle so it cannot vanish into the shell pile. This is a tactile coastal working room, distinct from a seafood auction, food-service counter, or the domestic fishing connection at Tai O.
+
+A wash-side rack stores covered containers, a stiff brush, a broad sorting tool and clean folded cloth. Two additional low trays separate shell inspection from discarded shells; the latter collect in an open slatted crate near the exit. The hose visibly connects to a tap instead of ending without explanation. A dry notebook and personal bag occupy the sheltered end, above splashes. Discover a pale empty shell among darker ridged shells, the separate cleanup cloth, and the brush handle worn to a lighter color. These details clarify arrival, rinsing, assessment, waste collection and record-keeping. The worker’s seated posture and the central shell comparison remain unobscured.
+
+The shell table lies between incoming stock and the low sorting trays. Put cleanup supplies against the wall, keep the personal bag at the driest end, and place the empty-shell crate near the way out. Develop shell ridges at close scale but retain clear gaps between the trays. Their different contents must be visible from above, so their rims stay shallower than the worker’s hands.
 
 ## 18. Beneath the floorboards — Tai O stilt-house work deck
 
@@ -260,6 +330,10 @@ Over 16 seconds, a seated resident lifts slack in the net, tests the tension bet
 
 Sun enters through the open right side, catching pale net lines above teal floorboards. A small houseplant grows from a chipped old container. The scene's distinctive role is a home visibly connected to water beneath it, with domestic life and repair occupying one airy raised platform.
 
+Net repair gains a dedicated cabinet with a twine coil and closed scissors, while a rear shelf keeps spare line, flat netting shuttles and clean cloth above the damp deck. A patched personal bag hangs near the domestic bench, and a covered tea container sits near the existing cup. The house now has a rainwater pipe descending past the elevated floor and replacement fastening plates at selected deck joints. Discover the shuttle with a darker repaired tip, a pale bolt plate among older timber, and the striped cloth laid on the bench. The scene balances household use, mending, dry storage, access and the water beneath; the net worker’s hands remain the visual center.
+
+The floor’s elevation is part of the story: retain visible water, pile bases and the stair descent below the new storage. The repair cabinet sits beside the netting area, with small shuttles on the high rear shelf. The domestic bench and tea things occupy the opposite end. New fasteners should look like local repairs to a larger timber assembly, not a decorative grid across every board.
+
 ## 19. The last parcel fits — Lamma pier trolley shelter
 
 ID: `hong-kong-lamma-parcels`.
@@ -273,6 +347,10 @@ Include three plain cardboard parcels, a reusable insulated box, a canvas mail b
 During a 16-second loop, a worker holds the final carton above a gap in the trolley load, shifts it forward to assess the balance, and returns it to the original held position. A recipient waits beside the bench with a reusable bag. No parcel changes owner or teleports back onto the trolley. The strap end flutters and water glints pass behind the railing. Reduced motion holds the final carton above the trolley gap while the worker considers its placement.
 
 Late light arrives from the water at left; the shelter casts a cool blue rectangle. A tiny parcel rests inside an oversized protective tote. This room gives an island its practical connection to the city through a modest delivery task, distinct from passenger travel and maritime work.
+
+A small dispatch cabinet supplies twine, scissors and a pocket ledger beside the loading trolley. An open shelter rack holds a folded rain cover, covered drink containers and a personal bag; low coils of spare tie-down cord stay within reach of the parcel stack. Wheel chocks explain why the trolley remains steady during the balancing gesture. A downpipe and an abstract route panel make the pier shelter more specific without lettering. Discover the contrasting pair of wheel chocks, the scissors nested inside a cord loop, and a repair on the rain cover. The additions form a packing edge and a dry waiting edge while keeping the path from pier to trolley open.
+
+The trolley remains centered below the shelter roof. Dispatch tools collect on the right, the waiting bench stays to the left, and tie-down cords sit low near the load. The downpipe establishes one vertical edge without closing the room. Wheel chocks, crate corners and tape bands make a connected loading story. The open strip in front is wide enough to read as the route for a person pulling the trolley.
 
 ## 20. Shade for two — Ping Shan village courtyard
 
@@ -288,6 +366,10 @@ Over 18 seconds, one neighbor holds a counter above the board, moves it toward a
 
 Warm sidelight meets cool teal tree shade, with coral confined to a cushion patch. One stool is propped with a neatly folded scrap beneath its leg. This shared space provides a generous pause after work and travel, grounded in contemporary village life without importing a festival or picturesque costume.
 
+The courtyard gains a shaded resting bench with a folded seat cloth and closed book. Spare game pieces occupy a shallow tray at the opposite edge, while a crate holds fresh towels near the tea table. A wash basin and tap connect to the gardener’s trowel; spare paving tiles are stacked beside the gate for repairs. A small framed abstract picture and a visitor’s bag make the enclosure feel shared. Discover a contrasting spare game piece, the repaired corner of the bench cloth, and a tiny moss mark along a paving joint. The center remains open around the players, with reading, refreshments, upkeep and waiting gathered against the boundaries.
+
+The tea and game table keep the courtyard’s middle occupied, while the new bench and wash basin develop opposite sides. Spare tiles belong close to the gate rather than under the players. The thin foreground drain remains continuous. Give the tree shade a broad shape, then let a few moss marks and worn stone edges supply the quieter detail. The players’ faces retain pale space behind them.
+
 ## 21. Hold that cloud — West Kowloon waterfront sketch shelter
 
 ID: `hong-kong-west-kowloon-sketch`.
@@ -301,6 +383,10 @@ Include a drawing board, a clipped sheet, graphite pencils, a soft eraser, a sma
 During a 16-second loop, the artist lifts a pencil to compare a cloud's slope, holds the measurement, then lowers the hand toward the board and pauses before making a mark. A companion looks from the paper to the water. The pencil returns through the same comfortable arc, while the drawing stays unchanged. A corner of spare paper lifts against its clip. Reduced motion holds the seated artist with a pencil poised beside the clipped sketch.
 
 Low sun enters from left, washing the board in paper gold and leaving the canopy underside blue. One pencil is too short for the tin's elastic loop. This spacious room introduces a personal act of looking, distinct from the bird hide's dark slit and the workshop's production equipment.
+
+A second low worktable supports a six-well color tray, sketch album and two pencils, with rigid drawing boards stored beneath. A lightweight easel holds an unfinished cloud study off to one side, giving the main sketcher a companion’s temporarily empty place. A patched bag rests within reach; a folded cloth protects the nearby seat. Small path lights and exposed shelter bolts complete the boundary. Discover the empty palette well, the incomplete line in the spare sketch, and the uneven board heights beneath the table. The second setup makes the shelter inhabited without adding another competing animation, and the central view to the sky remains open.
+
+The shelter roof and cloud view remain the dominant shapes. The spare easel sits outside the main artist’s elbow space; the palette table gathers color, paper and rigid boards at the opposite front edge. Path lights stay shorter than the benches. Paper corners, clamp feet and easel hinges provide close-view construction, while broad blank areas on both drawings prevent the room from becoming a wall of repeated marks.
 
 ## 22. The dragon waits — Tai Hang preparation workspace
 
@@ -316,6 +402,10 @@ In a 14-second loop, a volunteer straightens a loose supporting tie beside the h
 
 Warm work light enters from front left, against a cool teal doorway. One glove sits inside an empty eye-shaped component. The scene adds seasonal collective anticipation through a large organic silhouette, distinct from staged performance and the bamboo workshop's transparent structural frame.
 
+A separate preparation bench holds straight material bundles, twine and closed scissors, keeping small operations away from the supported dragon body. A low slatted crate stores tied straw bundles with visibly different ends. A leaning ladder, sorting tray and folded carrying cloth make the room feel ready for a group to return. A closed construction album sits near the rear, and visible surface wiring follows the workspace wall. Discover one bundle tied in coral, the ladder’s replaced rung, and a practice binding lying apart from the main stock. These additions distinguish material preparation, support checking, supply storage, documentation and cleanup while leaving the dragon’s long articulated silhouette intact.
+
+The dragon’s spine crosses the middle on trestles. Put long prepared materials behind it, tied straw at the front, fine fastening supplies along the side wall, and the carrying cloth near the open edge. The ladder reinforces the room’s height without adding another large silhouette. Different straw ends and clearly wrapped bindings explain construction; scattered fragments remain sparse enough that the floor still offers a usable work path.
+
 ## 23. Rain on the landing — Wan Chai stair-street shelter
 
 ID: `hong-kong-wan-chai-steps`.
@@ -329,6 +419,10 @@ Include stair nosings, a handrail, an awning brace, a downpipe, a gutter, a drai
 Over 12 seconds, a resident brings an already closed umbrella beneath the awning, smooths its wet folds around the shaft, tests the fastening strap, then loosens the strap for another careful adjustment. The canopy never opens inside the cramped shelter. A second resident waits one step above, making space. Rain falls beyond the roof edge, with a brief drip from the umbrella tip. Reduced motion holds the closed umbrella before the resident while both hands gather its folds.
 
 A sun-colored doorway glows against blue rain and teal plaster. A single dry leaf remains stubbornly sheltered under the mat. This room makes weather and topography tangible through a shared pause between levels, distinct from flat courtyards, markets, and waterfront platforms.
+
+The stair landing gains a grilled side window with a shallow projecting guard, three unlettered mailboxes and a small wall light connected by exposed conduit. Beneath the shelter, a narrow waiting bench holds a folded dry cloth and a resident’s bag. A shoe tray marks the dry threshold, while the existing gutter and pipe make the rain’s path legible. Discover the mailbox with a contrasting latch, a worn patch on the bench cloth, and the pale replacement piece in the window guard. The steps remain fully available for movement; added life sits on landings and walls rather than in the walking line. The scene now connects homes, weather protection, delivery and a brief personal pause.
+
+The side window and mailboxes bring attention above the stairs, while the bench and shoe tray occupy the lower landing. Preserve the changes in level: every new object must rest on its actual step or platform. The canopy’s gutter, downpipe and wet paving connect rain overhead to water underfoot. Keep dry cloth and belongings under cover, with their warm colors contrasting against the cooler exposed stair edges.
 
 ## 24. A clear pane at midnight — Central elevated walkway
 
@@ -344,6 +438,10 @@ During a 16-second loop, the cleaner raises the squeegee to a reachable section 
 
 Cool teal exterior reflections meet warm paper ceiling strips. A small folded towel cushions the worker's flask inside the cart. The room gives the city's elevated circulation network a human caretaker, with an architectural frame and vertical glass action unlike the neighboring stair landing.
 
+The walkway’s open edge now has a continuous handrail with posts and infill bars. A vented service cabinet with a contrasting access button sits against a structural bay. Beside the cleaning trolley, a low caddy separates cloths and replacement sleeves; a spare squeegee leans within the maintenance zone, and a coiled lead stays clear of pedestrians. Floor access plates, rail fixings and a simple abstract route panel add construction detail. Discover the newer cabinet latch, the folded dry cloth kept apart from wet sleeves, and one bright replacement floor fastener. The large empty middle remains a deliberate walking corridor, with all cleaning supplies gathered to its edge.
+
+The glass-cleaning gesture remains centered against the skyline. The service cabinet occupies a structural bay at the far left, and the supplies gather beside the right-hand cart. Handrail posts complete the open side without closing the foreground. Floor plates stay almost flush. The contrast between a broad empty pedestrian route and a concentrated maintenance corner gives the walkway detail without making it look like a storage room.
+
 ## 25. One window still awake — Quarry Bay aquarium corner
 
 ID: `hong-kong-quarry-bay-window`.
@@ -358,6 +456,10 @@ Over 20 seconds, the resident follows one fish with a finger outside the glass, 
 
 The aquarium casts a cool teal patch on the resident's sleeve, balanced by a small sun-colored kitchen lamp. A houseplant cutting leans toward the tank light instead of the window. This final home offers a quiet, bounded world within the larger one, distinct from the morning household's folding furniture and Tai O's open working deck.
 
+An aquarium-care cabinet holds small capped supplies above the wet work area. A fine-mesh net, coiled siphon tube and under-tank tray make the aquarium’s upkeep visible; the tray separates a clean towel from a covered vessel. Elsewhere, a low reading table carries a closed album and spectacles, while an upper shelf stores books and a small framed picture warms the window wall. A personal bag rests beside the reading area. Discover the net’s fine mesh, a bookmark extending from the album, and the contrasting repaired bag pocket. The room now has distinct sleeping, cooking, reading, aquarium-care and window clusters, preserving the fish and the resident’s quiet tracing gesture.
+
+Keep the aquarium brightest and the sleeping area softer. The new care cabinet sits against the side boundary, with net and siphon nearby and cleaning supplies beneath the tank. The reading table fills the foreground-left corner, separated from the wet equipment by a clear path. A few books high on the wall balance the tank’s low mass. Their plain covers and visible page edges remain secondary to the fish.
+
 ## Tour order and final design review
 
 The tour has five movements of five rooms: the city starts work; materials pass through skilled hands; movement becomes recreation; the outer edges slow the pace; and evening returns to the dense city. The order follows changes in attention and light rather than a feasible one-day route. The wetland room belongs to winter, the rain landing to summer, and the dragon preparation to its festival season.
@@ -369,3 +471,6 @@ All signs, screens, packages, and diagrams stay free of lettering. Hands retain 
 The research supports city and neighborhood associations, the milk-tea preparation stages, bamboo-theatre materials, the Guangcai painting tradition, opera's performance vocabulary, and the places' documented uses. Invented layouts, family stories, exact storage arrangements, abstract printed motifs, and reversible practice gestures are design proposals. Specialist construction knots, opera role choreography, and ritual preparation sequences are deliberately not claimed as technical reconstructions. A future documentary treatment would need focused maker interviews and measured references before adding those details.
 
 Sources were opened and read on September 17, 2026. Some district pages describe long-lived places rather than current operating schedules; this collection makes no promises about opening hours, access, or business continuity.
+
+
+Detail revision reviewed September 17, 2026. Added furnishings are static, so reduced-motion views retain their complete contents. Existing action loops and room IDs remain in place. The per-room additions above form the implementation checklist for architecture, work surfaces, storage, personal objects, visible wear and open circulation.

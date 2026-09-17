@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -35,6 +36,53 @@ function cup(H, R, i, j, z, ink = 'paper', brushes = false) {
   oval(H, R, x, y - 16, 8, 3, 'paper', 1);
   if (!brushes) oval(H, R, x, y - 16, 5.5, 1.8, 'teal', .24);
   H.line(R, [[x - 4, y - 8], [x + 4, y - 8]], 'teal', .9);
+}
+
+function kowloonBayPorcelainDetails(H, R) {
+  drawerUnit(H, R, 8.04, 8.08, 3.19, 1.48, 1.24, 4, 'teal');
+  shallowTray(H, R, 8.22, 8.25, 1.28, 1.06, 1.41, 'paper');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(8.51 + (n % 2) * 0.51, 8.53 + Math.floor(n / 2) * 0.43, 1.61);
+    plate(H, R, x, y, 9, n === 2, false, 0, true);
+  }
+  foldedCloth(H, R, 9.71, 8.25, 1.12, 0.83, 1.4, 'paper', 'coral');
+  liddedTin(H, R, 10.7, 9.21, 1.42, 6, 12, 'teal', true);
+  shelfUnit(H, R, 2.02, 0.2, 3.29, 0.76, 1.94, [0, 0.67], 'sun');
+  for (let n = 0; n < 4; n++) liddedTin(H, R, 2.41 + n * 0.74, 0.55, 2.08, 6, 15, ['coral', 'teal', 'sun', 'blue'][n]);
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(2.55 + n * 1.06, 0.57, 2.76);
+    plate(H, R, x, y - 12, 12, true, true, 0, n === 1);
+  }
+  boundBook(H, R, 5.02, 9.69, 1.09, 0.81, 0.04, 'coral');
+  shallowTray(H, R, 6.31, 9.71, 1.01, 0.85, 0.03, 'paper');
+  handTool(H, R, 6.81, 10.12, 0.24, 'brush', 'sun');
+  for (let n = 0; n < 3; n++) shape(H, R, H.tile(6.43 + n * 0.23, 9.88, 0.15, 0.32, 0.22), 'teal', 0.3 + n * 0.2, 0.4);
+  const [x, y] = H.p(7.77, 2.42, 0.04);
+  oval(H, R, x, y - 9, 13, 10, 'paper', 1);
+  oval(H, R, x, y - 17, 12, 4, 'teal', 0.2);
+  stroke(
+    H,
+    R,
+    [
+      [x - 12, y - 15],
+      [x - 8, y - 29],
+      [x + 9, y - 29],
+      [x + 12, y - 15]
+    ],
+    'blue',
+    1
+  );
+  servicePipe(
+    H,
+    R,
+    [
+      [7.22, 0.11, 0.14],
+      [7.22, 0.11, 0.89],
+      [7.77, 0.11, 0.89]
+    ],
+    'teal',
+    2
+  );
 }
 
 const room = world('hong-kong-kowloon-bay-porcelain', 'Kowloon Bay · A quiet rim of color', { floor: 'paper', tone: .54, wall: 'teal', wallTone: .19, height: 3.74, head: 20 }, (H, R) => {
@@ -102,6 +150,7 @@ const room = world('hong-kong-kowloon-bay-porcelain', 'Kowloon Bay · A quiet ri
   H.line(R, [H.p(2.02, 10.69, .58), H.p(3.88, 10.69, .58)], 'coral', 1.3);
   for (const i of [1.89, 4.01]) H.line(R, [H.p(i, 8.88, .42), H.p(i, 8.88, 1.46)], 'blue', 2);
   H.line(R, [H.p(1.89, 8.88, 1.46), H.p(4.01, 8.88, 1.46)], 'blue', 2.1);
+  kowloonBayPorcelainDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), turn = u < .57 ? 0 : u < .73 ? Math.sin((u - .57) / .16 * Math.PI / 2) * .22 : u < .86 ? .22 : Math.cos((u - .86) / .14 * Math.PI / 2) * .22;
   const [px, py] = H.p(5.14, 5.26, 1.24);

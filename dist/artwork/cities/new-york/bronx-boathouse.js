@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -36,6 +37,52 @@ function paddle(H, R, i, j, z, lean = 0, size = 1) {
   H.line(R, [[x, y], [x + lean, y - 75 * size]], 'sun', 3);
   shape(H, R, [[x - 5, y + 2], [x - 6, y + 25], [x, y + 31], [x + 6, y + 25], [x + 5, y + 2]], 'coral', .63, .7);
   H.line(R, [[x + lean - 5, y - 76 * size], [x + lean + 5, y - 76 * size]], 'blue', 2.2);
+}
+
+function bronxBoathouseDetails(H, R) {
+  shelfUnit(H, R, 4.11, 9.24, 2.63, 1.32, 0.03, [0.13, 1.05, 1.93], 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 4.58 + n * 0.72, 9.88, 0.32, 10, ['sun', 'coral', 'blue'][n]);
+  shallowTray(H, R, 4.28, 9.43, 1.32, 0.93, 1.2, 'paper');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(4.58 + n * 0.34, 9.87, 1.42);
+    oval(H, R, x, y, 5, 8, n === 1 ? 'coral' : 'sun', 0.55);
+    oval(H, R, x, y, 2.5, 5, 'paper', 1);
+  }
+  liddedTin(H, R, 6.13, 10.06, 1.23, 8, 23, 'teal');
+  foldedCloth(H, R, 4.3, 9.41, 1.53, 0.95, 2.08, 'paper', 'coral');
+  boundBook(H, R, 6.02, 9.5, 0.48, 0.7, 2.08, 'blue');
+  framedPanel(H, R, 9.52, 0.21, 1.69, 2.0, 1.16, 'teal');
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(9.79 + n * 0.33, 0.34, 2.25), H.p(9.91 + n * 0.3, 0.34, 2.88)], 'coral', 0.6);
+  shallowTray(H, R, 0.61, 9.83, 1.85, 0.91, 0.26, 'sun');
+  handTool(H, R, 1.15, 10.2, 0.47, 'brush', 'teal');
+  handTool(H, R, 1.96, 10.35, 0.47, 'spanner', 'coral');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.18, 8.16, 0.13],
+      [0.18, 8.16, 1.7],
+      [0.68, 8.16, 1.7]
+    ],
+    'teal',
+    2.5
+  );
+  const [x, y] = H.p(1.44, 8.69, 0.04);
+  oval(H, R, x, y - 7, 12, 9, 'paper', 1);
+  oval(H, R, x, y - 14, 12, 4, 'teal', 0.25);
+  stroke(
+    H,
+    R,
+    [
+      [x - 10, y - 13],
+      [x - 8, y - 28],
+      [x + 8, y - 28],
+      [x + 10, y - 13]
+    ],
+    'blue',
+    1
+  );
+  satchel(H, R, 8.14, 10.61, 0.03, 'coral', 0.9);
 }
 
 const room = world('new-york-bronx-boathouse', 'Bronx River · Back from the River', {
@@ -103,6 +150,7 @@ const room = world('new-york-bronx-boathouse', 'Bronx River · Back from the Riv
   const [lx, ly] = H.p(5.1, .35, 2.9);
   H.line(R, [[lx, ly - 22], [lx, ly]], 'blue', 1.2);
   shape(H, R, [[lx - 14, ly + 9], [lx + 14, ly + 9], [lx + 8, ly - 2], [lx - 8, ly - 2]], 'sun', .8);
+  bronxBoathouseDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   actor(H, R, 7.45, 5.28, t, 'newYorkVestDry', {

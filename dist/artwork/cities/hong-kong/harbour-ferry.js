@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -41,6 +42,38 @@ function luggage(H, R, i, j) {
   for (const a of [i + .12, i + .58]) oval(H, R, ...H.p(a, j + .45, .06), 2.8, 3.5, 'blue', .9);
   H.line(R, [H.p(i + .34, j + .51, .18), H.p(i + .34, j + .51, .86)], 'paper', 1.3);
   H.dot(...H.p(i + .56, j + .51, .7), 2, 'sun', .9);
+}
+
+function harbourFerryDetails(H, R) {
+  drawerUnit(H, R, 9.72, 2.03, 1.6, 0.74, 1.23, 2, 'paper');
+  liddedTin(H, R, 10.65, 2.38, 1.43, 6, 19, 'teal');
+  shallowTray(H, R, 9.91, 2.14, 0.62, 0.46, 1.43, 'sun');
+  handTool(H, R, 10.19, 2.38, 1.64, 'spanner', 'blue');
+  foldedCloth(H, R, 10.78, 2.16, 0.38, 0.44, 1.43, 'paper', 'coral');
+  box(H, R, 9.16, 6.98, 2.28, 1.71, 0.02, 0.18, 'teal', 0.55);
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(9.23, 7.1 + n * 0.24, 0.23), H.p(11.34, 7.1 + n * 0.24, 0.23)], 'paper', 0.8);
+  satchel(H, R, 9.75, 7.53, 0.25, 'coral', 0.85);
+  boundBook(H, R, 10.28, 8.03, 0.69, 0.46, 0.25, 'blue');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.39, 9.92, 0.3],
+      [0.39, 9.92, 2.77],
+      [0.39, 8.16, 2.77]
+    ],
+    'paper',
+    2.5
+  );
+  const [x, y] = H.p(0.44, 8.17, 2.66);
+  oval(H, R, x, y, 10, 8, 'blue', 0.65);
+  oval(H, R, x, y, 7, 5, 'sun', 0.5);
+  for (const i of [1.22, 5.88, 10.7]) {
+    shallowTray(H, R, i, 10.96, 0.71, 0.31, 0.02, 'blue');
+    for (let n = 0; n < 4; n++) H.line(R, [H.p(i + 0.1 + n * 0.15, 11, 0.2), H.p(i + 0.1 + n * 0.15, 11.21, 0.2)], 'paper', 0.7);
+  }
+  for (const i of [1.64, 6.46]) for (const j of [4.88, 8.42]) H.dot(...H.p(i, j, 0.25), 2, 'sun');
+  coiledLine(H, R, 10.86, 0.92, 0.06, 12, 'sun');
 }
 
 const room = world('hong-kong-harbour-ferry', 'Victoria Harbour · Across the working water', { floor: 'teal', tone: .25, wall: false, pattern: 'boards', head: 20 }, (H, R) => {
@@ -87,6 +120,7 @@ const room = world('hong-kong-harbour-ferry', 'Victoria Harbour · Across the wo
   shape(H, R, [[ux - 4, uy - 4], [ux + 7, uy - 40], [ux + 13, uy - 39], [ux + 3, uy - 2]], 'coral', .7, .65);
   box(H, R, 7.56, 10.65, 2.73, .54, .02, .07, 'blue', .45);
   for (let q = 0; q < 12; q++) H.line(R, [H.p(7.62 + q * .22, 10.7, .1), H.p(7.62 + q * .22, 11.15, .1)], 'paper', .8);
+  harbourFerryDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   H.clip(H.faceI(.2, .11, 11.55, .63, 1.48), () => {

@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, windowOn, steam, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -99,6 +100,54 @@ function wetCounter(H, R) {
   H.line(R, [[tx - 5, ty + 1], [tx, ty], [tx + 1, ty - 7]], 'blue', 1.2);
 }
 
+function sheungWanMilkTeaDetails(H, R) {
+  shelfUnit(H, R, 0.26, 7.0, 1.48, 0.75, 1.77, [0, 0.65, 1.3], 'teal');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 0.56 + n * 0.39, 7.31, 1.9, 6, 17, ['sun', 'coral', 'teal'][n]);
+  foldedCloth(H, R, 0.44, 7.14, 0.98, 0.43, 2.56, 'paper', 'coral');
+  shallowTray(H, R, 0.43, 7.16, 1.08, 0.42, 3.2, 'paper');
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(0.62 + n * 0.29, 7.27, 3.3), H.p(0.69 + n * 0.29, 7.41, 3.65)], 'sun', 2);
+  drawerUnit(H, R, 9.03, 6.9, 2.08, 1.03, 1.13, 3, 'teal');
+  shallowTray(H, R, 9.14, 7.03, 0.9, 0.67, 1.3, 'paper');
+  for (let n = 0; n < 6; n++) oval(H, R, ...H.p(9.32 + (n % 3) * 0.25, 7.2 + Math.floor(n / 3) * 0.27, 1.42), 4, 3, 'sun', 0.65);
+  boundBook(H, R, 10.2, 7.07, 0.64, 0.6, 1.29, 'blue');
+  const [x, y] = H.p(10.51, 7.35, 1.51);
+  H.line(
+    R,
+    [
+      [x - 4, y - 4],
+      [x + 8, y + 3]
+    ],
+    'coral',
+    1.5
+  );
+  servicePipe(
+    H,
+    R,
+    [
+      [0.19, 8.62, 0.2],
+      [0.19, 8.62, 2.22],
+      [0.19, 9.7, 2.22]
+    ],
+    'teal',
+    2.6
+  );
+  shape(H, R, H.faceJ(0.23, 9.3, 0.85, 1.0, 1.76), 'paper', 1, 0.6);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(0.25, 9.39 + n * 0.19, 1.1), H.p(0.25, 9.39 + n * 0.19, 1.63)], 'coral', 0.8);
+  box(H, R, 3.6, 9.1, 1.72, 0.27, 0.02, 0.08, 'sun', 0.4);
+  for (const i of [3.8, 4.35, 4.91]) H.line(R, [H.p(i, 9.08, 0.12), H.p(i, 9.38, 0.12)], 'blue', 0.7);
+  const [cx, cy] = H.p(7.09, 1.85, 1.3);
+  oval(H, R, cx, cy, 7, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [cx - 4, cy],
+      [cx + 5, cy - 13]
+    ],
+    'sun',
+    2
+  );
+}
+
 const room = world('hong-kong-sheung-wan-milk-tea', 'Sheung Wan · The long pour', { floor: 'paper', tone: .67, wall: 'paper', wallTone: .88, height: 3.75, wallStyle: 'tile', pattern: 'tiles', accent: 'teal', head: 22 }, (H, R) => {
   shape(H, R, wallRect(H, 'nw', .5, 4.0, 2.12, 3.38), 'blue', .28);
   for (let z = 2.2; z < 3.35; z += .16) H.line(R, [H.p(.04, .61, z), H.p(.04, 3.89, z)], 'paper', 2);
@@ -126,6 +175,7 @@ const room = world('hong-kong-sheung-wan-milk-tea', 'Sheung Wan · The long pour
   oval(H, R, sx, sy - 22, 12, 4, 'paper', .8);
   shape(H, R, H.tile(3.16, 9.76, 4.69, .25, .04), 'blue', .72);
   for (let i = 3.24; i < 7.8; i += .18) H.line(R, [H.p(i, 9.77, .05), H.p(i, 10.0, .05)], 'paper', .7);
+  sheungWanMilkTeaDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   H.at(5.6, 6.1, 0, HH => actor(HH, R, 5.6, 6.1, u * 18, 'hongKongTeaTransfer', { shirt: ['paper', 1], pants: ['blue', .73], apron: ['teal', .73], hairStyle: 'short', prop: (h, r, p) => {

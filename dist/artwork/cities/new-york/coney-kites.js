@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, boundBook, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -73,6 +74,80 @@ function kite(H, R, x, y, u, hand, parentHand) {
   }
 }
 
+function coneyKitesDetails(H, R) {
+  table(H, R, 1.05, 8.79, 2.32, 1.75, 0.64, 'teal');
+  shallowTray(H, R, 1.21, 8.98, 1.94, 1.35, 0.78, 'paper');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 1.57 + n * 0.57, 9.59, 0.99, 8, ['coral', 'sun', 'teal'][n]);
+  handTool(H, R, 2.37, 10.01, 1.01, 'scissors', 'blue');
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(1.31, 9.13, 1.02 + n * 0.025), H.p(2.95, 10.12, 1.02 + n * 0.025)], 'sun', 1.4);
+  slattedCrate(H, R, 1.3, 9.01, 1.72, 1.24, 0.02, 0.44, 'sun');
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.tile(1.49 + n * 0.32, 9.2, 0.27, 0.89, 0.54), 'coral', 0.22 + n * 0.1, 0.5);
+  }
+  const [x, y] = H.p(10.41, 8.17, 0.03);
+  for (const dx of [-15, 15])
+    H.line(
+      R,
+      [
+        [x + dx, y],
+        [x - dx * 0.4, y - 33]
+      ],
+      'blue',
+      2
+    );
+  shape(
+    H,
+    R,
+    [
+      [x - 17, y - 34],
+      [x + 15, y - 27],
+      [x + 8, y - 9],
+      [x - 16, y - 15]
+    ],
+    'sun',
+    0.55,
+    0.8
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 11, y - 35],
+      [x - 14, y - 59],
+      [x + 13, y - 55],
+      [x + 15, y - 27]
+    ],
+    'blue',
+    1.7
+  );
+  for (let n = 0; n < 4; n++)
+    H.line(
+      R,
+      [
+        [x - 11 + n * 6, y - 52],
+        [x - 9 + n * 5, y - 34]
+      ],
+      'coral',
+      1
+    );
+  foldedCloth(H, R, 3.11, 6.09, 1.35, 0.58, 0.74, 'paper', 'coral');
+  for (const j of [10.6, 10.97]) oval(H, R, ...H.p(5.42, j, 0.03), 9, 4, 'teal', 0.6);
+  boundBook(H, R, 8.05, 9.19, 0.99, 0.67, 0.78, 'sun');
+  const [sx, sy] = H.p(3.1, 10.65, 0.03);
+  stroke(
+    H,
+    R,
+    [
+      [sx, sy],
+      [sx + 17, sy + 6],
+      [sx + 29, sy - 1],
+      [sx + 41, sy + 8]
+    ],
+    'coral',
+    1.1
+  );
+}
+
 const room = world('new-york-coney-kites', 'Coney Island · Wind at the Bench', { floor: 'paper', tone: .8, wall: false, pattern: 'boards', head: 20 }, (H, R) => {
   shape(H, R, H.tile(.03, .03, 11.93, 1.72, .023), 'teal', .32, .6);
   for (let k = 0; k < 15; k++) H.line(R, [H.p(.4 + k * .75, .55 + k % 3 * .33, .033), H.p(.78 + k * .75, .55 + k % 3 * .33, .033)], 'paper', 1.4, { tone: .9 });
@@ -132,6 +207,7 @@ const room = world('new-york-coney-kites', 'Coney Island · Wind at the Bench', 
     const a = k * TAU / 8;
     H.line(R, [[fx, fy - 23], [fx + Math.cos(a) * 18, fy - 23 + Math.sin(a) * 18]], 'blue', .45, { tone: .5 });
   }
+  coneyKitesDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   let parentHand;

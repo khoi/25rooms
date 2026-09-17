@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -59,6 +60,48 @@ function window(H, R) {
   box(H, R, 4.91, .2, 5.14, .49, 1.34, .13, 'paper', 1);
   for (const i of [7.19, 7.73]) H.line(R, [H.p(i, .3, 2.58), H.p(i + .18, .3, 2.58)], 'blue', 1.5);
   H.line(R, [H.p(4.72, .24, 3.77), H.p(10.16, .24, 3.77)], 'blue', 2);
+}
+
+function washingtonHeightsDetails(H, R) {
+  drawerUnit(H, R, 9.53, 8.77, 1.9, 1.61, 1.57, 4, 'teal');
+  boundBook(H, R, 9.7, 8.96, 1.17, 0.9, 1.74, 'coral');
+  liddedTin(H, R, 10.99, 9.83, 1.76, 7, 14, 'sun');
+  framedPanel(H, R, 9.83, 9.13, 0.88, 1.98, 0.66, 'teal');
+  shelfUnit(H, R, 2.29, 0.27, 1.61, 0.68, 1.79, [0, 0.78], 'sun');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 2.62 + n * 0.46, 0.59, 1.94, 6, 17, ['teal', 'coral', 'paper'][n]);
+  foldedCloth(H, R, 2.44, 0.36, 1.26, 0.45, 2.73, 'paper', 'teal');
+  for (const j of [9.03, 9.72, 10.41]) {
+    H.line(R, [H.p(0.17, j, 2.07), H.p(0.45, j, 2.07), H.p(0.45, j, 2.19)], 'blue', 1.6);
+  }
+  satchel(H, R, 0.59, 9.63, 1.0, 'coral', 0.8);
+  const [x, y] = H.p(0.51, 10.39, 1.04);
+  shape(
+    H,
+    R,
+    [
+      [x - 11, y],
+      [x + 12, y],
+      [x + 8, y - 28],
+      [x - 7, y - 29]
+    ],
+    'teal',
+    0.55,
+    0.8
+  );
+  H.line(
+    R,
+    [
+      [x, y - 26],
+      [x, y - 2]
+    ],
+    'paper',
+    1
+  );
+  table(H, R, 4.23, 9.05, 2.36, 1.49, 0.57, 'sun');
+  shallowTray(H, R, 4.42, 9.23, 1.96, 1.1, 0.71, 'paper');
+  for (let n = 0; n < 3; n++) oval(H, R, ...H.p(4.81 + n * 0.55, 9.73, 0.94), 8, 5, ['sun', 'coral', 'sun'][n], 0.65);
+  foldedCloth(H, R, 4.44, 9.29, 1.74, 0.91, 0.14, 'paper', 'coral');
+  handTool(H, R, 1.29, 5.76, 1.17, 'brush', 'sun');
 }
 
 const room = world('new-york-washington-heights', 'Washington Heights · Window Wide', {
@@ -149,6 +192,7 @@ const room = world('new-york-washington-heights', 'Washington Heights · Window 
   oval(H, R, hx, hy + 3, 9, 9, 'teal', .5);
   shape(H, R, H.tile(4.15, 8.04, 3.43, 2.25, .02), 'coral', .19, .7);
   for (let q = 0; q < 6; q++) H.line(R, [H.p(4.2, 8.14 + q * .4, .025), H.p(7.5, 8.14 + q * .4, .025)], 'paper', 1.3);
+  washingtonHeightsDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   for (const [i, dir] of [[4.92, 1], [9.79, -1]]) {

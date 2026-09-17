@@ -1,4 +1,5 @@
-import { world, shape, oval, stroke, box, actor, cycle, ell, TAU } from '../../worlds/common.js';
+import { shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool } from '../furnishings.js';
+import { world, shape, oval, stroke, box, actor, cycle, ell, TAU, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -96,6 +97,30 @@ function body(H, R) {
   H.line(R, [[jx, jy - 11], [jx, jy + 17]], 'paper', .8);
 }
 
+function kennedyTownTramDetails(H, R) {
+  table(H, R, 9.58, 9.05, 1.65, 0.68, 0.44, 'teal');
+  foldedCloth(H, R, 9.83, 9.17, 0.61, 0.43, 0.58, 'coral', 'paper');
+  satchel(H, R, 10.8, 9.38, 0.59, 'blue', 0.68);
+  shallowTray(H, R, 0.65, 9.08, 1.72, 1.01, 0.04, 'blue');
+  handTool(H, R, 1.05, 9.41, 0.21, 'spanner', 'sun');
+  liddedTin(H, R, 1.82, 9.52, 0.21, 7, 17, 'teal');
+  coiledLine(H, R, 2.91, 9.56, 0.04, 16, 'coral');
+  for (const i of [1.5, 4.6, 7.5, 10.5]) {
+    box(H, R, i, 8.06, 0.67, 0.13, 0.72, 0.25, 'teal', 0.58);
+    for (let n = 0; n < 4; n++) H.line(R, [H.p(i + 0.12 + n * 0.13, 8.22, 0.79), H.p(i + 0.12 + n * 0.13, 8.22, 0.92)], 'blue', 0.7);
+  }
+  box(H, R, 4.0, 8.11, 3.5, 0.1, 1.05, 0.14, 'sun', 0.62);
+  for (const i of [4.12, 7.3]) H.dot(...H.p(i, 8.24, 1.12), 1.4, 'blue');
+  for (const i of [1.5, 10.3]) {
+    oval(H, R, ...H.p(i, 8.21, 1.36), 6, 5, i < 2 ? 'sun' : 'paper', 1);
+    oval(H, R, ...H.p(i, 8.24, 1.36), 3, 2.7, 'coral', 0.7);
+  }
+  for (const i of [6.94, 7.33]) box(H, R, i, 4.36, 0.17, 0.2, 2.93, 0.22, 'blue', 0.7);
+  boundBook(H, R, 5.73, 4.39, 0.65, 0.48, 3.66, 'teal');
+  shape(H, R, H.tile(1.17, 10.87, 2.4, 0.33, 0.03), 'blue', 0.5, 0.5);
+  for (let n = 0; n < 13; n++) H.line(R, [H.p(1.24 + n * 0.17, 10.88, 0.05), H.p(1.24 + n * 0.17, 11.19, 0.05)], 'paper', 0.8);
+}
+
 const room = world('hong-kong-kennedy-town-tram', 'Kennedy Town · Bell before departure', { floor: 'blue', tone: .16, wall: false, head: 46 }, (H, R) => {
   for (const j of [4.1, 7.55]) for (const d of [0, .13]) stroke(H, R, [H.p(.1, j + d, .03), H.p(5.3, j + d, .03), H.p(11.8, j + d + .3, .03)], 'blue', 1.9);
   box(H, R, .35, .32, 10.9, 2.65, .01, .34, 'paper', .82);
@@ -109,6 +134,7 @@ const room = world('hong-kong-kennedy-town-tram', 'Kennedy Town · Bell before d
   shape(H, R, H.tile(8.9, 1.15, .61, .54, 1.27), 'blue', .8);
   for (let k = 0; k < 7; k++) H.line(R, [H.p(.6 + k * 1.6, 10.45, .02), H.p(1.17 + k * 1.6, 10.45, .02)], 'sun', 2.5, { tone: .7 });
   body(H, R);
+  kennedyTownTramDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20);
   H.at(8.91, 6.86, .73, HH => actor(HH, R, 8.91, 6.86, u * 20, 'hongKongTramCheck', { shirt: ['paper', 1], pants: ['blue', .76], hairStyle: 'short' }, .73, 1.27));

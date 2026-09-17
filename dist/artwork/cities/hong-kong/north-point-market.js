@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -55,6 +56,47 @@ function basket(H, R, x, y) {
   for (let q = 0; q < 7; q++) H.line(R, [[x - 17 + q * 5.6, y + 10], [x - 13 + q * 4.3, y + 26]], 'blue', .7, { tone: .66 });
   for (const n of [14, 19, 24]) H.line(R, [[x - 19 + (n - 14) * .18, y + n], [x + 20 - (n - 14) * .18, y + n]], 'paper', .9);
   stroke(H, R, [[x - 17, y + 9], [x - 12, y - 6], [x + 11, y - 6], [x + 18, y + 9]], 'coral', 2.2);
+}
+
+function northPointMarketDetails(H, R) {
+  shelfUnit(H, R, 9.3, 0.65, 2.05, 1.05, 0.05, [0.15, 1.08, 2.05], 'teal');
+  slattedCrate(H, R, 9.46, 0.77, 1.69, 0.79, 0.29, 0.6, 'sun');
+  foldedCloth(H, R, 9.48, 0.8, 1.02, 0.69, 1.23, 'paper', 'coral');
+  liddedTin(H, R, 10.91, 1.17, 1.24, 8, 21, 'teal');
+  satchel(H, R, 10.04, 1.24, 2.21, 'coral', 0.75);
+  shallowTray(H, R, 9.67, 8.98, 1.51, 1.37, 0.03, 'teal');
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(9.89 + (n % 2) * 0.65, 9.23 + Math.floor(n / 2) * 0.35, 0.22);
+    oval(H, R, x, y, 9, 4, 'sun', 0.55);
+    stroke(
+      H,
+      R,
+      [
+        [x - 5, y - 1],
+        [x, y - 5],
+        [x + 6, y - 2]
+      ],
+      'coral',
+      0.8
+    );
+  }
+  box(H, R, 7.84, 9.53, 1.15, 0.7, 0.04, 0.09, 'sun', 0.5);
+  foldedCloth(H, R, 7.98, 9.6, 0.8, 0.5, 0.15, 'paper', 'teal');
+  handTool(H, R, 8.4, 9.91, 0.29, 'brush', 'coral');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.15, 8.1, 0.06],
+      [0.15, 8.1, 2.03],
+      [0.63, 8.1, 2.03]
+    ],
+    'teal'
+  );
+  coiledLine(H, R, 0.72, 8.68, 0.05, 18, 'teal');
+  for (const j of [7.77, 8.13]) oval(H, R, ...H.p(2.75, j, 0.13), 8, 4, 'blue', 0.7);
+  shallowTray(H, R, 4.43, 10.23, 1.64, 0.7, 0.03, 'blue');
+  for (let n = 0; n < 5; n++) shape(H, R, H.tile(4.58 + n * 0.23, 10.36, 0.17, 0.43, 0.2), 'paper', 1, 0.4);
 }
 
 const room = world('hong-kong-north-point-market', 'North Point · A basket of greens', { floor: 'paper', tone: .55, wall: 'teal', wallTone: .34, height: 3.6, oneWall: true, pattern: 'tiles', head: 20 }, (H, R) => {
@@ -118,6 +160,7 @@ const room = world('hong-kong-north-point-market', 'North Point · A basket of g
     box(H, R, i, 5.09, .26, .4, .03, .49, 'blue', .79);
     box(H, R, i, 5.34, .26, .24, .03, .16, 'blue', .85);
   }
+  northPointMarketDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 15);
   const move = u < .18 ? 0 : u < .46 ? ease((u - .18) / .28) : u < .69 ? 1 : u < .95 ? 1 - ease((u - .69) / .26) : 0;

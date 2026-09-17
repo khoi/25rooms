@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, bottle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -115,6 +116,47 @@ function courtyard(H, R) {
   shape(H, R, [[dx - 7, dy - 5], [dx - 16, dy - 10], [dx - 12, dy - 1]], 'teal', .6, .6);
   shape(H, R, H.tile(10.21, 8.1, 1.05, .71, .07), 'coral', .3);
   for (let k = 0; k < 4; k++) H.line(R, [H.p(10.31, 8.21 + k * .13, .09), H.p(11.16, 8.21 + k * .13, .09)], 'blue', .55, { tone: .35 });
+  pingShanCourtyardDetails(H, R);
+}
+
+function pingShanCourtyardDetails(H, R) {
+  table(H, R, 0.63, 9.21, 3.06, 0.83, 0.58, 'teal');
+  foldedCloth(H, R, 0.84, 9.34, 1.13, 0.54, 0.73, 'coral', 'sun');
+  boundBook(H, R, 2.27, 9.32, 0.89, 0.56, 0.73, 'teal');
+  shallowTray(H, R, 9.53, 8.92, 1.77, 1.15, 0.05, 'sun');
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(9.83 + (n % 3) * 0.46, 9.22 + Math.floor(n / 3) * 0.43, 0.24);
+    oval(H, R, x, y, 5, 3, n % 2 ? 'blue' : 'coral', 0.65);
+  }
+  slattedCrate(H, R, 10.07, 5.95, 1.39, 1.2, 0.04, 0.53, 'teal');
+  foldedCloth(H, R, 10.22, 6.1, 1.06, 0.87, 0.61, 'paper', 'coral');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.22, 7.09, 0.1],
+      [0.22, 7.09, 1.8],
+      [0.72, 7.09, 1.8]
+    ],
+    'teal',
+    2.6
+  );
+  const [x, y] = H.p(0.77, 7.36, 0.08);
+  oval(H, R, x, y - 8, 13, 9, 'paper', 1);
+  oval(H, R, x, y - 15, 13, 4, 'teal', 0.3);
+  handTool(H, R, 1.84, 7.77, 0.08, 'trowel', 'coral');
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 9.47 + n * 0.6, 0.56, 0.49, 0.58, 0.02, 0.21, 'sun', 0.32);
+    H.line(R, [H.p(9.51 + n * 0.6, 0.59, 0.25), H.p(9.91 + n * 0.6, 1.08, 0.25)], 'teal', 0.7);
+  }
+  framedPanel(H, R, 4.77, 0.24, 1.42, 1.03, 0.81, 'coral');
+  satchel(H, R, 3.32, 8.49, 0.05, 'sun', 0.8);
+  for (const [i, j] of [
+    [2.42, 10.53],
+    [8.78, 10.59],
+    [9.8, 4.56]
+  ])
+    oval(H, R, ...H.p(i, j, 0.05), 4, 2, 'teal', 0.25);
 }
 
 const room = world('hong-kong-ping-shan-courtyard', 'Ping Shan · Shade for two', { floor: 'paper', tone: .74, wall: false, head: 20 }, courtyard, (H, R, t) => {

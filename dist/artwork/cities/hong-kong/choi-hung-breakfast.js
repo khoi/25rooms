@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, windowOn, plant, wallRect, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -77,6 +78,47 @@ function foldingTable(H, R, angle, support) {
   for (const i of [4.72, 8.05]) H.dot(...H.p(i, tipJ - Math.cos(angle) * .11, tipZ - Math.sin(angle) * .11 + .03), 1, 'blue');
 }
 
+function choiHungBreakfastDetails(H, R) {
+  drawerUnit(H, R, 10.13, 6.56, 1.35, 1.16, 1.38, 3, 'teal');
+  boundBook(H, R, 10.28, 6.75, 0.85, 0.63, 1.57, 'coral');
+  const [x, y] = H.p(10.93, 7.34, 1.59);
+  oval(H, R, x - 4, y, 5, 3, 'paper', 1);
+  oval(H, R, x + 7, y, 5, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x + 3, y]
+    ],
+    'blue',
+    1
+  );
+  shelfUnit(H, R, 0.16, 10.55, 2.83, 0.67, 0.04, [0.12, 0.83, 1.62], 'sun');
+  for (let n = 0; n < 4; n++) boundBook(H, R, 0.38 + n * 0.52, 10.71, 0.42, 0.4, 0.28, ['teal', 'coral', 'blue', 'sun'][n]);
+  foldedCloth(H, R, 0.35, 10.7, 0.9, 0.41, 0.99, 'paper', 'teal');
+  shallowTray(H, R, 1.55, 10.69, 1.13, 0.4, 0.99, 'coral');
+  for (let n = 0; n < 4; n++) oval(H, R, ...H.p(1.74 + n * 0.23, 10.86, 1.19), 3, 3, 'sun', 0.6);
+  framedPanel(H, R, 0.51, 10.71, 0.84, 1.78, 0.69, 'teal');
+  liddedTin(H, R, 2.33, 10.9, 1.78, 7, 15, 'sun');
+  box(H, R, 5.5, 9.38, 1.51, 1.28, 0.05, 0.48, 'sun', 0.42);
+  foldedCloth(H, R, 5.59, 9.48, 1.3, 1.02, 0.55, 'coral', 'paper');
+  for (const i of [5.65, 6.7]) H.line(R, [H.p(i, 10.69, 0.14), H.p(i, 10.69, 0.44)], 'teal', 1);
+  shape(H, R, H.tile(3.49, 10.78, 1.12, 0.55, 0.03), 'teal', 0.26, 0.7);
+  for (const i of [3.72, 4.18]) oval(H, R, ...H.p(i, 11.03, 0.07), 8, 4, 'coral', 0.6);
+  servicePipe(
+    H,
+    R,
+    [
+      [0.1, 6.62, 0.19],
+      [0.1, 6.62, 3.47],
+      [0.1, 0.12, 3.47],
+      [2.6, 0.12, 3.47]
+    ],
+    'paper',
+    2
+  );
+}
+
 const room = world('hong-kong-choi-hung-breakfast', 'Choi Hung · A table unfolds', { floor: 'paper', tone: .52, wall: 'paper', wallTone: .92, height: 3.85, head: 22 }, (H, R) => {
   for (let k = 0; k < 110; k++) {
     const i = .22 + R() * 11.55, j = .22 + R() * 11.55;
@@ -129,6 +171,7 @@ const room = world('hong-kong-choi-hung-breakfast', 'Choi Hung · A table unfold
   plant(H, R, ...H.p(9.25, .49, 1.3), .85);
   table(H, R, 8.96, 9.35, 2.16, 1.27, .51, 'paper');
   for (let k = 0; k < 3; k++) box(H, R, 9.16, 9.55, 1.3, .82, .67 + k * .08, .05, ['coral', 'paper', 'teal'][k], .54);
+  choiHungBreakfastDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 22);
   const stool = u < .17 ? 0 : u < .31 ? ease((u - .17) / .14) : u < .91 ? 1 : 1 - ease((u - .91) / .09);

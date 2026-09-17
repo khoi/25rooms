@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, boundBook, satchel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -27,6 +28,44 @@ function planter(H, R, i, j, w, d) {
   shape(H, R, H.tile(i + .1, j + .1, w - .2, d - .2, .82), 'blue', .63, .6);
   for (let n = 0; n < Math.ceil(w / .7); n++) plant(H, R, ...H.p(i + .4 + n * .62, j + d / 2, .79), .64);
   for (let n = 0; n < 5; n++) H.line(R, [H.p(i, j + d, .15 + n * .12), H.p(i + w, j + d, .15 + n * .12)], 'paper', .6, { tone: .5 });
+}
+
+function jacksonHeightsDetails(H, R) {
+  table(H, R, 0.8, 7.26, 2.44, 0.91, 0.55, 'teal');
+  boundBook(H, R, 1.03, 7.4, 0.87, 0.59, 0.69, 'sun');
+  satchel(H, R, 2.69, 7.71, 0.69, 'coral', 0.65);
+  for (const j of [8.7, 9.39]) {
+    stroke(H, R, [H.p(0.87, j, 0.03), H.p(0.87, j + 0.52, 0.97), H.p(1.6, j + 0.52, 0.97), H.p(1.6, j, 0.03)], 'blue', 2);
+    box(H, R, 0.9, j + 0.18, 0.66, 0.16, 0.94, 0.36, 'teal', 0.5);
+  }
+  shallowTray(H, R, 9.16, 8.07, 1.21, 1.01, 1.0, 'paper');
+  for (let n = 0; n < 4; n++)
+    piece(H, R, ...H.p(9.4 + (n % 2) * 0.53, 8.33 + Math.floor(n / 2) * 0.42, 1.2), n % 2 ? 'blue' : 'paper', n === 2, 0.52);
+  box(H, R, 8.79, 10.02, 2.16, 0.79, 0.04, 0.56, 'sun', 0.4);
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(8.9 + n * 0.33, 10.82, 0.12), H.p(8.9 + n * 0.33, 10.82, 0.49)], 'blue', 0.8);
+  foldedCloth(H, R, 9, 10.17, 1.7, 0.48, 0.65, 'teal', 'paper');
+  const [x, y] = H.p(3.86, 2.92, 0.06);
+  oval(H, R, x, y, 20, 8, 'blue', 0.6);
+  H.line(
+    R,
+    [
+      [x - 11, y],
+      [x + 11, y]
+    ],
+    'sun',
+    2
+  );
+  for (const i of [1.26, 10.72]) {
+    box(H, R, i, 1.1, 0.44, 0.44, 0.02, 0.73, 'blue', 0.6);
+    H.line(R, [H.p(i + 0.05, 1.57, 0.61), H.p(i + 0.39, 1.57, 0.61)], 'sun', 2);
+  }
+  coiledLine(H, R, 3.4, 9.07, 0.04, 10, 'teal');
+  for (const [i, j] of [
+    [1.66, 3.73],
+    [10.48, 6.9],
+    [3.04, 10.93]
+  ])
+    oval(H, R, ...H.p(i, j, 0.03), 4, 2, 'coral', 0.35);
 }
 
 const room = world('new-york-jackson-heights', 'Jackson Heights · One More Move', { floor: 'paper', tone: .78, wall: false, head: 20 }, (H, R) => {
@@ -77,6 +116,7 @@ const room = world('new-york-jackson-heights', 'Jackson Heights · One More Move
   shape(H, R, [[px + 9, py - 12], [px + 14, py - 10], [px + 9, py - 9]], 'sun', .8, .4);
   H.dot(px + 7, py - 12, .9, 'blue', 1);
   for (const dx of [-2, 3]) H.line(R, [[px + dx, py], [px + dx - 1, py + 4]], 'coral', 1);
+  jacksonHeightsDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   actor(H, R, 5.81, 4.04, u * 16, 'newYorkChessReply', { face: 'se', shirt: ['teal', .7], hairStyle: 'curly', skin: ['coral', .5] }, .05, 1.32);

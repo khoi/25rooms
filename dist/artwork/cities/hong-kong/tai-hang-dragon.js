@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -38,6 +39,58 @@ function dragonHead(H, R, i, j, z) {
   for (let q = 0; q < 5; q++) shape(H, R, [[x + 13 + q * 5, y + 10], [x + 16 + q * 5, y + 10], [x + 15 + q * 5, y + 16]], 'paper', 1, .4);
   for (const d of [-1, 1]) stroke(H, R, [[x + 27, y + 1], [x + 43, y + d * 17], [x + 54, y + d * 18], [x + 57, y + d * 12]], 'teal', 1.6);
   for (let q = 0; q < 8; q++) stroke(H, R, [[x - 13 + q * 5, y + 22], [x - 15 + q * 5, y + 32], [x - 10 + q * 5, y + 39]], q % 2 ? 'coral' : 'sun', 1.3);
+}
+
+function taiHangDragonDetails(H, R) {
+  table(H, R, 5.4, 0.91, 3.28, 1.32, 0.8, 'teal');
+  shallowTray(H, R, 5.6, 1.08, 1.44, 0.96, 0.95, 'paper');
+  for (let n = 0; n < 7; n++) H.line(R, [H.p(5.78 + n * 0.16, 1.18, 1.16), H.p(5.81 + n * 0.16, 1.87, 1.16)], 'sun', 1.7);
+  coiledLine(H, R, 7.52, 1.57, 0.96, 12, 'teal');
+  handTool(H, R, 8.22, 1.64, 0.97, 'scissors', 'coral');
+  slattedCrate(H, R, 2.03, 10.19, 2.81, 1.18, 0.02, 0.67, 'sun');
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(2.36 + n * 0.4, 10.67, 0.73);
+    oval(H, R, x, y, 5, 10, 'sun', 0.45);
+    for (let k = 0; k < 3; k++)
+      H.line(
+        R,
+        [
+          [x - 3 + k * 3, y - 9],
+          [x - 2 + k * 2, y + 8]
+        ],
+        'blue',
+        0.6
+      );
+    H.line(
+      R,
+      [
+        [x - 5, y],
+        [x + 5, y]
+      ],
+      'coral',
+      1.5
+    );
+  }
+  for (const i of [8.96, 9.72]) {
+    H.line(R, [H.p(i, 0.42, 0.11), H.p(i, 0.42, 3.25)], 'sun', 3);
+    for (const z of [0.45, 1.0, 1.55, 2.1, 2.65, 3.1]) H.line(R, [H.p(8.96, 0.42, z), H.p(9.72, 0.42, z)], z === 1.55 ? 'coral' : 'teal', 2.2);
+  }
+  shallowTray(H, R, 1.24, 6.32, 1.35, 1.15, 0.02, 'teal');
+  for (let n = 0; n < 3; n++) oval(H, R, ...H.p(1.63 + n * 0.25, 6.78, 0.24), 6, 5, 'paper', 1);
+  boundBook(H, R, 3.21, 1.22, 1.25, 0.79, 0.06, 'blue');
+  foldedCloth(H, R, 10.06, 7.55, 1.16, 0.81, 0.04, 'coral', 'paper');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.12, 10.68, 0.28],
+      [0.12, 10.68, 3.18],
+      [0.12, 0.12, 3.18],
+      [3.82, 0.12, 3.18]
+    ],
+    'teal',
+    2
+  );
 }
 
 const room = world('hong-kong-tai-hang-dragon', 'Tai Hang · The dragon waits', { floor: 'paper', tone: .4, wall: 'paper', wallTone: .88, height: 3.63, head: 20 }, (H, R) => {
@@ -95,6 +148,7 @@ const room = world('hong-kong-tai-hang-dragon', 'Tai Hang · The dragon waits', 
   oval(H, R, cx, cy - 9, 10, 11, 'paper', 1);
   oval(H, R, cx, cy - 19, 10, 4, 'blue', .6);
   stroke(H, R, [[cx - 9, cy - 17], [cx - 12, cy - 30], [cx + 10, cy - 30], [cx + 10, cy - 17]], 'blue', .9);
+  taiHangDragonDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14), pull = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .13) / .67))) ** 2;
   actor(H, R, 6.27, 6.29, t, 'hongKongDragonSupport', { shirt: ['coral', .7], hairStyle: 'short', face: 'nw', prop(h, r, p) {

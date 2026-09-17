@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -59,6 +60,46 @@ function cradle(H, R, i, j, width = 1.85, height = .72) {
   for (const sign of [-1, 1]) H.line(R, [H.p(i, j + sign * width * .5, .03), H.p(i, j - sign * width * .34, height)], 'blue', 2.5);
   H.line(R, [H.p(i, j - width * .41, height), H.p(i, j + width * .41, height)], 'teal', 4);
   H.line(R, [H.p(i, j - width * .3, .24), H.p(i, j + width * .3, .24)], 'sun', 1.8);
+}
+
+function saiKungKayakDetails(H, R) {
+  shelfUnit(H, R, 0.22, 7.95, 2.03, 1.18, 0.05, [0.15, 1.05, 1.97], 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 0.62 + n * 0.59, 8.55, 0.33, 8, ['sun', 'coral', 'blue'][n]);
+  foldedCloth(H, R, 0.4, 8.09, 1.62, 0.89, 1.2, 'paper', 'teal');
+  for (let n = 0; n < 2; n++) satchel(H, R, 0.79 + n * 0.83, 8.59, 2.13, ['sun', 'coral'][n], 0.72);
+  shallowTray(H, R, 7.21, 9.87, 1.73, 1.02, 0.04, 'teal');
+  handTool(H, R, 7.72, 10.23, 0.25, 'spanner', 'coral');
+  liddedTin(H, R, 8.55, 10.37, 0.25, 6, 16, 'paper', true);
+  slattedCrate(H, R, 9.3, 6.85, 1.95, 1.25, 0.04, 0.68, 'sun');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(9.65 + n * 0.57, 7.39, 0.76);
+    oval(H, R, x, y - 5, 9, 10, 'teal', 0.55);
+    oval(H, R, x, y - 13, 5, 3, 'blue', 0.6);
+    H.line(
+      R,
+      [
+        [x - 6, y - 8],
+        [x + 6, y - 8]
+      ],
+      n === 1 ? 'coral' : 'paper',
+      1
+    );
+  }
+  servicePipe(
+    H,
+    R,
+    [
+      [0.11, 6.44, 0.06],
+      [0.11, 6.44, 2.37],
+      [0.6, 6.44, 2.37]
+    ],
+    'teal',
+    2.6
+  );
+  oval(H, R, ...H.p(0.14, 6.44, 1.89), 5, 5, 'coral', 0.7);
+  shallowTray(H, R, 2.86, 10.38, 1.68, 0.92, 0.02, 'blue');
+  for (const i of [3.22, 3.84]) oval(H, R, ...H.p(i, 10.79, 0.2), 10, 4, 'teal', 0.55);
+  boundBook(H, R, 10.7, 9.79, 0.58, 0.69, 1.05, 'blue');
 }
 
 const room = world('hong-kong-sai-kung-kayak', 'Sai Kung · Salt rinsed away', { floor: 'paper', tone: .58, wall: 'paper', wallTone: .83, height: 3.65, head: 20 }, (H, R) => {
@@ -127,6 +168,7 @@ const room = world('hong-kong-sai-kung-kayak', 'Sai Kung · Salt rinsed away', {
   H.line(R, [[bx - 7, by - 22], [bx - 3, by - 32], [bx + 11, by - 30]], 'blue', 1.2);
   const [fx, fy] = H.p(10.55, 7.55, .06);
   shape(H, R, [[fx - 4, fy + 8], [fx + 5, fy + 8], [fx + 5, fy - 8], [fx + 16, fy - 20], [fx + 17, fy - 27], [fx + 8, fy - 25], [fx - 5, fy - 11]], 'teal', .6, .65);
+  saiKungKayakDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), spraying = u > .15 && u < .73;
   H.at(5.93, 8.03, 0, HH => actor(HH, R, 5.93, 8.03, t, 'hongKongKayakRinse', { shirt: ['paper', 1], pants: ['teal', .72], hairStyle: 'cap', face: 'nw', prop(h, r, p) {

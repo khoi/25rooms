@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -34,6 +35,43 @@ function screen(H, R, lift) {
     }
   });
   for (const i of [4.18, 7.02]) box(H, R, i, j0 - .13, .24, .33, 1.24, .16, 'blue', .7);
+}
+
+function kwunTongPrintDetails(H, R) {
+  drawerUnit(H, R, 1.5, 1.67, 3.98, 1.12, 1.32, 5, 'teal');
+  shallowTray(H, R, 1.71, 1.86, 1.48, 0.74, 1.49, 'sun');
+  handTool(H, R, 2.19, 2.19, 1.68, 'brush', 'coral');
+  handTool(H, R, 2.85, 2.3, 1.68, 'trowel', 'teal');
+  for (let n = 0; n < 3; n++) boundBook(H, R, 3.56, 1.87, 1.56, 0.78, 1.49 + n * 0.16, ['paper', 'coral', 'teal'][n]);
+  shelfUnit(H, R, 0.14, 4.03, 1.08, 2.1, 0.04, [0.16, 1.1, 2.12], 'blue');
+  for (let n = 0; n < 4; n++) liddedTin(H, R, 0.61, 4.4 + n * 0.44, 0.32, 6, 17, ['sun', 'teal', 'coral', 'blue'][n]);
+  foldedCloth(H, R, 0.29, 4.31, 0.77, 1.03, 1.24, 'paper', 'coral');
+  shallowTray(H, R, 0.27, 4.18, 0.8, 1.73, 2.26, 'sun');
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(0.44, 4.44 + n * 0.34, 2.45), H.p(0.94, 4.44 + n * 0.34, 2.45)], 'coral', 3);
+  servicePipe(
+    H,
+    R,
+    [
+      [0.12, 7.73, 0.2],
+      [0.12, 7.73, 3.29],
+      [0.12, 0.1, 3.29],
+      [3.07, 0.1, 3.29]
+    ],
+    'teal',
+    2
+  );
+  for (let n = 0; n < 3; n++) {
+    const i = 4.03 + n * 1.07;
+    const points = H.faceI(i, 0.15, 0.88, 2.1, 3.13);
+    print(H, R, points, ...H.p(i + 0.43, 0.16, 2.65), 0.34, n === 1);
+    for (const a of [0.13, 0.74]) box(H, R, i + a, 0.16, 0.1, 0.06, 3.09, 0.14, 'blue', 0.6);
+  }
+  slattedCrate(H, R, 4.23, 9.52, 2.23, 1.58, 0.02, 0.65, 'teal');
+  for (let n = 0; n < 5; n++) {
+    box(H, R, 4.41 + n * 0.37, 9.73, 0.11, 1.13, 0.15, 1.18, 'sun', 0.38);
+    H.line(R, [H.p(4.44 + n * 0.37, 10.89, 0.26), H.p(4.44 + n * 0.37, 10.89, 1.23)], 'paper', 1);
+  }
+  coiledLine(H, R, 7.15, 10.47, 0.03, 16, 'blue');
 }
 
 const room = world('hong-kong-kwun-tong-print', 'Kwun Tong · One fresh layer', { floor: 'paper', tone: .4, wall: 'paper', wallTone: .85, height: 3.86, head: 20 }, (H, R) => {
@@ -83,6 +121,7 @@ const room = world('hong-kong-kwun-tong-print', 'Kwun Tong · One fresh layer', 
   const [cx, cy] = wallPt(H, 'ne', 5.46, 2.61, .05);
   oval(H, R, cx, cy, 10, 11, 'sun', .6);
   H.line(R, [[cx, cy - 7], [cx, cy], [cx + 4, cy + 3]], 'blue', 1.2);
+  kwunTongPrintDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), rise = u < .69 ? 0 : u < .79 ? (1 - Math.cos((u - .69) / .1 * Math.PI)) / 2 : u < .88 ? 1 : (1 + Math.cos((u - .88) / .12 * Math.PI)) / 2;
   screen(H, R, rise * .1);

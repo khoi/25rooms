@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, boundBook, satchel, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -23,6 +24,60 @@ function shorebird(H, R, x, y, dip) {
   oval(H, R, x + 15, y - 25 + dip * 19, 4, 3.5, 'paper', 1);
   H.line(R, [[x + 18, y - 25 + dip * 19], [x + 27, y - 24 + dip * 22]], 'blue', 1.1);
   H.dot(x + 16, y - 26 + dip * 19, .8, 'blue');
+}
+
+function jamaicaBayDetails(H, R) {
+  table(H, R, 9.91, 9.4, 1.46, 1.82, 0.65, 'teal');
+  shallowTray(H, R, 10.05, 9.58, 1.15, 1.43, 0.8, 'paper');
+  boundBook(H, R, 10.19, 9.73, 0.86, 0.88, 1.0, 'sun');
+  foldedCloth(H, R, 10.22, 10.69, 0.71, 0.2, 1.0, 'paper', 'teal');
+  for (const i of [10.1, 11.14]) for (const j of [9.61, 11.0]) oval(H, R, ...H.p(i, j, 0.08), 3, 4, 'blue', 0.65);
+  const [x, y] = H.p(9.79, 5.17, 0.14);
+  for (const dx of [-15, 0, 15])
+    H.line(
+      R,
+      [
+        [x, y - 51],
+        [x + dx, y]
+      ],
+      'blue',
+      1.6
+    );
+  shape(
+    H,
+    R,
+    [
+      [x - 24, y - 56],
+      [x + 16, y - 66],
+      [x + 18, y - 56],
+      [x - 21, y - 47]
+    ],
+    'teal',
+    0.6,
+    0.7
+  );
+  oval(H, R, x + 18, y - 61, 4, 5, 'paper', 1);
+  framedPanel(H, R, 0.57, 4.24, 1.45, 1.57, 0.86, 'sun');
+  for (const i of [3.07, 8.19]) {
+    H.line(R, [H.p(i, 4.23, 2.5), H.p(i, 4.51, 2.8)], 'blue', 1.4);
+    oval(H, R, ...H.p(i, 4.51, 2.82), 3, 3, 'sun', 0.6);
+  }
+  shallowTray(H, R, 4.11, 10.48, 2.14, 0.83, 0.13, 'teal');
+  for (const i of [4.61, 5.43]) oval(H, R, ...H.p(i, 10.85, 0.34), 11, 5, 'blue', 0.6);
+  satchel(H, R, 7.86, 10.35, 0.14, 'coral', 0.8);
+  coiledLine(H, R, 9.42, 8.15, 0.71, 9, 'blue');
+  for (const j of [5.1, 6.93])
+    servicePipe(
+      H,
+      R,
+      [
+        [0.24, j, 0.18],
+        [0.24, j, 2.92],
+        [0.57, j, 2.92]
+      ],
+      'paper',
+      1.8
+    );
 }
 
 const room = world('new-york-jamaica-bay', 'Jamaica Bay · A Quiet Opening', {
@@ -87,6 +142,7 @@ const room = world('new-york-jamaica-bay', 'Jamaica Bay · A Quiet Opening', {
     shape(H, R, [[x - 6, y], [x + 2, y - 6], [x + 9, y - 2], [x + 2, y + 4]], 'sun', .58, .6);
     H.line(R, [[x - 3, y], [x + 5, y - 2]], 'blue', .5);
   }
+  jamaicaBayDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20);
   const dip = u > .37 && u < .68 ? Math.sin((u - .37) / .31 * Math.PI) ** 2 : 0;

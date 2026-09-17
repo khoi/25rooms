@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -31,6 +32,29 @@ function coil(H, R, i, j, ink = 'blue', size = 1) {
   const [x, y] = H.p(i, j, .035);
   for (let q = 0; q < 5; q++) H.outline(R, Array.from({ length: 36 }, (_, n) => [x + Math.cos(n * TAU / 36) * (7 + q * 2) * size, y + Math.sin(n * TAU / 36) * (3 + q) * size]), ink, 1.3, { tone: .7 });
   stroke(H, R, [[x + 13 * size, y + 3], [x + 29 * size, y + 4], [x + 33 * size, y + 12]], ink, 1.3);
+}
+
+function tsuenWanBambooDetails(H, R) {
+  shelfUnit(H, R, 6.05, 0.93, 2.22, 1.03, 0.02, [0.14, 1.02, 1.91], 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 6.48 + n * 0.62, 1.43, 0.32, 9, ['blue', 'coral', 'teal'][n]);
+  foldedCloth(H, R, 6.24, 1.08, 1.64, 0.69, 1.16, 'paper', 'teal');
+  shallowTray(H, R, 6.23, 1.08, 1.69, 0.73, 2.05, 'sun');
+  handTool(H, R, 6.65, 1.34, 2.23, 'hammer', 'coral');
+  handTool(H, R, 7.52, 1.5, 2.23, 'brush', 'blue');
+  slattedCrate(H, R, 2.77, 1.1, 2.18, 1.28, 0.03, 0.69, 'sun');
+  for (let n = 0; n < 5; n++) pole(H, R, [3 + n * 0.34, 1.25, 0.2], [3 + n * 0.34, 2.05, 1.1 + (n % 2) * 0.2], 3);
+  table(H, R, 2.04, 9.54, 2.01, 1.48, 0.61, 'teal');
+  shallowTray(H, R, 2.21, 9.73, 1.67, 1.05, 0.75, 'paper');
+  for (let n = 0; n < 3; n++) pole(H, R, [2.44, 9.95 + n * 0.25, 0.95], [3.58, 9.95 + n * 0.25, 0.95], 2.5);
+  for (let n = 0; n < 3; n++) binding(H, R, 2.75 + n * 0.34, 10.2, 0.99, ['teal', 'coral', 'blue'][n]);
+  satchel(H, R, 7.78, 10.54, 0.03, 'blue', 0.9);
+  liddedTin(H, R, 9.71, 8.82, 0.65, 6, 17, 'sun');
+  for (const j of [2.86, 3.7]) {
+    box(H, R, 10.96, j, 0.37, 0.47, 0.02, 0.11, 'blue', 0.6);
+    H.line(R, [H.p(11.14, j + 0.2, 0.13), H.p(11.14, j + 0.2, 1.49)], 'sun', 2.2);
+  }
+  H.line(R, [H.p(11.14, 3.07, 1.5), H.p(11.14, 3.9, 1.5)], 'sun', 2);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(11.14, 3.1 + n * 0.2, 1.45), H.p(11.14, 3.1 + n * 0.2, 0.83)], 'blue', 1);
 }
 
 const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', { floor: 'paper', tone: .5, wall: false, head: 20 }, (H, R) => {
@@ -90,6 +114,7 @@ const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', 
   for (let q = 0; q < 9; q++) H.line(R, [H.p(8.42, 10.33, .35), H.p(8.13 + q * .08, 10.53, .03)], 'sun', 1.5);
   pole(H, R, [3.89, 9.82, .13], [6.02, 9.82, .13], 3.7);
   for (const [i, ink] of [[4.18, 'coral'], [4.85, 'blue'], [5.43, 'teal']]) binding(H, R, i, 9.82, .15, ink);
+  tsuenWanBambooDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), tight = u < .12 ? 0 : u < .34 ? (1 - Math.cos((u - .12) / .22 * Math.PI)) / 2 : u < .56 ? 1 : u < .75 ? (1 + Math.cos((u - .56) / .19 * Math.PI)) / 2 : 0;
   actor(H, R, 6.69, 6.15, t, 'hongKongBambooTension', { shirt: ['teal', .58], pants: ['blue', .74], hairStyle: 'short', face: 'nw', prop(HH, RR, points) {

@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, boundBook, satchel, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -44,6 +45,67 @@ function luggage(H, R, i, j) {
   shape(H, R, H.faceI(i + .09, j + .56, .51, .15, .42), 'coral', .62, .6);
   H.line(R, [H.p(i + .36, j + .57, .16), H.p(i + .36, j + .57, .36)], 'sun', 1.4);
   for (const a of [.16, .58]) H.dot(...H.p(i + a, j + .48, .04), 2.5, 'blue');
+}
+
+function statenFerryDetails(H, R) {
+  box(H, R, 9.58, 9.3, 1.76, 1.63, 0.02, 0.16, 'teal', 0.52);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(9.68, 9.45 + n * 0.36, 0.2), H.p(11.24, 9.45 + n * 0.36, 0.2)], 'paper', 0.8);
+  const [x, y] = H.p(10.48, 10.11, 0.22);
+  for (const dx of [-15, 15]) {
+    oval(H, R, x + dx, y, 5, 5, dx < 0 ? 'teal' : 'blue', 0.8);
+    H.line(
+      R,
+      [
+        [x + dx, y - 4],
+        [x - dx * 0.5, y - 47]
+      ],
+      'blue',
+      2
+    );
+  }
+  shape(
+    H,
+    R,
+    [
+      [x - 12, y - 43],
+      [x + 11, y - 38],
+      [x + 5, y - 9],
+      [x - 9, y - 15]
+    ],
+    'coral',
+    0.62,
+    0.8
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 5, y - 43],
+      [x - 8, y - 60],
+      [x + 9, y - 59]
+    ],
+    'teal',
+    2
+  );
+  boundBook(H, R, 2.15, 6.52, 0.67, 0.45, 0.6, 'sun');
+  framedPanel(H, R, 10.67, 0.24, 0.91, 0.93, 0.53, 'teal');
+  for (const j of [4.07, 8.03]) {
+    shallowTray(H, R, 10.13, j, 0.93, 0.3, 0.02, 'blue');
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(10.24 + n * 0.16, j + 0.04, 0.2), H.p(10.24 + n * 0.16, j + 0.26, 0.2)], 'paper', 0.6);
+  }
+  servicePipe(
+    H,
+    R,
+    [
+      [0.31, 10.23, 0.15],
+      [0.31, 10.23, 2.72],
+      [0.31, 6.36, 2.72]
+    ],
+    'paper',
+    2
+  );
+  oval(H, R, ...H.p(0.35, 6.36, 2.58), 8, 8, 'blue', 0.6);
+  oval(H, R, ...H.p(0.35, 6.36, 2.58), 5, 5, 'sun', 0.45);
 }
 
 const room = world('new-york-staten-ferry', 'Staten Island Ferry · First Crossing', {
@@ -99,6 +161,7 @@ const room = world('new-york-staten-ferry', 'Staten Island Ferry · First Crossi
   stroke(H, R, [[ux - 27, uy - 8], [ux + 28, uy + 11]], 'blue', 3);
   stroke(H, R, [[ux + 27, uy + 11], [ux + 34, uy + 9], [ux + 34, uy + 1]], 'coral', 3);
   H.line(R, [[ux - 27, uy - 8], [ux - 8, uy - 2]], 'sun', 5);
+  statenFerryDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   for (const p of [2.15, 5.85, 9.55]) {
@@ -122,5 +185,15 @@ const room = world('new-york-staten-ferry', 'Staten Island Ferry · First Crossi
   stroke(H, R, [[wx, wy - 11], [wx + Math.sin(u * TAU) * 2, wy + 3], [wx + 1, wy + 14]], 'coral', 1.6);
 });
 
+room.over = (H, R) => {
+  for (const i of [2.02, 7.24]) {
+    const points = [H.p(i, 0.43, 3.34), H.p(i, 0.94, 3.18), H.p(i + 2.43, 0.94, 3.18), H.p(i + 2.43, 0.43, 3.34)];
+    shape(H, R, points, 'paper', 0.9, 0.7);
+    for (let n = 0; n < 8; n++) H.line(R, [H.p(i + 0.13 + n * 0.29, 0.46, 3.35), H.p(i + 0.13 + n * 0.29, 0.88, 3.23)], 'blue', 0.8);
+    for (const x of [i + 0.12, i + 2.28]) H.line(R, [H.p(x, 0.24, 2.94), H.p(x, 0.93, 3.19)], 'teal', 1.4);
+  }
+  satchel(H, R, 2.78, 0.79, 3.32, 'teal', 0.57);
+  foldedCloth(H, R, 7.6, 0.5, 0.95, 0.39, 3.37, 'coral', 'paper');
+};
 room.loopSeconds = 16;
 export default room;

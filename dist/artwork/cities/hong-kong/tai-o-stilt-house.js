@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU, ell, bottle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -118,6 +119,76 @@ function house(H, R) {
   H.line(R, [[fx, fy + 31], [fx, fy + 6]], 'blue', 2.5);
   oval(H, R, fx, fy, 19, 21, 'paper', 1);
   H.outline(R, ell(fx, fy, 16, 18), 'blue', .6);
+  taiOStiltHouseDetails(H, R);
+}
+
+function taiOStiltHouseDetails(H, R) {
+  shelfUnit(H, R, 7.08, 0.89, 2.04, 0.88, 1.45, [0.11, 0.89, 1.69], 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 7.47 + n * 0.55, 1.32, 1.7, 7, ['sun', 'coral', 'teal'][n]);
+  shallowTray(H, R, 7.25, 1.04, 1.68, 0.6, 2.48, 'paper');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(7.5 + n * 0.36, 1.32, 2.68);
+    shape(
+      H,
+      R,
+      [
+        [x - 3, y],
+        [x - 3, y - 22],
+        [x + 3, y - 27],
+        [x + 3, y - 1]
+      ],
+      'sun',
+      0.5,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [x, y - 4],
+        [x, y - 21]
+      ],
+      'blue',
+      0.7
+    );
+    if (n === 1)
+      H.line(
+        R,
+        [
+          [x - 2, y - 24],
+          [x + 2, y - 24]
+        ],
+        'teal',
+        2
+      );
+  }
+  foldedCloth(H, R, 7.29, 1.05, 1.54, 0.59, 3.28, 'paper', 'coral');
+  drawerUnit(H, R, 0.8, 5.12, 1.89, 1.23, 1.01, 2, 'teal', 1.44);
+  shallowTray(H, R, 0.97, 5.3, 1.51, 0.83, 2.63, 'sun');
+  coiledLine(H, R, 1.45, 5.65, 2.83, 10, 'blue');
+  handTool(H, R, 2.11, 5.86, 2.84, 'scissors', 'coral');
+  satchel(H, R, 3.38, 7.26, 1.45, 'blue', 0.8);
+  liddedTin(H, R, 4.63, 1.07, 2.34, 7, 16, 'sun');
+  foldedCloth(H, R, 1.21, 2.77, 0.71, 0.44, 2.13, 'paper', 'teal');
+  servicePipe(
+    H,
+    R,
+    [
+      [10.96, 1.55, 0.13],
+      [10.96, 1.55, 3.97],
+      [10.96, 0.77, 3.97],
+      [10.13, 0.77, 3.97]
+    ],
+    'teal',
+    2.5
+  );
+  for (const [i, j] of [
+    [0.63, 5.41],
+    [10.9, 6.87],
+    [4.81, 7.99]
+  ]) {
+    box(H, R, i, j, 0.39, 0.3, 1.44, 0.08, 'paper', 0.82);
+    H.dot(...H.p(i + 0.18, j + 0.15, 1.54), 1.3, 'blue');
+  }
 }
 
 const room = world('hong-kong-tai-o-stilt-house', 'Tai O · Beneath the floorboards', { floor: 'teal', tone: .22, wall: false, head: 24 }, house, (H, R, t) => {

@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -23,6 +24,82 @@ function bollard(H, R, i, j) {
   box(H, R, i + .22, j + .17, .24, .3, .31, .5, 'teal', .73);
   box(H, R, i + .05, j + .17, .6, .3, .79, .12, 'blue', .75);
   for (let n = 0; n < 3; n++) H.outline(R, ell(...H.p(i + .33, j + .33, .42 + n * .06), 10, 4), 'sun', 1.4);
+}
+
+function redHookPierDetails(H, R) {
+  table(H, R, 0.94, 9.51, 2.09, 1.66, 0.73, 'teal');
+  shallowTray(H, R, 1.1, 9.67, 1.76, 1.27, 0.87, 'paper');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(1.41 + (n % 2) * 0.81, 10.01 + Math.floor(n / 2) * 0.48, 1.08);
+    oval(H, R, x, y, 4, 8, n % 2 ? 'coral' : 'sun', 0.6);
+    if (n === 2)
+      H.line(
+        R,
+        [
+          [x - 4, y],
+          [x + 4, y]
+        ],
+        'paper',
+        2
+      );
+    H.line(
+      R,
+      [
+        [x, y - 12],
+        [x, y + 11]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  handTool(H, R, 2.35, 10.4, 1.11, 'scissors', 'blue');
+  coiledLine(H, R, 1.63, 9.99, 0.28, 15, 'sun');
+  for (const i of [2.55, 3.08]) {
+    H.line(R, [H.p(i, 3.03, 0.3), H.p(i, 3.03, 2.59)], 'sun', 1.8);
+    for (const z of [0.8, 1.45, 2.12]) oval(H, R, ...H.p(i, 3.03, z), 2.7, 2, 'blue', 0.6);
+  }
+  const [x, y] = H.p(5.91, 9.81, 0.24);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x + 6, y - 48]
+    ],
+    'teal',
+    2
+  );
+  oval(H, R, x + 7, y - 61, 16, 14, 'paper', 0.35);
+  for (let n = -3; n < 4; n++)
+    H.line(
+      R,
+      [
+        [x - 7, y - 61 + n * 3],
+        [x + 20, y - 61 + n * 3]
+      ],
+      'blue',
+      0.5
+    );
+  foldedCloth(H, R, 1.2, 5.83, 0.71, 0.41, 0.82, 'paper', 'coral');
+  satchel(H, R, 2.31, 7.4, 0.23, 'coral', 0.75);
+  framedPanel(H, R, 0.62, 6.96, 1.32, 1.79, 0.82, 'teal');
+  servicePipe(
+    H,
+    R,
+    [
+      [4.08, 2.83, 0.28],
+      [4.08, 2.83, 3.03],
+      [4.08, 6.99, 2.76]
+    ],
+    'teal',
+    2.3
+  );
+  for (const [i, j] of [
+    [6.65, 8.37],
+    [6.74, 10.38]
+  ]) {
+    box(H, R, i, j, 0.21, 0.29, 0.2, 0.06, 'sun', 0.5);
+    H.dot(...H.p(i + 0.1, j + 0.14, 0.28), 1, 'blue');
+  }
 }
 
 const room = world('new-york-red-hook-pier', 'Red Hook · The Patient Line', {
@@ -95,6 +172,7 @@ const room = world('new-york-red-hook-pier', 'Red Hook · The Patient Line', {
   const [rx, ry] = H.p(5.79, 10.3, .24);
   for (let n = 0; n < 4; n++) H.outline(R, ell(rx, ry, 9 + n * 4, 3 + n * 1.6), 'sun', 1.8, { tone: .7 });
   stroke(H, R, [[rx + 15, ry], [rx + 31, ry + 8], [rx + 40, ry - 1]], 'sun', 1.9);
+  redHookPierDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20), raised = smooth((u - .18) / .2) * (1 - smooth((u - .53) / .19));
   for (let n = 0; n < 4; n++) {

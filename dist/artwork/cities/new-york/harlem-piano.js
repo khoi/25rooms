@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, windowOn, glow, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -55,6 +56,93 @@ function piano(H, R) {
   stroke(H, R, [[vx, vy - 8], [vx + 2, vy - 26], [vx - 4, vy - 37]], 'teal', 1.1);
   shape(H, R, [[vx + 2, vy - 20], [vx + 12, vy - 26], [vx + 7, vy - 15]], 'teal', .65, .5);
   oval(H, R, vx - 5, vy - 38, 7, 5, 'sun', .7);
+}
+
+function harlemPianoDetails(H, R) {
+  drawerUnit(H, R, 0.54, 5.18, 2.16, 1.35, 1.18, 3, 'teal');
+  shallowTray(H, R, 0.72, 5.36, 1.78, 0.98, 1.35, 'sun');
+  for (let n = 0; n < 5; n++) boundBook(H, R, 0.87 + n * 0.29, 5.5, 0.22, 0.7, 1.55, ['coral', 'paper', 'teal', 'sun', 'blue'][n]);
+  const [x, y] = H.p(1.47, 7.65, 0.04);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x, y - 70]
+    ],
+    'blue',
+    2
+  );
+  for (const dx of [-15, 0, 15])
+    H.line(
+      R,
+      [
+        [x, y - 10],
+        [x + dx, y + dx * 0.17]
+      ],
+      'blue',
+      1.5
+    );
+  shape(
+    H,
+    R,
+    [
+      [x - 22, y - 82],
+      [x + 22, y - 82],
+      [x + 22, y - 56],
+      [x - 22, y - 56]
+    ],
+    'teal',
+    0.55,
+    0.8
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 18, y - 79],
+      [x, y - 77],
+      [x + 18, y - 79],
+      [x + 18, y - 59],
+      [x, y - 57],
+      [x - 18, y - 59]
+    ],
+    'paper',
+    1,
+    0.5
+  );
+  for (let n = 0; n < 4; n++)
+    H.line(
+      R,
+      [
+        [x - 14, y - 74 + n * 3],
+        [x + 14, y - 74 + n * 3]
+      ],
+      'blue',
+      0.5
+    );
+  shape(
+    H,
+    R,
+    [
+      [x + 12, y - 79],
+      [x + 18, y - 79],
+      [x + 18, y - 73]
+    ],
+    'sun',
+    0.35,
+    0.5
+  );
+  for (let n = 0; n < 3; n++) framedPanel(H, R, 1.07 + n * 2.42, 0.15, 1.58, 2.72, 0.78, ['coral', 'teal', 'sun'][n]);
+  table(H, R, 5.03, 9.83, 1.46, 1.16, 0.61, 'sun');
+  shallowTray(H, R, 5.19, 9.99, 1.13, 0.82, 0.75, 'paper');
+  glass(H, R, 5.48, 10.27, 0.95, 'sun');
+  glass(H, R, 5.96, 10.51, 0.95, 'coral');
+  foldedCloth(H, R, 5.21, 10.01, 1.08, 0.77, 0.14, 'paper', 'teal');
+  coiledLine(H, R, 9.75, 5.34, 0.04, 16, 'blue');
+  box(H, R, 9.75, 5.89, 1.23, 0.8, 0.03, 0.54, 'teal', 0.58);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(9.87 + n * 0.21, 6.71, 0.12), H.p(9.87 + n * 0.21, 6.71, 0.44)], 'blue', 0.9);
+  H.dot(...H.p(10.68, 6.73, 0.42), 2, 'coral');
+  satchel(H, R, 4.23, 7.8, 0.03, 'blue', 0.86);
 }
 
 const room = world('new-york-harlem-piano', 'Harlem · One Last Chord', {
@@ -121,6 +209,7 @@ const room = world('new-york-harlem-piano', 'Harlem · One Last Chord', {
   const [wx, wy] = H.p(4.92, .09, 3.4);
   oval(H, R, wx, wy, 13, 13, 'paper', 1);
   H.line(R, [[wx, wy - 9], [wx, wy], [wx - 5, wy + 5]], 'blue', 1.3);
+  harlemPianoDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), closed = ease((u - .35) / .13) * (1 - ease((u - .62) / .14));
   glow(H, 8.95, 1.8, 2.24, 49, 'sun');

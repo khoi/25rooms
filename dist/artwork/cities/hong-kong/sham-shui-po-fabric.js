@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -24,6 +25,53 @@ function roll(H, R, i, j, z, length, ink, stripe = false) {
   for (const rad of [3, 5, 7]) H.outline(R, Array.from({ length: 24 }, (_, q) => [b[0] + Math.cos(q * TAU / 24) * rad, b[1] + Math.sin(q * TAU / 24) * rad * 1.4]), ink, .8, { tone: .65 });
   H.dot(...b, 2.2, 'blue', .9);
   if (stripe) for (let q = 0; q < 3; q++) H.line(R, [[a[0], a[1] - 8 + q * 6], [b[0], b[1] - 8 + q * 6]], 'paper', 1.1);
+}
+
+function shamShuiPoFabricDetails(H, R) {
+  drawerUnit(H, R, 0.22, 9.27, 3.35, 1.43, 1.35, 5, 'teal');
+  shallowTray(H, R, 0.4, 9.44, 1.46, 1.02, 1.51, 'sun');
+  for (let n = 0; n < 8; n++) {
+    const [x, y] = H.p(0.61 + (n % 4) * 0.31, 9.7 + Math.floor(n / 4) * 0.4, 1.72);
+    oval(H, R, x, y, 4, 3, ['coral', 'teal', 'paper', 'blue'][n % 4], 0.7);
+    for (const dx of [-1, 1]) H.dot(x + dx, y, 0.5, 'blue');
+  }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(2.18 + n * 0.29, 9.83, 1.53);
+    oval(H, R, x, y, 5, 3, 'sun', 0.5);
+    H.line(
+      R,
+      [
+        [x, y - 1],
+        [x, y - 18]
+      ],
+      ['teal', 'coral', 'blue', 'paper'][n],
+      6
+    );
+    oval(H, R, x, y - 18, 5, 3, 'paper', 1);
+  }
+  shelfUnit(H, R, 8.55, 0.17, 2.81, 0.72, 2.77, [0, 0.58], 'sun');
+  for (let n = 0; n < 4; n++) foldedCloth(H, R, 8.72 + n * 0.6, 0.25, 0.48, 0.5, 2.91, ['coral', 'teal', 'paper', 'blue'][n], 'sun');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 9.02 + n * 0.8, 0.56, 3.49, 7, 13, ['teal', 'sun', 'coral'][n]);
+  table(H, R, 5.04, 9.38, 2.48, 1.4, 0.55, 'teal');
+  boundBook(H, R, 5.2, 9.55, 1.24, 0.99, 0.69, 'coral');
+  shallowTray(H, R, 6.69, 9.63, 0.62, 0.91, 0.69, 'paper');
+  handTool(H, R, 7, 10.02, 0.88, 'scissors', 'blue');
+  for (let n = 0; n < 3; n++) foldedCloth(H, R, 5.19, 9.55, 1.42, 0.91, 0.12 + n * 0.12, 'paper', ['coral', 'teal', 'blue'][n]);
+  satchel(H, R, 8.12, 10.75, 0.04, 'teal', 0.8);
+  const [x, y] = H.p(3.91, 9.73, 0.05);
+  stroke(
+    H,
+    R,
+    [
+      [x, y],
+      [x + 12, y - 7],
+      [x + 17, y + 1],
+      [x + 8, y + 8],
+      [x - 1, y + 2]
+    ],
+    'coral',
+    1.3
+  );
 }
 
 const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue metres', { floor: 'paper', tone: .5, wall: 'paper', wallTone: .82, pattern: 'tiles', height: 3.72, head: 20 }, (H, R) => {
@@ -76,6 +124,7 @@ const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue
   shape(H, R, [[bx - 11, by - 4], [bx + 11, by - 4], [bx + 9, by - 23], [bx - 9, by - 23]], 'blue', .25, .7);
   oval(H, R, bx, by - 23, 9, 4, 'paper', 1);
   for (let q = 0; q < 5; q++) stroke(H, R, [[bx - 6 + q * 3, by - 22], [bx - 8 + q * 3, by - 30], [bx - 2 + q * 2, by - 26]], q % 2 ? 'coral' : 'teal', 2);
+  shamShuiPoFabricDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   actor(H, R, 7.44, 6.91, t, 'hongKongFabricMeasure', { shirt: ['coral', .58], apron: ['paper', 1], glasses: true, hairStyle: 'short', face: 'nw', prop(HH, RR, points) {

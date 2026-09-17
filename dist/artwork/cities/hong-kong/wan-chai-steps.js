@@ -1,4 +1,5 @@
-import { world, shape, oval, stroke, box, actor, plant, cycle, TAU } from '../../worlds/common.js';
+import { shallowTray, foldedCloth, satchel, servicePipe } from '../furnishings.js';
+import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -8,6 +9,53 @@ FIGURES.clips.hongKongUmbrellaFold = { dur: 12, keys: [[0, fold], [.17, fold], [
 function rail(H, R, points) {
   H.line(R, points.map(p => H.p(...p)), 'blue', 3.2);
   H.line(R, points.map(([i, j, z]) => H.p(i, j, z + .04)), 'paper', .9);
+}
+
+function wanChaiStepsDetails(H, R) {
+  shape(H, R, H.faceJ(0.16, 1.1, 2.63, 1.69, 3.21), 'blue', 0.45, 0.8);
+  shape(H, R, H.faceJ(0.19, 1.24, 2.35, 1.82, 3.08), 'paper', 0.9, 0.6);
+  for (const j of [1.45, 2.23, 3.01]) {
+    shape(H, R, H.faceJ(0.21, j, 0.55, 2.05, 2.87), 'teal', 0.35, 0.6);
+    H.line(R, [H.p(0.24, j + 0.27, 2.07), H.p(0.24, j + 0.27, 2.84)], 'blue', 1.3);
+  }
+  for (const j of [1.32, 3.3])
+    servicePipe(
+      H,
+      R,
+      [
+        [0.42, j, 1.76],
+        [1.08, j, 1.76],
+        [1.08, j, 2.21]
+      ],
+      'teal',
+      2
+    );
+  H.line(R, [H.p(1.08, 1.31, 2.21), H.p(1.08, 3.31, 2.21)], 'teal', 2);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(1.07, 1.46 + n * 0.42, 1.8), H.p(1.07, 1.46 + n * 0.42, 2.18)], 'blue', 0.9);
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 1.72 + n * 0.8, 0.3, 0.64, 0.28, 1.77, 0.49, 'teal', 0.5);
+    H.line(R, [H.p(1.84 + n * 0.8, 0.61, 2.12), H.p(2.22 + n * 0.8, 0.61, 2.12)], 'blue', 1.7);
+    H.dot(...H.p(2.03 + n * 0.8, 0.62, 1.95), 1.4, 'sun');
+  }
+  table(H, R, 9.26, 6.28, 1.72, 0.91, 0.98, 'sun');
+  foldedCloth(H, R, 9.42, 6.44, 1.31, 0.59, 1.13, 'paper', 'teal');
+  satchel(H, R, 10.73, 6.73, 1.14, 'coral', 0.58);
+  shallowTray(H, R, 5.03, 6.22, 1.67, 1.12, 0.5, 'teal');
+  for (const i of [5.47, 6.11]) oval(H, R, ...H.p(i, 6.69, 0.7), 10, 4, 'blue', 0.7);
+  servicePipe(
+    H,
+    R,
+    [
+      [3.88, 0.23, 1.12],
+      [3.88, 0.23, 3.45],
+      [4.75, 0.23, 3.45]
+    ],
+    'paper',
+    2.4
+  );
+  const [x, y] = H.p(4.22, 0.26, 2.58);
+  oval(H, R, x, y, 9, 11, 'blue', 0.6);
+  oval(H, R, x, y, 6, 8, 'sun', 0.4);
 }
 
 const room = world('hong-kong-wan-chai-steps', 'Wan Chai · Rain on the landing', { floor: 'blue', tone: .25, wall: false, head: 20 }, (H, R) => {
@@ -69,6 +117,7 @@ const room = world('hong-kong-wan-chai-steps', 'Wan Chai · Rain on the landing'
   }
   box(H, R, 7.46, 1.35, .71, .52, 1.03, .37, 'paper', 1);
   H.line(R, [H.p(7.81, 1.34, 1.42), H.p(7.81, 1.88, 1.42)], 'coral', 2.3);
+  wanChaiStepsDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), wrap = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .17) / .63))) ** 2;
   actor(H, R, 7.23, 4.0, t, 'hongKongUmbrellaFold', { shirt: ['sun', .75], pants: ['blue', .7], hairStyle: 'short', face: 'se', prop(h, r, p) {

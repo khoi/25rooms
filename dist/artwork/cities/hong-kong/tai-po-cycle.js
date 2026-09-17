@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -46,6 +47,32 @@ function bottle(H, R, i, j, z, ink) {
   shape(H, R, [[x - 4, y], [x + 4, y], [x + 5, y - 18], [x + 3, y - 23], [x - 3, y - 23], [x - 5, y - 18]], ink, .65, .6);
   H.line(R, [[x - 3, y - 23], [x + 3, y - 23]], 'blue', 2.1);
   H.line(R, [[x - 4, y - 10], [x + 4, y - 10]], 'paper', 2.6);
+}
+
+function taiPoCycleDetails(H, R) {
+  shelfUnit(H, R, 0.22, 6.98, 2.1, 1.04, 0.04, [0.15, 1.03, 1.89], 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 0.65 + n * 0.63, 7.49, 0.32, 8, 'blue');
+  shallowTray(H, R, 0.4, 7.13, 1.73, 0.73, 1.18, 'sun');
+  handTool(H, R, 0.88, 7.45, 1.38, 'spanner', 'coral');
+  handTool(H, R, 1.63, 7.51, 1.38, 'brush', 'teal');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 0.67 + n * 0.59, 7.5, 2.04, 6, 19, ['teal', 'sun', 'coral'][n]);
+  drawerUnit(H, R, 3.06, 9.93, 2.41, 1.17, 1.06, 4, 'teal');
+  shallowTray(H, R, 3.23, 10.09, 1.13, 0.82, 1.23, 'paper');
+  for (let n = 0; n < 5; n++)
+    oval(H, R, ...H.p(3.44 + (n % 3) * 0.27, 10.32 + Math.floor(n / 3) * 0.32, 1.44), 3, 3, n === 3 ? 'coral' : 'blue', 0.6);
+  foldedCloth(H, R, 4.54, 10.11, 0.68, 0.78, 1.23, 'paper', 'coral');
+  box(H, R, 7.85, 10.65, 2.61, 0.19, 0.04, 0.15, 'teal', 0.5);
+  for (let n = 0; n < 3; n++)
+    stroke(
+      H,
+      R,
+      [H.p(8.17 + n * 0.73, 10.65, 0.2), H.p(8.17 + n * 0.73, 10.33, 0.99), H.p(8.52 + n * 0.73, 10.33, 0.99), H.p(8.52 + n * 0.73, 10.65, 0.2)],
+      'blue',
+      2.3
+    );
+  satchel(H, R, 10.99, 9.06, 0.05, 'coral', 0.9);
+  for (const i of [2.3, 2.62]) box(H, R, i, 0.68, 0.19, 0.55, 1.26, 0.37, 'paper', 0.9);
+  for (const i of [2.38, 2.7]) H.dot(...H.p(i, 0.97, 1.65), 2, 'teal');
 }
 
 const room = world('hong-kong-tai-po-cycle', 'Tai Po · One more breath of air', { floor: 'paper', tone: .46, wall: false, head: 20 }, (H, R) => {
@@ -108,6 +135,7 @@ const room = world('hong-kong-tai-po-cycle', 'Tai Po · One more breath of air',
   const [px, py] = H.p(7.36, 10.8, .05);
   oval(H, R, px, py - 1, 7, 3, 'coral', .7);
   H.line(R, [[px - 4, py - 2], [px + 4, py - 2]], 'paper', 1.2);
+  taiPoCycleDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), [baseX, baseY] = H.p(6.55, 7.67, .02);
   H.at(6.43, 8.18, 0, HH => actor(HH, R, 6.43, 8.18, t, 'hongKongTyrePump', { shirt: ['paper', 1], apron: ['teal', .64], pants: ['blue', .7], hairStyle: 'short', prop(h, r, p) {

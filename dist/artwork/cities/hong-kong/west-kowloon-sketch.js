@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, boundBook, satchel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -16,6 +17,80 @@ function foldingChair(H, R, i, j, ink) {
   }
   shape(H, R, H.tile(i, j + .15, .82, .62, .65), ink, .65);
   shape(H, R, H.faceI(i, j + .08, .82, .7, 1.35), ink, .65);
+}
+
+function westKowloonSketchDetails(H, R) {
+  table(H, R, 7.96, 7.95, 2.76, 1.3, 0.64, 'teal');
+  shallowTray(H, R, 8.13, 8.12, 1.19, 0.91, 0.79, 'paper');
+  for (let n = 0; n < 6; n++)
+    shape(
+      H,
+      R,
+      H.tile(8.27 + (n % 3) * 0.29, 8.25 + Math.floor(n / 3) * 0.32, 0.22, 0.24, 0.98),
+      ['coral', 'teal', 'sun', 'blue', 'paper', 'teal'][n],
+      n === 4 ? 0.1 : 0.62,
+      0.4
+    );
+  boundBook(H, R, 9.58, 8.13, 0.86, 0.86, 0.79, 'coral');
+  for (const i of [9.82, 10.25]) H.line(R, [H.p(i, 8.28, 0.99), H.p(i + 0.12, 8.82, 0.99)], 'blue', 1.3);
+  slattedCrate(H, R, 8.14, 8.13, 1.73, 0.95, 0.02, 0.39, 'sun');
+  for (let n = 0; n < 4; n++) box(H, R, 8.33 + n * 0.33, 8.25, 0.07, 0.69, 0.16, 0.51 + (n % 2) * 0.14, 'paper', 1);
+  satchel(H, R, 6.9, 8.8, 0.04, 'blue', 0.84);
+  const [x, y] = H.p(2.27, 4.72, 0.03);
+  for (const dx of [-10, 10])
+    H.line(
+      R,
+      [
+        [x + dx, y],
+        [x + dx * 0.4, y - 55]
+      ],
+      'sun',
+      2.3
+    );
+  H.line(
+    R,
+    [
+      [x - 12, y - 23],
+      [x + 12, y - 23]
+    ],
+    'blue',
+    2
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 19, y - 60],
+      [x + 17, y - 52],
+      [x + 17, y - 22],
+      [x - 19, y - 30]
+    ],
+    'paper',
+    1,
+    0.8
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 15, y - 39],
+      [x - 4, y - 47],
+      [x + 5, y - 38],
+      [x + 13, y - 40]
+    ],
+    'teal',
+    1.5
+  );
+  oval(H, R, x + 5, y - 46, 4, 3, 'sun', 0.6);
+  for (const [i, j] of [
+    [0.63, 9.68],
+    [10.79, 3.75]
+  ]) {
+    box(H, R, i, j, 0.58, 0.59, 0.03, 0.69, 'blue', 0.55);
+    oval(H, R, ...H.p(i + 0.3, j + 0.29, 0.75), 6, 3, 'paper', 1);
+  }
+  foldedCloth(H, R, 8.49, 2.28, 0.71, 0.43, 0.71, 'paper', 'coral');
+  for (const i of [2.55, 7.55]) for (const j of [2.19, 8.37]) H.dot(...H.p(i, j, 0.15), 1.8, 'sun');
 }
 
 const room = world('hong-kong-west-kowloon-sketch', 'West Kowloon · Hold that cloud', { floor: 'paper', tone: .55, wall: false, head: 20 }, (H, R) => {
@@ -72,6 +147,7 @@ const room = world('hong-kong-west-kowloon-sketch', 'West Kowloon · Hold that c
     shape(H, R, H.faceI(i + .03, j + .21, .14, .4, .5), 'sun', .9, .3);
   }
   for (let q = 0; q < 9; q++) H.line(R, [H.p(1.7 + q * 1.05, 10.9, .01), H.p(1.9 + q * 1.05, 11.6, .01)], 'blue', .6, { tone: .3 });
+  westKowloonSketchDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   H.clip(H.faceI(.1, .15, 11.8, 1.85, 3.45), () => {

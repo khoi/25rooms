@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, foldedCloth, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, bottle, steam, cycle, ell, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -23,6 +24,63 @@ function steamer(H, R, i, j, z, size = 1) {
   oval(H, R, x, y + 3 * size, 16 * size, 6 * size, 'sun', .5);
   oval(H, R, x, y - 10 * size, 16 * size, 6 * size, 'paper', 1);
   for (let n = -2; n <= 2; n++) H.line(R, [[x - 12 * size, y - 10 * size + n * 1.6], [x + 12 * size, y - 10 * size + n * 1.6]], 'teal', .7, { tone: .5 });
+}
+
+function chinatownKitchenDetails(H, R) {
+  shelfUnit(H, R, 0.25, 6.11, 1.23, 1.1, 1.62, [0, 0.72], 'teal');
+  for (let n = 0; n < 3; n++) bowl(H, R, 0.84, 6.34 + n * 0.3, 1.79, 0.47, 'paper', 'sun');
+  for (let n = 0; n < 2; n++) foldedCloth(H, R, 0.41, 6.28, 0.89, 0.74, 2.48 + n * 0.12, 'paper', 'coral');
+  table(H, R, 4.52, 9.76, 3.82, 1.34, 0.8, 'teal');
+  shallowTray(H, R, 4.69, 9.94, 1.95, 0.98, 0.94, 'paper');
+  for (let n = 0; n < 6; n++) dumpling(H, R, ...H.p(5 + (n % 3) * 0.53, 10.22 + Math.floor(n / 3) * 0.4, 1.15), 0.55);
+  steamer(H, R, 7.44, 10.37, 1.04, 0.6);
+  slattedCrate(H, R, 4.8, 9.94, 1.91, 0.99, 0.03, 0.48, 'sun');
+  for (let n = 0; n < 4; n++) box(H, R, 5.05 + n * 0.36, 10.09, 0.08, 0.73, 0.16, 0.65, 'paper', 1);
+  const [x, y] = H.p(10.88, 4.62, 0.05);
+  oval(H, R, x, y, 20, 7, 'teal', 0.5);
+  shape(
+    H,
+    R,
+    [
+      [x - 20, y],
+      [x + 20, y],
+      [x + 20, y - 26],
+      [x - 20, y - 26]
+    ],
+    'paper',
+    1,
+    0.8
+  );
+  oval(H, R, x, y - 26, 20, 7, 'teal', 0.3);
+  for (const dx of [-25, 25])
+    stroke(
+      H,
+      R,
+      [
+        [x + dx * 0.7, y - 22],
+        [x + dx, y - 24],
+        [x + dx, y - 13],
+        [x + dx * 0.7, y - 12]
+      ],
+      'blue',
+      1.4
+    );
+  oval(H, R, x + 25, y + 8, 18, 6, 'paper', 1);
+  H.dot(x + 25, y + 5, 3, 'blue');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.17, 1.67, 0.16],
+      [0.17, 1.67, 3.09],
+      [0.17, 0.16, 3.09],
+      [2.03, 0.16, 3.09]
+    ],
+    'teal',
+    2
+  );
+  handTool(H, R, 3.77, 7.75, 1.25, 'brush', 'sun');
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(7.62 + n * 0.21, 7.4, 1.25), H.p(7.62 + n * 0.21, 8.12, 1.25)], 'sun', 2.8);
 }
 
 const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather', { floor: 'paper', tone: .65, wall: 'teal', wallTone: .18, pattern: 'tiles', height: 3.65, head: 20 }, (H, R) => {
@@ -86,6 +144,7 @@ const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather',
   for (let n = 0; n < 3; n++) bowl(H, R, .82, 8.28 + n * .86, 1, .71, 'paper', 'paper');
   shape(H, R, H.tile(7.5, 7.35, .82, .7, 1.24), 'paper', 1, .6);
   dumpling(H, R, ...H.p(7.89, 7.7, 1.28), .73);
+  chinatownKitchenDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   actor(H, R, 5.19, 6.12, u * 14, 'newYorkDumplingInspect', { face: 'sw', shirt: ['paper', 1], apron: ['coral', .7], hairStyle: 'bun', prop(h, r, points) {

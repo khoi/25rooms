@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -76,6 +77,53 @@ function cosmetics(H, R) {
   for (let k = 0; k < 7; k++) H.line(R, [[x - 7 + k * 2.5, y - 20], [x - 7 + k * 2.5, y - 13]], 'blue', .8);
 }
 
+function stGeorgeStageDetails(H, R) {
+  table(H, R, 4.07, 7.35, 2.46, 1.38, 0.89, 'sun');
+  shallowTray(H, R, 4.24, 7.53, 1.17, 0.98, 1.03, 'paper');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(4.49 + n * 0.3, 7.98, 1.25);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y - 12]
+      ],
+      ['coral', 'teal', 'sun'][n],
+      6
+    );
+    oval(H, R, x, y - 12, 4, 2, 'paper', 1);
+  }
+  handTool(H, R, 5.05, 8.15, 1.28, 'scissors', 'blue');
+  foldedCloth(H, R, 5.63, 7.57, 0.66, 0.89, 1.03, 'paper', 'teal');
+  shelfUnit(H, R, 9.74, 5.27, 1.46, 1.13, 0.03, [0.16, 1.12, 2.05], 'teal');
+  for (let n = 0; n < 2; n++) {
+    const [x, y] = H.p(10.1 + n * 0.59, 5.81, 0.31);
+    oval(H, R, x, y, 9, 4, 'blue', 0.7);
+    oval(H, R, x - 3, y - 4, 5, 5, 'coral', 0.55);
+  }
+  boundBook(H, R, 9.94, 5.46, 1.01, 0.76, 1.27, 'coral');
+  liddedTin(H, R, 10.45, 5.82, 2.21, 13, 17, 'sun');
+  const [x, y] = H.p(7.31, 0.16, 2.95);
+  oval(H, R, x, y, 11, 12, 'blue', 0.55);
+  oval(H, R, x, y, 8, 9, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y - 6],
+      [x, y],
+      [x + 5, y + 2]
+    ],
+    'coral',
+    1
+  );
+  for (let n = 0; n < 3; n++) {
+    const j = 6.0 + n * 0.65;
+    H.line(R, [H.p(0.16, j, 2.59), H.p(0.44, j, 2.59)], 'blue', 1.2);
+    stroke(H, R, [H.p(0.43, j - 0.18, 2.3), H.p(0.43, j, 2.55), H.p(0.43, j + 0.18, 2.3), H.p(0.43, j - 0.18, 2.3)], 'sun', 1);
+  }
+  satchel(H, R, 7.4, 10.46, 0.03, 'teal', 0.85);
+}
+
 const room = world('new-york-st-george-stage', 'St. George · Five Minutes', { floor: 'paper', tone: .64, wall: 'coral', wallTone: .2, pattern: 'boards', height: 3.62, head: 20 }, (H, R) => {
   for (const side of ['nw', 'ne']) {
     shape(H, R, wallRect(H, side, .03, 11.95, .09, .31), 'blue', .66, .65);
@@ -125,6 +173,7 @@ const room = world('new-york-st-george-stage', 'St. George · Five Minutes', { f
   const curtain = [H.p(.14, 6.13, 3.35), H.p(.14, 7.8, 3.35), H.p(.14, 7.59, .49), H.p(.14, 7.21, .57), H.p(.14, 6.87, .4), H.p(.14, 6.48, .55), H.p(.14, 6.13, .46)];
   shape(H, R, curtain, 'blue', .67, .9);
   for (let j = 6.28; j < 7.75; j += .31) stroke(H, R, [H.p(.18, j, 3.31), H.p(.23, j + .1, 1.8), H.p(.19, j, .59)], 'paper', .75, .5);
+  stGeorgeStageDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   const shift = u < .54 ? 0 : u < .69 ? (u - .54) / .15 : u < .84 ? 1 : (1 - u) / .16;

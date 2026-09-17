@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -36,6 +37,43 @@ function wrench(H, R, x, y, size = 1, ink = 'blue') {
   stroke(H, R, [[x - 2 * size, y - 25 * size], [x - 3 * size, y - 20 * size], [x + 2 * size, y - 16 * size], [x + 6 * size, y - 21 * size], [x + 5 * size, y - 25 * size]], ink, 2 * size);
   oval(H, R, x, y + 1 * size, 3.5 * size, 3.5 * size, ink, .72);
   oval(H, R, x, y + 1 * size, 1.8 * size, 1.8 * size, 'paper', 1);
+}
+
+function mottHavenCyclesDetails(H, R) {
+  drawerUnit(H, R, 7.35, 0.54, 3.78, 1.1, 1.18, 5, 'teal');
+  shallowTray(H, R, 7.54, 0.7, 1.27, 0.74, 1.35, 'paper');
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(7.79 + (n % 3) * 0.32, 0.93 + Math.floor(n / 3) * 0.27, 1.56);
+    oval(H, R, x, y, 4, 3, n === 4 ? 'sun' : 'blue', 0.65);
+    oval(H, R, x, y, 1.7, 1.2, 'paper', 1);
+  }
+  handTool(H, R, 9.32, 1.1, 1.36, 'spanner', 'coral');
+  coiledLine(H, R, 10.35, 1.08, 1.36, 13, 'blue');
+  for (const i of [8.11, 8.68, 9.25, 9.82, 10.39]) {
+    H.line(R, [H.p(i, 0.16, 2.35), H.p(i, 0.38, 2.35)], 'sun', 1.5);
+    const [x, y] = H.p(i, 0.4, 2.14);
+    oval(H, R, x, y, 9, 16, 'blue', 0.3);
+    oval(H, R, x, y, 6, 12, 'paper', 0.8);
+  }
+  table(H, R, 5.78, 9.6, 2.11, 1.43, 0.55, 'teal');
+  shallowTray(H, R, 5.94, 9.75, 1.74, 1.04, 0.69, 'sun');
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(6.14 + n * 0.35, 9.96, 0.9), H.p(6.14 + n * 0.35, 10.59, 0.9)], 'blue', 1.3);
+  foldedCloth(H, R, 6.02, 9.78, 1.39, 0.96, 0.15, 'paper', 'coral');
+  const [x, y] = H.p(8.93, 8.32, 0.03);
+  for (const dx of [-12, 12])
+    H.line(
+      R,
+      [
+        [x + dx, y],
+        [x, y - 26]
+      ],
+      'blue',
+      2
+    );
+  oval(H, R, x, y - 29, 17, 8, 'coral', 0.55);
+  box(H, R, 9.99, 8.11, 0.69, 0.7, 0.23, 0.44, 'teal', 0.4);
+  for (let n = 0; n < 3; n++) wheel(H, R, ...H.p(10.37, 8.52 + n * 0.66, 0.54), 12, 0, 'blue');
+  boundBook(H, R, 3.48, 9.47, 0.91, 0.6, 0.68, 'teal');
 }
 
 const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { floor: 'blue', tone: .17, wall: 'paper', wallTone: .9, height: 3.7, head: 20 }, (H, R) => {
@@ -99,6 +137,7 @@ const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { f
   stroke(H, R, [[hx - 12, hy], [hx - 7, hy + 19], [hx + 10, hy]], 'blue', 1);
   shape(H, R, H.tile(5.15, 9.8, .67, .83, .03), 'paper', 1, .5);
   for (let n = 0; n < 3; n++) H.line(R, [H.p(5.24, 10 + n * .16, .05), H.p(5.7, 10 + n * .16, .05)], 'teal', .6);
+  mottHavenCyclesDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), spin = Math.min(1, Math.max(0, (u - .1) / .34));
   const angle = TAU * 5 * (1 - (1 - spin) ** 3);

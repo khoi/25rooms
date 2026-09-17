@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, bottle, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -80,6 +81,43 @@ function hide(H, R) {
   for (let k = 0; k < 9; k++) H.line(R, [H.p(5.35 + k * .33, 9.64, .24), H.p(5.35 + k * .33, 10.65, .24)], 'blue', .55, { tone: .3 });
   box(H, R, .38, 5.7, .69, .77, .22, .55, 'teal', .6);
   oval(H, R, ...H.p(.72, 6.08, .79), 9, 4, 'blue', .56);
+  tinShuiWaiHideDetails(H, R);
+}
+
+function tinShuiWaiHideDetails(H, R) {
+  shelfUnit(H, R, 8.59, 9.2, 2.56, 1.05, 0.22, [0.12, 0.93, 1.71], 'sun');
+  for (let n = 0; n < 3; n++) boundBook(H, R, 8.79 + n * 0.7, 9.38, 0.57, 0.68, 0.48, ['teal', 'coral', 'blue'][n]);
+  shallowTray(H, R, 8.77, 9.36, 1.11, 0.71, 1.3, 'paper');
+  for (const i of [9.05, 9.5]) oval(H, R, ...H.p(i, 9.72, 1.52), i < 9.3 ? 5 : 7, i < 9.3 ? 5 : 7, 'blue', 0.65);
+  foldedCloth(H, R, 10.05, 9.38, 0.83, 0.68, 1.3, 'paper', 'teal');
+  framedPanel(H, R, 8.84, 9.52, 1.08, 2.06, 0.74, 'teal');
+  liddedTin(H, R, 10.69, 9.75, 2.07, 6, 16, 'sun');
+  for (const j of [6.66, 7.31, 7.96]) {
+    H.line(R, [H.p(0.28, j, 2.04), H.p(0.59, j, 2.04), H.p(0.59, j, 2.14)], 'blue', 1.8);
+  }
+  satchel(H, R, 0.65, 7.16, 1.11, 'teal', 0.74);
+  shallowTray(H, R, 1.54, 10.62, 2.24, 0.72, 0.22, 'blue');
+  for (const i of [2, 2.75]) {
+    oval(H, R, ...H.p(i, 10.91, 0.41), 10, 5, 'coral', 0.55);
+    H.line(R, [H.p(i, 10.9, 0.45), H.p(i, 10.9, 0.82)], 'coral', 6);
+  }
+  boundBook(H, R, 3.05, 7.91, 0.66, 0.57, 1.05, 'sun');
+  handTool(H, R, 3.43, 8.15, 1.23, 'brush', 'teal');
+  for (const i of [1.8, 5.1, 8.7]) {
+    box(H, R, i, 2.47, 0.23, 0.1, 2.51, 0.29, 'blue', 0.55);
+    H.dot(...H.p(i + 0.11, 2.59, 2.64), 1.3, 'sun');
+  }
+  servicePipe(
+    H,
+    R,
+    [
+      [11.69, 2.34, 0.24],
+      [11.69, 2.34, 3.29],
+      [11.69, 3.1, 3.29]
+    ],
+    'teal',
+    2
+  );
 }
 
 const room = world('hong-kong-tin-shui-wai-hide', 'Tin Shui Wai · A gap in the reeds', { floor: 'paper', tone: .2, wall: false, head: 20 }, hide, (H, R, t) => {

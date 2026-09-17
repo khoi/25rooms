@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -32,6 +33,53 @@ function bucket(H, R, i, j, z, ink, count = 6, tall = false) {
 function wrap(H, R, x, y, length = 27) {
   shape(H, R, [[x - 16, y - length], [x + 15, y - length - 5], [x + 6, y + 10], [x - 3, y + 10]], 'paper', 1, .7);
   H.line(R, [[x - 8, y - 8], [x + 8, y - 10]], 'coral', 2.2);
+}
+
+function mongKokFlowersDetails(H, R) {
+  shelfUnit(H, R, 10.13, 6.45, 1.34, 1.11, 0.03, [0.1, 0.9, 1.72], 'teal');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 10.44 + n * 0.34, 6.95, 0.23, 5, 16, ['sun', 'teal', 'paper'][n]);
+  foldedCloth(H, R, 10.29, 6.61, 0.95, 0.77, 1.04, 'paper', 'coral');
+  shallowTray(H, R, 10.28, 6.6, 0.99, 0.74, 1.86, 'sun');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 10.46 + n * 0.29, 6.96, 2.02, 5, ['teal', 'coral', 'blue'][n]);
+  drawerUnit(H, R, 0.3, 7.81, 2.33, 1.2, 1.18, 3, 'teal');
+  shallowTray(H, R, 0.47, 7.94, 1.94, 0.89, 1.35, 'paper');
+  handTool(H, R, 1.05, 8.32, 1.55, 'scissors', 'coral');
+  coiledLine(H, R, 1.97, 8.44, 1.54, 9, 'sun');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(0.61 + n * 0.22, 8.06, 1.53);
+    shape(
+      H,
+      R,
+      [
+        [x - 2, y],
+        [x + 3, y],
+        [x + 1, y - 21]
+      ],
+      'teal',
+      0.5,
+      0.5
+    );
+  }
+  slattedCrate(H, R, 7.3, 9.35, 1.6, 1.24, 0.02, 0.5, 'sun');
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(7.54 + n * 0.32, 9.96, 0.57);
+    oval(H, R, x, y - 8, 5, 10, 'paper', 0.85);
+    oval(H, R, x, y - 17, 3, 2, 'blue', 0.3);
+  }
+  box(H, R, 3.05, 10.74, 1.25, 0.59, 0.04, 0.06, 'paper', 1);
+  for (let n = 0; n < 3; n++)
+    stroke(H, R, [H.p(3.15, 10.8 + n * 0.12, 0.12), H.p(3.56, 10.77 + n * 0.12, 0.12), H.p(4.15, 10.88 + n * 0.1, 0.12)], 'teal', 1.3);
+  servicePipe(
+    H,
+    R,
+    [
+      [0.18, 9.5, 0.1],
+      [0.18, 9.5, 1.9],
+      [0.66, 9.5, 1.9]
+    ],
+    'blue',
+    2
+  );
 }
 
 const room = world('hong-kong-mong-kok-flowers', 'Mong Kok · Water between stems', { floor: 'paper', tone: .44, wall: 'teal', wallTone: .2, height: 3.6, head: 20 }, (H, R) => {
@@ -82,6 +130,7 @@ const room = world('hong-kong-mong-kok-flowers', 'Mong Kok · Water between stem
   for (const [i, j, s] of [[3.3, 7.7, 18], [8.1, 9.1, 26], [10.1, 6.4, 17]]) H.tint(H.tile(i, j, s / 20, .45, .015), 'teal', .16);
   const [lx, ly] = H.p(6.4, 10.57, .03);
   shape(H, R, [[lx - 5, ly], [lx + 4, ly - 7], [lx + 11, ly - 2], [lx + 3, ly + 2]], 'coral', .6, .4);
+  mongKokFlowersDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   actor(H, R, 6.62, 7.16, t, 'hongKongFlowerArrange', { shirt: ['paper', 1], apron: ['teal', .7], hairStyle: 'bun', face: 'nw', prop(HH, RR, points) {

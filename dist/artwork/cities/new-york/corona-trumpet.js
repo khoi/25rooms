@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, plant, rug, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -38,6 +39,66 @@ function bay(H, R) {
     box(H, R, .05, j, .62, len, .79, .13, 'paper', 1);
   }
   for (const j of [1.2, 4.5, 6.6, 9.5]) box(H, R, .08, j, .35, .18, .9, 2.86, 'paper', 1);
+}
+
+function coronaTrumpetDetails(H, R) {
+  drawerUnit(H, R, 9.42, 4.25, 1.81, 1.31, 1.15, 3, 'teal');
+  shallowTray(H, R, 9.58, 4.41, 1.46, 0.94, 1.32, 'paper');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(9.85 + n * 0.44, 4.87, 1.54);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y - 15]
+      ],
+      'sun',
+      3
+    );
+    oval(H, R, x, y - 17, 5, 3, 'paper', 1);
+  }
+  liddedTin(H, R, 10.81, 5.06, 1.55, 4, 15, 'coral');
+  table(H, R, 0.93, 9.35, 2.47, 1.33, 0.51, 'sun');
+  foldedCloth(H, R, 1.11, 9.53, 1.98, 0.92, 0.65, 'paper', 'teal');
+  const [x, y] = H.p(2.07, 10.04, 0.82);
+  H.line(
+    R,
+    [
+      [x - 19, y + 3],
+      [x + 13, y - 6]
+    ],
+    'sun',
+    4
+  );
+  shape(
+    H,
+    R,
+    [
+      [x + 10, y - 9],
+      [x + 25, y - 17],
+      [x + 29, y - 1],
+      [x + 12, y - 3]
+    ],
+    'sun',
+    0.6,
+    0.7
+  );
+  oval(H, R, x + 28, y - 9, 5, 9, 'paper', 0.9);
+  for (let n = 0; n < 3; n++)
+    H.line(
+      R,
+      [
+        [x - 7 + n * 6, y - 2],
+        [x - 7 + n * 6, y - 11]
+      ],
+      'blue',
+      1.3
+    );
+  for (let n = 0; n < 3; n++) framedPanel(H, R, 2.05 + n * 1.56, 0.12, 1.17, 1.62, 0.87, ['teal', 'coral', 'sun'][n]);
+  boundBook(H, R, 7.14, 10.41, 1.16, 0.8, 0.04, 'teal');
+  satchel(H, R, 10.67, 10.64, 0.04, 'coral', 0.87);
+  coiledLine(H, R, 9.18, 2.41, 0.04, 15, 'blue');
+  for (const j of [7.19, 7.52]) oval(H, R, ...H.p(2.17, j, 0.06), 8, 4, 'blue', 0.65);
 }
 
 const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window', {
@@ -96,6 +157,7 @@ const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window
   oval(H, R, cx, cy, 15, 7, 'sun', .65);
   shape(H, R, [[cx - 13, cy - 1], [cx + 13, cy - 1], [cx + 8, cy - 14], [cx - 7, cy - 15]], 'sun', .72, .7);
   H.line(R, [[cx - 9, cy - 6], [cx + 10, cy - 5]], 'coral', 2.2);
+  coronaTrumpetDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), raised = u < .12 ? 0 : u < .28 ? (1 - Math.cos((u - .12) / .16 * Math.PI)) / 2 : u < .8 ? 1 : u < .91 ? (1 + Math.cos((u - .8) / .11 * Math.PI)) / 2 : 0;
   H.at(4.4, 6.32, 0, HH => actor(HH, R, 4.4, 6.32, t, 'newYorkTrumpetPhrase', {

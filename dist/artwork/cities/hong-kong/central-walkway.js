@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -10,6 +11,66 @@ function tower(H, R, i, j, w, z, h, ink, n) {
   for (let q = 0; q < n; q++) for (let row = 0; row < 5; row++) {
     shape(H, R, H.faceI(i + .09 + q * (w - .14) / n, j + .01, .11, z + .13 + row * h / 5, z + .2 + row * h / 5), (q + row) % 3 ? 'sun' : 'paper', .62, .2);
   }
+}
+
+function centralWalkwayDetails(H, R) {
+  for (const j of [4.28, 6.26, 8.36, 10.48]) {
+    box(H, R, 0.48, j, 0.18, 0.2, 0.02, 1.2, 'teal', 0.6);
+    H.dot(...H.p(0.58, j + 0.1, 1.26), 2, 'sun');
+  }
+  servicePipe(
+    H,
+    R,
+    [
+      [0.56, 4.28, 1.26],
+      [0.56, 6.26, 1.26],
+      [0.56, 8.36, 1.26],
+      [0.56, 10.68, 1.26]
+    ],
+    'paper',
+    2.5
+  );
+  for (let n = 0; n < 9; n++) H.line(R, [H.p(0.59, 4.55 + n * 0.69, 0.19), H.p(0.59, 4.55 + n * 0.69, 1.18)], 'blue', 0.9);
+  box(H, R, 1.02, 4.28, 1.17, 0.56, 0.04, 1.82, 'teal', 0.5);
+  shape(H, R, H.faceI(1.13, 4.86, 0.95, 0.26, 1.58), 'paper', 0.9, 0.6);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(1.26, 4.88, 0.39 + n * 0.13), H.p(1.92, 4.88, 0.39 + n * 0.13)], 'teal', 1);
+  H.dot(...H.p(1.9, 4.9, 1.31), 2, 'coral');
+  shallowTray(H, R, 9.4, 9.92, 1.86, 1.02, 0.03, 'blue');
+  foldedCloth(H, R, 9.58, 10.09, 0.75, 0.67, 0.22, 'paper', 'teal');
+  for (let n = 0; n < 2; n++) {
+    const [x, y] = H.p(10.57 + n * 0.34, 10.46, 0.23);
+    shape(
+      H,
+      R,
+      [
+        [x - 3, y],
+        [x + 3, y],
+        [x + 3, y - 20],
+        [x - 3, y - 20]
+      ],
+      'coral',
+      0.6,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [x - 3, y - 13],
+        [x + 3, y - 13]
+      ],
+      'paper',
+      1
+    );
+  }
+  coiledLine(H, R, 9.78, 7.54, 0.03, 16, 'teal');
+  H.line(R, [H.p(10.5, 8.83, 0.13), H.p(10.31, 8.34, 1.8)], 'blue', 2);
+  H.line(R, [H.p(10.31, 8.06, 1.82), H.p(10.31, 8.68, 1.82)], 'coral', 4);
+  for (const i of [2.9, 4.82])
+    for (const j of [7.56, 9.21]) {
+      box(H, R, i, j, 0.28, 0.35, 0.02, 0.035, 'teal', 0.5);
+      H.dot(...H.p(i + 0.14, j + 0.17, 0.07), 1.2, 'paper');
+    }
+  framedPanel(H, R, 1.12, 3.31, 1.4, 2.07, 0.83, 'sun');
 }
 
 const room = world('hong-kong-central-walkway', 'Central · A clear pane at midnight', { floor: 'blue', tone: .32, wall: false, head: 20 }, (H, R) => {
@@ -81,6 +142,7 @@ const room = world('hong-kong-central-walkway', 'Central · A clear pane at midn
   shape(H, R, [[sx, sy - 5], [sx - 5, sy + 4], [sx + 5, sy + 4]], 'sun', .8, .3);
   for (let q = 0; q < 8; q++) H.line(R, [H.p(1.2 + q * .18, 10.21, .03), H.p(1.2 + q * .18, 11.31, .03)], 'sun', 1.8);
   for (let q = 0; q < 8; q++) H.line(R, [H.p(5.25, 9.38 + q * .17, .03), H.p(5.65, 9.38 + q * .17, .03)], 'paper', .6, { tone: .32 });
+  centralWalkwayDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), down = u < .15 ? 0 : u < .36 ? (1 - Math.cos((u - .15) / .21 * Math.PI)) / 2 : u < .55 ? 1 : u < .73 ? (1 + Math.cos((u - .55) / .18 * Math.PI)) / 2 : 0;
   actor(H, R, 7.18, 4.38, t, 'hongKongWalkwayGlass', { shirt: ['teal', .74], vest: ['sun', .63], hairStyle: 'short', face: 'nw', prop(h, r, p) {

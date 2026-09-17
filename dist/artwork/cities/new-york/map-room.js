@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -50,6 +51,46 @@ function readingLamp(H, R, i, j) {
   stroke(H, R, [[x, y], [x - 1, y - 24], [x + 9, y - 29]], 'sun', 2.2);
   shape(H, R, [[x - 9, y - 39], [x + 16, y - 37], [x + 24, y - 23], [x - 16, y - 26]], 'teal', .8, .85);
   H.line(R, [[x - 14, y - 25], [x + 22, y - 23]], 'sun', 1.6);
+}
+
+function mapRoomDetails(H, R) {
+  shelfUnit(H, R, 5.56, 0.3, 3.18, 0.91, 1.64, [0, 0.84], 'teal');
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(5.9 + n * 0.57, 0.69, 1.82);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x + 4, y - 28 - (n % 2) * 8]
+      ],
+      'paper',
+      8
+    );
+    oval(H, R, x + 4, y - 28 - (n % 2) * 8, 4, 2, 'sun', 0.5);
+    H.dot(x + 4, y - 28 - (n % 2) * 8, 1.3, 'blue');
+  }
+  for (let n = 0; n < 3; n++) boundBook(H, R, 5.75 + n * 0.96, 0.44, 0.78, 0.61, 2.63, ['coral', 'teal', 'sun'][n]);
+  table(H, R, 4.29, 9.73, 2.25, 1.49, 0.64, 'teal');
+  boundBook(H, R, 4.47, 9.91, 1.27, 1.11, 0.79, 'coral');
+  shallowTray(H, R, 5.95, 9.94, 0.39, 0.92, 0.79, 'paper');
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(6.03 + n * 0.1, 10.07, 0.99), H.p(6.03 + n * 0.1, 10.71, 0.99)], 'sun', 1.4);
+  for (const i of [4.46, 6.29]) for (const j of [9.88, 11.03]) oval(H, R, ...H.p(i, j, 0.08), 4, 5, 'blue', 0.75);
+  for (let n = 0; n < 3; n++) boundBook(H, R, 4.51, 9.98, 1.45, 0.94, 0.14 + n * 0.17, ['paper', 'teal', 'sun'][n]);
+  framedPanel(H, R, 9.03, 0.18, 2.12, 1.85, 1.27, 'teal');
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(9.33, 0.31, 2.1 + n * 0.2), H.p(10.86, 0.31, 2.1 + n * 0.2)], 'blue', 0.5);
+  satchel(H, R, 10.64, 9.77, 0.05, 'blue', 0.8);
+  const [x, y] = H.p(9.96, 6.35, 0.96);
+  oval(H, R, x, y, 7, 5, 'paper', 1);
+  oval(H, R, x, y, 4, 3, 'teal', 0.15);
+  H.line(
+    R,
+    [
+      [x + 6, y + 2],
+      [x + 16, y + 7]
+    ],
+    'sun',
+    2
+  );
 }
 
 const room = world('new-york-map-room', 'Midtown · Find Our Block', {
@@ -108,6 +149,7 @@ const room = world('new-york-map-room', 'Midtown · Find Our Block', {
   shape(H, R, [[px - 14, py + 3], [px + 12, py + 3], [px + 10, py - 18], [px - 10, py - 18]], 'coral', .6, .8);
   stroke(H, R, [[px - 8, py - 16], [px - 7, py - 28], [px + 7, py - 28], [px + 8, py - 16]], 'blue', 1.4);
   for (let q = 0; q < 3; q++) H.line(R, [[px - 10, py - 9 + q * 4], [px + 11, py - 9 + q * 4]], 'paper', .7);
+  mapRoomDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12);
   H.at(7.94, 8.71, 0, HH => actor(HH, R, 7.94, 8.71, t, 'newYorkMapTrace', {

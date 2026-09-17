@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -41,6 +42,67 @@ function breadRack(H, R) {
     }
   }
   for (const j of [7.43, 10.85]) H.line(R, [H.p(1.06, j, 3.1), H.p(2.87, j, 3.1)], 'blue', 2.4);
+}
+
+function astoriaBakeryDetails(H, R) {
+  shelfUnit(H, R, 4.52, 0.21, 2.13, 0.74, 0.04, [0.13, 0.91, 1.69], 'teal');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 4.87 + n * 0.6, 0.59, 0.32, 7, 20, ['paper', 'teal', 'sun'][n]);
+  shallowTray(H, R, 4.7, 0.34, 1.76, 0.49, 1.06, 'paper');
+  for (let n = 0; n < 3; n++) loaf(H, R, 5.02 + n * 0.53, 0.6, 1.25, 7, true);
+  foldedCloth(H, R, 4.71, 0.33, 1.72, 0.5, 1.84, 'paper', 'coral');
+  table(H, R, 8.7, 9.55, 2.61, 1.65, 0.82, 'teal');
+  shallowTray(H, R, 8.88, 9.72, 1.32, 1.25, 0.96, 'paper');
+  for (let n = 0; n < 3; n++) loaf(H, R, 9.23 + (n % 2) * 0.57, 10.1 + Math.floor(n / 2) * 0.5, 1.16, 9, n === 1);
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(10.51 + n * 0.15, 10.17, 0.97);
+    shape(
+      H,
+      R,
+      [
+        [x - 7, y],
+        [x + 7, y + 3],
+        [x + 7, y - 25],
+        [x - 7, y - 28]
+      ],
+      'sun',
+      0.4,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [x - 4, y - 23],
+        [x + 4, y - 21]
+      ],
+      'paper',
+      0.8
+    );
+  }
+  slattedCrate(H, R, 8.92, 9.79, 1.88, 1.11, 0.03, 0.53, 'sun');
+  for (let n = 0; n < 2; n++) {
+    const [x, y] = H.p(6.85 + n * 0.44, 0.15, 2.97);
+    H.line(
+      R,
+      [
+        [x, y - 12],
+        [x, y + 16]
+      ],
+      'sun',
+      2.4
+    );
+    oval(H, R, x, y + 27, 9, 13, 'sun', 0.5);
+    H.line(
+      R,
+      [
+        [x - 5, y + 22],
+        [x + 5, y + 30]
+      ],
+      'coral',
+      0.6
+    );
+  }
+  handTool(H, R, 6.88, 6.03, 1.08, 'brush', 'teal');
+  boundBook(H, R, 10.36, 3.19, 0.74, 0.58, 0.03, 'coral');
 }
 
 const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfast', {
@@ -119,6 +181,7 @@ const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfa
   box(H, R, 4.31, 9.83, 2.0, 1.1, .03, .17, 'teal', .57);
   shape(H, R, H.tile(4.44, 9.96, 1.74, .84, .21), 'paper', 1, .65);
   for (let q = 0; q < 4; q++) loaf(H, R, 4.78 + q % 2 * .72, 10.18 + Math.floor(q / 2) * .42, .27, 9);
+  astoriaBakeryDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(7.84, 5.65, 0, HH => actor(HH, R, 7.84, 5.65, u * 14, 'newYorkAstoriaRoll', {

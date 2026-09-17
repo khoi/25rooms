@@ -1,3 +1,4 @@
+import { shallowTray, foldedCloth, coiledLine, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -47,6 +48,61 @@ function barrel(H, R, i, j) {
   for (const off of [14, 36]) stroke(H, R, [[x - 20, y - off], [x, y - off + 6], [x + 20, y - off]], 'blue', 1);
   H.line(R, [[x + 15, y - 15], [x + 27, y - 15], [x + 27, y - 8]], 'blue', 2.1);
   H.line(R, [[x + 21, y - 19], [x + 27, y - 19]], 'coral', 2.3);
+}
+
+function crownHeightsGardenDetails(H, R) {
+  table(H, R, 5.87, 8.83, 2.39, 1.86, 0.72, 'sun');
+  shallowTray(H, R, 6.03, 9.01, 2.05, 1.52, 0.86, 'teal');
+  for (let n = 0; n < 9; n++) {
+    H.line(R, [H.p(6.13 + n * 0.22, 9.1, 1.06), H.p(6.13 + n * 0.22, 10.39, 1.06)], 'blue', 0.7);
+    H.line(R, [H.p(6.12, 9.13 + n * 0.14, 1.06), H.p(7.97, 9.13 + n * 0.14, 1.06)], 'blue', 0.7);
+  }
+  leaf(H, R, ...H.p(6.12, 9.11, 1.1), 0.42, 'sun');
+  shallowTray(H, R, 6.12, 9.13, 1.82, 1.24, 0.05, 'sun');
+  for (let n = 0; n < 10; n++) oval(H, R, ...H.p(6.33 + (n % 5) * 0.31, 9.42 + Math.floor(n / 5) * 0.43, 0.24), 4, 2, 'blue', 0.4);
+  for (const i of [5.02, 5.44, 5.86]) {
+    H.line(R, [H.p(i, 0.4, 0.13), H.p(i, 0.4, 1.9)], i === 5.86 ? 'coral' : 'sun', 2);
+    const [x, y] = H.p(i, 0.4, 0.18);
+    shape(
+      H,
+      R,
+      [
+        [x - 6, y],
+        [x + 6, y],
+        [x + 8, y + 13],
+        [x, y + 18],
+        [x - 8, y + 13]
+      ],
+      'blue',
+      0.5,
+      0.6
+    );
+  }
+  slattedCrate(H, R, 3.58, 9.81, 1.56, 1.37, 0.02, 0.73, 'teal');
+  for (let n = 0; n < 6; n++) leaf(H, R, ...H.p(3.9 + (n % 3) * 0.4, 10.12 + Math.floor(n / 3) * 0.47, 0.85), 0.5, 'sun');
+  handTool(H, R, 7.62, 3.52, 1.05, 'trowel', 'coral');
+  coiledLine(H, R, 8.35, 7.37, 0.04, 15, 'teal');
+  const [x, y] = H.p(4.79, 2.52, 0.15);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x, y - 49]
+    ],
+    'paper',
+    2
+  );
+  oval(H, R, x, y - 50, 5, 5, 'blue', 0.65);
+  H.line(
+    R,
+    [
+      [x, y - 50],
+      [x + 2, y - 53]
+    ],
+    'sun',
+    1
+  );
+  foldedCloth(H, R, 9.34, 9.86, 1.33, 0.45, 0.69, 'paper', 'teal');
 }
 
 const room = world('new-york-crown-heights-garden', 'Crown Heights · Turn the Heap', { floor: 'sun', tone: .12, wall: false, head: 20 }, (H, R) => {
@@ -103,6 +159,7 @@ const room = world('new-york-crown-heights-garden', 'Crown Heights · Turn the H
   stroke(H, R, [H.p(9.53, 10.89, .5), H.p(9.84, 10.89, .95), H.p(10.13, 10.89, .5)], 'blue', 1);
   plant(H, R, ...H.p(11.15, 11.03, .04), .75);
   for (let k = 0; k < 4; k++) shape(H, R, H.tile(5.35 + k * .61, 10.92, .44, .3, .04), k % 2 ? 'paper' : 'sun', .85, .6);
+  crownHeightsGardenDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), turn = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .17) / .59))) ** 2;
   actor(H, R, 4.39, 5.11, t, 'newYorkCompostTurn', { face: 'sw', shirt: ['paper', 1], apron: ['teal', .72], hairStyle: 'cap', prop(h, r, points) {

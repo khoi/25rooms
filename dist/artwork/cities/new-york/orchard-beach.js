@@ -1,4 +1,5 @@
-import { world, shape, oval, stroke, box, bench, actor, cycle, ell } from '../../worlds/common.js';
+import { shallowTray, foldedCloth, satchel } from '../furnishings.js';
+import { world, shape, oval, stroke, box, bench, actor, cycle, ell, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -27,6 +28,53 @@ function duffel(H, R, i, j) {
   stroke(H, R, [[x - 7, y - 19], [x - 6, y - 28], [x + 6, y - 28], [x + 8, y - 19]], 'blue', 1.7);
   H.line(R, [[x - 13, y - 18], [x + 12, y - 18]], 'paper', .8);
   H.dot(x + 4, y - 17, 1.5, 'sun');
+}
+
+function orchardBeachDetails(H, R) {
+  table(H, R, 9.81, 9.62, 1.46, 1.11, 0.54, 'sun');
+  shallowTray(H, R, 9.95, 9.77, 1.18, 0.82, 0.68, 'teal');
+  for (let n = 0; n < 3; n++) H.dot(...H.p(10.18 + n * 0.31, 10.14, 0.92), 4.8, ['blue', 'coral', 'blue'][n]);
+  foldedCloth(H, R, 10.0, 9.82, 0.93, 0.73, 0.14, 'paper', 'coral');
+  const [x, y] = H.p(10.92, 5.32, 0.04);
+  H.line(
+    R,
+    [
+      [x - 11, y],
+      [x - 11, y - 32],
+      [x + 11, y - 32],
+      [x + 11, y]
+    ],
+    'blue',
+    2
+  );
+  oval(H, R, x, y - 34, 13, 6, 'paper', 1);
+  oval(H, R, x, y - 34, 9, 3, 'teal', 0.3);
+  stroke(
+    H,
+    R,
+    [
+      [x + 7, y - 32],
+      [x + 12, y - 44],
+      [x + 18, y - 43]
+    ],
+    'teal',
+    2
+  );
+  box(H, R, 10.25, 6.16, 0.68, 0.78, 0.04, 0.14, 'blue', 0.55);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(10.34 + n * 0.15, 6.24, 0.22), H.p(10.34 + n * 0.15, 6.85, 0.22)], 'paper', 0.7);
+  satchel(H, R, 1.25, 9.83, 0.04, 'teal', 0.76);
+  for (const j of [10.24, 10.62]) oval(H, R, ...H.p(2.02, j, 0.07), 9, 4, 'coral', 0.5);
+  for (let n = 0; n < 3; n++) {
+    const j = 2.16 + n * 0.63;
+    H.line(R, [H.p(0.27, j, 2.13), H.p(0.5, j, 2.13), H.p(0.5, j, 2.23)], 'blue', 1.5);
+  }
+  foldedCloth(H, R, 0.46, 2.33, 0.49, 0.83, 1.07, 'paper', 'teal');
+  for (const [i, j] of [
+    [0.7, 7.24],
+    [1.46, 10.95],
+    [10.78, 11.14]
+  ])
+    oval(H, R, ...H.p(i, j, 0.03), 4, 2, 'sun', 0.3);
 }
 
 const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
@@ -78,6 +126,7 @@ const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
   stroke(H, R, [[hx - 6, hy - 8], [hx - 5, hy - 18], [hx + 5, hy - 18], [hx + 6, hy - 8]], 'blue', 1);
   oval(H, R, ...H.p(11.02, 2.35, .03), 12, 5, 'teal', .52);
   for (let q = 0; q < 6; q++) H.line(R, [H.p(10.73 + q * .11, 2.17, .05), H.p(10.73 + q * .11, 2.49, .05)], 'blue', .75);
+  orchardBeachDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 10);
   H.at(4.93, 8.0, 0, HH => actor(HH, R, 4.93, 8.0, t, 'newYorkHandballRally', {

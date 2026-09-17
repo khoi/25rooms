@@ -1,3 +1,4 @@
+import { shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -95,6 +96,30 @@ function wheelchair(H, R, i, j, t) {
   H.line(R, [[x - 28, y + 6], [x - 39, y + 5]], 'teal', 3.2);
 }
 
+function queensPanoramaDetails(H, R) {
+  table(H, R, 0.54, 7.17, 1.34, 2.12, 0.71, 'teal');
+  shape(H, R, H.tile(0.68, 7.35, 1.06, 1.74, 0.85), 'paper', 1, 0.6);
+  for (let n = 0; n < 6; n++)
+    box(H, R, 0.83 + (n % 2) * 0.46, 7.57 + Math.floor(n / 2) * 0.45, 0.24, 0.3, 0.87, 0.16 + (n % 3) * 0.13, ['teal', 'sun', 'blue'][n % 3], 0.5);
+  framedPanel(H, R, 1.07, 0.21, 2.35, 1.7, 1.04, 'teal');
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(1.35 + n * 0.48, 0.33, 1.96), H.p(1.35 + n * 0.48, 0.33, 2.55)], 'blue', 0.5);
+  box(H, R, 7.09, 0.32, 1.47, 0.91, 0.03, 0.97, 'teal', 0.54);
+  shape(H, R, H.faceI(7.27, 1.27, 1.11, 0.27, 0.79), 'paper', 0.88, 0.7);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(7.38 + n * 0.2, 1.3, 0.34), H.p(7.38 + n * 0.2, 1.3, 0.69)], 'blue', 0.8);
+  shallowTray(H, R, 7.23, 0.47, 1.17, 0.57, 1.08, 'paper');
+  for (let n = 0; n < 3; n++) boundBook(H, R, 7.34 + n * 0.3, 0.56, 0.23, 0.37, 1.27, ['teal', 'coral', 'sun'][n]);
+  satchel(H, R, 3.74, 10.91, 0.7, 'coral', 0.58);
+  for (const i of [0.39, 11.6]) {
+    box(H, R, i, 9.22, 0.17, 0.24, 0.02, 1.15, 'blue', 0.6);
+    oval(H, R, ...H.p(i + 0.08, 9.34, 1.22), 5, 3, 'sun', 0.6);
+  }
+  for (const j of [3.52, 5.64, 7.74]) {
+    box(H, R, 0.27, j, 0.16, 0.84, 0.1, 0.06, 'teal', 0.35);
+    for (let n = 0; n < 3; n++) H.dot(...H.p(0.36, j + 0.19 + n * 0.22, 0.2), 1.2, 'sun');
+  }
+  for (const i of [3.42, 5.3, 7.27]) H.line(R, [H.p(i, 9.1, 0.31), H.p(i, 9.1, 0.58)], 'sun', 1.1);
+}
+
 const room = world('new-york-queens-panorama', 'Flushing Meadows · A City on a Table', { floor: 'blue', tone: .12, wall: 'paper', wallTone: .8, height: 3.55, head: 20 }, (H, R) => {
   for (const side of ['nw', 'ne']) {
     shape(H, R, wallRect(H, side, .1, 11.9, .12, .35), 'blue', .6, .6);
@@ -131,6 +156,7 @@ const room = world('new-york-queens-panorama', 'Flushing Meadows · A City on a 
   oval(H, R, ...H.p(11.08, 9.72, .04), 14, 7, 'blue', .45);
   box(H, R, 10.77, 9.4, .58, .54, .06, .93, 'paper', 1);
   oval(H, R, ...H.p(11.06, 9.67, 1.02), 12, 5, 'blue', .6);
+  queensPanoramaDetails(H, R);
 }, (H, R, t) => {
   H.at(5.55, 1.2, 0, h => actor(h, R, 5.55, 1.2, 0, 'hold', { shirt: ['blue', .64], hairStyle: 'short', prop(hh, rr, p) {
     const [x, y] = p.nearHand;

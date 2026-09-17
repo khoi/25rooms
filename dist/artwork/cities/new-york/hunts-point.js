@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, liddedTin, boundBook, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -52,6 +53,63 @@ function rollerBench(H, R) {
   for (const j of [4.77, 6.6]) H.line(R, [H.p(2.98, j, 1.2), H.p(8.2, j, 1)], 'blue', 3);
   box(H, R, 8.12, 4.73, .13, 1.94, .97, .23, 'coral', .85);
   crate(H, R, 3.34, 5.03, 1.15, 'pear', 'paper');
+}
+
+function huntsPointDetails(H, R) {
+  drawerUnit(H, R, 5.43, 0.43, 2.69, 1.09, 1.19, 3, 'teal');
+  shallowTray(H, R, 5.63, 0.62, 1.12, 0.69, 1.36, 'paper');
+  const [x, y] = H.p(6.17, 0.96, 1.57);
+  shape(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 7, y],
+      [x + 7, y - 15],
+      [x - 9, y - 15]
+    ],
+    'blue',
+    0.7,
+    0.7
+  );
+  oval(H, R, x - 4, y - 13, 7, 7, 'coral', 0.6);
+  oval(H, R, x - 4, y - 13, 3, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x + 3, y - 7],
+      [x + 16, y - 6]
+    ],
+    'sun',
+    2
+  );
+  boundBook(H, R, 7.02, 0.65, 0.9, 0.6, 1.36, 'coral');
+  for (let n = 0; n < 3; n++) shape(H, R, H.tile(7.09 + n * 0.21, 0.76, 0.14, 0.36, 1.56), 'paper', 1, 0.4);
+  for (const i of [1.46, 2.72, 3.98]) {
+    box(H, R, i, 0.13, 0.9, 0.11, 2.12, 0.98, 'sun', 0.36);
+    shape(H, R, H.faceI(i + 0.08, 0.26, 0.72, 2.23, 3.0), 'paper', 1, 0.5);
+    box(H, R, i + 0.29, 0.28, 0.29, 0.06, 2.96, 0.1, 'blue', 0.7);
+    for (let n = 0; n < 3; n++) H.line(R, [H.p(i + 0.18, 0.29, 2.38 + n * 0.16), H.p(i + 0.69, 0.29, 2.38 + n * 0.16)], 'teal', 0.8);
+  }
+  slattedCrate(H, R, 9.49, 9.0, 1.82, 1.97, 0.04, 0.68, 'teal');
+  for (let n = 0; n < 5; n++) box(H, R, 9.65 + n * 0.28, 9.15, 0.11, 1.58, 0.17, 0.74 + (n % 2) * 0.13, 'sun', 0.45);
+  for (const i of [8.92, 10.53]) {
+    box(H, R, i, 8.26, 0.49, 0.43, 0.03, 0.17, 'blue', 0.6);
+    H.line(R, [H.p(i + 0.1, 8.38, 0.23), H.p(i + 0.4, 8.38, 0.23)], 'sun', 2);
+  }
+  liddedTin(H, R, 3.03, 1.93, 1.03, 5, 16, 'sun');
+  servicePipe(
+    H,
+    R,
+    [
+      [0.12, 3.34, 0.16],
+      [0.12, 3.34, 3.43],
+      [0.12, 0.12, 3.43],
+      [6.7, 0.12, 3.43]
+    ],
+    'teal',
+    2.7
+  );
 }
 
 const room = world('new-york-hunts-point', 'Hunts Point · Before the Grocers', {
@@ -116,6 +174,7 @@ const room = world('new-york-hunts-point', 'Hunts Point · Before the Grocers', 
     const [x, y] = H.p(i, j, .02);
     shape(H, R, [[x - 5, y], [x, y - 5], [x + 7, y - 1], [x + 1, y + 3]], 'teal', .48, .5);
   }
+  huntsPointDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(8.35, 6.18, 0, HH => actor(HH, R, 8.35, 6.18, u * 14, 'newYorkProduceInspect', {

@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, windowOn, plant } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -26,6 +27,73 @@ function curtain(H, R, open) {
     }
     for (let n = 0; n < 6; n++) oval(H, R, ...H.p(left + width * (n + .3) / 6, .115, 3.67), 2, 3, 'sun', .64);
   }
+}
+
+function lowerEastBedroomDetails(H, R) {
+  drawerUnit(H, R, 7.34, 7.96, 2.13, 1.43, 1.58, 4, 'teal');
+  boundBook(H, R, 7.53, 8.17, 1.23, 0.99, 1.75, 'coral');
+  framedPanel(H, R, 8.9, 8.21, 0.48, 1.77, 0.7, 'sun');
+  const [x, y] = H.p(8.38, 8.77, 1.96);
+  for (const dx of [-5, 5]) oval(H, R, x + dx, y, 4, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x - 1, y],
+      [x + 1, y]
+    ],
+    'blue',
+    1
+  );
+  for (const i of [9.8, 11.25]) H.line(R, [H.p(i, 6.43, 0.04), H.p(i, 6.43, 2.63)], 'blue', 2.4);
+  H.line(R, [H.p(9.8, 6.43, 2.63), H.p(11.25, 6.43, 2.63)], 'sun', 2.7);
+  for (let n = 0; n < 3; n++) {
+    const [qx, qy] = H.p(10.11 + n * 0.43, 6.43, 2.31);
+    stroke(
+      H,
+      R,
+      [
+        [qx - 9, qy],
+        [qx, qy - 10],
+        [qx + 9, qy],
+        [qx - 9, qy]
+      ],
+      'blue',
+      1
+    );
+    shape(
+      H,
+      R,
+      [
+        [qx - 7, qy],
+        [qx + 7, qy],
+        [qx + 13, qy + 10],
+        [qx + 8, qy + 14],
+        [qx + 9, qy + 41],
+        [qx - 9, qy + 41],
+        [qx - 8, qy + 14],
+        [qx - 13, qy + 10]
+      ],
+      ['coral', 'paper', 'teal'][n],
+      0.55,
+      0.7
+    );
+    if (n === 0)
+      H.line(
+        R,
+        [
+          [qx + 6, qy + 10],
+          [qx + 11, qy + 10]
+        ],
+        'paper',
+        2
+      );
+  }
+  shallowTray(H, R, 9.72, 6.64, 1.66, 0.77, 0.03, 'teal');
+  for (const i of [10.15, 10.91]) oval(H, R, ...H.p(i, 6.99, 0.22), 10, 4, 'blue', 0.6);
+  slattedCrate(H, R, 2.2, 9.86, 1.84, 1.25, 0.02, 0.78, 'sun');
+  for (let n = 0; n < 3; n++) foldedCloth(H, R, 2.36, 10.01, 1.49, 0.91, 0.87 + n * 0.12, ['paper', 'coral', 'teal'][n], 'paper');
+  satchel(H, R, 6.7, 10.94, 0.04, 'blue', 0.8);
+  framedPanel(H, R, 5.79, 0.18, 1.12, 1.73, 1.09, 'coral');
 }
 
 const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other Morning', {
@@ -111,6 +179,7 @@ const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other 
   const [px, py] = H.p(.12, 10.73, 2.09);
   oval(H, R, px, py, 13, 11, 'coral', .57);
   shape(H, R, [[px - 18, py + 17], [px, py - 2], [px + 20, py + 14]], 'teal', .54, .6);
+  lowerEastBedroomDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), open = ease((u - .23) / .14) * (1 - ease((u - .53) / .17));
   curtain(H, R, open);

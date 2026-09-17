@@ -1,3 +1,4 @@
+import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -97,6 +98,37 @@ function shelter(H, R) {
   shape(H, R, [[ux - 3, uy], [ux - 8, uy - 42], [ux + 5, uy - 43], [ux + 5, uy - 2]], 'coral', .63);
   shape(H, R, H.tile(4.7, 10.56, 2.3, .71, .2), 'sun', .2);
   for (let k = 0; k < 8; k++) H.dot(...H.p(4.91 + k * .26, 10.86, .22), 1.4, 'blue', .35);
+  lammaParcelsDetails(H, R);
+}
+
+function lammaParcelsDetails(H, R) {
+  drawerUnit(H, R, 9.03, 3.92, 2.07, 1.21, 1.16, 3, 'teal', 0.18);
+  shallowTray(H, R, 9.22, 4.1, 1.02, 0.85, 1.52, 'sun');
+  coiledLine(H, R, 9.73, 4.5, 1.73, 10, 'coral');
+  handTool(H, R, 9.81, 4.61, 1.75, 'scissors', 'blue');
+  boundBook(H, R, 10.43, 4.11, 0.48, 0.78, 1.52, 'teal');
+  shelfUnit(H, R, 0.56, 8.18, 2.2, 1.09, 0.18, [0.13, 1.01, 1.8], 'sun');
+  foldedCloth(H, R, 0.74, 8.32, 1.78, 0.78, 0.45, 'teal', 'paper');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 1 + n * 0.62, 8.7, 1.33, 6, 15, ['paper', 'coral', 'sun'][n]);
+  satchel(H, R, 1.73, 8.73, 2.13, 'blue', 0.75);
+  shallowTray(H, R, 8.26, 8.48, 1.44, 1.34, 0.18, 'teal');
+  for (let n = 0; n < 3; n++) coiledLine(H, R, 8.61 + n * 0.36, 9.12, 0.38, 7, 'sun');
+  servicePipe(
+    H,
+    R,
+    [
+      [11.51, 2.64, 0.21],
+      [11.51, 2.64, 3.44],
+      [10.49, 2.64, 3.44]
+    ],
+    'teal',
+    2.4
+  );
+  for (const i of [3.55, 7.25]) {
+    box(H, R, i, 7.01, 0.42, 0.36, 0.2, 0.12, 'blue', 0.7);
+    shape(H, R, [H.p(i, 7.01, 0.32), H.p(i + 0.42, 7.01, 0.32), H.p(i + 0.42, 7.37, 0.2)], i < 4 ? 'sun' : 'coral', 0.6, 0.6);
+  }
+  framedPanel(H, R, 6.6, 2.53, 1.36, 1.96, 0.86, 'teal');
 }
 
 const room = world('hong-kong-lamma-parcels', 'Lamma · The last parcel fits', { floor: 'paper', tone: .6, wall: false, head: 20 }, shelter, (H, R, t) => {

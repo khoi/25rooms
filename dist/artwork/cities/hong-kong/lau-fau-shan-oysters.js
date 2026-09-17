@@ -1,3 +1,4 @@
+import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -90,6 +91,35 @@ function shed(H, R) {
   box(H, R, 10.33, 8.89, .91, 1.3, .73, .06, 'coral', .32);
   shell(H, R, ...H.p(10.67, 9.5, .82), .72, .3, true);
   H.line(R, [H.p(2.75, 10.88, .02), H.p(9.11, 10.88, .02)], 'paper', 2.3, { tone: .8 });
+  lauFauShanOystersDetails(H, R);
+}
+
+function lauFauShanOystersDetails(H, R) {
+  shelfUnit(H, R, 0.3, 2.26, 1.94, 1.1, 0.03, [0.13, 1.02, 1.92], 'teal');
+  for (let n = 0; n < 3; n++) liddedTin(H, R, 0.7 + n * 0.57, 2.82, 0.31, 6, 17, ['paper', 'sun', 'teal'][n]);
+  shallowTray(H, R, 0.48, 2.41, 1.56, 0.75, 1.16, 'paper');
+  handTool(H, R, 0.93, 2.79, 1.37, 'brush', 'coral');
+  handTool(H, R, 1.57, 2.93, 1.37, 'trowel', 'sun');
+  foldedCloth(H, R, 0.49, 2.45, 1.52, 0.72, 2.06, 'paper', 'teal');
+  slattedCrate(H, R, 7.1, 9.9, 1.85, 1.17, 0.02, 0.67, 'teal');
+  for (let n = 0; n < 6; n++) shell(H, R, ...H.p(7.4 + (n % 3) * 0.52, 10.2 + Math.floor(n / 3) * 0.38, 0.73), 0.38, n * 0.5, true);
+  shallowTray(H, R, 8.75, 5.49, 1.67, 1.29, 0.03, 'paper');
+  for (let n = 0; n < 4; n++) shell(H, R, ...H.p(9.08 + (n % 2) * 0.65, 5.83 + Math.floor(n / 2) * 0.45, 0.23), 0.46, n * 0.4);
+  servicePipe(
+    H,
+    R,
+    [
+      [0.13, 5.62, 0.14],
+      [0.13, 5.62, 1.82],
+      [0.62, 5.62, 1.82]
+    ],
+    'teal',
+    2.8
+  );
+  coiledLine(H, R, 1.17, 5.61, 0.06, 18, 'teal');
+  boundBook(H, R, 10.16, 8.94, 0.69, 0.63, 0.82, 'blue');
+  satchel(H, R, 10.73, 1.09, 0.06, 'coral', 0.67);
+  for (const i of [3.21, 4.39, 7.17]) H.line(R, [H.p(i, 7.19, 0.28), H.p(i, 7.19, 0.81)], 'paper', 1.5);
 }
 
 const room = world('hong-kong-lau-fau-shan-oysters', 'Lau Fau Shan · Shells after the tide', { floor: 'teal', tone: .18, wall: 'paper', wallTone: .9, height: 3.38, head: 20 }, shed, (H, R, t) => {

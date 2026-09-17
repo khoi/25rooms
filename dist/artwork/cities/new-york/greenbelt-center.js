@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, loop, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -28,6 +29,48 @@ function roundedTable(H, R) {
   shape(H, R, loop(lower, 1), 'coral', .46, .7);
   shape(H, R, loop(upper, 1), 'sun', .42, .85);
   H.line(R, [H.p(4.16, 5.41, 1.07), H.p(7.67, 5.41, 1.07)], 'coral', .6, { tone: .25 });
+}
+
+function greenbeltCenterDetails(H, R) {
+  drawerUnit(H, R, 8.05, 0.46, 3.15, 1.08, 1.16, 4, 'teal');
+  shallowTray(H, R, 8.25, 0.63, 1.28, 0.76, 1.33, 'paper');
+  for (let n = 0; n < 3; n++) cone(H, R, ...H.p(8.55 + n * 0.33, 1.0, 1.57), 0.45 + n * 0.08);
+  shallowTray(H, R, 9.77, 0.63, 1.18, 0.77, 1.33, 'sun');
+  for (let n = 0; n < 3; n++) leaf(H, R, ...H.p(10.06 + n * 0.26, 0.99, 1.57), 0.45, ['teal', 'coral', 'sun'][n], n * 0.4, n === 1);
+  framedPanel(H, R, 4.25, 0.16, 1.58, 1.69, 1.28, 'teal');
+  framedPanel(H, R, 6.23, 0.16, 1.39, 1.78, 1.09, 'sun');
+  table(H, R, 0.94, 9.14, 2.67, 1.65, 0.67, 'sun');
+  boundBook(H, R, 1.13, 9.32, 1.15, 1.2, 0.82, 'teal');
+  shallowTray(H, R, 2.49, 9.32, 0.88, 1.21, 0.82, 'paper');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(2.91, 9.6 + n * 0.34, 1.04);
+    oval(H, R, x, y, 6, 4, 'paper', 1);
+    oval(H, R, x, y, 3, 2, 'teal', 0.3);
+  }
+  slattedCrate(H, R, 1.14, 9.36, 1.92, 1.24, 0.02, 0.48, 'teal');
+  foldedCloth(H, R, 1.31, 9.53, 1.54, 0.87, 0.58, 'paper', 'coral');
+  const [x, y] = H.p(10.91, 6.08, 0.04);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x - 6, y - 60]
+    ],
+    'sun',
+    2.5
+  );
+  oval(H, R, x - 8, y - 75, 12, 15, 'paper', 0.5);
+  for (let n = -2; n < 3; n++)
+    H.line(
+      R,
+      [
+        [x - 17, y - 74 + n * 3],
+        [x + 2, y - 74 + n * 3]
+      ],
+      'teal',
+      0.6
+    );
+  satchel(H, R, 9.67, 10.4, 0.03, 'coral', 0.8);
 }
 
 const room = world('new-york-greenbelt-center', 'Staten Island · The Leaf Table', { floor: 'paper', tone: .63, wall: 'teal', wallTone: .15, pattern: 'boards', height: 3.55, head: 20 }, (H, R) => {
@@ -110,6 +153,7 @@ const room = world('new-york-greenbelt-center', 'Staten Island · The Leaf Table
   for (let n = 0; n < 6; n++) H.line(R, [H.p(9.16 + n * .2, 9.2, .7), H.p(9.16 + n * .2, 9.2, 1.11)], 'blue', .55);
   stroke(H, R, [H.p(9.3, 8.55, 1.17), H.p(9.7, 8.51, 1.53), H.p(10.1, 8.56, 1.17)], 'blue', 1.5);
   cone(H, R, ...H.p(10.86, 10.62, .04), .7);
+  greenbeltCenterDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   actor(H, R, 8.45, 5.39, u * 18, 'newYorkLeafGuide', { shirt: ['paper', 1], vest: ['teal', .62], hairStyle: 'curly', face: 'sw', glasses: true }, .04, 1.31);

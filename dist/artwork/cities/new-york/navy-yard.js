@@ -1,3 +1,4 @@
+import { drawerUnit, shallowTray, foldedCloth, handTool, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, bottle, cycle, TAU, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -25,6 +26,51 @@ function clamp(H, R, i, j, z, size = 1) {
   stroke(H, R, [[x - 13 * size, y - 9 * size], [x - 19 * size, y - 9 * size], [x - 19 * size, y + 16 * size], [x + 9 * size, y + 16 * size], [x + 9 * size, y - 5 * size]], 'blue', 3 * size);
   H.line(R, [[x + 9 * size, y - 12 * size], [x + 9 * size, y + 5 * size]], 'teal', 2 * size);
   H.line(R, [[x + 3 * size, y - 12 * size], [x + 15 * size, y - 12 * size]], 'coral', 2 * size);
+}
+
+function navyYardDetails(H, R) {
+  drawerUnit(H, R, 2.58, 0.44, 4.13, 1.11, 1.37, 5, 'teal');
+  shallowTray(H, R, 2.8, 0.61, 1.55, 0.77, 1.54, 'sun');
+  handTool(H, R, 3.32, 0.97, 1.75, 'hammer', 'coral');
+  handTool(H, R, 4.01, 1.02, 1.75, 'brush', 'teal');
+  for (let n = 0; n < 4; n++) box(H, R, 4.7 + n * 0.34, 0.66, 0.22, 0.7, 1.53, 0.09, 'sun', 0.4 + n * 0.1);
+  for (const i of [3.04, 3.93, 4.82, 5.71]) {
+    H.line(R, [H.p(i, 0.15, 2.07), H.p(i, 0.15, 3.15)], 'blue', 2.2);
+    H.line(R, [H.p(i - 0.18, 0.15, 3.09), H.p(i + 0.29, 0.15, 3.09)], 'blue', 3);
+    H.line(R, [H.p(i - 0.14, 0.15, 2.38), H.p(i + 0.28, 0.15, 2.38)], 'coral', 2.2);
+    H.dot(...H.p(i + 0.28, 0.15, 2.24), 3, i === 4.82 ? 'coral' : 'sun');
+  }
+  slattedCrate(H, R, 3.34, 9.02, 2.81, 1.92, 0.03, 0.68, 'sun');
+  for (let n = 0; n < 6; n++) box(H, R, 3.55 + n * 0.4, 9.2, 0.17, 1.51, 0.22, 0.77 + (n % 3) * 0.15, 'sun', 0.38 + (n % 2) * 0.15);
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(6.73 + (n % 2) * 0.4, 9.61 + Math.floor(n / 2) * 0.45, 0.03);
+    stroke(
+      H,
+      R,
+      [
+        [x - 5, y],
+        [x - 10, y - 6],
+        [x - 2, y - 10],
+        [x + 8, y - 7],
+        [x + 3, y - 1]
+      ],
+      'sun',
+      1.5
+    );
+  }
+  framedPanel(H, R, 7.74, 0.12, 1.61, 1.78, 1.21, 'sun');
+  const [x, y] = H.p(9.89, 9.7, 0.94);
+  for (const dx of [-5, 6]) oval(H, R, x + dx, y, 5, 4, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y],
+      [x + 2, y]
+    ],
+    'blue',
+    1
+  );
+  foldedCloth(H, R, 10.3, 3.09, 0.93, 0.63, 0.85, 'paper', 'teal');
 }
 
 const room = world('new-york-navy-yard', 'Brooklyn Navy Yard · Chair in the Making', { floor: 'paper', tone: .66, wall: 'paper', wallTone: .91, height: 3.85, head: 20 }, (H, R) => {
@@ -92,6 +138,7 @@ const room = world('new-york-navy-yard', 'Brooklyn Navy Yard · Chair in the Mak
   box(H, R, 1.51, 9.94, .56, .52, .04, .17, 'teal', .6);
   for (let n = 0; n < 6; n++) H.line(R, [H.p(1.56 + n * .085, 10.48, .05), H.p(1.56 + n * .085, 10.48, .18)], 'blue', .6);
   shape(H, R, [H.p(.37, 2.87, .04), H.p(.99, 2.87, .04), H.p(.99, 3.22, .04), H.p(.37, 3.22, .2)], 'sun', .6, .6);
+  navyYardDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   actor(H, R, 8.02, 6.44, u * 14, 'newYorkChairSand', { shirt: ['coral', .6], apron: ['paper', .95], face: 'se', hairStyle: 'short', prop(h, r, points) {
