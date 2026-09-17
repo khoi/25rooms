@@ -1,4 +1,4 @@
 interface:
   display_name: "create-room"
-  short_description: "Plan 25 richly furnished rooms with close-up discoveries"
-  default_prompt: "Use $create-room for Lisbon, Portugal: research the city and create a comprehensive plan for 25 richly furnished rooms with layered detail and close-up discoveries."
+  short_description: "Design richly built rooms with original-room visual review"
+  default_prompt: "Use $create-room for Lisbon, Portugal: study the original collection, research the city, and plan 25 deeply furnished rooms with developed architecture, complex fixtures, and close-up discoveries."
