@@ -1,12 +1,25 @@
-import { surface, benchFrame, drape } from '../materials.js';
-import { cornice, panelFront, wallRack, taskLight, specimen } from '../joinery.js';
-import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
+import { surface, vessel, bentTube, drape, benchFrame, pendant, branchSpray } from '../materials.js';
+import { masonry, archedBay, cabinetFrame, basin as washBasin } from '../structure.js';
+import { cityView } from '../joinery.js';
+import { shallowTray, foldedCloth, coiledLine, handTool } from '../furnishings.js';
+import { TAU, actor, cycle, ell, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
 const arrange = { ...rest, lean: -8, head: 12, al: 58, ar: 64, el: 48, er: 42 };
-FIGURES.clips.hongKongFlowerArrange = { dur: 14, keys: [[0, arrange], [.15, arrange], [.32, { ...arrange, al: 77, el: 22, ar: 62, head: 18 }], [.46, { ...arrange, al: 64, el: 53, ar: 78, er: 29 }], [.6, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }], [.77, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }], [.94, arrange], [1, arrange]] };
+FIGURES.clips.hongKongFlowerArrange = {
+  dur: 14,
+  keys: [
+    [0, arrange],
+    [0.15, arrange],
+    [0.32, { ...arrange, al: 77, el: 22, ar: 62, head: 18 }],
+    [0.46, { ...arrange, al: 64, el: 53, ar: 78, er: 29 }],
+    [0.6, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }],
+    [0.77, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }],
+    [0.94, arrange],
+    [1, arrange]
+  ]
+};
 
 function stem(H, R, x, y, length, ink, lean = 0, kind = 0) {
   stroke(
@@ -81,296 +94,239 @@ function stem(H, R, x, y, length, ink, lean = 0, kind = 0) {
   H.dot(xx, yy, 1.8, 'sun', 1, { knock: true });
 }
 
-
 function bucket(H, R, i, j, z, ink, count = 6, tall = false) {
   const [x, y] = H.p(i, j, z);
-  shape(H, R, [[x - 13, y - 23], [x + 13, y - 23], [x + 10, y], [x - 10, y]], 'blue', .5, .85);
-  oval(H, R, x, y - 23, 13, 5, 'paper', 1);
-  oval(H, R, x, y - 23, 10, 3, 'teal', .45);
-  for (let q = 0; q < count; q++) stem(H, R, x - 7 + q * 14 / count, y - 24, 24 + q % 3 * 6 + (tall ? 15 : 0), ink, (q - count / 2) * 3.3, tall ? 1 : 0);
-  stroke(H, R, [[x - 12, y - 17], [x - 17, y - 7], [x, y + 3], [x + 17, y - 7], [x + 12, y - 17]], 'paper', .7, .8);
-}
-
-function wrap(H, R, x, y, length = 27) {
-  shape(H, R, [[x - 16, y - length], [x + 15, y - length - 5], [x + 6, y + 10], [x - 3, y + 10]], 'paper', 1, .7);
-  H.line(R, [[x - 8, y - 8], [x + 8, y - 10]], 'coral', 2.2);
-}
-
-function mongKokFlowersDetails(H, R) {
-  shelfUnit(H, R, 10.13, 6.45, 1.34, 1.11, 0.03, [0.1, 0.9, 1.72], 'teal');
-  for (let n = 0; n < 3; n++) liddedTin(H, R, 10.44 + n * 0.34, 6.95, 0.23, 5, 16, ['sun', 'teal', 'paper'][n]);
-  foldedCloth(H, R, 10.29, 6.61, 0.95, 0.77, 1.04, 'paper', 'coral');
-  shallowTray(H, R, 10.28, 6.6, 0.99, 0.74, 1.86, 'sun');
-  for (let n = 0; n < 3; n++) coiledLine(H, R, 10.46 + n * 0.29, 6.96, 2.02, 5, ['teal', 'coral', 'blue'][n]);
-  drawerUnit(H, R, 0.3, 7.81, 2.33, 1.2, 1.18, 3, 'teal');
-  shallowTray(H, R, 0.47, 7.94, 1.94, 0.89, 1.35, 'paper');
-  handTool(H, R, 1.05, 8.32, 1.55, 'scissors', 'coral');
-  coiledLine(H, R, 1.97, 8.44, 1.54, 9, 'sun');
-  for (let n = 0; n < 4; n++) {
-    const [x, y] = H.p(0.61 + n * 0.22, 8.06, 1.53);
-    shape(
-      H,
-      R,
-      [
-        [x - 2, y],
-        [x + 3, y],
-        [x + 1, y - 21]
-      ],
-      'teal',
-      0.5,
-      0.5
-    );
-  }
-  slattedCrate(H, R, 7.3, 9.35, 1.6, 1.24, 0.02, 0.5, 'sun');
-  for (let n = 0; n < 4; n++) {
-    const [x, y] = H.p(7.54 + n * 0.32, 9.96, 0.57);
-    oval(H, R, x, y - 8, 5, 10, 'paper', 0.85);
-    oval(H, R, x, y - 17, 3, 2, 'blue', 0.3);
-  }
-  box(H, R, 3.05, 10.74, 1.25, 0.59, 0.04, 0.06, 'paper', 1);
-  for (let n = 0; n < 3; n++)
-    stroke(H, R, [H.p(3.15, 10.8 + n * 0.12, 0.12), H.p(3.56, 10.77 + n * 0.12, 0.12), H.p(4.15, 10.88 + n * 0.1, 0.12)], 'teal', 1.3);
-  servicePipe(
-    H,
-    R,
-    [
-      [0.18, 9.5, 0.1],
-      [0.18, 9.5, 1.9],
-      [0.66, 9.5, 1.9]
-    ],
-    'blue',
-    2
-  );
-}
-
-function construction(H, R) {
-  cornice(H, R, 'nw', 0.2, 11.8, 3.37, 'teal');
-  wallRack(H, R, 'ne', 6.65, 4.63, 1.27, 1.64, 2, 'teal', (P, z, row) => {
-    for (let n = 0; n < 8; n++) {
-      const [x, y] = P(0.34 + n * 0.55, z + 0.14);
-      if (row === 0) {
-        shape(
-          H,
-          R,
-          [
-            [x - 5, y],
-            [x + 5, y],
-            [x + 4, y - 17],
-            [x - 3, y - 17]
-          ],
-          'paper',
-          1,
-          0.6
-        );
-        oval(H, R, x, y - 17, 4, 2, 'teal', 0.3);
-        H.line(
-          R,
-          [
-            [x - 2, y - 14],
-            [x - 2, y - 4]
-          ],
-          'paper',
-          1.2
-        );
-      } else {
-        oval(H, R, x, y - 5, 7, 7, ['sun', 'coral', 'teal'][n % 3], 0.65);
-        oval(H, R, x, y - 5, 2.5, 2.5, 'paper', 1);
-        H.line(
-          R,
-          [
-            [x + 5, y - 2],
-            [x + 8, y + 5]
-          ],
-          'paper',
-          1.1
-        );
-      }
-    }
-  });
-  for (const j of [1.5, 3.1, 4.7, 6.3]) {
-    box(H, R, 0.11, j, 0.22, 0.17, 0.08, 3.08, 'blue', 0.5);
-    H.line(R, [H.p(0.16, j, 2.6), H.p(1.3, j, 3.16)], 'teal', 1.8);
-  }
-  for (let n = 0; n < 5; n++) {
-    const [x, y] = H.p(0.35, 1.8 + n * 1.6, 3.02);
-    H.line(
-      R,
-      [
-        [x, y - 12],
-        [x, y + 3]
-      ],
-      'sun',
-      1.1
-    );
-    shape(
-      H,
-      R,
-      [
-        [x - 7, y + 3],
-        [x + 7, y + 3],
-        [x + 5, y + 15],
-        [x - 5, y + 15]
-      ],
-      'coral',
-      0.55,
-      0.6
-    );
-    specimen(H, R, x, y + 2, 0.58, 'teal', n % 2 === 0);
-  }
-  for (const i of [4.1, 7.63]) H.line(R, [H.p(i, 5.24, 0.25), H.p(i, 6.43, 0.86)], 'teal', 1.6);
-  for (const j of [5.3, 5.74]) {
-    const [x, y] = H.p(5.35, j, 0.6);
-    oval(H, R, x, y, 18, 5, 'sun', 0.5);
-    oval(H, R, x, y, 5, 2, 'blue', 0.6);
-    H.line(
-      R,
-      [
-        [x + 10, y],
-        [x + 18, y + 13]
-      ],
-      'paper',
-      1.6
-    );
-  }
-  const [x, y] = H.p(5.54, 6.27, 1.16);
-  H.line(
-    R,
-    [
-      [x - 20, y],
-      [x + 23, y - 10]
-    ],
-    'blue',
-    1.6
-  );
-  for (let n = 0; n < 9; n++)
-    H.line(
-      R,
-      [
-        [x - 18 + n * 4, y - 1 - n * 0.85],
-        [x - 17 + n * 4, y - 4 - n * 0.85]
-      ],
-      'sun',
-      0.65
-    );
-  taskLight(H, R, 7.6, 5.33, 1.15, 'coral', -0.8);
-  panelFront(H, R, 0.38, 9.04, 2.14, 0.16, 0.99, 3, 'teal');
-  for (let n = 0; n < 5; n++) {
-    const [px, py] = H.p(9.6, 2.05, 1.01 + n * 0.1);
-    shape(
-      H,
-      R,
-      [
-        [px - 17, py],
-        [px + 15, py - 5],
-        [px + 19, py + 2],
-        [px - 14, py + 7]
-      ],
-      n % 2 ? 'paper' : 'sun',
-      n % 2 ? 1 : 0.3,
-      0.6
-    );
-  }
-  const [px, py] = H.p(8.68, 3.36, 0.05);
   shape(
     H,
     R,
     [
-      [px - 13, py],
-      [px + 13, py],
-      [px + 16, py - 21],
-      [px - 16, py - 21]
+      [x - 13, y - 23],
+      [x + 13, y - 23],
+      [x + 10, y],
+      [x - 10, y]
     ],
-    'teal',
+    'blue',
     0.5,
+    0.85
+  );
+  oval(H, R, x, y - 23, 13, 5, 'paper', 1);
+  oval(H, R, x, y - 23, 10, 3, 'teal', 0.45);
+  for (let q = 0; q < count; q++)
+    stem(H, R, x - 7 + (q * 14) / count, y - 24, 24 + (q % 3) * 6 + (tall ? 15 : 0), ink, (q - count / 2) * 3.3, tall ? 1 : 0);
+  stroke(
+    H,
+    R,
+    [
+      [x - 12, y - 17],
+      [x - 17, y - 7],
+      [x, y + 3],
+      [x + 17, y - 7],
+      [x + 12, y - 17]
+    ],
+    'paper',
+    0.7,
     0.8
   );
-  oval(H, R, px, py - 21, 16, 6, 'blue', 0.6);
-  specimen(H, R, px, py - 21, 0.85, 'teal', true);
-  for (let n = 0; n < 6; n++) {
-    const [ax, ay] = H.p(3.1 + n * 0.26, 10.95, 0.13);
-    H.line(
-      R,
-      [
-        [ax, ay],
-        [ax + 7, ay - 8 - (n % 2) * 5]
-      ],
-      'teal',
-      0.8
-    );
-    oval(H, R, ax + 7, ay - 9 - (n % 2) * 5, 2, 2, 'coral', 0.6);
-  }
 }
 
-const room = world('hong-kong-mong-kok-flowers', 'Mong Kok · Water between stems', { floor: 'paper', tone: .44, wall: 'teal', wallTone: .2, height: 3.6, head: 20 }, (H, R) => {
-  shape(H, R, wallRect(H, 'ne', .5, 6.05, .1, 3.4), 'blue', .24, .8);
-  for (let z = .2; z < 3.4; z += .16) H.line(R, [wallPt(H, 'ne', .54, z, .04), wallPt(H, 'ne', 6, z, .04)], 'blue', .65, { tone: .5 });
-  shape(H, R, wallRect(H, 'ne', 6.55, 11.45, .9, 3.16), 'paper', .8, .8);
-  for (let q = 0; q < 5; q++) {
-    const i = 6.65 + q * .95;
-    H.line(R, [H.p(i, .04, 1.02), H.p(i, .04, 3.07)], 'teal', 1.2);
-    stem(H, R, ...H.p(i + .42, .09, 1.05), 40 + q % 2 * 8, q % 2 ? 'sun' : 'paper', 3, 1);
+function wrap(H, R, x, y, length = 27) {
+  shape(
+    H,
+    R,
+    [
+      [x - 16, y - length],
+      [x + 15, y - length - 5],
+      [x + 6, y + 10],
+      [x - 3, y + 10]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  H.line(
+    R,
+    [
+      [x - 8, y - 8],
+      [x + 8, y - 10]
+    ],
+    'coral',
+    2.2
+  );
+}
+
+const room = world(
+  'hong-kong-mong-kok-flowers',
+  'Mong Kok · Water between stems',
+  { floor: 'paper', tone: 1, wall: false, head: 70 },
+  (H, R) => {
+    surface(H, R, H.tile(0, 0, 12, 12, 0.02), 'teal', 0.09);
+    for (let j = 0.2; j < 12; j += 0.74) H.line(R, [H.p(0.1, j, 0.03), H.p(11.9, j, 0.03)], 'blue', 0.45, { tone: 0.2 });
+    masonry(H, R, 'nw', 0, 12, 0, 4.24, 'paper');
+    masonry(H, R, 'ne', 0, 12, 0, 4.65, 'paper');
+    archedBay(H, R, 'ne', 5.1, 6.26, 1.91, 2.36, 'teal', (P) => cityView(H, R, P, 6.26, 2.36));
+    for (let row = 0; row < 3; row++) {
+      const i = 0.34 + row * 0.8,
+        z = 2.18 - row * 0.73;
+      benchFrame(H, R, i, 0.71, 0.8, 5.79, z, 'teal');
+      for (let n = 0; n < 5; n++) bucket(H, R, i + 0.41, 1.22 + n * 1.13, z + 0.04, ['coral', 'paper', 'sun'][(n + row) % 3], 5, row === 0);
+    }
+    for (const j of [1.22, 4.55]) {
+      const [x, y] = H.p(0.25, j, 3.9);
+      bentTube(
+        H,
+        R,
+        [
+          [0.12, j, 4.13],
+          [0.62, j, 3.84]
+        ],
+        1.4,
+        'teal'
+      );
+      for (let n = 0; n < 4; n++) branchSpray(H, R, x + (n - 2) * 4, y + 20, 0.8, 'teal', n % 2 ? 1 : -1);
+      vessel(H, R, 0.43, j, 3.1, 10, 14, 'coral');
+    }
+    cabinetFrame(H, R, 4.18, 0.56, 1.63, 1.8, 0.08, 1.2, 1, 'sun', (i, j, w, d, z) => {
+      for (let n = 0; n < 4; n++) surface(H, R, H.tile(i + 0.04, j + 0.07, w - 0.08, d - 0.14, z + 0.12 + n * 0.18), 'paper', 1, 0.4);
+    });
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = H.p(4.35 + n * 0.34, 1.14, 1.45);
+      surface(H, R, ell(x, y, 6, 7), 'coral', 0.5);
+      surface(H, R, ell(x, y, 2.8, 3), 'paper', 1);
+    }
+    benchFrame(H, R, 4.11, 4.65, 3.92, 2.03, 1.14, 'sun');
+    drape(H, R, 4.19, 4.78, 1.63, 1.83, 1.16, 0.63, 'paper');
+    for (let n = 0; n < 3; n++) surface(H, R, H.tile(6.41, 4.93, 1.41, 1.03, 1.17 + n * 0.022), n === 2 ? 'sun' : 'paper', n === 2 ? 0.15 : 1, 0.4);
+    for (let n = 0; n < 7; n++) {
+      const [x, y] = H.p(4.52 + n * 0.27, 5.39, 1.19);
+      stem(H, R, x, y, 22 + (n % 3) * 4, n % 2 ? 'paper' : 'coral', 12, 0);
+    }
+    handTool(H, R, 7.38, 6.25, 1.24, 'scissors', 'coral');
+    vessel(H, R, 7.52, 5.21, 1.2, 8, 13, 'teal');
+    for (let n = 0; n < 6; n++) H.line(R, [H.p(5.28 + n * 0.27, 6.81, 0.03), H.p(5.09 + n * 0.27, 7.3, 0.03)], 'teal', 0.8);
+    benchFrame(H, R, 9.55, 2.35, 1.79, 2.35, 1.12, 'teal');
+    washBasin(H, R, 9.63, 2.43, 1.62, 2.17, 1.14);
+    coiledLine(H, R, 10.43, 5.32, 0.04, 24, 'teal');
+    for (let n = 0; n < 3; n++) bucket(H, R, 10.54, 6.24 + n * 0.71, 0.04, ['sun', 'coral', 'paper'][n], 5, false);
+    cabinetFrame(H, R, 0.54, 8.18, 2.67, 2.52, 0.07, 1.16, 2, 'teal', (i, j, w, d, z, h, n) => {
+      for (let q = 0; q < 2; q++) vessel(H, R, i + w * 0.5, j + 0.35 + q * 0.86, z + 0.11, 10, 23, n ? 'paper' : 'teal', true);
+    });
+    for (let n = 0; n < 3; n++) wrap(H, R, ...H.p(0.95 + n * 0.77, 9.14, 1.33), 37);
+    bentTube(
+      H,
+      R,
+      [
+        [3.09, 9.03, 0.1],
+        [3.09, 9.03, 2.2]
+      ],
+      2,
+      'teal'
+    );
+    const [rx, ry] = H.p(3.09, 9.03, 2.2);
+    surface(H, R, ell(rx, ry, 21, 21), 'teal', 0.37);
+    surface(H, R, ell(rx, ry, 15, 15), 'paper', 1);
+    for (let n = 0; n < 11; n++) {
+      const a = (n * TAU) / 11;
+      stem(H, R, rx + Math.cos(a) * 20, ry + Math.sin(a) * 20, 6, 'paper', Math.cos(a) * 3, 0);
+    }
+    shallowTray(H, R, 7.5, 9.77, 1.44, 1.39, 0.03, 'sun');
+    foldedCloth(H, R, 7.69, 10, 1.06, 1.02, 0.21, 'paper', 'coral');
+    pendant(H, R, 6.48, 4.94, 4.52, 3.38, 'coral', 0.98);
+  },
+  (H, R, t) => {
+    const u = cycle(t, 14);
+    actor(
+      H,
+      R,
+      6.62,
+      7.16,
+      t,
+      'hongKongFlowerArrange',
+      {
+        shirt: ['paper', 1],
+        apron: ['teal', 0.7],
+        hairStyle: 'bun',
+        face: 'nw',
+        prop(HH, RR, points) {
+          const [x, y] = points.farHand;
+          const twist = Math.sin(TAU * u) * 4;
+          wrap(HH, RR, x, y + 4, 24);
+          for (let q = 0; q < 5; q++) stem(HH, RR, x + q - 2, y + 4, 29 + (q % 3) * 4, q % 2 ? 'paper' : 'coral', (q - 2) * 5 + twist);
+          const [nx, ny] = points.nearHand;
+          stroke(
+            HH,
+            RR,
+            [
+              [nx, ny],
+              [x + 2, y - 5],
+              [x + 9, y - 8]
+            ],
+            'coral',
+            1.2
+          );
+        }
+      },
+      0,
+      1.38
+    );
+    actor(
+      H,
+      R,
+      9.55,
+      8.66,
+      0,
+      'hold',
+      {
+        shirt: ['sun', 0.63],
+        face: 'nw',
+        hairStyle: 'short',
+        prop(HH, RR, points) {
+          const [x, y] = points.nearHand;
+          stroke(
+            HH,
+            RR,
+            [
+              [x - 7, y + 10],
+              [x - 6, y],
+              [x + 5, y],
+              [x + 8, y + 10]
+            ],
+            'blue',
+            1
+          );
+          shape(
+            HH,
+            RR,
+            [
+              [x - 11, y + 8],
+              [x + 12, y + 8],
+              [x + 10, y + 30],
+              [x - 10, y + 30]
+            ],
+            'paper',
+            1,
+            0.8
+          );
+          oval(HH, RR, x, y + 18, 5, 4, 'coral', 0.6);
+        }
+      },
+      0,
+      1.28
+    );
+    const [x, y] = H.p(3.3, 2.25, 0.55);
+    H.opacity(0.15 + 0.12 * Math.sin(u * TAU) ** 2, () =>
+      H.outline(
+        R,
+        [
+          [x - 6, y - 4],
+          [x + 5, y - 3],
+          [x + 7, y]
+        ],
+        'paper',
+        0.8
+      )
+    );
   }
-  for (let q = 0; q < 10; q++) {
-    const j = .15 + q * .9;
-    const awning = [H.p(.06, j, 3.56), H.p(1.56, j, 3.28), H.p(1.56, j + .87, 3.28), H.p(.06, j + .87, 3.56)];
-    shape(H, R, awning, q % 2 ? 'paper' : 'coral', q % 2 ? 1 : .58, .65);
-    shape(H, R, H.faceJ(1.56, j, .87, 3.03, 3.28), q % 2 ? 'paper' : 'coral', q % 2 ? 1 : .58, .65);
-  }
-  table(H, R, 1.1, 1.2, 1.25, 6.15, .42, 'teal');
-  for (let q = 0; q < 5; q++) bucket(H, R, 1.72, 1.72 + q * 1.12, .59, ['coral', 'paper', 'sun', 'coral', 'paper'][q], 6, q % 2 === 0);
-  for (let q = 0; q < 5; q++) bucket(H, R, 3.3 + q * 1.42, 2.25 + Math.sin(q * .68) * .9, .03, ['sun', 'coral', 'paper', 'coral', 'sun'][q], 7, q === 3);
-  benchFrame(H,R,4,5.15,3.85,1.4,1.12,'sun');
-  drape(H,R,4.02,5.23,.87,1.27,1.14,.56,'paper');
-  shape(H, R, H.tile(4.14, 5.31, 1.52, 1.03, 1.14), 'teal', .22, .5);
-  for (let q = 0; q < 4; q++) {
-    const [x, y] = H.p(4.45 + q * .2, 5.8, 1.16);
-    stem(H, R, x, y, 30 + q * 3, 'coral', 21 + q * 2);
-  }
-  const [sx, sy] = H.p(7.24, 5.87, 1.16);
-  for (const dx of [-5, 5]) oval(H, R, sx + dx, sy, 4, 3, 'coral', .7);
-  H.line(R, [[sx - 3, sy - 1], [sx + 10, sy - 13]], 'blue', 1.4);
-  H.line(R, [[sx + 3, sy - 1], [sx - 6, sy - 13]], 'blue', 1.4);
-  for (let q = 0; q < 4; q++) box(H, R, 6.23, 5.25, .67, .64, 1.14 + q * .035, .025, q === 3 ? 'sun' : 'paper', q === 3 ? .2 : 1);
-  const [rx, ry] = H.p(7.3, 5.4, 1.19);
-  oval(H, R, rx, ry - 7, 8, 9, 'coral', .5);
-  oval(H, R, rx, ry - 7, 3, 4, 'paper', 1);
-  stroke(H, R, [[rx + 7, ry - 6], [rx + 19, ry - 1], [rx + 14, ry + 7]], 'coral', 1.5);
-  box(H, R, 4.24, 5.45, 1.2, .86, .02, .53, 'blue', .35);
-  for (let q = 0; q < 6; q++) H.line(R, [H.p(4.36 + q * .17, 6.32, .12), H.p(4.36 + q * .17, 6.32, .44)], 'paper', .6);
-  table(H, R, 9.35, 1.42, 1.85, 1.35, .72, 'coral');
-  for (let q = 0; q < 3; q++) wrap(H, R, ...H.p(9.77 + q * .46, 1.95, .87), 32 + q * 4);
-  const [wx, wy] = H.p(10.7, 5.12, .02);
-  shape(H, R, [[wx - 17, wy], [wx + 16, wy], [wx + 12, wy - 33], [wx - 11, wy - 33]], 'sun', .65, .9);
-  oval(H, R, wx, wy - 33, 12, 5, 'paper', 1);
-  stroke(H, R, [[wx - 11, wy - 18], [wx - 26, wy - 22], [wx - 34, wy - 31]], 'sun', 5);
-  stroke(H, R, [[wx + 11, wy - 27], [wx + 25, wy - 32], [wx + 24, wy - 8], [wx + 15, wy - 8]], 'blue', 1.6);
-  shape(H, R, H.tile(1.05, 9.95, 2.15, 1.13, .015), 'blue', .4, .6);
-  for (let q = 0; q < 9; q++) H.line(R, [H.p(1.13 + q * .23, 9.99, .03), H.p(1.13 + q * .23, 11.01, .03)], 'paper', .7);
-  bucket(H, R, 3.92, 9.93, .02, 'paper', 5);
-  for (const [i, j, s] of [[3.3, 7.7, 18], [8.1, 9.1, 26], [10.1, 6.4, 17]]) H.tint(H.tile(i, j, s / 20, .45, .015), 'teal', .16);
-  const [lx, ly] = H.p(6.4, 10.57, .03);
-  shape(H, R, [[lx - 5, ly], [lx + 4, ly - 7], [lx + 11, ly - 2], [lx + 3, ly + 2]], 'coral', .6, .4);
-  mongKokFlowersDetails(H, R);
-  construction(H, R);
-}, (H, R, t) => {
-  const u = cycle(t, 14);
-  actor(H, R, 6.62, 7.16, t, 'hongKongFlowerArrange', { shirt: ['paper', 1], apron: ['teal', .7], hairStyle: 'bun', face: 'nw', prop(HH, RR, points) {
-    const [x, y] = points.farHand;
-    const twist = Math.sin(TAU * u) * 4;
-    wrap(HH, RR, x, y + 4, 24);
-    for (let q = 0; q < 5; q++) stem(HH, RR, x + q - 2, y + 4, 29 + q % 3 * 4, q % 2 ? 'paper' : 'coral', (q - 2) * 5 + twist);
-    const [nx, ny] = points.nearHand;
-    stroke(HH, RR, [[nx, ny], [x + 2, y - 5], [x + 9, y - 8]], 'coral', 1.2);
-  } }, 0, 1.38);
-  actor(H, R, 9.55, 8.66, 0, 'hold', { shirt: ['sun', .63], face: 'nw', hairStyle: 'short', prop(HH, RR, points) {
-    const [x, y] = points.nearHand;
-    stroke(HH, RR, [[x - 7, y + 10], [x - 6, y], [x + 5, y], [x + 8, y + 10]], 'blue', 1);
-    shape(HH, RR, [[x - 11, y + 8], [x + 12, y + 8], [x + 10, y + 30], [x - 10, y + 30]], 'paper', 1, .8);
-    oval(HH, RR, x, y + 18, 5, 4, 'coral', .6);
-  } }, 0, 1.28);
-  const [x, y] = H.p(3.3, 2.25, .55);
-  H.opacity(.15 + .12 * Math.sin(u * TAU) ** 2, () => H.outline(R, [[x - 6, y - 4], [x + 5, y - 3], [x + 7, y]], 'paper', .8));
-});
+);
 
 room.loopSeconds = 14;
 export default room;

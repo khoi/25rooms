@@ -1,14 +1,37 @@
-import { benchFrame, metal, surface } from '../materials.js';
-import { cornice, recessedFrame, panelFront } from '../joinery.js';
-import { shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
+import { benchFrame, bentTube, cushion, metal, surface } from '../materials.js';
+
+import { TAU, actor, box, cycle, ell, oval, shape, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
 const looking = { ...rest, lean: -4, head: 16, al: 24, ar: 27, el: 36, er: 32 };
-FIGURES.clips.newYorkPanoramaFind = { dur: 18, keys: [[0, looking], [.13, looking], [.3, { ...looking, ar: 106, er: 4, head: 21 }], [.53, { ...looking, ar: 104, er: 8, head: 19 }], [.66, { ...looking, ar: 95, er: 13, head: 14 }], [.8, looking], [1, looking]] };
-FIGURES.clips.newYorkPanoramaWheelFind = { dur: 18, keys: FIGURES.clips.newYorkPanoramaFind.keys.map(([time, pose]) => [time, { ...pose, drop: .47, ll: 84, lr: 80, kl: -84, kr: -80 }]) };
-FIGURES.clips.newYorkPanoramaLean = { dur: 18, keys: [[0, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [.24, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [.48, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }], [.7, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }], [.91, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [1, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }]] };
+FIGURES.clips.newYorkPanoramaFind = {
+  dur: 18,
+  keys: [
+    [0, looking],
+    [0.13, looking],
+    [0.3, { ...looking, ar: 106, er: 4, head: 21 }],
+    [0.53, { ...looking, ar: 104, er: 8, head: 19 }],
+    [0.66, { ...looking, ar: 95, er: 13, head: 14 }],
+    [0.8, looking],
+    [1, looking]
+  ]
+};
+FIGURES.clips.newYorkPanoramaWheelFind = {
+  dur: 18,
+  keys: FIGURES.clips.newYorkPanoramaFind.keys.map(([time, pose]) => [time, { ...pose, drop: 0.47, ll: 84, lr: 80, kl: -84, kr: -80 }])
+};
+FIGURES.clips.newYorkPanoramaLean = {
+  dur: 18,
+  keys: [
+    [0, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }],
+    [0.24, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }],
+    [0.48, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }],
+    [0.7, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }],
+    [0.91, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }],
+    [1, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }]
+  ]
+};
 
 function modelBlock(H, R, i, j, w, d, height, ink = 'paper') {
   box(H, R, i, j, w, d, 0.77, height, ink, ink === 'paper' ? 1 : 0.6);
@@ -27,346 +50,369 @@ function modelBlock(H, R, i, j, w, d, height, ink = 'paper') {
 }
 
 function cityModel(H, R) {
-  benchFrame(H, R, 2.35, 2.09, 7.08, 6.98, 0.6, 'teal');
-  box(H, R, 2.27, 2.01, 7.24, 7.14, 0.61, 0.14, 'paper', 1);
-  shape(H, R, H.tile(2.42, 2.16, 6.94, 6.84, 0.77), 'teal', 0.66, 0.6);
-  const land = [
+  const rim = [
+    [2.43, 2.06],
+    [8.81, 2.06],
+    [9.52, 2.77],
+    [9.52, 8.36],
+    [8.83, 9.08],
+    [3.02, 9.08],
+    [2.29, 8.31],
+    [2.29, 2.8]
+  ];
+  for (const [i, j] of [
+    [2.7, 2.6],
+    [8.84, 2.6],
+    [2.7, 8.31],
+    [8.84, 8.31]
+  ])
+    metal(H, R, i, j, 0.26, 0.29, 0.04, 0.55, 'teal');
+  surface(
+    H,
+    R,
+    rim.map(([i, j]) => H.p(i, j, 0.73)),
+    'teal',
+    0.63,
+    2.1
+  );
+  for (let n = 0; n < rim.length; n++) {
+    const a = rim[n],
+      b = rim[(n + 1) % rim.length];
+    surface(H, R, [H.p(...a, 0.73), H.p(...b, 0.73), H.p(...b, 0.47), H.p(...a, 0.47)], 'paper', 1, 0.6);
+  }
+  const lands = [
     [
-      [2.64, 2.35],
-      [4.91, 2.35],
-      [4.82, 3.28],
-      [4.26, 4.07],
-      [4.17, 5.59],
-      [3.61, 6.2],
-      [2.64, 6.13]
+      [2.63, 2.4],
+      [4.27, 2.4],
+      [4.62, 3.02],
+      [4.07, 4.44],
+      [3.91, 6.28],
+      [2.64, 6.39]
     ],
     [
-      [5.75, 2.36],
-      [9.11, 2.36],
-      [9.11, 5.27],
-      [7.41, 5.45],
-      [6.47, 4.95],
-      [6.13, 3.66]
+      [5.55, 2.38],
+      [9.14, 2.73],
+      [9.13, 4.92],
+      [7.12, 5.47],
+      [6.31, 4.73]
     ],
     [
-      [6.77, 5.61],
-      [9.11, 5.53],
-      [9.11, 8.7],
-      [5.53, 8.7],
-      [5.7, 7.46],
-      [6.47, 6.98]
+      [6.77, 5.74],
+      [9.17, 5.51],
+      [9.17, 8.42],
+      [8.6, 8.76],
+      [5.78, 8.76],
+      [5.72, 7.93]
     ],
     [
-      [4.83, 3.05],
-      [5.53, 3.09],
-      [6.15, 6.52],
-      [5.63, 7.39],
-      [5.04, 6.68],
-      [4.44, 4.21]
+      [4.82, 3.0],
+      [5.27, 3.09],
+      [6.24, 6.64],
+      [5.7, 7.4],
+      [5.14, 6.64],
+      [4.4, 4.24]
     ],
     [
-      [2.65, 7.15],
-      [3.53, 6.96],
-      [4.56, 7.75],
-      [4.47, 8.7],
-      [2.65, 8.7]
+      [2.74, 7.37],
+      [3.8, 6.93],
+      [4.65, 7.58],
+      [4.49, 8.75],
+      [3.15, 8.75],
+      [2.64, 8.15]
     ]
   ];
-  for (const polygon of land)
-    shape(
+  for (const land of lands)
+    surface(
       H,
       R,
-      polygon.map(([i, j]) => H.p(i, j, 0.79)),
+      land.map(([i, j]) => H.p(i, j, 0.77)),
       'sun',
-      0.27,
-      0.7
+      0.23,
+      0.8
     );
-  for (let i = 2.8; i < 4.1; i += 0.34)
-    for (let j = 2.63; j < 5.88; j += 0.43) modelBlock(H, R, i, j, 0.22, 0.29, 0.11 + (Math.floor(j * 10) % 3) * 0.04, 'paper');
-  for (let i = 6.6; i < 8.95; i += 0.44)
-    for (let j = 2.65; j < 4.98; j += 0.41) {
-      if (i > 7.87 && j < 3.5) continue;
-      modelBlock(H, R, i, j, 0.3, 0.25, 0.1 + (Math.floor(i * 10 + j * 10) % 4) * 0.035, Math.floor(i * 10) % 3 ? 'paper' : 'coral');
+  const inside = (x, y, poly) => {
+    let hit = false;
+    for (let a = 0, b = poly.length - 1; a < poly.length; b = a++) {
+      const [ax, ay] = poly[a],
+        [bx, by] = poly[b];
+      if (ay > y !== by > y && x < ((bx - ax) * (y - ay)) / (by - ay) + ax) hit = !hit;
     }
-  for (let i = 6.65; i < 8.96; i += 0.47)
-    for (let j = 6.09; j < 8.58; j += 0.44) modelBlock(H, R, i, j, 0.33, 0.28, 0.12 + (Math.floor(j * 10) % 3) * 0.055);
-  for (let j = 3.29; j < 6.78; j += 0.32) {
-    const i = 4.76 + (j - 3.29) * 0.2;
-    for (let k = 0; k < 2; k++) {
-      if (j > 3.95 && j < 4.67 && k === 0) continue;
-      modelBlock(H, R, i + k * 0.33, j, 0.24, 0.22, j > 4.7 && j < 5.7 ? 0.35 + k * 0.19 : 0.13 + k * 0.07);
+    return hit;
+  };
+  for (let row = 0; row < 17; row++)
+    for (let col = 0; col < 18; col++) {
+      const i = 2.77 + col * 0.348,
+        j = 2.56 + row * 0.36;
+      if (!lands.some((poly) => inside(i, j, poly) && inside(i + 0.19, j + 0.19, poly))) continue;
+      if (i > 4.57 && i < 5.31 && j > 3.76 && j < 4.51) continue;
+      const tall = i > 4.76 && i < 6.21 && j > 4.54 && j < 6.66;
+      modelBlock(
+        H,
+        R,
+        i,
+        j,
+        0.21,
+        0.23,
+        tall ? 0.27 + (row % 4) * 0.16 : 0.07 + ((row + col) % 4) * 0.044,
+        (row + col) % 9 === 0 ? 'coral' : 'paper'
+      );
     }
-  }
-  shape(H, R, [H.p(4.86, 4.06, 0.82), H.p(5.14, 4.06, 0.82), H.p(5.3, 4.72, 0.82), H.p(5.01, 4.72, 0.82)], 'teal', 0.85, 0.5);
-  for (const [i, j, height] of [
-    [5.21, 4.91, 0.78],
-    [5.55, 5.34, 0.68],
-    [5.66, 6.49, 0.98],
-    [5.34, 5.67, 0.58]
+  surface(H, R, [H.p(4.67, 3.87, 0.81), H.p(4.98, 3.95, 0.81), H.p(5.21, 4.57, 0.81), H.p(4.92, 4.48, 0.81)], 'teal', 0.85);
+  for (const [i, j, h] of [
+    [5.11, 4.72, 0.88],
+    [5.61, 5.43, 1.04],
+    [5.82, 6.48, 0.91]
   ]) {
-    modelBlock(H, R, i, j, 0.2, 0.23, height);
-    H.line(R, [H.p(i + 0.1, j + 0.12, 0.77 + height), H.p(i + 0.1, j + 0.12, 1.02 + height)], 'blue', 0.55);
+    modelBlock(H, R, i, j, 0.2, 0.23, h);
+    metal(H, R, i + 0.055, j + 0.055, 0.09, 0.12, 0.77 + h, 0.16, 'paper');
+    H.line(R, [H.p(i + 0.1, j + 0.1, 0.93 + h), H.p(i + 0.1, j + 0.1, 1.17 + h)], 'blue', 0.6);
   }
-  for (let i = 2.96; i < 4.22; i += 0.41) for (let j = 7.45; j < 8.52; j += 0.45) modelBlock(H, R, i, j, 0.26, 0.29, 0.12);
   for (const [a, b, c, d] of [
-    [4.04, 4.16, 4.56, 4.13],
-    [5.98, 5.39, 6.77, 5.12],
-    [6.09, 6.52, 6.76, 6.48],
-    [4.36, 8.04, 5.56, 8.09]
+    [3.91, 4.92, 4.67, 4.82],
+    [5.71, 5.11, 6.64, 4.94],
+    [6.04, 6.27, 6.87, 6.36],
+    [4.36, 7.96, 5.85, 8.0]
   ]) {
-    H.line(R, [H.p(a, b, 0.94), H.p(c, d, 0.94)], 'paper', 3.5);
-    H.line(R, [H.p(a, b, 0.95), H.p(c, d, 0.95)], 'blue', 0.6);
-    for (const f of [0.22, 0.78]) {
-      const i = a + (c - a) * f,
-        j = b + (d - b) * f;
-      H.line(R, [H.p(i, j, 0.8), H.p(i, j, 1.19)], 'coral', 0.8);
-    }
-    stroke(
+    bentTube(
       H,
       R,
       [
-        H.p(a, b, 0.95),
-        H.p(a + (c - a) * 0.22, b + (d - b) * 0.22, 1.19),
-        H.p(a + (c - a) * 0.5, b + (d - b) * 0.5, 1.01),
-        H.p(a + (c - a) * 0.78, b + (d - b) * 0.78, 1.19),
-        H.p(c, d, 0.95)
+        [a, b, 0.91],
+        [c, d, 0.91]
+      ],
+      3.5,
+      'paper'
+    );
+    for (const f of [0.22, 0.77]) {
+      const i = a + (c - a) * f,
+        j = b + (d - b) * f;
+      H.line(R, [H.p(i, j, 0.78), H.p(i, j, 1.21)], 'coral', 1);
+    }
+    H.line(
+      R,
+      [
+        H.p(a, b, 0.96),
+        H.p(a + (c - a) * 0.22, b + (d - b) * 0.22, 1.21),
+        H.p((a + c) / 2, (b + d) / 2, 1.02),
+        H.p(a + (c - a) * 0.77, b + (d - b) * 0.77, 1.21),
+        H.p(c, d, 0.96)
       ],
       'blue',
-      0.5
+      0.6
     );
   }
-  const runway = [H.p(7.87, 2.67, 0.82), H.p(8.91, 2.67, 0.82), H.p(8.91, 2.91, 0.82), H.p(7.87, 2.91, 0.82)];
-  shape(H, R, runway, 'blue', 0.4, 0.4);
-  for (let k = 0; k < 6; k++) H.line(R, [H.p(7.96 + k * 0.16, 2.79, 0.83), H.p(8.04 + k * 0.16, 2.79, 0.83)], 'paper', 0.8);
-  modelBlock(H, R, 8.14, 3.12, 0.53, 0.21, 0.09, 'coral');
-  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(3.1 + k * 0.3, 6.55, 0.83), 4, 1.5, 'paper', 1);
+  surface(H, R, H.tile(7.67, 2.63, 1.23, 0.19, 0.81), 'blue', 0.6);
+  for (let n = 0; n < 7; n++) H.line(R, [H.p(7.74 + n * 0.16, 2.72, 0.82), H.p(7.81 + n * 0.16, 2.72, 0.82)], 'paper', 0.85);
+  const stadium = ell(...H.p(8.31, 5.83, 0.86), 9, 5);
+  surface(H, R, stadium, 'paper', 1);
+  surface(H, R, ell(...H.p(8.31, 5.83, 0.87), 5, 2.5), 'teal', 0.5);
+  for (let n = 0; n < 9; n++) {
+    const i = 2.85 + n * 0.48;
+    H.line(R, [H.p(i, 6.52, 0.81), H.p(i + 0.22, 6.52, 0.81)], 'paper', 1.1);
+  }
 }
 
 function rail(H, R, from, to, posts, z = 1.43) {
-  const a = H.p(...from, z), b = H.p(...to, z);
-  shape(H, R, [H.p(...from, .65), H.p(...to, .65), b, a], 'paper', .18, .5);
-  H.line(R, [a, b], 'blue', 2.2);
-  H.line(R, [H.p(...from, z - .05), H.p(...to, z - .05)], 'sun', .8);
-  for (let k = 0; k <= posts; k++) {
-    const i = from[0] + (to[0] - from[0]) * k / posts, j = from[1] + (to[1] - from[1]) * k / posts;
-    H.line(R, [H.p(i, j, .24), H.p(i, j, z)], 'blue', 1.65);
-    oval(H, R, ...H.p(i, j, .25), 4, 2, 'blue', .5);
+  const pane = [H.p(...from, 0.65), H.p(...to, 0.65), H.p(...to, z), H.p(...from, z)];
+  H.tint(pane, 'teal', 0.07);
+  H.outline(R, pane, 'paper', 0.6);
+  H.line(R, [H.p(...from, z), H.p(...to, z)], 'teal', 2.3);
+  for (let n = 0; n <= posts; n++) {
+    const i = from[0] + ((to[0] - from[0]) * n) / posts,
+      j = from[1] + ((to[1] - from[1]) * n) / posts;
+    metal(H, R, i - 0.035, j - 0.035, 0.07, 0.07, 0.05, z - 0.05, 'teal');
+    surface(H, R, ell(...H.p(i, j, 0.06), 3.4, 1.7), 'blue', 0.56);
   }
 }
 
 function wheelchair(H, R, i, j, t) {
-  const [x, y] = H.p(i, j, .11);
-  oval(H, R, x - 10, y - 7, 13, 15, 'blue', .6);
+  const [x, y] = H.p(i, j, 0.11);
+  oval(H, R, x - 10, y - 7, 13, 15, 'blue', 0.6);
   oval(H, R, x - 10, y - 7, 10, 12, 'paper', 1);
-  H.line(R, [[x + 4, y - 12], [x - 16, y - 12], [x - 27, y + 6], [x - 36, y + 6]], 'blue', 2.5);
-  H.line(R, [[x + 9, y - 8], [x + 9, y - 32], [x + 16, y - 35]], 'blue', 2.5);
-  H.line(R, [[x - 11, y - 17], [x - 11, y - 29], [x + 7, y - 29]], 'blue', 2);
-  shape(H, R, [[x - 13, y - 17], [x + 9, y - 15], [x + 9, y - 29], [x - 13, y - 31]], 'teal', .65, .7);
-  actor(H, R, i, j, t, 'newYorkPanoramaWheelFind', { shirt: ['coral', .66], hairStyle: 'curly', face: 'sw' }, .29, 1.3);
-  oval(H, R, x + 12, y - 7, 15, 17, 'blue', .72);
-  oval(H, R, x + 12, y - 7, 12, 14, 'paper', 1);
-  for (let k = 0; k < 8; k++) {
-    const a = k * TAU / 8;
-    H.line(R, [[x + 12, y - 7], [x + 12 + Math.cos(a) * 11, y - 7 + Math.sin(a) * 13]], 'blue', .65);
-  }
-  H.dot(x + 12, y - 7, 2.4, 'teal', .9);
-  H.line(R, [[x + 12, y - 7], [x - 17, y + 7], [x - 27, y + 7]], 'blue', 2);
-  oval(H, R, x - 26, y + 9, 4, 5, 'blue', .8);
-  H.line(R, [[x - 28, y + 6], [x - 39, y + 5]], 'teal', 3.2);
-}
-
-function queensPanoramaDetails(H, R) {
-  table(H, R, 0.54, 7.17, 1.34, 2.12, 0.71, 'teal');
-  shape(H, R, H.tile(0.68, 7.35, 1.06, 1.74, 0.85), 'paper', 1, 0.6);
-  for (let n = 0; n < 6; n++)
-    box(H, R, 0.83 + (n % 2) * 0.46, 7.57 + Math.floor(n / 2) * 0.45, 0.24, 0.3, 0.87, 0.16 + (n % 3) * 0.13, ['teal', 'sun', 'blue'][n % 3], 0.5);
-  framedPanel(H, R, 1.07, 0.21, 2.35, 1.7, 1.04, 'teal');
-  for (let n = 0; n < 4; n++) H.line(R, [H.p(1.35 + n * 0.48, 0.33, 1.96), H.p(1.35 + n * 0.48, 0.33, 2.55)], 'blue', 0.5);
-  box(H, R, 7.09, 0.32, 1.47, 0.91, 0.03, 0.97, 'teal', 0.54);
-  shape(H, R, H.faceI(7.27, 1.27, 1.11, 0.27, 0.79), 'paper', 0.88, 0.7);
-  for (let n = 0; n < 5; n++) H.line(R, [H.p(7.38 + n * 0.2, 1.3, 0.34), H.p(7.38 + n * 0.2, 1.3, 0.69)], 'blue', 0.8);
-  shallowTray(H, R, 7.23, 0.47, 1.17, 0.57, 1.08, 'paper');
-  for (let n = 0; n < 3; n++) boundBook(H, R, 7.34 + n * 0.3, 0.56, 0.23, 0.37, 1.27, ['teal', 'coral', 'sun'][n]);
-  satchel(H, R, 3.74, 10.91, 0.7, 'coral', 0.58);
-  for (const i of [0.39, 11.6]) {
-    box(H, R, i, 9.22, 0.17, 0.24, 0.02, 1.15, 'blue', 0.6);
-    oval(H, R, ...H.p(i + 0.08, 9.34, 1.22), 5, 3, 'sun', 0.6);
-  }
-  for (const j of [3.52, 5.64, 7.74]) {
-    box(H, R, 0.27, j, 0.16, 0.84, 0.1, 0.06, 'teal', 0.35);
-    for (let n = 0; n < 3; n++) H.dot(...H.p(0.36, j + 0.19 + n * 0.22, 0.2), 1.2, 'sun');
-  }
-  for (const i of [3.42, 5.3, 7.27]) H.line(R, [H.p(i, 9.1, 0.31), H.p(i, 9.1, 0.58)], 'sun', 1.1);
-}
-
-function construction(H, R) {
-  cornice(H, R, 'nw', 0.12, 11.85, 3.32, 'teal');
-  cornice(H, R, 'ne', 0.12, 11.85, 3.32, 'teal');
-  for (let n = 0; n < 6; n++) {
-    const i = 2.48 + n * 1.13;
-    shape(H, R, H.faceI(i, 9.16, 0.94, 0.2, 0.55), 'blue', 0.62, 0.6);
-    for (const u of [0.13, 0.8]) H.dot(...H.p(i + u, 9.18, 0.32), 1, 'sun');
-  }
-  for (let n = 0; n < 5; n++) {
-    const j = 2.37 + n * 1.29;
-    shape(H, R, H.faceJ(9.46, j, 1.1, 0.2, 0.55), 'blue', 0.56, 0.6);
-    H.line(R, [H.p(9.48, j + 0.35, 0.44), H.p(9.48, j + 0.7, 0.44)], 'paper', 0.8);
-  }
-  recessedFrame(H, R, 'nw', 1.27, 3.15, 1.33, 1.65, 'teal', (P) => {
-    shape(H, R, [P(0.13, 0.13), P(3.02, 0.13), P(3.02, 1.52), P(0.13, 1.52)], 'paper', 1, 0.5);
-    for (let n = 0; n < 9; n++) {
-      const u = 0.26 + n * 0.3,
-        h = 0.28 + (n % 4) * 0.19;
-      shape(H, R, [P(u, 0.25), P(u + 0.19, 0.25), P(u + 0.19, h + 0.25), P(u, h + 0.25)], n % 2 ? 'teal' : 'coral', 0.5, 0.45);
-      for (let q = 0; q < 3; q++) H.line(R, [P(u + 0.04, 0.36 + q * 0.13), P(u + 0.15, 0.36 + q * 0.13)], 'paper', 0.5);
-    }
-    H.line(R, [P(0.25, 0.18), P(2.87, 0.18)], 'sun', 1.4);
-  });
-  recessedFrame(H, R, 'nw', 5.14, 2.57, 1.66, 1.32, 'sun', (P) => {
-    shape(H, R, [P(0.12, 0.13), P(2.45, 0.13), P(2.45, 1.2), P(0.12, 1.2)], 'paper', 1, 0.5);
-    stroke(H, R, [P(0.25, 0.24), P(0.6, 0.54), P(0.95, 0.48), P(1.46, 0.94), P(2.25, 1.03)], 'teal', 2);
-    for (let n = 0; n < 5; n++) H.dot(...P(0.36 + n * 0.43, 0.38 + n * 0.13), 1.7, 'coral');
-  });
-  for (const i of [1.83, 4.02, 6.25, 8.5]) {
-    const [x, y] = H.p(i, 0.72, 3.19);
-    H.line(
-      R,
-      [
-        [x - 8, y - 7],
-        [x - 13, y - 3],
-        [x - 10, y + 8]
-      ],
-      'sun',
-      1.1
-    );
-    H.line(
-      R,
-      [
-        [x + 8, y - 7],
-        [x + 13, y - 3],
-        [x + 10, y + 8]
-      ],
-      'sun',
-      1.1
-    );
-    H.dot(x, y - 11, 1.6, 'paper');
-  }
-  for (let n = 0; n < 6; n++) {
-    const [x, y] = H.p(0.85 + (n % 2) * 0.43, 7.62 + Math.floor(n / 2) * 0.45, 1.19);
-    H.line(
-      R,
-      [
-        [x - 3, y],
-        [x + 3, y]
-      ],
-      'paper',
-      0.6
-    );
-    H.dot(x, y - 2, 1.1, 'coral');
-  }
-  panelFront(H, R, 7.16, 1.25, 1.32, 0.13, 0.78, 2, 'teal');
-  for (let n = 0; n < 5; n++) {
-    const [x, y] = H.p(8.7 + n * 0.21, 11.2, 0.65);
-    H.line(
-      R,
-      [
-        [x - 2, y],
-        [x + 2, y - 3]
-      ],
-      'teal',
-      0.8
-    );
-  }
-  for (const i of [3.51, 6.13]) H.line(R, [H.p(i, 10.79, 0.14), H.p(i, 11.21, 0.52)], 'sun', 1.5);
-  const [x, y] = H.p(2.1, 10.43, 0.05);
-  shape(
-    H,
+  H.line(
     R,
     [
-      [x - 8, y],
-      [x + 8, y - 3],
-      [x + 8, y - 18],
-      [x - 8, y - 16]
+      [x + 4, y - 12],
+      [x - 16, y - 12],
+      [x - 27, y + 6],
+      [x - 36, y + 6]
     ],
-    'paper',
-    1,
-    0.6
-  );
-  stroke(
-    H,
-    R,
-    [
-      [x - 4, y - 11],
-      [x, y - 7],
-      [x + 5, y - 12]
-    ],
-    'teal',
-    1
+    'blue',
+    2.5
   );
   H.line(
     R,
     [
-      [x - 6, y - 3],
-      [x + 5, y - 6]
+      [x + 9, y - 8],
+      [x + 9, y - 32],
+      [x + 16, y - 35]
     ],
-    'sun',
-    0.8
+    'blue',
+    2.5
+  );
+  H.line(
+    R,
+    [
+      [x - 11, y - 17],
+      [x - 11, y - 29],
+      [x + 7, y - 29]
+    ],
+    'blue',
+    2
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 13, y - 17],
+      [x + 9, y - 15],
+      [x + 9, y - 29],
+      [x - 13, y - 31]
+    ],
+    'teal',
+    0.65,
+    0.7
+  );
+  actor(H, R, i, j, t, 'newYorkPanoramaWheelFind', { shirt: ['coral', 0.66], hairStyle: 'curly', face: 'sw' }, 0.29, 1.3);
+  oval(H, R, x + 12, y - 7, 15, 17, 'blue', 0.72);
+  oval(H, R, x + 12, y - 7, 12, 14, 'paper', 1);
+  for (let k = 0; k < 8; k++) {
+    const a = (k * TAU) / 8;
+    H.line(
+      R,
+      [
+        [x + 12, y - 7],
+        [x + 12 + Math.cos(a) * 11, y - 7 + Math.sin(a) * 13]
+      ],
+      'blue',
+      0.65
+    );
+  }
+  H.dot(x + 12, y - 7, 2.4, 'teal', 0.9);
+  H.line(
+    R,
+    [
+      [x + 12, y - 7],
+      [x - 17, y + 7],
+      [x - 27, y + 7]
+    ],
+    'blue',
+    2
+  );
+  oval(H, R, x - 26, y + 9, 4, 5, 'blue', 0.8);
+  H.line(
+    R,
+    [
+      [x - 28, y + 6],
+      [x - 39, y + 5]
+    ],
+    'teal',
+    3.2
   );
 }
 
-const room = world('new-york-queens-panorama', 'Flushing Meadows · A City on a Table', { floor: 'blue', tone: .12, wall: 'paper', wallTone: .8, height: 3.55, head: 20 }, (H, R) => {
-  for (const side of ['nw', 'ne']) {
-    shape(H, R, wallRect(H, side, .1, 11.9, .12, .35), 'blue', .6, .6);
-    for (let p = .5; p < 12; p += 2.25) H.line(R, [wallPt(H, side, p, .35, .03), wallPt(H, side, p, 3.5, .03)], 'blue', .65, { tone: .2 });
+const room = world(
+  'new-york-queens-panorama',
+  'Flushing Meadows · A City on a Table',
+  { floor: 'paper', tone: 1, wall: false, head: 115 },
+  (H, R) => {
+    surface(H, R, H.tile(0, 0, 12, 12, 0.025), 'blue', 0.12);
+    for (let n = 0; n < 8; n++) {
+      H.line(R, [H.p(n * 1.5, 0.05, 0.03), H.p(n * 1.5, 11.95, 0.03)], 'paper', 0.75);
+      H.line(R, [H.p(0.05, n * 1.5, 0.03), H.p(11.95, n * 1.5, 0.03)], 'paper', 0.75);
+    }
+    surface(H, R, H.faceJ(0.12, 0.12, 11.76, 0, 4.11), 'blue', 0.75);
+    surface(H, R, H.faceI(0.12, 0.12, 11.76, 0, 4.11), 'teal', 0.36);
+    for (let n = 0; n < 10; n++) {
+      const j = 0.4 + n * 1.11;
+      surface(H, R, H.faceJ(0.17, j, 0.89, 0.79, 3.42), 'paper', 1);
+      for (let r = 0; r < 6; r++)
+        H.line(R, [H.p(0.18, j + 0.13, 1.04 + r * 0.32), H.p(0.18, j + 0.75, 1.04 + r * 0.32)], r === 2 ? 'coral' : 'teal', r === 2 ? 2 : 0.7);
+    }
+    for (const i of [1.31, 4.59, 7.87]) {
+      surface(H, R, H.faceI(i, 0.22, 2.71, 1.8, 3.35), 'sun', 0.19);
+      for (let n = 0; n < 12; n++)
+        H.line(R, [H.p(i + 0.18 + n * 0.19, 0.24, 2.01), H.p(i + 0.18 + n * 0.19, 0.24, 2.21 + (n % 4) * 0.23)], 'teal', 2);
+    }
+    for (const i of [0.31, 11.46]) metal(H, R, i, 0.37, 0.2, 0.26, 0.04, 4.29, 'paper');
+    metal(H, R, 0.28, 0.32, 11.4, 0.25, 4.27, 0.16, 'teal');
+    for (const j of [1.45, 5.51, 9.59]) {
+      metal(H, R, 0.31, j, 11.32, 0.1, 3.92, 0.1, 'blue');
+      for (let n = 0; n < 5; n++) {
+        const i = 1.02 + n * 2.31;
+        metal(H, R, i, j, 0.19, 0.23, 3.69, 0.23, 'blue');
+        surface(H, R, ell(...H.p(i + 0.09, j + 0.25, 3.72), 3.1, 1.7), 'sun', 0.83);
+      }
+    }
+    cityModel(H, R);
+    rail(H, R, [1.63, 1.62], [1.63, 9.51], 5);
+    rail(H, R, [1.63, 1.62], [9.94, 1.62], 6);
+    benchFrame(H, R, 2.36, 10.47, 2.84, 1.08, 0.63, 'teal');
+    cushion(H, R, 2.41, 10.5, 2.74, 1.02, 0.68, 0.12, 'coral');
+    metal(H, R, 9.32, 10.24, 1.62, 0.96, 0.05, 0.77, 'teal');
+    surface(H, R, [H.p(9.31, 10.23, 0.84), H.p(10.99, 10.23, 0.84), H.p(10.99, 11.23, 0.63), H.p(9.31, 11.23, 0.63)], 'paper', 1);
+    for (let n = 0; n < 5; n++)
+      H.line(R, [H.p(9.51, 10.42 + n * 0.13, 0.8 - n * 0.027), H.p(10.77, 10.42 + n * 0.13, 0.8 - n * 0.027)], n === 1 ? 'coral' : 'blue', 0.7);
+  },
+  (H, R, t) => {
+    H.at(5.55, 1.2, 0, (h) =>
+      actor(
+        h,
+        R,
+        5.55,
+        1.2,
+        0,
+        'hold',
+        {
+          shirt: ['blue', 0.64],
+          hairStyle: 'short',
+          prop(hh, rr, p) {
+            const [x, y] = p.nearHand;
+            shape(
+              hh,
+              rr,
+              [
+                [x - 6, y - 7],
+                [x + 8, y - 4],
+                [x + 8, y + 7],
+                [x - 6, y + 4]
+              ],
+              'paper',
+              1,
+              0.6
+            );
+            hh.line(
+              rr,
+              [
+                [x - 3, y - 2],
+                [x + 5, y]
+              ],
+              'teal',
+              0.8
+            );
+          }
+        },
+        0.1,
+        1.25
+      )
+    );
+    H.at(10.68, 5.37, 0, (h) => wheelchair(h, R, 10.68, 5.37, t));
+    H.at(10.64, 6.62, 0, (h) =>
+      actor(h, R, 10.64, 6.62, t, 'newYorkPanoramaLean', { shirt: ['sun', 0.78], hairStyle: 'short', face: 'sw' }, 0.2, 1.4, 'child')
+    );
+    H.at(6.68, 9.98, 0, (h) =>
+      actor(h, R, 6.68, 9.98, t, 'newYorkPanoramaFind', { shirt: ['teal', 0.68], hairStyle: 'pony', face: 'nw' }, 0.15, 1.25)
+    );
+    H.at(7.73, 10.25, 0, (h) =>
+      actor(h, R, 7.73, 10.25, 0, 'hold', { shirt: ['paper', 1], hairStyle: 'bald', face: 'nw', glasses: true }, 0.15, 1.2, 'elder')
+    );
+    H.at(9.94, 7.14, 0, (h) => rail(h, R, [9.94, 1.62], [9.94, 9.51], 5));
+    H.at(6.39, 9.51, 0, (h) => rail(h, R, [1.63, 9.51], [9.94, 9.51], 6));
+    const u = cycle(t, 18),
+      [x, y] = H.p(9.7, 10.91, 0.64);
+    H.dot(x, y, 1.6, 'sun', 0.65 + Math.sin(u * TAU) * 0.12);
   }
-  for (const [p, w] of [[1.4, 2.35], [5.04, 2.74], [8.95, 1.75]]) {
-    shape(H, R, wallRect(H, 'ne', p, p + w, 2.02, 3.04), 'teal', .16, .75);
-    const [x, y] = wallPt(H, 'ne', p + w / 2, 2.53, .05);
-    oval(H, R, x, y, 15, 12, 'sun', .6);
-    for (let k = 0; k < 5; k++) box(H, R, p + .21 + k * (w - .4) / 5, -.06, (w - .5) / 6, .03, 2.13, .15 + k % 3 * .14, 'blue', .45);
-  }
-  shape(H, R, H.tile(.71, .76, 10.67, 10.62, .09), 'paper', .7, .6);
-  shape(H, R, H.tile(1.81, 1.56, 8.33, 8.08, .12), 'blue', .66, .75);
-  cityModel(H, R);
-  shape(H, R, [H.p(.52, 2, .1), H.p(1.47, 2, .1), H.p(1.47, 10.5, .45), H.p(.52, 10.5, .45)], 'paper', 1, .8);
-  for (let j = 2.3; j < 10.3; j += .85) H.line(R, [H.p(.59, j, .1 + (j - 2) * .041), H.p(1.41, j, .1 + (j - 2) * .041)], 'blue', .55, { tone: .3 });
-  rail(H, R, [1.63, 1.62], [9.93, 1.62], 6);
-  rail(H, R, [1.63, 1.62], [1.63, 9.51], 5);
-  box(H, R, 10.22, .64, .74, .63, .03, 1.83, 'blue', .58);
-  shape(H, R, H.faceI(10.3, 1.29, .58, 1.3, 1.7), 'paper', 1, .5);
-  shape(H, R, [H.p(10.38, 1.31, 1.48), H.p(10.68, 1.31, 1.62), H.p(10.8, 1.31, 1.38)], 'teal', .5, .4);
-  for (const i of [3.09, 7.57]) {
-    H.line(R, [H.p(i, .29, 3.5), H.p(i, .29, 3.18)], 'blue', 1.2);
-    box(H, R, i - .28, .26, .6, .48, 3.05, .25, 'blue', .75);
-    oval(H, R, ...H.p(i, .76, 3.12), 7, 4, 'sun', .9);
-    H.tint([H.p(i, .76, 3.09), H.p(i + 1.12, 3.51, .84), H.p(i - .85, 3.17, .84)], 'sun', .035);
-  }
-  table(H, R, 3.35, 10.64, 3.02, .7, .56, 'teal');
-  box(H, R, 3.35, 10.64, 3.02, .11, .7, .55, 'teal', .6);
-  for (let k = 0; k < 7; k++) H.line(R, [H.p(3.5 + k * .4, 10.67, .68), H.p(3.5 + k * .4, 11.29, .68)], 'blue', .65);
-  box(H, R, 8.25, 10.6, 1.7, .9, .01, .25, 'sun', .48);
-  shape(H, R, [H.p(8.32, 10.68, .3), H.p(9.89, 10.68, .3), H.p(9.89, 11.4, .61), H.p(8.32, 11.4, .61)], 'paper', 1, .7);
-  for (let k = 0; k < 4; k++) shape(H, R, H.tile(8.58 + k * .29, 10.93, .19, .21, .46), ['teal', 'coral', 'blue', 'sun'][k], .65, .5);
-  oval(H, R, ...H.p(11.08, 9.72, .04), 14, 7, 'blue', .45);
-  box(H, R, 10.77, 9.4, .58, .54, .06, .93, 'paper', 1);
-  oval(H, R, ...H.p(11.06, 9.67, 1.02), 12, 5, 'blue', .6);
-  queensPanoramaDetails(H, R);
-  construction(H, R);
-}, (H, R, t) => {
-  H.at(5.55, 1.2, 0, h => actor(h, R, 5.55, 1.2, 0, 'hold', { shirt: ['blue', .64], hairStyle: 'short', prop(hh, rr, p) {
-    const [x, y] = p.nearHand;
-    shape(hh, rr, [[x - 6, y - 7], [x + 8, y - 4], [x + 8, y + 7], [x - 6, y + 4]], 'paper', 1, .6);
-    hh.line(rr, [[x - 3, y - 2], [x + 5, y]], 'teal', .8);
-  } }, .1, 1.25));
-  H.at(10.68, 5.37, 0, h => wheelchair(h, R, 10.68, 5.37, t));
-  H.at(10.64, 6.62, 0, h => actor(h, R, 10.64, 6.62, t, 'newYorkPanoramaLean', { shirt: ['sun', .78], hairStyle: 'short', face: 'sw' }, .2, 1.4, 'child'));
-  H.at(6.68, 9.98, 0, h => actor(h, R, 6.68, 9.98, t, 'newYorkPanoramaFind', { shirt: ['teal', .68], hairStyle: 'pony', face: 'nw' }, .15, 1.25));
-  H.at(7.73, 10.25, 0, h => actor(h, R, 7.73, 10.25, 0, 'hold', { shirt: ['paper', 1], hairStyle: 'bald', face: 'nw', glasses: true }, .15, 1.2, 'elder'));
-  H.at(9.94, 7.14, 0, h => rail(h, R, [9.94, 1.62], [9.94, 9.51], 5));
-  H.at(6.39, 9.51, 0, h => rail(h, R, [1.63, 9.51], [9.94, 9.51], 6));
-  const u = cycle(t, 18), [x, y] = H.p(9.7, 10.91, .64);
-  H.dot(x, y, 1.6, 'sun', .65 + Math.sin(u * TAU) * .12);
-});
+);
 
 room.loopSeconds = 18;
 export default room;

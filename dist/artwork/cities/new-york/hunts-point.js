@@ -1,384 +1,328 @@
-import { surface, bentTube } from '../materials.js';
-import { cornice, panelFront, wallRack, hangingRail, taskLight } from '../joinery.js';
-import { drawerUnit, shallowTray, liddedTin, boundBook, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
+import { benchFrame, bentTube, metal, pendant, spokedWheel, surface, vessel } from '../materials.js';
+import { masonry } from '../structure.js';
+
+import { boundBook, coiledLine } from '../furnishings.js';
+import { TAU, actor, box, cycle, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
 const hold = { ...rest, head: 16, lean: -8, al: 56, ar: 58, el: 28, er: 29 };
-FIGURES.clips.newYorkProduceInspect = { dur: 14, keys: [[0, hold], [.16, hold], [.32, { ...hold, lean: -3, al: 73, ar: 77, el: 55, er: 46, head: 8 }], [.53, { ...hold, lean: -2, al: 70, ar: 81, el: 53, er: 42, head: 17 }], [.72, hold], [.88, hold], [1, hold]] };
-FIGURES.clips.newYorkDispatchCheck = { dur: 14, keys: [[0, { ...rest, al: 52, el: 63, ar: 69, er: 38, head: 12 }], [.28, { ...rest, al: 52, el: 63, ar: 72, er: 33, head: 14 }], [.56, { ...rest, al: 52, el: 63, ar: 60, er: 48, head: -9 }], [.82, { ...rest, al: 52, el: 63, ar: 60, er: 48, head: -9 }], [1, { ...rest, al: 52, el: 63, ar: 69, er: 38, head: 12 }]] };
+FIGURES.clips.newYorkProduceInspect = {
+  dur: 14,
+  keys: [
+    [0, hold],
+    [0.16, hold],
+    [0.32, { ...hold, lean: -3, al: 73, ar: 77, el: 55, er: 46, head: 8 }],
+    [0.53, { ...hold, lean: -2, al: 70, ar: 81, el: 53, er: 42, head: 17 }],
+    [0.72, hold],
+    [0.88, hold],
+    [1, hold]
+  ]
+};
+FIGURES.clips.newYorkDispatchCheck = {
+  dur: 14,
+  keys: [
+    [0, { ...rest, al: 52, el: 63, ar: 69, er: 38, head: 12 }],
+    [0.28, { ...rest, al: 52, el: 63, ar: 72, er: 33, head: 14 }],
+    [0.56, { ...rest, al: 52, el: 63, ar: 60, er: 48, head: -9 }],
+    [0.82, { ...rest, al: 52, el: 63, ar: 60, er: 48, head: -9 }],
+    [1, { ...rest, al: 52, el: 63, ar: 69, er: 38, head: 12 }]
+  ]
+};
 
 function crate(H, R, i, j, z, kind = 'citrus', ink = 'sun') {
-  box(H, R, i, j, 1.46, 1.06, z, .49, ink, .62);
-  shape(H, R, H.tile(i + .08, j + .07, 1.3, .9, z + .5), 'blue', .38, .55);
+  box(H, R, i, j, 1.46, 1.06, z, 0.49, ink, 0.62);
+  shape(H, R, H.tile(i + 0.08, j + 0.07, 1.3, 0.9, z + 0.5), 'blue', 0.38, 0.55);
   for (let q = 0; q < 5; q++) {
-    shape(H, R, H.faceI(i + .12 + q * .25, j + 1.065, .15, z + .12, z + .32), 'blue', .63, .4);
-    H.line(R, [H.p(i + 1.47, j + .1 + q * .18, z + .12), H.p(i + 1.47, j + .1 + q * .18, z + .34)], 'blue', 1.4);
+    shape(H, R, H.faceI(i + 0.12 + q * 0.25, j + 1.065, 0.15, z + 0.12, z + 0.32), 'blue', 0.63, 0.4);
+    H.line(R, [H.p(i + 1.47, j + 0.1 + q * 0.18, z + 0.12), H.p(i + 1.47, j + 0.1 + q * 0.18, z + 0.34)], 'blue', 1.4);
   }
-  for (let a = 0; a < 3; a++) for (let b = 0; b < 2; b++) {
-    const [x, y] = H.p(i + .31 + a * .38, j + .27 + b * .43, z + .53);
-    if (kind === 'cabbage') {
-      oval(H, R, x, y - 2, 8, 6, 'teal', .8);
-      stroke(H, R, [[x - 6, y - 2], [x, y - 5], [x + 5, y - 1], [x - 1, y + 3]], 'paper', .8, .68);
-      H.line(R, [[x, y - 5], [x + 1, y + 3]], 'blue', .7);
-    } else if (kind === 'pear') {
-      shape(H, R, [[x - 6, y + 2], [x - 7, y - 3], [x - 2, y - 8], [x + 1, y - 10], [x + 5, y - 5], [x + 7, y + 1], [x, y + 5]], 'sun', .67, .5);
-      H.line(R, [[x + 1, y - 9], [x + 3, y - 13]], 'blue', .8);
-    } else {
-      oval(H, R, x, y - 1, 6, 5.4, 'coral', .77);
-      H.dot(x + 1, y - 4, 1.1, 'sun');
+  for (let a = 0; a < 3; a++)
+    for (let b = 0; b < 2; b++) {
+      const [x, y] = H.p(i + 0.31 + a * 0.38, j + 0.27 + b * 0.43, z + 0.53);
+      if (kind === 'cabbage') {
+        oval(H, R, x, y - 2, 8, 6, 'teal', 0.8);
+        stroke(
+          H,
+          R,
+          [
+            [x - 6, y - 2],
+            [x, y - 5],
+            [x + 5, y - 1],
+            [x - 1, y + 3]
+          ],
+          'paper',
+          0.8,
+          0.68
+        );
+        H.line(
+          R,
+          [
+            [x, y - 5],
+            [x + 1, y + 3]
+          ],
+          'blue',
+          0.7
+        );
+      } else if (kind === 'pear') {
+        shape(
+          H,
+          R,
+          [
+            [x - 6, y + 2],
+            [x - 7, y - 3],
+            [x - 2, y - 8],
+            [x + 1, y - 10],
+            [x + 5, y - 5],
+            [x + 7, y + 1],
+            [x, y + 5]
+          ],
+          'sun',
+          0.67,
+          0.5
+        );
+        H.line(
+          R,
+          [
+            [x + 1, y - 9],
+            [x + 3, y - 13]
+          ],
+          'blue',
+          0.8
+        );
+      } else {
+        oval(H, R, x, y - 1, 6, 5.4, 'coral', 0.77);
+        H.dot(x + 1, y - 4, 1.1, 'sun');
+      }
     }
-  }
-  for (const a of [i, i + 1.39]) box(H, R, a, j, .08, 1.06, z + .45, .13, ink, .75);
+  for (const a of [i, i + 1.39]) box(H, R, a, j, 0.08, 1.06, z + 0.45, 0.13, ink, 0.75);
 }
 
 function pallet(H, R, i, j, w = 2.1, d = 2.6, z = 0) {
-  for (const a of [i + .12, i + w - .24]) box(H, R, a, j, .18, d, z, .2, 'coral', .48);
-  for (let b = .05; b < d; b += .36) box(H, R, i, j + b, w, .26, z + .2, .08, 'sun', .57);
-  for (const a of [.15, w - .15]) for (const b of [.19, d - .17]) H.dot(...H.p(i + a, j + b, z + .29), 1.2, 'blue');
+  for (const a of [i + 0.12, i + w - 0.24]) box(H, R, a, j, 0.18, d, z, 0.2, 'coral', 0.48);
+  for (let b = 0.05; b < d; b += 0.36) box(H, R, i, j + b, w, 0.26, z + 0.2, 0.08, 'sun', 0.57);
+  for (const a of [0.15, w - 0.15]) for (const b of [0.19, d - 0.17]) H.dot(...H.p(i + a, j + b, z + 0.29), 1.2, 'blue');
 }
 
-function rollerBench(H, R) {
-  for (const i of [3.1, 5.45, 7.8])
-    for (const j of [4.8, 6.4]) {
-      const height = 1.13 - (i - 3.1) * 0.038;
-      box(H, R, i, j, 0.13, 0.13, 0, height, 'blue', 0.68);
-      H.line(R, [H.p(i, j, 0.1), H.p(i + 0.7, j, height - 0.12)], 'teal', 1.7);
+const room = world(
+  'new-york-hunts-point',
+  'Hunts Point · Before the Grocers',
+  { floor: 'paper', tone: 1, wall: false, head: 100 },
+  (H, R) => {
+    for (let r = 0; r < 8; r++)
+      for (let c = 0; c < 8; c++) surface(H, R, H.tile(c * 1.5, r * 1.5, 1.47, 1.47, 0.025), 'blue', (r + c) % 4 ? 0.11 : 0.19, 0.5);
+    masonry(H, R, 'nw', 0.12, 11.73, 0, 4.0, 'paper', 1);
+    masonry(H, R, 'ne', 0.12, 11.73, 0, 4.15, 'teal', 0.23);
+    surface(H, R, H.faceI(4.16, 0.16, 5.35, 0.1, 3.8), 'blue', 0.8);
+    for (let n = 0; n < 10; n++) metal(H, R, 4.26, 0.21, 5.15, 0.11, 2.98 + n * 0.071, 0.04, 'paper');
+    for (const i of [4.04, 9.5]) metal(H, R, i, 0.16, 0.2, 0.45, 0.03, 4.04, 'sun');
+    surface(H, R, H.faceI(4.34, 0.29, 4.97, 0.19, 2.91), 'teal', 0.3);
+    metal(H, R, 4.13, 0.12, 5.57, 1.52, 3.91, 0.16, 'teal');
+    for (const i of [4.3, 9.2]) {
+      metal(H, R, i, 1.52, 0.15, 0.15, 0.05, 1.17, 'sun');
+      for (const z of [0.21, 0.67]) metal(H, R, i, 1.52, 0.16, 0.16, z, 0.18, 'blue');
     }
-  const top = [
-    [3, 4.8, 1.16],
-    [8.15, 4.8, 0.96],
-    [8.15, 6.6, 0.96],
-    [3, 6.6, 1.16]
-  ].map((p) => H.p(...p));
-  for (const j of [4.8, 6.5])
+    for (const i of [0.53, 3.24]) for (const j of [0.57, 3.24, 5.92]) metal(H, R, i, j, 0.1, 0.1, 0.03, 3.61, 'teal');
+    for (const [row, z] of [0.18, 1.47, 2.76].entries()) {
+      for (const i of [0.53, 3.24]) metal(H, R, i, 0.57, 0.1, 5.44, z, 0.1, 'teal');
+      for (let n = 0; n < 4; n++) metal(H, R, 0.53, 0.57 + n * 1.78, 2.81, 0.1, z, 0.1, 'teal');
+      for (let n = 0; n < 3; n++) crate(H, R, 0.73, 0.8 + n * 1.62, z + 0.12, row === 1 ? 'greens' : 'citrus', row === 2 ? 'coral' : 'sun');
+    }
+    for (const [i, j, z] of [
+      [0.68, 7.0, 0.19],
+      [0.68, 8.57, 0.19],
+      [2.85, 9.57, 0.19],
+      [9.05, 1.69, 0.18],
+      [9.12, 3.24, 0.18]
+    ]) {
+      pallet(H, R, i - 0.06, j - 0.07, 1.88, 1.51);
+      crate(H, R, i, j, z, 'citrus', 'sun');
+      crate(H, R, i + 0.03, j + 0.02, z + 0.61, 'greens', 'teal');
+    }
+    for (const i of [5.46, 9.91]) for (const j of [6.9, 8.56]) metal(H, R, i, j, 0.15, 0.15, 0.02, 0.89, 'teal');
+    for (const j of [6.82, 8.58]) metal(H, R, 5.34, j, 4.88, 0.12, 0.85, 0.22, 'teal');
+    for (let n = 0; n < 22; n++) {
+      const i = 5.47 + n * 0.217;
+      bentTube(
+        H,
+        R,
+        [
+          [i, 6.91, 0.97],
+          [i, 8.61, 0.97]
+        ],
+        4.5,
+        'paper'
+      );
+      H.line(R, [H.p(i, 6.92, 1.01), H.p(i, 8.59, 1.01)], 'teal', 0.8);
+    }
+    crate(H, R, 5.62, 6.99, 1.03, 'citrus', 'sun');
+    benchFrame(H, R, 3.52, 1.58, 1.48, 1.63, 1.17, 'sun');
+    boundBook(H, R, 3.7, 1.8, 1.09, 0.88, 1.2, 'paper');
+    vessel(H, R, 4.61, 2.92, 1.19, 4, 9, 'teal');
+    metal(H, R, 8.42, 9.36, 2.29, 1.91, 0.08, 0.1, 'sun');
+    for (const j of [9.59, 10.75]) metal(H, R, 8.56, j, 2.61, 0.24, 0.08, 0.11, 'sun');
     bentTube(
       H,
       R,
       [
-        [3, j, 1.16],
-        [8.15, j, 0.96]
+        [10.91, 9.38, 0.13],
+        [10.91, 9.38, 1.56],
+        [10.91, 10.97, 1.56],
+        [10.91, 10.97, 0.13]
       ],
-      4,
+      3,
       'teal'
     );
-  for (let n = 0; n < 18; n++) {
-    const i = 3.08 + n * 0.28,
-      z = 1.16 - (i - 3) * 0.038;
-    const a = H.p(i, 4.93, z),
-      b = H.p(i, 6.47, z);
-    surface(
-      H,
-      R,
-      [
-        [a[0] - 2, a[1]],
-        [a[0] + 2, a[1] - 2],
-        [b[0] + 2, b[1] - 2],
-        [b[0] - 2, b[1]]
-      ],
-      'paper',
-      1,
-      0.55
-    );
-    oval(H, R, ...b, 2.8, 2.3, 'teal', 0.75);
-    H.dot(...b, 0.9, 'sun');
-  }
-  for (let i = 3.08; i < 8.09; i += 0.28) {
-    const z = 1.16 - (i - 3) * 0.038;
-    H.line(R, [H.p(i, 4.92, z + 0.02), H.p(i, 6.46, z + 0.02)], 'paper', 4, { tone: 1, amp: 0.03 });
-    H.line(R, [H.p(i + 0.05, 4.92, z + 0.015), H.p(i + 0.05, 6.46, z + 0.015)], 'blue', 0.75, { tone: 0.6 });
-  }
-  for (const j of [4.77, 6.6]) H.line(R, [H.p(2.98, j, 1.2), H.p(8.2, j, 1)], 'blue', 3);
-  box(H, R, 8.12, 4.73, 0.13, 1.94, 0.97, 0.23, 'coral', 0.85);
-  crate(H, R, 3.34, 5.03, 1.15, 'pear', 'paper');
-}
-
-function huntsPointDetails(H, R) {
-  drawerUnit(H, R, 5.43, 0.43, 2.69, 1.09, 1.19, 3, 'teal');
-  shallowTray(H, R, 5.63, 0.62, 1.12, 0.69, 1.36, 'paper');
-  const [x, y] = H.p(6.17, 0.96, 1.57);
-  shape(
-    H,
-    R,
-    [
-      [x - 9, y],
-      [x + 7, y],
-      [x + 7, y - 15],
-      [x - 9, y - 15]
-    ],
-    'blue',
-    0.7,
-    0.7
-  );
-  oval(H, R, x - 4, y - 13, 7, 7, 'coral', 0.6);
-  oval(H, R, x - 4, y - 13, 3, 3, 'paper', 1);
-  H.line(
-    R,
-    [
-      [x + 3, y - 7],
-      [x + 16, y - 6]
-    ],
-    'sun',
-    2
-  );
-  boundBook(H, R, 7.02, 0.65, 0.9, 0.6, 1.36, 'coral');
-  for (let n = 0; n < 3; n++) shape(H, R, H.tile(7.09 + n * 0.21, 0.76, 0.14, 0.36, 1.56), 'paper', 1, 0.4);
-  for (const i of [1.46, 2.72, 3.98]) {
-    box(H, R, i, 0.13, 0.9, 0.11, 2.12, 0.98, 'sun', 0.36);
-    shape(H, R, H.faceI(i + 0.08, 0.26, 0.72, 2.23, 3.0), 'paper', 1, 0.5);
-    box(H, R, i + 0.29, 0.28, 0.29, 0.06, 2.96, 0.1, 'blue', 0.7);
-    for (let n = 0; n < 3; n++) H.line(R, [H.p(i + 0.18, 0.29, 2.38 + n * 0.16), H.p(i + 0.69, 0.29, 2.38 + n * 0.16)], 'teal', 0.8);
-  }
-  slattedCrate(H, R, 9.49, 9.0, 1.82, 1.97, 0.04, 0.68, 'teal');
-  for (let n = 0; n < 5; n++) box(H, R, 9.65 + n * 0.28, 9.15, 0.11, 1.58, 0.17, 0.74 + (n % 2) * 0.13, 'sun', 0.45);
-  for (const i of [8.92, 10.53]) {
-    box(H, R, i, 8.26, 0.49, 0.43, 0.03, 0.17, 'blue', 0.6);
-    H.line(R, [H.p(i + 0.1, 8.38, 0.23), H.p(i + 0.4, 8.38, 0.23)], 'sun', 2);
-  }
-  liddedTin(H, R, 3.03, 1.93, 1.03, 5, 16, 'sun');
-  servicePipe(
-    H,
-    R,
-    [
-      [0.12, 3.34, 0.16],
-      [0.12, 3.34, 3.43],
-      [0.12, 0.12, 3.43],
-      [6.7, 0.12, 3.43]
-    ],
-    'teal',
-    2.7
-  );
-}
-
-function construction(H, R) {
-  cornice(H, R, 'nw', 0.15, 11.85, 3.72, 'teal');
-  for (const i of [0.4, 4.2, 8.05, 11.52]) {
-    for (const z of [1.35, 2.63, 3.51]) {
-      box(H, R, i - 0.02, 0.32, 0.3, 0.25, z, 0.12, 'paper', 1);
-      H.dot(...H.p(i + 0.13, 0.59, z + 0.06), 1.5, 'blue');
-    }
-  }
-  hangingRail(H, R, 'ne', 5.43, 2.7, 2.97, 4, (P, u, n) => {
-    const [x, y] = P(u, -0.14);
-    shape(
-      H,
-      R,
-      [
-        [x - 8, y],
-        [x + 8, y],
-        [x + 8, y + 27],
-        [x - 8, y + 27]
-      ],
-      'paper',
-      1,
-      0.65
-    );
-    H.line(
-      R,
-      [
-        [x - 4, y + 6],
-        [x + 5, y + 6]
-      ],
-      n % 2 ? 'teal' : 'coral',
-      1.4
-    );
-    for (let q = 0; q < 3; q++)
-      H.line(
+    for (const j of [9.61, 10.78]) spokedWheel(H, R, ...H.p(10.94, j, 0.22), 5, 'blue');
+    for (let n = 0; n < 11; n++) H.line(R, [H.p(4.26 + n * 0.39, 10.98, 0.03), H.p(4.47 + n * 0.39, 11.5, 0.03)], 'sun', 2.3);
+    pendant(H, R, 6.5, 4.46, 3.92, 3.17, 'paper', 1);
+    coiledLine(H, R, 10.95, 5.41, 0.03, 12, 'teal');
+  },
+  (H, R, t) => {
+    const u = cycle(t, 14);
+    H.at(8.35, 6.18, 0, (HH) =>
+      actor(
+        HH,
         R,
-        [
-          [x - 5, y + 13 + q * 4],
-          [x + 4, y + 13 + q * 4]
-        ],
-        'blue',
-        0.5
-      );
-    H.line(
-      R,
-      [
-        [x - 4, y],
-        [x + 4, y]
-      ],
-      'sun',
-      2.5
+        8.35,
+        6.18,
+        u * 14,
+        'newYorkProduceInspect',
+        {
+          face: 'sw',
+          shirt: ['blue', 0.66],
+          vest: ['sun', 0.8],
+          pants: ['teal', 0.75],
+          hairStyle: 'cap',
+          skin: ['coral', 0.56],
+          prop(h, r, points) {
+            const x = (points.nearHand[0] + points.farHand[0]) / 2,
+              y = (points.nearHand[1] + points.farHand[1]) / 2;
+            const tilt = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - 0.16) / 0.56))) * 5;
+            shape(
+              h,
+              r,
+              [
+                [x - 27, y - 7],
+                [x + 20, y - 1 - tilt],
+                [x + 26, y + 8 - tilt],
+                [x - 22, y + 15]
+              ],
+              'sun',
+              0.74,
+              0.8
+            );
+            shape(
+              h,
+              r,
+              [
+                [x - 27, y - 7],
+                [x - 18, y - 17],
+                [x + 28, y - 11 - tilt],
+                [x + 20, y - 1 - tilt]
+              ],
+              'paper',
+              1,
+              0.7
+            );
+            for (let q = 0; q < 6; q++)
+              oval(h, r, x - 14 + (q % 3) * 13, y - 13 + Math.floor(q / 3) * 5 - (tilt * q) / 7, 5, 4, q % 2 ? 'coral' : 'sun', 0.77);
+            for (let q = 0; q < 5; q++)
+              h.line(
+                r,
+                [
+                  [x - 19 + q * 8, y + 2 - q * 0.12 * tilt],
+                  [x - 18 + q * 8, y + 9 - q * 0.12 * tilt]
+                ],
+                'blue',
+                1.6
+              );
+            h.line(
+              r,
+              [
+                [x - 27, y - 7],
+                [x + 20, y - 1 - tilt]
+              ],
+              'coral',
+              2
+            );
+          }
+        },
+        0,
+        1.4
+      )
     );
-  });
-  panelFront(H, R, 5.49, 1.54, 2.56, 0.14, 1.09, 3, 'teal');
-  const [x, y] = H.p(2.57, 1.39, 1.87);
-  for (let n = 0; n < 4; n++) {
-    H.line(
-      R,
-      [
-        [x - 8 + n * 5, y - 6],
-        [x - 8 + n * 5, y + 3]
-      ],
-      'sun',
-      1.4
+    H.at(4.5, 3.38, 0, (HH) =>
+      actor(
+        HH,
+        R,
+        4.5,
+        3.38,
+        u * 14,
+        'newYorkDispatchCheck',
+        {
+          shirt: ['paper', 1],
+          vest: ['teal', 0.65],
+          hairStyle: 'bun',
+          glasses: true,
+          prop(h, r, p) {
+            const [x, y] = p.farHand;
+            shape(
+              h,
+              r,
+              [
+                [x - 12, y - 4],
+                [x + 13, y + 2],
+                [x + 11, y + 21],
+                [x - 14, y + 15]
+              ],
+              'sun',
+              0.61,
+              0.7
+            );
+            shape(
+              h,
+              r,
+              [
+                [x - 9, y - 1],
+                [x + 10, y + 4],
+                [x + 8, y + 18],
+                [x - 11, y + 13]
+              ],
+              'paper',
+              1,
+              0.5
+            );
+            for (let q = 0; q < 3; q++)
+              h.line(
+                r,
+                [
+                  [x - 7, y + 3 + q * 3],
+                  [x + 5, y + 6 + q * 3]
+                ],
+                'teal',
+                0.7
+              );
+            const [px, py] = p.nearHand;
+            h.line(
+              r,
+              [
+                [px - 5, py + 5],
+                [px + 5, py - 7]
+              ],
+              'coral',
+              1.6
+            );
+          }
+        },
+        0,
+        1.3
+      )
     );
-    H.line(
-      R,
-      [
-        [x - 9 + n * 5, y - 6],
-        [x - 6 + n * 5, y - 6]
-      ],
-      'sun',
-      0.8
-    );
+    const glow = 0.17 + 0.03 * Math.sin(u * TAU);
+    HHGlow(H, 6.4, 0.12, 2.5, glow);
   }
-  for (let n = 0; n < 7; n++) {
-    const [px, py] = H.p(5.23 + n * 0.43, 6.67, 1.15);
-    oval(H, R, px, py, 3, 3, 'blue', 0.6);
-    H.dot(px, py, 1, 'sun');
-  }
-  for (const i of [5.1, 7.91]) H.line(R, [H.p(i, 4.93, 0.18), H.p(i, 6.54, 0.87)], 'blue', 1.7);
-  for (const j of [9.39, 10.92]) {
-    const [px, py] = H.p(6.74, j, 0.15);
-    oval(H, R, px, py, 5, 6, 'blue', 0.8);
-    H.dot(px, py, 1.8, 'sun');
-  }
-  stroke(H, R, [H.p(7.05, 8.89, 0.56), H.p(7.45, 8.73, 1.3), H.p(7.3, 8.57, 1.79), H.p(6.95, 8.75, 1.82), H.p(6.91, 8.87, 1.49)], 'blue', 3);
-  H.line(R, [H.p(7.06, 8.85, 1.79), H.p(7.34, 8.7, 1.76)], 'coral', 4);
-  wallRack(H, R, 'nw', 7.55, 3.45, 1.49, 1.74, 2, 'teal', (P, z, row) => {
-    for (let n = 0; n < 5; n++) {
-      const u = 0.35 + n * 0.62;
-      shape(H, R, [P(u, z + 0.06), P(u + 0.43, z + 0.06), P(u + 0.43, z + 0.59), P(u, z + 0.59)], row ? 'paper' : 'sun', 0.7, 0.6);
-      H.line(R, [P(u + 0.19, z + 0.06), P(u + 0.19, z + 0.59)], 'teal', 1.3);
-      H.line(R, [P(u + 0.03, z + 0.28), P(u + 0.4, z + 0.28)], 'paper', 1.4);
-    }
-  });
-  for (let n = 0; n < 5; n++) {
-    const [px, py] = H.p(2.58 + n * 0.23, 10.3, 0.69);
-    shape(
-      H,
-      R,
-      [
-        [px - 6, py],
-        [px + 6, py],
-        [px + 5, py - 12],
-        [px - 4, py - 15]
-      ],
-      'paper',
-      1,
-      0.5
-    );
-    H.line(
-      R,
-      [
-        [px - 4, py - 6],
-        [px + 4, py - 6]
-      ],
-      'coral',
-      0.8
-    );
-  }
-  taskLight(H, R, 5.79, 0.83, 1.39, 'sun', 0.6);
-  for (let n = 0; n < 6; n++) {
-    const [px, py] = H.p(9.7 + n * 0.17, 7.21, 0.04);
-    shape(
-      H,
-      R,
-      [
-        [px - 4, py],
-        [px + 4, py],
-        [px + 2, py - 5]
-      ],
-      'teal',
-      0.4,
-      0.4
-    );
-  }
-}
-
-const room = world('new-york-hunts-point', 'Hunts Point · Before the Grocers', {
-  floor: 'blue', tone: .21, wall: 'paper', wallTone: 1, height: 4.0, head: 20,
-}, (H, R) => {
-  for (const side of ['ne', 'nw']) {
-    shape(H, R, wallRect(H, side, .04, 11.96, .07, .72), 'teal', .6, .7);
-    for (let p = .7; p < 12; p += 1.6) H.line(R, [wallPt(H, side, p, .8, .03), wallPt(H, side, p, 3.94, .03)], 'blue', .7, { tone: .32 });
-  }
-  shape(H, R, H.faceI(5.6, .05, 5.9, .12, 3.73), 'blue', .8);
-  shape(H, R, H.faceI(5.8, .08, 5.5, .18, 2.74), 'teal', .37);
-  for (let i = 5.9; i < 11.2; i += .39) {
-    shape(H, R, H.faceI(i, .12, .34, .23, 2.74), 'paper', .73, .45);
-    H.line(R, [H.p(i + .31, .14, .24), H.p(i + .31, .14, 2.7)], 'teal', 1.2);
-  }
-  for (let z = 2.91; z < 3.65; z += .16) H.line(R, [H.p(5.66, .09, z), H.p(11.47, .09, z)], 'paper', 2, { tone: .78 });
-  for (const i of [5.35, 11.58]) {
-    box(H, R, i, .1, .24, .44, 0, 3.96, 'blue', .57);
-    box(H, R, i - .08, .4, .36, .36, .03, 1.1, 'sun', .78);
-    for (let z = .16; z < 1.02; z += .27) H.line(R, [H.p(i - .04, .78, z), H.p(i + .24, .78, z + .18)], 'blue', 3);
-  }
-  shape(H, R, H.faceJ(.06, 1.08, 3.15, .96, 3.55), 'blue', .61);
-  for (let z = 1.08; z < 3.5; z += .2) H.line(R, [H.p(.1, 1.16, z), H.p(.1, 4.14, z)], 'paper', 1.7, { tone: .75 });
-  H.line(R, [H.p(.15, 4.43, 3.62), H.p(.15, 4.43, .8), H.p(.55, 4.43, .8)], 'teal', 2.5);
-  const [vx, vy] = H.p(.22, 4.43, 1.25);
-  oval(H, R, vx, vy, 8, 8, 'coral', .8);
-  H.line(R, [[vx - 5, vy], [vx + 5, vy]], 'paper', 1.1);
-  for (const j of [3.3, 8.4]) {
-    H.line(R, [H.p(.22, j, 3.76), H.p(11.5, j, 3.76)], 'blue', 2.2);
-    box(H, R, 3.4, j - .14, 3.1, .28, 3.61, .11, 'paper', 1);
-    H.line(R, [H.p(3.52, j + .15, 3.62), H.p(6.37, j + .15, 3.62)], 'sun', 2);
-  }
-  for (const [i, j, kind, ink] of [[.8, 5.2, 'cabbage', 'paper'], [8.94, 1.24, 'citrus', 'sun'], [9.05, 5.8, 'pear', 'teal']]) {
-    pallet(H, R, i - .08, j - .07, 1.76, 2.36);
-    for (let level = 0; level < (kind === 'pear' ? 2 : 3); level++) for (let row = 0; row < 2; row++) crate(H, R, i, j + row * 1.15, .3 + level * .61, kind, ink);
-  }
-  rollerBench(H, R);
-  table(H, R, 1.0, 1.14, 2.4, 1.15, .87, 'teal');
-  box(H, R, 1.27, 1.27, 1.08, .78, 1.01, .14, 'paper', 1);
-  box(H, R, 1.37, 1.35, .9, .6, 1.16, .08, 'blue', .68);
-  H.line(R, [H.p(2.53, 1.32, 1), H.p(2.53, 1.32, 1.83)], 'blue', 2.2);
-  box(H, R, 2.2, 1.22, .7, .18, 1.65, .33, 'blue', .8);
-  for (let q = 0; q < 3; q++) H.dot(...H.p(2.35 + q * .18, 1.41, 1.82), 1.8, 'sun');
-  box(H, R, 3.87, .63, 1.15, .78, .02, .57, 'coral', .48);
-  for (let q = 0; q < 5; q++) box(H, R, 3.93, .66, 1.08, .72, .61 + q * .08, .055, 'sun', .54);
-  for (const j of [8.95, 10.95]) shape(H, R, H.tile(2.6, j, 8.2, .12, .02), 'sun', .65, .4);
-  for (let q = 0; q < 6; q++) H.line(R, [H.p(2.9 + q * 1.27, 9.8, .02), H.p(3.5 + q * 1.27, 9.8, .02)], 'paper', 1.9);
-  for (const i of [6.48, 7.35]) {
-    box(H, R, i, 9.2, .3, 2.1, .11, .16, 'coral', .73);
-    oval(H, R, ...H.p(i + .16, 11.0, .13), 4.2, 5.5, 'blue', .9);
-  }
-  box(H, R, 6.44, 8.77, 1.23, .52, .18, .23, 'teal', .67);
-  stroke(H, R, [H.p(7.05, 8.92, .38), H.p(7.05, 8.6, 1.65), H.p(6.53, 8.49, 1.8), H.p(6.31, 8.61, 1.5), H.p(7.05, 8.92, .38)], 'blue', 3);
-  pallet(H, R, 2.2, 9.65, 2.1, 1.72);
-  for (let q = 0; q < 4; q++) box(H, R, 2.44, 9.85, 1.6, 1.3, .3 + q * .07, .05, 'paper', 1);
-  shape(H, R, H.tile(2.44, 9.85, 1.6, 1.3, .58), 'sun', .44, .6);
-  H.line(R, [H.p(3.25, 9.87, .59), H.p(3.25, 11.13, .59)], 'coral', 1.6);
-  const [hx, hy] = H.p(.4, 9.0, 1.65);
-  for (let q = 0; q < 4; q++) H.outline(R, Array.from({ length: 28 }, (_, k) => [hx + Math.cos(k / 27 * TAU) * (18 + q * 3), hy + Math.sin(k / 27 * TAU) * (19 + q * 3)]), 'teal', 2, { tone: .7 });
-  stroke(H, R, [[hx + 20, hy + 15], [hx + 35, hy + 42], [hx + 61, hy + 45]], 'teal', 2.8);
-  for (const [i, j] of [[4.7, 7.8], [8.3, 10.7], [2.6, 7.4]]) {
-    const [x, y] = H.p(i, j, .02);
-    shape(H, R, [[x - 5, y], [x, y - 5], [x + 7, y - 1], [x + 1, y + 3]], 'teal', .48, .5);
-  }
-  huntsPointDetails(H, R);
-  construction(H, R);
-}, (H, R, t) => {
-  const u = cycle(t, 14);
-  H.at(8.35, 6.18, 0, HH => actor(HH, R, 8.35, 6.18, u * 14, 'newYorkProduceInspect', {
-    face: 'sw', shirt: ['blue', .66], vest: ['sun', .8], pants: ['teal', .75], hairStyle: 'cap', skin: ['coral', .56], prop(h, r, points) {
-      const x = (points.nearHand[0] + points.farHand[0]) / 2, y = (points.nearHand[1] + points.farHand[1]) / 2;
-      const tilt = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .16) / .56))) * 5;
-      shape(h, r, [[x - 27, y - 7], [x + 20, y - 1 - tilt], [x + 26, y + 8 - tilt], [x - 22, y + 15]], 'sun', .74, .8);
-      shape(h, r, [[x - 27, y - 7], [x - 18, y - 17], [x + 28, y - 11 - tilt], [x + 20, y - 1 - tilt]], 'paper', 1, .7);
-      for (let q = 0; q < 6; q++) oval(h, r, x - 14 + q % 3 * 13, y - 13 + Math.floor(q / 3) * 5 - tilt * q / 7, 5, 4, q % 2 ? 'coral' : 'sun', .77);
-      for (let q = 0; q < 5; q++) h.line(r, [[x - 19 + q * 8, y + 2 - q * .12 * tilt], [x - 18 + q * 8, y + 9 - q * .12 * tilt]], 'blue', 1.6);
-      h.line(r, [[x - 27, y - 7], [x + 20, y - 1 - tilt]], 'coral', 2);
-    },
-  }, 0, 1.4));
-  H.at(4.5, 3.38, 0, HH => actor(HH, R, 4.5, 3.38, u * 14, 'newYorkDispatchCheck', {
-    shirt: ['paper', 1], vest: ['teal', .65], hairStyle: 'bun', glasses: true, prop(h, r, p) {
-      const [x, y] = p.farHand;
-      shape(h, r, [[x - 12, y - 4], [x + 13, y + 2], [x + 11, y + 21], [x - 14, y + 15]], 'sun', .61, .7);
-      shape(h, r, [[x - 9, y - 1], [x + 10, y + 4], [x + 8, y + 18], [x - 11, y + 13]], 'paper', 1, .5);
-      for (let q = 0; q < 3; q++) h.line(r, [[x - 7, y + 3 + q * 3], [x + 5, y + 6 + q * 3]], 'teal', .7);
-      const [px, py] = p.nearHand;
-      h.line(r, [[px - 5, py + 5], [px + 5, py - 7]], 'coral', 1.6);
-    },
-  }, 0, 1.3));
-  const glow = .17 + .03 * Math.sin(u * TAU);
-  HHGlow(H, 6.4, .12, 2.5, glow);
-});
+);
 
 function HHGlow(H, i, j, z, tone) {
   const [x, y] = H.p(i, j, z);
