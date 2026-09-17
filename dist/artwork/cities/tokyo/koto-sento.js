@@ -1,0 +1,155 @@
+import { world, shape, oval, stroke, box, table, bench, actor, bottle, steam, cycle, TAU } from '../../worlds/common.js';
+import { FIGURES, loop, ell } from '../../drawings.js';
+
+const seated = FIGURES.sample('sit', 0);
+FIGURES.clips.tokyoSentoRinse = {
+  dur: 18,
+  keys: [[0, { ar: 35, er: 50 }], [.18, { ar: 35, er: 50 }], [.31, { ar: 146, er: 40, head: 12 }], [.46, { ar: 151, er: 28, head: 15 }], [.61, { ar: 48, er: 20 }], [.76, { ar: 35, er: 50 }], [1, { ar: 35, er: 50 }]].map(([u, pose]) => [u, { ...seated, lean: -6, ...pose }]),
+};
+
+function towel(H, R, i, j, z, ink = 'paper') {
+  box(H, R, i, j, .71, .46, z, .1, ink, ink === 'paper' ? 1 : .45);
+  for (const off of [.07, .14]) H.line(R, [H.p(i + .04, j + off, z + .11), H.p(i + .67, j + off, z + .11)], 'teal', .8);
+}
+
+function basin(H, R, x, y, size = 1, tilt = 0) {
+  const top = [[x - 10 * size, y - 8 * size + tilt], [x + 10 * size, y - 8 * size - tilt], [x + 7 * size, y + 2 * size], [x - 7 * size, y + 2 * size]];
+  shape(H, R, top, 'sun', .56, .7);
+  oval(H, R, x, y - 8 * size, 10 * size, 3.8 * size, 'paper', 1);
+  oval(H, R, x, y - 8 * size, 7.4 * size, 2.5 * size, 'teal', .27);
+}
+
+function bathEdge(H, R) {
+  for (const [i, j, w, d] of [[3.1, 1.1, 8.4, .28], [3.1, 1.1, .28, 3.7], [11.22, 1.1, .28, 3.7], [3.1, 4.53, 8.4, .28]]) box(H, R, i, j, w, d, .02, .63, 'paper', 1);
+  for (let k = 0; k < 16; k++) H.line(R, [H.p(3.15 + k * .52, 4.83, .1), H.p(3.15 + k * .52, 4.83, .65)], 'teal', .65, { tone: .6 });
+}
+
+export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { wall: false, floor: 'teal', tone: .19, pattern: 'tiles', accent: 'teal', head: 20 }, (H, R) => {
+  shape(H, R, H.faceI(.1, .1, 11.8, 0, 4.55), 'paper', 1);
+  shape(H, R, H.faceJ(.1, .1, 9.75, 0, 2.85), 'teal', .24);
+  for (let j = .2; j < 9.8; j += .55) H.line(R, [H.p(.12, j, .05), H.p(.12, j, 2.8)], 'blue', .6, { tone: .34 });
+  for (let z = .15; z < 2.85; z += .45) H.line(R, [H.p(.12, .1, z), H.p(.12, 9.82, z)], 'blue', .6, { tone: .34 });
+  const mural = H.faceI(2.5, .13, 9.1, 1.92, 4.32);
+  shape(H, R, mural, 'teal', .23);
+  H.clip(mural, () => {
+    shape(H, R, [H.p(3.3, .16, 2.45), H.p(6.85, .16, 4.05), H.p(7.65, .16, 4.05), H.p(10.98, .16, 2.45)], 'blue', .67);
+    shape(H, R, [H.p(5.56, .17, 3.49), H.p(6.85, .17, 4.05), H.p(7.65, .17, 4.05), H.p(8.92, .17, 3.46), H.p(8.11, .17, 3.56), H.p(7.72, .17, 3.37), H.p(7.05, .17, 3.66), H.p(6.25, .17, 3.48)], 'paper', 1);
+    for (let row = 0; row < 4; row++) {
+      const points = [];
+      for (let k = 0; k < 41; k++) points.push(H.p(2.4 + k * .24, .18, 2.04 + row * .13 + Math.sin(k * .68 + row) * .09));
+      stroke(H, R, points, row % 2 ? 'paper' : 'blue', 1.3, .65);
+    }
+  });
+  H.outline(R, mural, 'blue', 1);
+  for (let i = .2; i < 11.9; i += .5) H.line(R, [H.p(i, .2, .1), H.p(i, .2, 1.82)], 'teal', .7, { tone: .45 });
+  for (let z = .2; z < 1.9; z += .4) H.line(R, [H.p(.2, .2, z), H.p(11.8, .2, z)], 'teal', .7, { tone: .45 });
+  box(H, R, 3.1, 1.1, 8.4, 3.7, 0, .18, 'blue', .53);
+  shape(H, R, H.tile(3.38, 1.38, 7.84, 3.15, .42), 'teal', .51);
+  bathEdge(H, R);
+  towel(H, R, 10.38, 1.16, .66);
+  towel(H, R, 4.2, 1.15, .66, 'coral');
+  const [tx, ty] = H.p(11.55, .2, 1.75);
+  shape(H, R, [[tx - 3, ty - 19], [tx + 3, ty - 19], [tx + 3, ty + 9], [tx - 3, ty + 9]], 'paper', 1, .6);
+  H.line(R, [[tx, ty + 6], [tx, ty - 9]], 'coral', 1.4);
+  for (let k = 0; k < 6; k++) H.line(R, [[tx - 2, ty - 14 + k * 4], [tx, ty - 14 + k * 4]], 'blue', .5);
+  for (const j of [3.82, 5.96, 8.08]) {
+    const mirror = H.faceJ(.15, j, 1.15, 1.04, 2.18);
+    shape(H, R, mirror, 'paper', 1);
+    H.tint(mirror, 'blue', .15);
+    H.line(R, [H.p(.18, j + .17, 1.19), H.p(.18, j + .83, 1.95)], 'paper', 2.2);
+    box(H, R, .12, j - .06, .64, 1.28, .69, .09, 'paper', 1);
+    for (const off of [.35, .82]) {
+      const [x, y] = H.p(.4, j + off, .89);
+      stroke(H, R, [[x - 2, y - 7], [x - 2, y + 1], [x + 5, y + 3]], 'blue', 2.2);
+      H.line(R, [[x - 5, y - 7], [x + 3, y - 7]], off < .5 ? 'coral' : 'teal', 2.3);
+    }
+    const [hx, hy] = H.p(.2, j + 1.13, 1.29);
+    stroke(H, R, [[hx, hy], [hx + 16, hy + 29], [hx + 6, hy + 43], [hx - 2, hy + 19]], 'blue', 1.2);
+    oval(H, R, hx, hy - 2, 4.5, 2.4, 'paper', 1);
+    table(H, R, 1.37, j + .17, .65, .63, .3, 'sun');
+    if (j !== 5.96) basin(H, R, ...H.p(1.45, j + 1.05, .03), .83);
+    for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(.48, j + .18 + k * .28, .8), ['coral', 'teal', 'sun'][k], .22 + k * .06);
+  }
+  box(H, R, 2.61, 3.7, .21, 5.95, .01, .015, 'blue', .5);
+  for (let k = 0; k < 24; k++) H.line(R, [H.p(2.62, 3.75 + k * .24, .04), H.p(2.81, 3.75 + k * .24, .04)], 'paper', .7);
+  const [hx, hy] = H.p(.8, 2.28, .68);
+  for (let k = 0; k < 4; k++) H.outline(R, ell(hx, hy, 13 - k * 2, 16 - k * 2.3), 'teal', 1.7);
+  stroke(H, R, [[hx + 12, hy], [hx + 16, hy + 17], [hx + 24, hy + 25]], 'teal', 1.7);
+  shape(H, R, H.tile(7.25, 6.91, 4.45, 4.79, .05), 'sun', .27);
+  for (let j = 7; j < 11.8; j += .36) H.line(R, [H.p(7.3, j, .06), H.p(11.7, j, .06)], 'blue', .5, { tone: .35 });
+  box(H, R, 7.12, 6.75, 4.58, .17, .02, .93, 'sun', .43);
+  for (let k = 0; k < 4; k++) {
+    const i = 8.31 + k * .78;
+    box(H, R, i, 7.1, .72, .65, .07, 2.05, 'sun', .4);
+    for (let row = 0; row < 2; row++) {
+      H.outline(R, H.faceI(i + .07, 7.76, .58, .18 + row * .95, 1.04 + row * .95), 'blue', .7);
+      H.dot(...H.p(i + .53, 7.79, .52 + row * .95), 1.6, 'coral', .8);
+      for (let n = 0; n < 3; n++) H.line(R, [H.p(i + .17, 7.8, .81 + row * .95 - n * .075), H.p(i + .46, 7.8, .81 + row * .95 - n * .075)], 'blue', .55);
+    }
+  }
+  bench(H, R, 8.25, 9.18, 2.9, 'sun');
+  for (const i of [8.37, 10.15]) {
+    box(H, R, i, 10.27, .89, .78, .09, .36, 'paper', 1);
+    for (let k = 0; k < 5; k++) H.line(R, [H.p(i + .08 + k * .16, 11.06, .17), H.p(i + .08 + k * .16, 11.06, .41)], 'coral', .55);
+    towel(H, R, i + .05, 10.35, .45, i < 9 ? 'teal' : 'paper');
+  }
+  box(H, R, 10.85, 5.07, .93, 1.18, .02, 1.56, 'paper', 1);
+  shape(H, R, H.faceI(10.94, 6.26, .75, .41, 1.41), 'teal', .34);
+  for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(11.06 + k * .24, 6.27, .5), ['sun', 'coral', 'paper'][k], .24);
+  H.line(R, [H.p(11.65, 6.29, .65), H.p(11.65, 6.29, 1.19)], 'blue', 1.7);
+  const [cx, cy] = H.p(1.64, .18, 3.26);
+  oval(H, R, cx, cy, 16, 16, 'paper', 1);
+  for (let k = 0; k < 12; k++) H.dot(cx + Math.sin(k * TAU / 12) * 12, cy - Math.cos(k * TAU / 12) * 12, .9, 'blue');
+  stroke(H, R, [[cx, cy - 8], [cx, cy], [cx + 6, cy + 4]], 'blue', 1.2);
+  box(H, R, 5.15, 10.98, 1.59, .64, .04, .68, 'sun', .43);
+  for (let k = 0; k < 3; k++) {
+    shape(H, R, H.faceI(5.24 + k * .49, 11.63, .41, .16, .6), 'blue', .53);
+    oval(H, R, ...H.p(5.43 + k * .49, 11.66, .25), 5, 2.5, 'coral', .7);
+  }
+}, (H, R, t) => {
+  const u = cycle(t, 18);
+  H.clip(H.tile(3.4, 1.39, 7.8, 3.12, .43), () => {
+    for (let k = 0; k < 4; k++) {
+      const f = cycle(t + k * 1.4, 5.6);
+      H.opacity((1 - f) * .62, () => H.outline(R, ell(...H.p(8.2, 3.2, .45), 9 + f * 96, 4 + f * 37), 'paper', .9));
+    }
+    const [x, y] = H.p(8.2, 3.22, .43);
+    shape(H, R, loop([[x - 21, y + 4], [x - 18, y - 10], [x - 8, y - 16], [x + 8, y - 16], [x + 20, y - 8], [x + 22, y + 4]], 1), 'coral', .29);
+    oval(H, R, x, y - 24, 8, 9, 'coral', .3);
+    shape(H, R, loop([[x - 8, y - 23], [x - 8, y - 33], [x + 3, y - 36], [x + 8, y - 30], [x + 7, y - 27], [x - 2, y - 30]], 1), 'blue', .77, .6);
+    H.line(R, [[x + 1, y - 22], [x + 5, y - 22]], 'blue', .7);
+    H.line(R, [[x + 1, y - 18], [x + 4, y - 17]], 'blue', .6);
+    stroke(H, R, [[x - 25, y + 2], [x, y + 6], [x + 25, y + 1]], 'paper', 1.2);
+  });
+  actor(H, R, 1.8, 6.43, t, 'tokyoSentoRinse', {
+    shirt: ['coral', .3], pants: ['paper', 1], skin: ['coral', .3], sleeve: ['coral', .3], face: 'nw',
+    prop: (HH, RR, pts) => {
+      const [x, y] = pts.nearHand;
+      basin(HH, RR, x, y - 1, .76, u > .31 && u < .47 ? 3 : 0);
+      if (u > .32 && u < .48) {
+        const [hx, hy] = pts.head;
+        for (let k = 0; k < 4; k++) stroke(HH, RR, [[x - 6 + k * 2, y], [hx - 6 + k * 3, hy + 9], [hx - 7 + k * 3, hy + 24]], 'teal', .85, .6);
+      }
+    },
+  }, .29, 1.14);
+  towel(H, R, 1.72, 6.55, .41);
+  actor(H, R, 9.1, 9.63, t, 'drink', {
+    shirt: ['coral', .52], pants: ['blue', .57], face: 'se',
+    prop: (HH, RR, pts) => {
+      const [x, y] = pts.nearHand;
+      bottle(HH, RR, x, y + 6, 'sun', .27);
+    },
+  }, .55, 1.14);
+  const [fx, fy] = H.p(7.73, 8.33, .08);
+  oval(H, R, fx, fy, 15, 5, 'teal', .5);
+  stroke(H, R, [[fx, fy - 2], [fx, fy - 53]], 'blue', 3);
+  oval(H, R, fx, fy - 64, 19, 19, 'paper', 1);
+  for (let k = 0; k < 3; k++) {
+    const a = t * 5 + k * TAU / 3;
+    shape(H, R, loop([[fx, fy - 64], [fx + Math.cos(a) * 15, fy - 64 + Math.sin(a) * 15], [fx + Math.cos(a + .85) * 14, fy - 64 + Math.sin(a + .85) * 14]], 1), 'teal', .45, .5);
+  }
+  for (const r of [7, 13, 18]) H.outline(R, ell(fx, fy - 64, r, r), 'blue', .55, { tone: .55 });
+  for (let k = 0; k < 8; k++) H.line(R, [[fx, fy - 64], [fx + Math.cos(k * TAU / 8) * 18, fy - 64 + Math.sin(k * TAU / 8) * 18]], 'blue', .55, { tone: .5 });
+  H.dot(fx, fy - 64, 3, 'sun', .75, { knock: true });
+  steam(H, R, ...H.p(6.5, 2.5, .69), t * .43, 3);
+});

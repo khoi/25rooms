@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { createLayout, collectionForRoom, overlaps } from './artwork/layout.js';
+import { COLLECTIONS } from './artwork/collections.js';
 import { RoomPainter, paintSheet } from './artwork/painter.js';
 
 const stage = document.querySelector('#stage');
@@ -8,13 +9,16 @@ const tourButton = document.querySelector('#tour');
 const query = new URLSearchParams(location.search);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const initialId = query.get('room') || location.hash.slice(1);
-const collection = ['original', 'new'].includes(query.get('collection')) ? query.get('collection') : collectionForRoom(initialId) || 'new';
+const selectedCollection = COLLECTIONS.find(entry => entry.id === query.get('collection'))
+  || COLLECTIONS.find(entry => entry.id === collectionForRoom(initialId))
+  || COLLECTIONS[0];
+const collection = selectedCollection.id;
 const layout = createLayout(5, collection);
 const caption = document.querySelector('#room-caption');
 for (const link of document.querySelectorAll('[data-collection]')) {
   if (link.dataset.collection === collection) link.setAttribute('aria-current', 'page');
 }
-document.title = collection === 'new' ? 'a small light, somewhere else' : 'a small light, original';
+document.title = selectedCollection.title;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#262320');
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 100);
