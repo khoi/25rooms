@@ -1,3 +1,4 @@
+import { hangingRail, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -105,6 +106,155 @@ function crownHeightsGardenDetails(H, R) {
   foldedCloth(H, R, 9.34, 9.86, 1.33, 0.45, 0.69, 'paper', 'teal');
 }
 
+function construction(H, R) {
+  for (let row = 0; row < 8; row++)
+    for (let n = 0; n < 14; n++) {
+      const j = 0.2 + n * 0.82 + (row % 2) * 0.41,
+        z = 0.15 + row * 0.28;
+      if (j < 11.9) {
+        H.line(R, [H.p(0.215, j, z), H.p(0.215, Math.min(j + 0.74, 11.9), z)], 'blue', 0.6, { tone: 0.3 });
+        H.line(R, [H.p(0.215, j, z), H.p(0.215, j, z + 0.24)], 'paper', 0.6);
+      }
+    }
+  for (const j of [0.53, 3.54, 6.55])
+    for (let n = 0; n < 4; n++) {
+      const z = 0.24 + n * 0.23;
+      H.dot(...H.p(2.8, j + 0.1, z), 1.2, 'sun');
+      H.line(R, [H.p(2.8, j + 0.11, z), H.p(2.8, j + 0.2, z)], 'paper', 0.6);
+    }
+  for (const i of [6.23, 8.98]) {
+    H.line(R, [H.p(i, 0.55, 0.5), H.p(i, 0.55, 2.5)], 'sun', 2.3);
+    for (const z of [1.08, 1.55, 2.02, 2.48]) H.line(R, [H.p(i - 0.055, 0.58, z), H.p(i + 0.055, 0.58, z)], 'blue', 0.8);
+  }
+  for (const z of [0.96, 1.38, 1.8, 2.22]) H.line(R, [H.p(6.23, 0.62, z), H.p(8.98, 0.62, z)], 'blue', 0.65);
+  for (let n = 0; n < 4; n++) specimen(H, R, ...H.p(6.52 + n * 0.7, 0.93, 0.45), 0.83, 'teal', n === 1);
+  hangingRail(H, R, 'nw', 9.73, 1.92, 2.27, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.16);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x - 1, y + 36]
+      ],
+      'sun',
+      2.2
+    );
+    if (n % 2) {
+      shape(
+        H,
+        R,
+        [
+          [x - 5, y + 33],
+          [x + 4, y + 33],
+          [x + 5, y + 44],
+          [x, y + 48],
+          [x - 6, y + 44]
+        ],
+        'teal',
+        0.55,
+        0.6
+      );
+    } else {
+      H.line(
+        R,
+        [
+          [x - 7, y + 39],
+          [x + 6, y + 39]
+        ],
+        'blue',
+        1.5
+      );
+      for (let q = 0; q < 4; q++)
+        H.line(
+          R,
+          [
+            [x - 6 + q * 4, y + 39],
+            [x - 6 + q * 4, y + 46]
+          ],
+          'blue',
+          1
+        );
+    }
+  });
+  const [x, y] = H.p(6.91, 9.52, 0.91);
+  shape(
+    H,
+    R,
+    [
+      [x - 24, y],
+      [x + 22, y - 11],
+      [x + 26, y + 5],
+      [x - 20, y + 17]
+    ],
+    'sun',
+    0.5,
+    0.8
+  );
+  for (let n = 0; n < 9; n++)
+    H.line(
+      R,
+      [
+        [x - 20 + n * 5, y + 2 - n],
+        [x - 16 + n * 5, y + 14 - n]
+      ],
+      'blue',
+      0.5
+    );
+  for (let n = 0; n < 5; n++)
+    H.line(
+      R,
+      [
+        [x - 19, y + 1 + n * 3],
+        [x + 22, y - 9 + n * 3]
+      ],
+      'teal',
+      0.65
+    );
+  for (let n = 0; n < 7; n++) {
+    const [px, py] = H.p(6.45 + n * 0.19, 9.43, 0.93);
+    oval(H, R, px, py, 2.1, 1.3, n % 2 ? 'blue' : 'coral', 0.5);
+  }
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(6.2 + n * 0.42, 3.59, 1.19);
+    specimen(H, R, px, py, 0.23, 'teal', false);
+  }
+  const [px, py] = H.p(10.32, 10.94, 0.15);
+  shape(
+    H,
+    R,
+    [
+      [px - 6, py],
+      [px + 6, py],
+      [px + 5, py - 17],
+      [px - 5, py - 17]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  H.line(
+    R,
+    [
+      [px, py - 14],
+      [px + 1, py - 5]
+    ],
+    'teal',
+    1.2
+  );
+  for (let n = 0; n < 9; n++) {
+    const [ax, ay] = H.p(3.18 + (n % 3) * 0.24, 7.61 + Math.floor(n / 3) * 0.24, 0.035);
+    H.line(
+      R,
+      [
+        [ax - 3, ay],
+        [ax + 4, ay - 3]
+      ],
+      'sun',
+      1
+    );
+  }
+}
+
 const room = world('new-york-crown-heights-garden', 'Crown Heights · Turn the Heap', { floor: 'sun', tone: .12, wall: false, head: 20 }, (H, R) => {
   box(H, R, 0, 0, .2, 12, .04, 2.52, 'coral', .23);
   for (let z = .15; z < 2.5; z += .27) {
@@ -160,6 +310,7 @@ const room = world('new-york-crown-heights-garden', 'Crown Heights · Turn the H
   plant(H, R, ...H.p(11.15, 11.03, .04), .75);
   for (let k = 0; k < 4; k++) shape(H, R, H.tile(5.35 + k * .61, 10.92, .44, .3, .04), k % 2 ? 'paper' : 'sun', .85, .6);
   crownHeightsGardenDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), turn = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .17) / .59))) ** 2;
   actor(H, R, 4.39, 5.11, t, 'newYorkCompostTurn', { face: 'sw', shirt: ['paper', 1], apron: ['teal', .72], hairStyle: 'cap', prop(h, r, points) {

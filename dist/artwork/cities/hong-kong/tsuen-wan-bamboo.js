@@ -1,5 +1,5 @@
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -55,6 +55,139 @@ function tsuenWanBambooDetails(H, R) {
   }
   H.line(R, [H.p(11.14, 3.07, 1.5), H.p(11.14, 3.9, 1.5)], 'sun', 2);
   for (let n = 0; n < 4; n++) H.line(R, [H.p(11.14, 3.1 + n * 0.2, 1.45), H.p(11.14, 3.1 + n * 0.2, 0.83)], 'blue', 1);
+}
+
+function construction(H, R) {
+  for (const [i, j] of [
+    [0.68, 1.08],
+    [0.68, 8.24],
+    [5.28, 1.08],
+    [5.28, 8.24]
+  ]) {
+    box(H, R, i - 0.22, j - 0.23, 0.58, 0.62, 0.02, 0.1, 'sun', 0.43);
+    for (const x of [i - 0.13, i + 0.25]) for (const y of [j - 0.13, j + 0.25]) H.dot(...H.p(x, y, 0.14), 1.4, 'blue');
+  }
+  for (let n = 0; n < 8; n++) {
+    const j = 2.96 + n * 0.54;
+    pole(H, R, [0.8, j, 0.36], [2.15, j, 0.36], 3, 'sun');
+    binding(H, R, 1.01, j, 0.38);
+    binding(H, R, 1.91, j, 0.38);
+  }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(10.5, 2.75, 0.87 + n * 0.1);
+    shape(
+      H,
+      R,
+      [
+        [x - 15, y],
+        [x + 14, y],
+        [x + 12, y - 6],
+        [x - 12, y - 6]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [x - 11, y - 3],
+        [x + 9, y - 3]
+      ],
+      n % 2 ? 'coral' : 'teal',
+      0.8
+    );
+  }
+  const [x, y] = H.p(9.5, 2.43, 1.22);
+  for (let n = 0; n < 5; n++)
+    H.line(
+      R,
+      [
+        [x - 12 + n * 5, y - 2],
+        [x - 12 + n * 5, y - 13]
+      ],
+      'sun',
+      1.3
+    );
+  H.line(
+    R,
+    [
+      [x - 15, y - 14],
+      [x + 13, y - 14]
+    ],
+    'blue',
+    2.2
+  );
+  for (const i of [9, 10.87]) H.line(R, [H.p(i, 2.1, 0.18), H.p(i, 3.01, 0.67)], 'blue', 1.4);
+  box(H, R, 8.7, 1.68, 2.5, 0.11, 1.03, 1.53, 'teal', 0.32);
+  for (let n = 0; n < 6; n++) {
+    const i = 8.9 + n * 0.36,
+      [px, py] = H.p(i, 1.82, 2.36);
+    H.dot(px, py, 1.6, 'sun');
+    H.line(
+      R,
+      [
+        [px, py],
+        [px, py + 13]
+      ],
+      'blue',
+      0.8
+    );
+    if (n < 3) {
+      H.line(
+        R,
+        [
+          [px, py + 10],
+          [px - 3, py + 33]
+        ],
+        'sun',
+        3
+      );
+      H.line(
+        R,
+        [
+          [px - 7, py + 32],
+          [px + 4, py + 35]
+        ],
+        'blue',
+        4
+      );
+    } else {
+      H.outline(R, ell(px, py + 23, 7, 10), 'blue', 2);
+      H.line(
+        R,
+        [
+          [px, py + 31],
+          [px + 5, py + 38]
+        ],
+        'coral',
+        1.1
+      );
+    }
+  }
+  for (let n = 0; n < 4; n++) {
+    const j = 9.1 + n * 0.47;
+    pole(H, R, [5.25, j, 0.08], [7.42, j, 0.08], 3.2, 'sun');
+    for (const i of [5.42, 7.17]) H.line(R, [H.p(i, j - 0.1, 0.09), H.p(i, j + 0.1, 0.09)], 'blue', 0.7);
+  }
+  shape(H, R, H.tile(2.24, 9.74, 1.5, 1.06, 0.78), 'paper', 1, 0.6);
+  for (let n = 0; n < 3; n++) {
+    H.line(R, [H.p(2.38 + n * 0.47, 9.81, 0.8), H.p(2.38 + n * 0.47, 10.67, 0.8)], 'teal', 1.1);
+    H.line(R, [H.p(2.29, 9.92 + n * 0.3, 0.8), H.p(3.62, 9.92 + n * 0.3, 0.8)], 'coral', 0.8);
+  }
+  coil(H, R, 7.1, 10.61, 'coral', 0.65);
+  for (let n = 0; n < 7; n++) {
+    const [px, py] = H.p(7.75 + n * 0.16, 2.95 + (n % 2) * 0.24, 0.04);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 9, py - 4]
+      ],
+      'sun',
+      1.1
+    );
+  }
 }
 
 const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', { floor: 'paper', tone: .5, wall: false, head: 20 }, (H, R) => {
@@ -115,6 +248,7 @@ const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', 
   pole(H, R, [3.89, 9.82, .13], [6.02, 9.82, .13], 3.7);
   for (const [i, ink] of [[4.18, 'coral'], [4.85, 'blue'], [5.43, 'teal']]) binding(H, R, i, 9.82, .15, ink);
   tsuenWanBambooDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), tight = u < .12 ? 0 : u < .34 ? (1 - Math.cos((u - .12) / .22 * Math.PI)) / 2 : u < .56 ? 1 : u < .75 ? (1 + Math.cos((u - .56) / .19 * Math.PI)) / 2 : 0;
   actor(H, R, 6.69, 6.15, t, 'hongKongBambooTension', { shirt: ['teal', .58], pants: ['blue', .74], hairStyle: 'short', face: 'nw', prop(HH, RR, points) {

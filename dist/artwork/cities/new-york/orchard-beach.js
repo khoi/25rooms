@@ -77,6 +77,132 @@ function orchardBeachDetails(H, R) {
     oval(H, R, ...H.p(i, j, 0.03), 4, 2, 'sun', 0.3);
 }
 
+function construction(H, R) {
+  for (let n = 0; n < 7; n++) {
+    const i = 0.54 + n * 1.66;
+    H.line(R, [H.p(i, 0.435, 0.24), H.p(i, 0.435, 3.54)], 'blue', 0.5, { tone: 0.24 });
+    for (const z of [0.23, 3.59]) H.dot(...H.p(i + 0.07, 0.45, z), 1.4, 'sun');
+  }
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(2.2 + n * 0.87, 0.45, 1.6 + (n % 3) * 0.34);
+    H.outline(R, ell(x, y, 5 + (n % 3) * 2, 4 + (n % 2) * 2), 'teal', 0.65, { tone: 0.3 });
+  }
+  for (let n = 0; n < 9; n++) {
+    const [x, y] = H.p(1.16 + n * 0.78, 0.46, 0.15);
+    H.line(
+      R,
+      [
+        [x - 9, y],
+        [x - 3, y - 3],
+        [x + 6, y - 1]
+      ],
+      'teal',
+      0.7,
+      { tone: 0.3 }
+    );
+  }
+  for (const j of [1.1, 4.37, 7.64, 10.9]) {
+    box(H, R, 0.05, j - 0.2, 0.3, 0.4, 0.03, 0.12, 'teal', 0.6);
+    for (const y of [j + 0.09, j + 0.34]) H.dot(...H.p(0.2, y - 0.2, 0.18), 1.4, 'sun');
+    const [x, y] = H.p(0.2, j, 2.35);
+    oval(H, R, x, y, 3.1, 3.1, 'paper', 1);
+  }
+  box(H, R, 0.52, 7.75, 0.17, 2.82, 1.4, 1.3, 'teal', 0.5);
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(0.71, 8.08 + n * 0.63, 2.12);
+    shape(
+      H,
+      R,
+      [
+        [x - 7, y],
+        [x + 7, y],
+        [x + 7, y - 20],
+        [x - 7, y - 20]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [x - 4, y - 14],
+        [x + 4, y - 14]
+      ],
+      n % 2 ? 'coral' : 'teal',
+      1.3
+    );
+    for (let q = 0; q < 3; q++)
+      H.line(
+        R,
+        [
+          [x - 4, y - 9 + q * 3],
+          [x + 4, y - 9 + q * 3]
+        ],
+        'blue',
+        0.45
+      );
+  }
+  table(H, R, 1.01, 9.25, 2.66, 0.83, 0.54, 'sun');
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(1.09 + n * 0.5, 9.32, 0.69), H.p(1.09 + n * 0.5, 10.0, 0.69)], 'paper', 0.7);
+  foldedCloth(H, R, 1.31, 9.39, 1.15, 0.46, 0.71, 'paper', 'coral');
+  const [x, y] = H.p(3.27, 9.63, 0.71);
+  shape(
+    H,
+    R,
+    [
+      [x - 4, y],
+      [x + 4, y],
+      [x + 4, y - 23],
+      [x - 4, y - 23]
+    ],
+    'teal',
+    0.6,
+    0.6
+  );
+  oval(H, R, x, y - 23, 4, 2, 'sun', 0.7);
+  H.line(
+    R,
+    [
+      [x - 3, y - 14],
+      [x + 3, y - 14]
+    ],
+    'paper',
+    1.1
+  );
+  box(H, R, 10.62, 5.03, 0.6, 0.58, 0.05, 0.49, 'paper', 1);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(10.7 + n * 0.11, 5.63, 0.14), H.p(10.7 + n * 0.11, 5.63, 0.42)], 'teal', 0.6);
+  H.dot(...H.p(11.08, 5.65, 0.36), 1.6, 'sun');
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(10.3 + n * 0.2, 10.14, 0.71);
+    oval(H, R, px, py, 3, 2.7, n % 2 ? 'sun' : 'teal', 0.65);
+    H.line(
+      R,
+      [
+        [px - 2, py],
+        [px + 2, py]
+      ],
+      'paper',
+      0.6
+    );
+  }
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(1.68 + n * 0.4, 10.86, 0.03);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 4, py],
+        [px + 1, py - 5]
+      ],
+      'sun',
+      0.3,
+      0.4
+    );
+  }
+}
+
 const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
   floor: 'teal', tone: .28, wall: false,
 }, (H, R) => {
@@ -127,6 +253,7 @@ const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
   oval(H, R, ...H.p(11.02, 2.35, .03), 12, 5, 'teal', .52);
   for (let q = 0; q < 6; q++) H.line(R, [H.p(10.73 + q * .11, 2.17, .05), H.p(10.73 + q * .11, 2.49, .05)], 'blue', .75);
   orchardBeachDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 10);
   H.at(4.93, 8.0, 0, HH => actor(HH, R, 4.93, 8.0, t, 'newYorkHandballRally', {

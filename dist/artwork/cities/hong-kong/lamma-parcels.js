@@ -1,3 +1,4 @@
+import { panelFront, caster } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -99,6 +100,7 @@ function shelter(H, R) {
   shape(H, R, H.tile(4.7, 10.56, 2.3, .71, .2), 'sun', .2);
   for (let k = 0; k < 8; k++) H.dot(...H.p(4.91 + k * .26, 10.86, .22), 1.4, 'blue', .35);
   lammaParcelsDetails(H, R);
+  construction(H, R);
 }
 
 function lammaParcelsDetails(H, R) {
@@ -129,6 +131,121 @@ function lammaParcelsDetails(H, R) {
     shape(H, R, [H.p(i, 7.01, 0.32), H.p(i + 0.42, 7.01, 0.32), H.p(i + 0.42, 7.37, 0.2)], i < 4 ? 'sun' : 'coral', 0.6, 0.6);
   }
   framedPanel(H, R, 6.6, 2.53, 1.36, 1.96, 0.86, 'teal');
+}
+
+function construction(H, R) {
+  for (const i of [0.65, 5.76, 11.06]) {
+    H.line(R, [H.p(i, 2.48, 2.81), H.p(i + 0.48, 2.48, 3.44)], 'sun', 2.1);
+    for (const z of [0.42, 2.91]) {
+      H.dot(...H.p(i + 0.07, 2.56, z), 1.5, 'paper');
+      H.line(R, [H.p(i + 0.02, 2.57, z), H.p(i + 0.12, 2.57, z)], 'blue', 0.65);
+    }
+  }
+  for (let n = 0; n < 15; n++) {
+    const i = 0.3 + n * 0.78;
+    H.line(R, [H.p(i, 1.91, 0.19), H.p(i, 2.19, 0.19)], 'blue', 0.65);
+  }
+  for (const [i, j] of [
+    [3.47, 4.97],
+    [7.56, 4.97],
+    [3.47, 7.25],
+    [7.56, 7.25]
+  ])
+    caster(H, R, i, j, 0.28);
+  for (const j of [4.93, 7.24]) {
+    H.line(R, [H.p(3.36, j, 0.31), H.p(7.81, j, 0.31)], 'blue', 2.3);
+    for (let n = 0; n < 6; n++) H.dot(...H.p(3.57 + n * 0.74, j, 0.52), 1.2, 'sun');
+  }
+  panelFront(H, R, 9.09, 5.15, 1.94, 0.31, 1.0, 3, 'teal');
+  const [x, y] = H.p(10.11, 4.55, 1.54);
+  shape(
+    H,
+    R,
+    [
+      [x - 15, y],
+      [x + 13, y],
+      [x + 11, y - 13],
+      [x - 10, y - 13]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  oval(H, R, x, y - 20, 10, 10, 'sun', 0.5);
+  H.line(
+    R,
+    [
+      [x, y - 20],
+      [x - 4, y - 25]
+    ],
+    'blue',
+    1.2
+  );
+  for (let n = 0; n < 6; n++) {
+    const a = (n * TAU) / 6;
+    H.dot(x + Math.cos(a) * 7, y - 20 + Math.sin(a) * 7, 0.8, 'blue');
+  }
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(9.43 + n * 0.42, 4.92, 1.53);
+    shape(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px + 4, py],
+        [px + 4, py - 11],
+        [px - 4, py - 11]
+      ],
+      n % 2 ? 'coral' : 'teal',
+      0.6,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 3, py - 7],
+        [px + 3, py - 7]
+      ],
+      'paper',
+      0.9
+    );
+  }
+  for (let n = 0; n < 6; n++) {
+    const j = 8.36 + n * 0.15;
+    H.line(R, [H.p(0.72, j, 2.13), H.p(2.49, j, 2.13)], 'teal', 0.7);
+  }
+  for (const j of [3.76, 4.1]) for (let n = 0; n < 8; n++) H.line(R, [H.p(0.94 + n * 0.42, j, 0.79), H.p(1.15 + n * 0.42, j, 0.79)], 'paper', 0.65);
+  box(H, R, 5.6, 2.47, 2.1, 0.2, 1.58, 1.48, 'teal', 0.4);
+  for (let n = 0; n < 6; n++) {
+    const i = 5.75 + (n % 3) * 0.59,
+      z = 1.75 + Math.floor(n / 3) * 0.59;
+    shape(H, R, H.faceI(i, 2.69, 0.48, z, z + 0.43), 'paper', 1, 0.55);
+    H.line(R, [H.p(i + 0.08, 2.7, z + 0.26), H.p(i + 0.39, 2.7, z + 0.26)], n % 2 ? 'coral' : 'teal', 1.1);
+    H.dot(...H.p(i + 0.23, 2.71, z + 0.37), 1, 'sun');
+  }
+  const [px, py] = H.p(7.97, 10.64, 0.2);
+  shape(
+    H,
+    R,
+    [
+      [px - 7, py],
+      [px + 8, py - 5],
+      [px + 10, py + 2],
+      [px - 5, py + 7]
+    ],
+    'paper',
+    1,
+    0.55
+  );
+  H.line(
+    R,
+    [
+      [px - 3, py],
+      [px + 5, py - 2]
+    ],
+    'teal',
+    0.8
+  );
 }
 
 const room = world('hong-kong-lamma-parcels', 'Lamma · The last parcel fits', { floor: 'paper', tone: .6, wall: false, head: 20 }, shelter, (H, R, t) => {

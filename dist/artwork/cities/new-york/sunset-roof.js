@@ -1,5 +1,6 @@
+import { panelFront, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -63,6 +64,115 @@ function sunsetRoofDetails(H, R) {
   boundBook(H, R, 9.46, 4.45, 0.79, 0.56, 1.54, 'teal');
 }
 
+function construction(H, R) {
+  for (let n = 0; n < 14; n++) {
+    const i = 0.29 + n * 0.83;
+    H.line(R, [H.p(i, 0.38, 1.23), H.p(i + 0.65, 0.38, 1.23)], 'paper', 0.8);
+    H.line(R, [H.p(0.39, i, 0.16), H.p(0.39, i + 0.67, 0.16)], 'blue', 0.6);
+    for (const z of [0.36, 0.73, 1.1]) H.line(R, [H.p(0.39, i, z), H.p(0.39, i + 0.61, z)], 'paper', 0.55);
+  }
+  for (const i of [1.1, 4.15, 7.25]) {
+    H.line(R, [H.p(i, 0.61, 1.48), H.p(i, 0.61, 2.82)], 'sun', 2);
+    for (const z of [1.58, 1.97, 2.36, 2.72]) H.line(R, [H.p(i - 0.08, 0.63, z), H.p(i + 0.08, 0.63, z)], 'blue', 0.7);
+  }
+  for (const z of [1.82, 2.25, 2.67]) H.line(R, [H.p(1.1, 0.65, z), H.p(7.25, 0.65, z)], 'blue', 0.75);
+  for (let n = 0; n < 7; n++) {
+    const i = 1.37 + n * 0.86;
+    specimen(H, R, ...H.p(i, 0.84, 1.43), 0.5 + (n % 3) * 0.13, 'teal', n % 3 === 0);
+  }
+  panelFront(H, R, 9.37, 2.9, 1.67, 0.16, 1.2, 2, 'paper');
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(9.56 + n * 0.27, 2.92, 0.95), H.p(9.56 + n * 0.27, 2.92, 1.21)], 'teal', 0.7);
+  const [x, y] = H.p(10.13, 2.07, 1.57);
+  oval(H, R, x, y, 17, 8, 'teal', 0.4);
+  oval(H, R, x, y, 12, 5.5, 'blue', 0.6);
+  for (let n = 0; n < 10; n++) {
+    const a = (n * TAU) / 10;
+    H.line(
+      R,
+      [
+        [x, y],
+        [x + Math.cos(a) * 12, y + Math.sin(a) * 5]
+      ],
+      'paper',
+      0.7
+    );
+  }
+  for (let n = 0; n < 4; n++) {
+    const j = 4.35 + n * 0.28;
+    H.line(R, [H.p(9.37, j, 1.3), H.p(10.99, j, 1.3)], 'teal', 0.7);
+  }
+  for (const i of [9.26, 11.09]) H.line(R, [H.p(i, 6.41, 0.19), H.p(i, 7.66, 0.75)], 'blue', 1.5);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(9.6 + n * 0.4, 5.01, 1.56);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 5, py],
+        [px + 5, py - 17],
+        [px - 5, py - 17]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    leaf(H, R, px, py - 5, 0.28, 0.1, 'teal');
+    H.dot(px, py - 15, 1, 'coral');
+  }
+  box(H, R, 0.56, 8.7, 0.74, 1.0, 0.04, 0.6, 'teal', 0.5);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(0.59, 9.72, 0.17 + n * 0.11), H.p(1.27, 9.72, 0.17 + n * 0.11)], 'paper', 0.65);
+  const [px, py] = H.p(0.92, 9.17, 0.69);
+  oval(H, R, px, py, 11, 5, 'blue', 0.55);
+  stroke(
+    H,
+    R,
+    [
+      [px - 10, py],
+      [px - 9, py - 17],
+      [px + 8, py - 17],
+      [px + 10, py]
+    ],
+    'sun',
+    1.2
+  );
+  H.line(
+    R,
+    [
+      [px + 8, py - 1],
+      [px + 25, py - 14]
+    ],
+    'teal',
+    3
+  );
+  oval(H, R, px + 25, py - 14, 5, 2.3, 'paper', 1);
+  for (let n = 0; n < 5; n++) {
+    const [ax, ay] = H.p(4.35 + n * 0.32, 10.91, 0.35);
+    shape(
+      H,
+      R,
+      [
+        [ax - 3, ay],
+        [ax + 4, ay],
+        [ax + 4, ay - 7],
+        [ax - 3, ay - 7]
+      ],
+      'paper',
+      1,
+      0.45
+    );
+    H.line(
+      R,
+      [
+        [ax - 2, ay - 4],
+        [ax + 3, ay - 4]
+      ],
+      'coral',
+      0.7
+    );
+  }
+}
+
 const room = world('new-york-sunset-roof', 'Sunset Park · Above the Loading Bays', {
   floor: 'paper', tone: .88, wall: false,
 }, (H, R) => {
@@ -121,6 +231,7 @@ const room = world('new-york-sunset-roof', 'Sunset Park · Above the Loading Bay
   box(H, R, 7.22, 9.56, .78, 1.13, .04, .16, 'coral', .5);
   for (let q = 0; q < 4; q++) H.line(R, [H.p(7.34 + q * .15, 9.74, .23), H.p(7.32 + q * .15, 10.45, .23)], 'paper', .8);
   sunsetRoofDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(7.45, 8.3, 0, HH => actor(HH, R, 7.45, 8.3, t, 'newYorkRoofHarvest', {

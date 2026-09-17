@@ -1,3 +1,4 @@
+import { cornice, wallRack, hangingRail } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -92,6 +93,7 @@ function shed(H, R) {
   shell(H, R, ...H.p(10.67, 9.5, .82), .72, .3, true);
   H.line(R, [H.p(2.75, 10.88, .02), H.p(9.11, 10.88, .02)], 'paper', 2.3, { tone: .8 });
   lauFauShanOystersDetails(H, R);
+  construction(H, R);
 }
 
 function lauFauShanOystersDetails(H, R) {
@@ -120,6 +122,179 @@ function lauFauShanOystersDetails(H, R) {
   boundBook(H, R, 10.16, 8.94, 0.69, 0.63, 0.82, 'blue');
   satchel(H, R, 10.73, 1.09, 0.06, 'coral', 0.67);
   for (const i of [3.21, 4.39, 7.17]) H.line(R, [H.p(i, 7.19, 0.28), H.p(i, 7.19, 0.81)], 'paper', 1.5);
+}
+
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.85, 3.14, 'teal');
+  wallRack(H, R, 'nw', 4.35, 2.64, 1.44, 1.54, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.36 + n * 0.47, z + 0.14);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 4, y],
+            [x + 4, y],
+            [x + 5, y - 18],
+            [x - 3, y - 18]
+          ],
+          'paper',
+          1,
+          0.6
+        );
+        H.line(
+          R,
+          [
+            [x - 3, y - 10],
+            [x + 4, y - 10]
+          ],
+          'coral',
+          1
+        );
+      } else {
+        shell(H, R, x, y, 0.48, n * 0.2, n === 2);
+      }
+    }
+  });
+  hangingRail(H, R, 'nw', 7.4, 3.4, 2.87, 5, (P, u, n) => {
+    const [x, y] = P(u, -0.14);
+    if (n < 2) {
+      shape(
+        H,
+        R,
+        [
+          [x - 10, y],
+          [x + 10, y],
+          [x + 7, y + 32],
+          [x - 7, y + 32]
+        ],
+        n ? 'coral' : 'paper',
+        0.7,
+        0.7
+      );
+      H.line(
+        R,
+        [
+          [x, y + 4],
+          [x - 2, y + 28]
+        ],
+        'blue',
+        0.55
+      );
+    } else {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x - 3, y + 24]
+        ],
+        'sun',
+        2.7
+      );
+      shape(
+        H,
+        R,
+        [
+          [x - 6, y + 21],
+          [x + 1, y + 22],
+          [x + 7, y + 12]
+        ],
+        'paper',
+        1,
+        0.6
+      );
+    }
+  });
+  for (let n = 0; n < 4; n++) {
+    const i = 3.13 + n * 1.29;
+    shape(H, R, H.faceI(i, 7.215, 1.13, 0.23, 0.76), 'teal', 0.3, 0.6);
+    H.line(R, [H.p(i + 0.1, 7.23, 0.68), H.p(i + 1.04, 7.23, 0.68)], 'paper', 1.1);
+    for (const u of [0.15, 0.99]) H.dot(...H.p(i + u, 7.235, 0.37), 1.1, 'sun');
+  }
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(3.55 + n * 0.89, 6.57, 1.19);
+    shell(H, R, x, y, 0.55, n * 0.2, n % 2 === 0);
+    H.line(
+      R,
+      [
+        [x - 4, y + 3],
+        [x + 4, y + 3]
+      ],
+      'paper',
+      0.7
+    );
+  }
+  const [x, y] = H.p(10.14, 3.18, 0.32);
+  shape(
+    H,
+    R,
+    [
+      [x - 14, y],
+      [x + 13, y],
+      [x + 11, y - 13],
+      [x - 12, y - 13]
+    ],
+    'teal',
+    0.65,
+    0.8
+  );
+  oval(H, R, x, y - 20, 13, 12, 'paper', 1);
+  oval(H, R, x, y - 20, 10, 9, 'sun', 0.25);
+  for (let n = 0; n < 8; n++) {
+    const a = (n * TAU) / 8;
+    H.line(
+      R,
+      [
+        [x + Math.cos(a) * 7, y - 20 + Math.sin(a) * 7],
+        [x + Math.cos(a) * 9, y - 20 + Math.sin(a) * 9]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  H.line(
+    R,
+    [
+      [x, y - 20],
+      [x - 5, y - 25]
+    ],
+    'coral',
+    1.3
+  );
+  for (let n = 0; n < 8; n++) {
+    const j = 8.93 + n * 0.19;
+    H.line(R, [H.p(10.25, j, 0.79), H.p(11.3, j, 0.79)], 'paper', 0.65);
+  }
+  for (let n = 0; n < 4; n++) {
+    const i = 3.98 + n * 0.71;
+    shape(H, R, H.tile(i, 9.62, 0.48, 0.39, 0.025), 'teal', 0.2, 0.4);
+    shell(H, R, ...H.p(i + 0.23, 9.84, 0.04), 0.42, n * 0.3, true);
+  }
+  for (const i of [3.5, 7.13, 10.85]) {
+    H.line(R, [H.p(i, 0.23, 1.52), H.p(i, 0.23, 2.98)], 'paper', 0.8);
+    for (const z of [1.64, 2.88]) H.dot(...H.p(i, 0.25, z), 1.1, 'sun');
+  }
+  const [px, py] = H.p(0.83, 8.61, 1.08);
+  oval(H, R, px, py, 6, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [px - 5, py],
+      [px + 6, py]
+    ],
+    'coral',
+    1.1
+  );
+  H.line(
+    R,
+    [
+      [px, py - 3],
+      [px + 9, py - 19]
+    ],
+    'sun',
+    1.2
+  );
 }
 
 const room = world('hong-kong-lau-fau-shan-oysters', 'Lau Fau Shan · Shells after the tide', { floor: 'teal', tone: .18, wall: 'paper', wallTone: .9, height: 3.38, head: 20 }, shed, (H, R, t) => {

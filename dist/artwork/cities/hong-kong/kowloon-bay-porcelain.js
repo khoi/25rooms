@@ -1,3 +1,4 @@
+import { cornice, windowBay, cityView, panelFront, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -85,6 +86,143 @@ function kowloonBayPorcelainDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.15, 11.85, 3.49, 'teal');
+  windowBay(H, R, 'ne', 6.14, 5.28, 1.28, 2.12, {
+    divisions: 4,
+    view(P) {
+      cityView(H, R, P, 5.28, 2.12);
+    }
+  });
+  wallRack(H, R, 'nw', 7.5, 3.73, 1.34, 1.96, 3, 'teal', (P, z, row) => {
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = P(0.38 + n * 0.6, z + 0.2);
+      plate(H, R, x, y, 8 + (n % 2) * 2, row === 2, true, 0, n === 4);
+    }
+  });
+  hangingRail(H, R, 'ne', 1.2, 4.3, 1.64, 7, (P, u, n) => {
+    const [x, y] = P(u, -0.16);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x - 2, y + 20]
+      ],
+      'sun',
+      1.6
+    );
+    shape(
+      H,
+      R,
+      [
+        [x - 5, y + 20],
+        [x + 1, y + 19],
+        [x + 1, y + 29],
+        [x - 5, y + 29]
+      ],
+      n % 3 ? 'paper' : 'coral',
+      0.8,
+      0.5
+    );
+  });
+  taskLight(H, R, 2.33, 3.67, 1.09, 'teal', 0.75);
+  panelFront(H, R, 8.1, 9.59, 3.06, 0.13, 1.12, 4, 'teal');
+  for (let n = 0; n < 4; n++) {
+    const i = 2.28 + n * 1.06;
+    shape(H, R, H.faceI(i, 5.99, 0.83, 0.48, 0.8), 'paper', 1, 0.55);
+    H.line(R, [H.p(i + 0.25, 6.015, 0.68), H.p(i + 0.6, 6.015, 0.68)], 'teal', 1.5);
+  }
+  const [x, y] = H.p(4.37, 4.28, 1.12);
+  oval(H, R, x, y, 18, 8, 'paper', 1);
+  oval(H, R, x, y, 14, 6, 'teal', 0.13);
+  for (let n = 0; n < 6; n++) {
+    const a = (n * TAU) / 6;
+    oval(H, R, x + Math.cos(a) * 11, y + Math.sin(a) * 4, 3, 1.8, ['coral', 'teal', 'sun'][n % 3], 0.75);
+  }
+  H.line(
+    R,
+    [
+      [x - 7, y + 10],
+      [x + 17, y - 16]
+    ],
+    'sun',
+    1.2
+  );
+  const [mx, my] = H.p(6.11, 3.95, 1.1);
+  oval(H, R, mx, my, 9, 7, 'paper', 1);
+  oval(H, R, mx, my, 7, 5, 'teal', 0.13);
+  H.line(
+    R,
+    [
+      [mx + 6, my + 5],
+      [mx + 16, my + 15]
+    ],
+    'blue',
+    3
+  );
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(9.04 + n * 0.43, 5.89, 0.81);
+    cup(H, R, 9.04 + n * 0.43, 5.89, 0.81, n % 2 ? 'paper' : 'teal', n === 0);
+    H.line(
+      R,
+      [
+        [px - 4, py - 2],
+        [px + 3, py - 2]
+      ],
+      'coral',
+      0.5
+    );
+  }
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(2.2 + n * 0.32, 9.22, 1.16);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 8, py],
+        [px + 6, py - 12],
+        [px - 3, py - 16]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [px - 1, py - 11],
+        [px + 4, py - 2]
+      ],
+      'teal',
+      0.65
+    );
+  }
+  for (const i of [1.92, 3.9]) for (const j of [8.92, 10.49]) caster(H, R, i, j);
+  const [sx, sy] = H.p(7.85, 10.27, 0.04);
+  shape(
+    H,
+    R,
+    [
+      [sx - 6, sy],
+      [sx + 7, sy - 3],
+      [sx + 2, sy - 10]
+    ],
+    'paper',
+    1,
+    0.5
+  );
+  H.line(
+    R,
+    [
+      [sx - 3, sy - 1],
+      [sx + 3, sy - 5]
+    ],
+    'coral',
+    0.65
+  );
+}
+
 const room = world('hong-kong-kowloon-bay-porcelain', 'Kowloon Bay · A quiet rim of color', { floor: 'paper', tone: .54, wall: 'teal', wallTone: .19, height: 3.74, head: 20 }, (H, R) => {
   shape(H, R, wallRect(H, 'ne', 6.14, 11.42, 1.28, 3.4), 'blue', .26, .9);
   for (const i of [6.24, 7.49, 8.74, 10.0, 11.29]) H.line(R, [wallPt(H, 'ne', i, 1.34, .08), wallPt(H, 'ne', i, 3.34, .08)], 'paper', 2.4);
@@ -151,6 +289,7 @@ const room = world('hong-kong-kowloon-bay-porcelain', 'Kowloon Bay · A quiet ri
   for (const i of [1.89, 4.01]) H.line(R, [H.p(i, 8.88, .42), H.p(i, 8.88, 1.46)], 'blue', 2);
   H.line(R, [H.p(1.89, 8.88, 1.46), H.p(4.01, 8.88, 1.46)], 'blue', 2.1);
   kowloonBayPorcelainDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), turn = u < .57 ? 0 : u < .73 ? Math.sin((u - .57) / .16 * Math.PI / 2) * .22 : u < .86 ? .22 : Math.cos((u - .86) / .14 * Math.PI / 2) * .22;
   const [px, py] = H.p(5.14, 5.26, 1.24);

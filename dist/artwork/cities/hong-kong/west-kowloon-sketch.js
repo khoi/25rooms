@@ -1,3 +1,4 @@
+import { caster, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -93,6 +94,83 @@ function westKowloonSketchDetails(H, R) {
   for (const i of [2.55, 7.55]) for (const j of [2.19, 8.37]) H.dot(...H.p(i, j, 0.15), 1.8, 'sun');
 }
 
+function construction(H, R) {
+  for (const i of [2.52, 7.48])
+    for (const j of [2.14, 8.33]) {
+      H.line(R, [H.p(i, j, 2.75), H.p(i + (i < 3 ? 0.62 : -0.62), j, 3.48)], 'blue', 2);
+      H.line(R, [H.p(i, j, 2.75), H.p(i, j + (j < 3 ? 0.62 : -0.62), 3.48)], 'blue', 2);
+      for (const z of [0.15, 2.82, 3.39]) H.dot(...H.p(i + 0.075, j + 0.12, z), 1.4, 'sun');
+    }
+  for (let n = 0; n < 11; n++) {
+    const i = 0.4 + n * 1.05;
+    shape(H, R, H.faceI(i, 0.85, 0.85, 0.12, 0.46), 'paper', 1, 0.6);
+    H.line(R, [H.p(i + 0.12, 0.87, 0.18), H.p(i + 0.66, 0.87, 0.18)], 'teal', 0.6);
+  }
+  for (let n = 0; n < 7; n++) {
+    const [x, y] = H.p(1.28, 2.13 + n * 0.86, 0.2);
+    specimen(H, R, x, y, 0.48 + (n % 3) * 0.12, 'teal', n % 3 === 0);
+  }
+  table(H, R, 8.51, 3.53, 1.9, 0.9, 0.75, 'sun');
+  const P = (i, j, z) => H.p(i, j, z);
+  for (const i of [8.78, 10.06]) H.line(R, [P(i, 3.71, 0.88), P(i, 3.27, 2.29)], 'blue', 2);
+  shape(H, R, [P(8.65, 3.72, 1.15), P(10.16, 3.72, 1.15), P(10.16, 3.28, 2.27), P(8.65, 3.28, 2.27)], 'sun', 0.4, 0.8);
+  shape(H, R, [P(8.78, 3.7, 1.26), P(10.01, 3.7, 1.26), P(10.01, 3.33, 2.14), P(8.78, 3.33, 2.14)], 'paper', 1, 0.55);
+  stroke(H, R, [P(8.86, 3.61, 1.45), P(9.11, 3.55, 1.68), P(9.42, 3.57, 1.6), P(9.77, 3.5, 1.84)], 'teal', 1.5);
+  for (let n = 0; n < 3; n++) H.line(R, [P(8.88, 3.65, 1.36 + n * 0.12), P(9.86, 3.65, 1.36 + n * 0.12)], 'blue', 0.5);
+  shallowTray(H, R, 8.65, 3.8, 1.1, 0.42, 0.89, 'teal');
+  for (let n = 0; n < 5; n++) oval(H, R, ...P(8.84 + n * 0.17, 4.01, 1.08), 2.6, 1.5, ['coral', 'teal', 'sun'][n % 3], 0.75);
+  const [x, y] = P(4.84, 5.86, 1.1);
+  oval(H, R, x, y, 7, 4, 'paper', 1);
+  oval(H, R, x, y, 4.5, 2.5, 'teal', 0.3);
+  H.line(
+    R,
+    [
+      [x, y - 1],
+      [x + 10, y - 17]
+    ],
+    'sun',
+    1.1
+  );
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = P(8.4 + n * 0.46, 8.36, 0.83);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 5, py],
+        [px + 4, py - 15],
+        [px - 4, py - 15]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 10],
+        [px + 4, py - 10]
+      ],
+      ['coral', 'sun', 'teal'][n % 3],
+      2.2
+    );
+  }
+  for (const i of [8.1, 10.54]) for (const j of [8.1, 9.11]) caster(H, R, i, j);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = P(3.76 + n * 0.23, 8.66, 0.04);
+    H.line(
+      R,
+      [
+        [px - 6, py],
+        [px + 6, py - 4]
+      ],
+      n % 2 ? 'sun' : 'coral',
+      0.8
+    );
+  }
+}
+
 const room = world('hong-kong-west-kowloon-sketch', 'West Kowloon · Hold that cloud', { floor: 'paper', tone: .55, wall: false, head: 20 }, (H, R) => {
   const sky = H.faceI(.1, .15, 11.8, .4, 3.45);
   shape(H, R, sky, 'sun', .18);
@@ -148,6 +226,7 @@ const room = world('hong-kong-west-kowloon-sketch', 'West Kowloon · Hold that c
   }
   for (let q = 0; q < 9; q++) H.line(R, [H.p(1.7 + q * 1.05, 10.9, .01), H.p(1.9 + q * 1.05, 11.6, .01)], 'blue', .6, { tone: .3 });
   westKowloonSketchDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   H.clip(H.faceI(.1, .15, 11.8, 1.85, 3.45), () => {

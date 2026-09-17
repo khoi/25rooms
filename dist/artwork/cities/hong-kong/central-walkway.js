@@ -1,5 +1,6 @@
+import { caster, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, framedPanel, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, actor, cycle, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, cycle, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -73,6 +74,106 @@ function centralWalkwayDetails(H, R) {
   framedPanel(H, R, 1.12, 3.31, 1.4, 2.07, 0.83, 'sun');
 }
 
+function construction(H, R) {
+  for (let n = 0; n < 6; n++) {
+    const i = 0.55 + n * 2.12;
+    for (const z of [0.58, 1.48, 2.5, 3.39]) {
+      box(H, R, i - 0.025, 0.48, 0.2, 0.25, z, 0.1, 'teal', 0.6);
+      H.dot(...H.p(i + 0.07, 0.75, z + 0.05), 1.25, 'sun');
+    }
+  }
+  for (const i of [0.44, 11.32])
+    for (const j of [3.24, 7.71]) {
+      H.line(R, [H.p(i, j, 2.86), H.p(i + (i < 1 ? 0.68 : -0.68), j, 3.49)], 'teal', 2.3);
+      for (const z of [0.18, 2.84]) H.dot(...H.p(i + 0.1, j + 0.2, z), 1.6, 'sun');
+    }
+  for (let n = 0; n < 6; n++) {
+    const i = 1.03 + n * 1.71,
+      [x, y] = H.p(i, 3.4, 3.41);
+    shape(
+      H,
+      R,
+      [
+        [x - 16, y],
+        [x + 16, y],
+        [x + 13, y - 6],
+        [x - 13, y - 6]
+      ],
+      'teal',
+      0.6,
+      0.7
+    );
+    H.line(
+      R,
+      [
+        [x - 12, y],
+        [x + 12, y]
+      ],
+      'sun',
+      3
+    );
+    H.glow(x, y + 8, 29, 18, 'sun', 0.16);
+  }
+  box(H, R, 1.05, 5.4, 1.33, 3.34, 0.03, 0.38, 'teal', 0.65);
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(1.69, 5.7 + n * 0.62, 0.43);
+    specimen(H, R, x, y, 0.5 + (n % 2) * 0.2, 'teal', false);
+  }
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.faceJ(2.405, 5.61 + n * 0.74, 0.55, 0.13, 0.34), 'paper', 1, 0.6);
+    H.line(R, [H.p(2.42, 5.69 + n * 0.74, 0.27), H.p(2.42, 6.04 + n * 0.74, 0.27)], 'teal', 0.6);
+  }
+  box(H, R, 8.87, 8.1, 1.42, 1.66, 0.26, 0.1, 'teal', 0.65);
+  for (const i of [8.96, 10.11]) for (const j of [8.24, 9.54]) caster(H, R, i, j);
+  for (const i of [8.98, 10.12]) H.line(R, [H.p(i, 8.21, 0.31), H.p(i, 8.21, 1.3), H.p(i, 9.58, 1.3), H.p(i, 9.58, 0.31)], 'blue', 1.9);
+  box(H, R, 8.91, 8.14, 1.37, 1.55, 1.23, 0.07, 'paper', 1);
+  shallowTray(H, R, 9.0, 8.27, 1.15, 1.18, 1.32, 'teal');
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(9.24 + n * 0.32, 8.8, 1.52);
+    shape(
+      H,
+      R,
+      [
+        [x - 4, y],
+        [x + 4, y],
+        [x + 4, y - 20],
+        [x - 4, y - 20]
+      ],
+      n % 2 ? 'paper' : 'coral',
+      0.7,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [x - 3, y - 20],
+        [x + 6, y - 20],
+        [x + 6, y - 24]
+      ],
+      'blue',
+      1.4
+    );
+    H.line(
+      R,
+      [
+        [x - 4, y - 10],
+        [x + 4, y - 10]
+      ],
+      'sun',
+      1.2
+    );
+  }
+  for (let n = 0; n < 4; n++) foldedCloth(H, R, 9.13, 8.49, 0.91, 0.81, 0.4 + n * 0.09, 'paper', n % 2 ? 'coral' : 'teal');
+  H.line(R, [H.p(10.18, 9.63, 1.3), H.p(10.49, 9.78, 1.73), H.p(10.49, 8.79, 1.73), H.p(10.18, 8.18, 1.3)], 'blue', 2.1);
+  for (let n = 0; n < 7; n++) {
+    H.line(R, [H.p(3.2 + n * 0.81, 6.9, 0.025), H.p(3.65 + n * 0.81, 7.11, 0.025)], 'sun', 1.2, { tone: 0.45 });
+  }
+  for (let n = 0; n < 8; n++) {
+    const i = 2.9 + n * 0.93;
+    H.line(R, [H.p(i, 10.9, 0.025), H.p(i, 11.42, 0.025)], 'paper', 0.8);
+  }
+}
+
 const room = world('hong-kong-central-walkway', 'Central · A clear pane at midnight', { floor: 'blue', tone: .32, wall: false, head: 20 }, (H, R) => {
   const view = H.faceI(.16, .18, 11.68, .18, 3.52);
   shape(H, R, view, 'blue', .77, .9);
@@ -143,6 +244,7 @@ const room = world('hong-kong-central-walkway', 'Central · A clear pane at midn
   for (let q = 0; q < 8; q++) H.line(R, [H.p(1.2 + q * .18, 10.21, .03), H.p(1.2 + q * .18, 11.31, .03)], 'sun', 1.8);
   for (let q = 0; q < 8; q++) H.line(R, [H.p(5.25, 9.38 + q * .17, .03), H.p(5.65, 9.38 + q * .17, .03)], 'paper', .6, { tone: .32 });
   centralWalkwayDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), down = u < .15 ? 0 : u < .36 ? (1 - Math.cos((u - .15) / .21 * Math.PI)) / 2 : u < .55 ? 1 : u < .73 ? (1 + Math.cos((u - .55) / .18 * Math.PI)) / 2 : 0;
   actor(H, R, 7.18, 4.38, t, 'hongKongWalkwayGlass', { shirt: ['teal', .74], vest: ['sun', .63], hairStyle: 'short', face: 'nw', prop(h, r, p) {

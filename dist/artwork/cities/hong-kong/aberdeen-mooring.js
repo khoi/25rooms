@@ -1,3 +1,4 @@
+import { panelFront } from '../joinery.js';
 import { shallowTray, liddedTin, foldedCloth, coiledLine, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -111,6 +112,146 @@ function aberdeenMooringDetails(H, R) {
   for (let n = 0; n < 5; n++) H.line(R, [H.p(5.29 + n * 0.16, 2.22, 2.96), H.p(5.29 + n * 0.16, 2.4, 2.96)], 'paper', 1);
 }
 
+function construction(H, R) {
+  for (const j of [1.2, 4.6, 8.15, 10.55]) {
+    box(H, R, 8.55, j - 0.08, 0.7, 0.62, 0.88, 0.06, 'teal', 0.6);
+    for (const i of [8.63, 9.14])
+      for (const y of [j + 0.01, j + 0.44]) {
+        H.dot(...H.p(i, y, 0.96), 1.5, 'blue');
+        H.line(R, [H.p(i - 0.035, y, 0.97), H.p(i + 0.035, y, 0.97)], 'paper', 0.65);
+      }
+  }
+  for (const j of [2.25, 5.32, 8.8]) {
+    const [x, y] = H.p(8.38, j, 0.44);
+    shape(
+      H,
+      R,
+      [
+        [x - 6, y - 19],
+        [x + 5, y - 19],
+        [x + 7, y + 10],
+        [x - 6, y + 10]
+      ],
+      'blue',
+      0.7,
+      0.8
+    );
+    for (let n = 0; n < 4; n++)
+      H.line(
+        R,
+        [
+          [x - 5, y - 12 + n * 5],
+          [x + 6, y - 12 + n * 5]
+        ],
+        'teal',
+        1.2
+      );
+    H.line(R, [H.p(8.43, j, 0.91), [x, y - 12]], 'sun', 1.4);
+  }
+  for (const j of [1.9, 2.3, 2.7]) {
+    box(H, R, 9.82, j, 0.84, 0.12, 1.55, 0.06, 'sun', 0.5);
+    H.dot(...H.p(9.94, j + 0.07, 1.63), 1, 'blue');
+  }
+  const [wx, wy] = H.p(10.3, 2.9, 1.14);
+  oval(H, R, wx, wy, 14, 13, 'teal', 0.65);
+  oval(H, R, wx, wy, 10, 9, 'sun', 0.5);
+  for (let n = 0; n < 8; n++) {
+    const a = (n * TAU) / 8;
+    H.line(
+      R,
+      [
+        [wx, wy],
+        [wx + Math.cos(a) * 12, wy + Math.sin(a) * 11]
+      ],
+      'blue',
+      0.8
+    );
+  }
+  H.line(
+    R,
+    [
+      [wx, wy],
+      [wx + 22, wy - 9],
+      [wx + 22, wy - 18]
+    ],
+    'blue',
+    2
+  );
+  H.line(
+    R,
+    [
+      [wx + 22, wy - 18],
+      [wx + 29, wy - 18]
+    ],
+    'coral',
+    3
+  );
+  stroke(H, R, [[wx - 12, wy + 5], H.p(9.6, 3.7, 0.93), H.p(8.8, 4.76, 1.38)], 'sun', 1.8);
+  box(H, R, 10.8, 5.1, 0.46, 0.4, 0.9, 1.04, 'paper', 1);
+  panelFront(H, R, 10.83, 5.52, 0.4, 1.02, 0.76, 1, 'teal');
+  H.line(R, [H.p(11.02, 5.54, 1.56), H.p(11.02, 5.54, 1.79)], 'coral', 1.5);
+  for (let n = 0; n < 8; n++) {
+    const j = 1.7 + n * 0.48;
+    H.line(R, [H.p(2.48, j, 2.91), H.p(2.48, j, 2.72)], 'blue', 0.8);
+    H.dot(...H.p(2.49, j, 2.7), 1.2, 'sun');
+  }
+  for (const i of [2.66, 6.5]) {
+    H.line(R, [H.p(i, 2.1, 1.95), H.p(i, 2.9, 2.92)], 'sun', 1.4);
+    H.line(R, [H.p(i, 5.6, 1.94), H.p(i, 4.9, 2.94)], 'sun', 1.4);
+  }
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(2.74 + n * 0.61, 2.69, 0.77), H.p(2.74 + n * 0.61, 2.69, 1.02)], 'blue', 0.7);
+  const [mx, my] = H.p(4.55, 5.32, 0.76);
+  shape(
+    H,
+    R,
+    [
+      [mx - 20, my - 3],
+      [mx + 12, my - 11],
+      [mx + 24, my + 2],
+      [mx - 10, my + 10]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  stroke(
+    H,
+    R,
+    [
+      [mx - 16, my],
+      [mx - 5, my - 4],
+      [mx + 1, my + 2],
+      [mx + 16, my - 2]
+    ],
+    'teal',
+    1.3
+  );
+  H.line(
+    R,
+    [
+      [mx - 9, my - 5],
+      [mx + 7, my + 6]
+    ],
+    'coral',
+    0.65
+  );
+  oval(H, R, mx + 11, my, 3, 3, 'sun', 0.8);
+  for (let n = 0; n < 7; n++) {
+    const [x, y] = H.p(6.7, 8.1 + n * 0.15, 0.69);
+    H.line(
+      R,
+      [
+        [x - 5, y],
+        [x + 3, y - 1]
+      ],
+      'paper',
+      0.9
+    );
+  }
+  shape(H, R, H.tile(9.57, 9.7, 0.18, 0.75, 0.92), 'paper', 1, 0.5);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(9.59, 9.75 + n * 0.14, 0.94), H.p(9.74, 9.75 + n * 0.14, 0.94)], 'coral', 0.8);
+}
+
 const room = world('hong-kong-aberdeen-mooring', 'Aberdeen · First rope ashore', { floor: 'teal', tone: .4, wall: false, head: 20 }, (H, R) => {
   for (let j = .3; j < 12; j += .62) for (let i = .1; i < 12; i += 1.4) H.line(R, [H.p(i, j, .03), H.p(i + .62, j, .03)], 'paper', 1, { tone: .36 });
   box(H, R, 8.4, .4, 3.25, 11.05, .09, .65, 'blue', .57);
@@ -134,6 +275,7 @@ const room = world('hong-kong-aberdeen-mooring', 'Aberdeen · First rope ashore'
   stroke(H, R, [[cx - 6, cy - 24], [cx - 5, cy - 32], [cx + 6, cy - 31], [cx + 8, cy - 24]], 'blue', 1.5);
   deck(H, R);
   aberdeenMooringDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   for (const [i, j, phase] of [[1, 7.2, 0], [7.5, 10.8, .35], [6.5, .7, .65]]) {

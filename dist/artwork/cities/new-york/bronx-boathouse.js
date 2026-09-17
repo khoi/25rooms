@@ -1,3 +1,4 @@
+import { panelFront, hangingRail, specimen } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -85,6 +86,139 @@ function bronxBoathouseDetails(H, R) {
   satchel(H, R, 8.14, 10.61, 0.03, 'coral', 0.9);
 }
 
+function construction(H, R) {
+  for (const i of [0.42, 8.93]) {
+    H.line(R, [H.p(i, 0.72, 2.96), H.p(i + (i < 1 ? 0.66 : -0.66), 0.72, 3.64)], 'sun', 2);
+    for (const z of [0.17, 2.93, 3.52]) H.dot(...H.p(i + 0.09, 0.77, z), 1.5, 'paper');
+  }
+  for (let n = 0; n < 8; n++) {
+    const j = 1.1 + n * 0.83;
+    H.line(R, [H.p(0.18, j, 0.25), H.p(0.18, j, 3.43)], 'blue', 0.6, { tone: 0.35 });
+  }
+  hangingRail(H, R, 'nw', 1.71, 4.33, 2.8, 6, (P, u, n) => {
+    const [x, y] = P(u, -0.15);
+    if (n < 3) {
+      oval(H, R, x, y + 11, 9, 11, 'coral', 0.65);
+      oval(H, R, x, y + 12, 5, 6, 'paper', 1);
+      H.line(
+        R,
+        [
+          [x - 7, y + 17],
+          [x, y + 29],
+          [x + 7, y + 17]
+        ],
+        'blue',
+        1
+      );
+    } else {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x - 1, y + 29]
+        ],
+        'sun',
+        2.1
+      );
+      shape(
+        H,
+        R,
+        [
+          [x - 5, y + 28],
+          [x + 4, y + 28],
+          [x + 6, y + 41],
+          [x - 5, y + 41]
+        ],
+        'teal',
+        0.5,
+        0.6
+      );
+    }
+  });
+  for (const i of [1.4, 7.37])
+    for (const z of [0.65, 1.78, 2.7]) {
+      for (const j of [0.85, 2.25]) {
+        box(H, R, i - 0.05, j, 0.29, 0.32, z + 0.08, 0.1, 'paper', 1);
+        H.dot(...H.p(i + 0.08, j + 0.15, z + 0.2), 1.2, 'sun');
+      }
+    }
+  const [x, y] = H.p(10.73, 2.72, 0.9);
+  oval(H, R, x, y, 9, 4, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x - 8, y],
+      [x - 7, y - 18],
+      [x + 7, y - 18],
+      [x + 8, y]
+    ],
+    'teal',
+    1.4
+  );
+  oval(H, R, x, y - 18, 7, 3, 'blue', 0.6);
+  H.line(
+    R,
+    [
+      [x - 5, y - 12],
+      [x + 5, y - 12]
+    ],
+    'coral',
+    1.2
+  );
+  for (let n = 0; n < 5; n++) {
+    const j = 9.4 + n * 0.23;
+    H.line(R, [H.p(4.32, j, 1.18), H.p(6.5, j, 1.18)], 'paper', 0.7);
+  }
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(4.57 + n * 0.54, 9.85, 2.1);
+    oval(H, R, px, py, 5, 4, 'sun', 0.6);
+    H.line(
+      R,
+      [
+        [px - 4, py],
+        [px + 4, py]
+      ],
+      'blue',
+      0.6
+    );
+  }
+  panelFront(H, R, 9.66, 9.82, 1.77, 0.14, 0.51, 2, 'paper');
+  for (const i of [9.76, 11.26]) for (const j of [8.81, 9.63]) H.dot(...H.p(i, j, 0.82), 1.3, 'sun');
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(1.03 + n * 0.29, 10.17, 0.26);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 5, py],
+        [px + 4, py - 11],
+        [px - 4, py - 11]
+      ],
+      'teal',
+      0.6,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 7],
+        [px + 4, py - 7]
+      ],
+      'paper',
+      0.9
+    );
+  }
+  for (const j of [3.54, 7.53]) {
+    const [px, py] = H.p(11.41, j, 0.04);
+    specimen(H, R, px, py, 0.65, 'teal', false);
+  }
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(7.9 + n * 0.26, 7.22, 0.03);
+    oval(H, R, px, py, 5 + (n % 2) * 3, 2, 'teal', 0.16);
+  }
+}
+
 const room = world('new-york-bronx-boathouse', 'Bronx River · Back from the River', {
   floor: 'paper', tone: .85, wall: false, pattern: 'boards', head: 20,
 }, (H, R) => {
@@ -151,6 +285,7 @@ const room = world('new-york-bronx-boathouse', 'Bronx River · Back from the Riv
   H.line(R, [[lx, ly - 22], [lx, ly]], 'blue', 1.2);
   shape(H, R, [[lx - 14, ly + 9], [lx + 14, ly + 9], [lx + 8, ly - 2], [lx - 8, ly - 2]], 'sun', .8);
   bronxBoathouseDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   actor(H, R, 7.45, 5.28, t, 'newYorkVestDry', {

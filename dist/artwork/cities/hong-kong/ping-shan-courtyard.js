@@ -1,3 +1,4 @@
+import { recessedFrame, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, bottle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -117,6 +118,7 @@ function courtyard(H, R) {
   shape(H, R, H.tile(10.21, 8.1, 1.05, .71, .07), 'coral', .3);
   for (let k = 0; k < 4; k++) H.line(R, [H.p(10.31, 8.21 + k * .13, .09), H.p(11.16, 8.21 + k * .13, .09)], 'blue', .55, { tone: .35 });
   pingShanCourtyardDetails(H, R);
+  construction(H, R);
 }
 
 function pingShanCourtyardDetails(H, R) {
@@ -157,6 +159,109 @@ function pingShanCourtyardDetails(H, R) {
     [9.8, 4.56]
   ])
     oval(H, R, ...H.p(i, j, 0.05), 4, 2, 'teal', 0.25);
+}
+
+function construction(H, R) {
+  for (let row = 0; row < 7; row++)
+    for (let n = 0; n < 14; n++) {
+      const j = 0.28 + n * 0.81 + (row % 2) * 0.4,
+        z = 0.12 + row * 0.3;
+      if (j < 11.45) H.line(R, [H.p(0.22, j, z), H.p(0.22, Math.min(j + 0.72, 11.45), z)], 'blue', 0.55, { tone: 0.3 });
+      if (j < 11.45) H.line(R, [H.p(0.22, j, z), H.p(0.22, j, z + 0.25)], 'teal', 0.45);
+    }
+  for (const [a, b] of [
+    [0.2, 6.73],
+    [9.23, 11.74]
+  ])
+    for (let n = a; n < b; n += 0.26) {
+      H.line(R, [H.p(n, 0.15, 2.26), H.p(n, 0.52, 2.26)], 'paper', 1.1);
+      H.line(R, [H.p(n + 0.09, 0.17, 2.2), H.p(n + 0.09, 0.54, 2.2)], 'blue', 0.8);
+    }
+  for (let j = 0.15; j < 11.5; j += 0.27) H.line(R, [H.p(0.02, j, 2.58), H.p(0.45, j, 2.58)], 'paper', 1.2);
+  for (const i of [6.83, 8.98]) {
+    shape(H, R, H.faceI(i, 0.5, 0.17, 0.32, 2.6), 'teal', 0.18, 0.6);
+    for (const z of [0.51, 2.3]) H.dot(...H.p(i + 0.08, 0.52, z), 1.7, 'sun');
+  }
+  recessedFrame(H, R, 'ne', 2.46, 2.16, 0.84, 1.06, 'teal', (P) => {
+    for (let n = 0; n < 6; n++)
+      for (let q = 0; q < 3; q++) {
+        const u = 0.23 + n * 0.31,
+          z = 0.2 + q * 0.25;
+        shape(H, R, [P(u, z), P(u + 0.2, z), P(u + 0.2, z + 0.17), P(u, z + 0.17)], 'paper', 1, 0.4);
+      }
+  });
+  for (const [i, j, s] of [
+    [0.9, 6.75, 0.83],
+    [1.19, 7.98, 0.58],
+    [9.93, 0.98, 0.54],
+    [10.66, 0.98, 0.7]
+  ]) {
+    const [x, y] = H.p(i, j, 0.1);
+    shape(
+      H,
+      R,
+      [
+        [x - 10 * s, y],
+        [x + 10 * s, y],
+        [x + 13 * s, y - 18 * s],
+        [x - 13 * s, y - 18 * s]
+      ],
+      'coral',
+      0.45,
+      0.6
+    );
+    oval(H, R, x, y - 18 * s, 13 * s, 4 * s, 'blue', 0.45);
+    specimen(H, R, x, y - 18 * s, s, 'teal', j < 7);
+  }
+  for (const i of [4.52, 7.55]) {
+    H.line(R, [H.p(i, 4.67, 0.16), H.p(i, 7.23, 0.16)], 'teal', 2);
+    H.line(R, [H.p(i, 4.67, 0.2), H.p(i, 7.23, 0.9)], 'sun', 1.3);
+  }
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(6.6 + n * 0.14, 4.94, 1.14);
+    oval(H, R, x, y, 3, 2, 'sun', 0.7);
+  }
+  const [x, y] = H.p(10.53, 2.44, 0.81);
+  oval(H, R, x, y, 11, 5, 'paper', 1);
+  oval(H, R, x, y - 9, 8, 4, 'teal', 0.45);
+  H.line(
+    R,
+    [
+      [x - 7, y - 9],
+      [x - 6, y],
+      [x + 6, y],
+      [x + 7, y - 9]
+    ],
+    'blue',
+    0.7
+  );
+  H.line(
+    R,
+    [
+      [x + 7, y - 7],
+      [x + 14, y - 15]
+    ],
+    'sun',
+    1.7
+  );
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(1.08 + n * 0.64, 10.51, 0.03);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 1, py - 3],
+        [px + 5, py + 1],
+        [px - 1, py + 3]
+      ],
+      n % 2 ? 'sun' : 'teal',
+      0.35,
+      0.4
+    );
+  }
+  shape(H, R, H.tile(5.95, 10.06, 0.9, 0.65, 0.025), 'paper', 1, 0.5);
+  H.line(R, [H.p(6.1, 10.17, 0.04), H.p(6.6, 10.58, 0.04)], 'coral', 1.1);
 }
 
 const room = world('hong-kong-ping-shan-courtyard', 'Ping Shan · Shade for two', { floor: 'paper', tone: .74, wall: false, head: 20 }, courtyard, (H, R, t) => {

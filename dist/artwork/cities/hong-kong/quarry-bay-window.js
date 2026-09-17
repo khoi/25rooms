@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -68,6 +69,144 @@ function quarryBayWindowDetails(H, R) {
     0.9
   );
   satchel(H, R, 3.08, 10.53, 0.04, 'coral', 0.8);
+}
+
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.85, 3.6, 'teal');
+  cornice(H, R, 'ne', 0.1, 11.85, 3.6, 'teal');
+  panelFront(H, R, 0.34, 2.055, 3.59, 0.15, 0.77, 3, 'teal');
+  wallRack(H, R, 'nw', 0.43, 2.15, 1.57, 1.67, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.28 + n * 0.38, z + 0.14);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 4, y],
+            [x + 4, y],
+            [x + 4, y - 15],
+            [x - 4, y - 15]
+          ],
+          n % 2 ? 'paper' : 'coral',
+          0.6,
+          0.5
+        );
+        oval(H, R, x, y - 15, 4, 2, 'sun', 0.6);
+      } else {
+        oval(H, R, x, y, 6, 3, 'paper', 1);
+        H.line(
+          R,
+          [
+            [x - 5, y],
+            [x - 4, y + 5],
+            [x + 4, y + 5],
+            [x + 5, y]
+          ],
+          'blue',
+          0.6
+        );
+      }
+    }
+  });
+  for (let n = 0; n < 7; n++) {
+    const j = 3.72 + n * 0.45;
+    H.line(R, [H.p(0.52, j, 0.74), H.p(2.8, j, 0.74)], n % 2 ? 'teal' : 'sun', 0.65);
+  }
+  for (let n = 0; n < 10; n++) {
+    const i = 0.69 + n * 0.21;
+    H.line(R, [H.p(i, 7.2, 0.71), H.p(i, 7.2, 0.53)], 'paper', 0.8);
+  }
+  recessedFrame(H, R, 'nw', 7.65, 2.87, 1.61, 1.61, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(2.75, 0.13), P(2.75, 1.49), P(0.12, 1.49)], 'paper', 1, 0.5);
+    for (let n = 0; n < 3; n++) {
+      const u = 0.3 + n * 0.82;
+      shape(H, R, [P(u, 0.32), P(u + 0.61, 0.32), P(u + 0.61, 1.24), P(u, 1.24)], n === 1 ? 'sun' : 'teal', 0.22, 0.5);
+      const [x, y] = P(u + 0.3, 0.82);
+      oval(H, R, x, y, 6, 7, 'coral', 0.5);
+      H.line(
+        R,
+        [
+          [x - 9, y + 17],
+          [x - 5, y + 6],
+          [x + 5, y + 6],
+          [x + 9, y + 17]
+        ],
+        'blue',
+        1.2
+      );
+    }
+  });
+  for (const i of [7.51, 10.77]) {
+    H.line(R, [H.p(i, 7.09, 0.16), H.p(i, 8.12, 0.87)], 'blue', 1.8);
+    H.line(R, [H.p(i, 7.09, 0.18), H.p(i, 8.12, 0.18)], 'teal', 2);
+  }
+  box(H, R, 7.74, 7.24, 2.67, 0.74, 0.24, 0.08, 'teal', 0.65);
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(8.01 + n * 0.64, 7.59, 0.39);
+    shape(
+      H,
+      R,
+      [
+        [x - 5, y],
+        [x + 5, y],
+        [x + 5, y - 14],
+        [x - 5, y - 14]
+      ],
+      n % 2 ? 'paper' : 'sun',
+      0.65,
+      0.6
+    );
+    oval(H, R, x, y - 14, 5, 2, 'teal', 0.6);
+    H.line(
+      R,
+      [
+        [x - 4, y - 7],
+        [x + 4, y - 7]
+      ],
+      'coral',
+      1.1
+    );
+  }
+  stroke(H, R, [H.p(10.17, 7.12, 2.67), H.p(10.5, 7.03, 2.64), H.p(10.56, 7.09, 1.23), H.p(10.03, 7.42, 0.63)], 'blue', 1.1);
+  const [x, y] = H.p(10.03, 7.42, 0.59);
+  oval(H, R, x, y, 7, 3, 'teal', 0.5);
+  H.line(
+    R,
+    [
+      [x - 6, y],
+      [x - 6, y - 11],
+      [x + 6, y - 11],
+      [x + 6, y]
+    ],
+    'blue',
+    0.7
+  );
+  taskLight(H, R, 3.63, 9.71, 0.81, 'sun', 0.6);
+  const [px, py] = H.p(5.2, 10.16, 0.91);
+  oval(H, R, px, py, 7, 4, 'paper', 1);
+  H.line(
+    R,
+    [
+      [px + 5, py + 2],
+      [px + 12, py + 10]
+    ],
+    'blue',
+    2
+  );
+  oval(H, R, px, py, 4, 2.5, 'teal', 0.15);
+  for (let n = 0; n < 4; n++) {
+    const [ax, ay] = H.p(9.93 + n * 0.21, 10.48, 1.04);
+    H.line(
+      R,
+      [
+        [ax, ay],
+        [ax + 7, ay - 9]
+      ],
+      'coral',
+      0.8
+    );
+  }
 }
 
 const room = world('hong-kong-quarry-bay-window', 'Quarry Bay · One window still awake', { floor: 'paper', tone: .5, wall: 'paper', wallTone: .88, height: 3.82, head: 20, pattern: 'tiles', accent: 'teal' }, (H, R) => {
@@ -155,6 +294,7 @@ const room = world('hong-kong-quarry-bay-window', 'Quarry Bay · One window stil
   box(H, R, 5.69, 1.02, 1.07, .73, .04, .44, 'paper', .85);
   for (let q = 0; q < 8; q++) H.line(R, [H.p(5.8 + q * .11, 1.76, .13), H.p(5.8 + q * .11, 1.76, .42)], 'blue', .7);
   quarryBayWindowDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20), pane = H.faceI(7.55, 8.27, 3.29, 1.27, 2.53);
   H.clip(pane, () => {

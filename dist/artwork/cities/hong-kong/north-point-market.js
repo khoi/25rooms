@@ -1,3 +1,4 @@
+import { cornice, hangingRail, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -99,6 +100,166 @@ function northPointMarketDetails(H, R) {
   for (let n = 0; n < 5; n++) shape(H, R, H.tile(4.58 + n * 0.23, 10.36, 0.17, 0.43, 0.2), 'paper', 1, 0.4);
 }
 
+function construction(H, R) {
+  cornice(H, R, 'ne', 0.2, 11.75, 3.39, 'teal');
+  hangingRail(
+    H,
+    R,
+    'ne',
+    0.8,
+    7.5,
+    2.8,
+    7,
+    (P, u, n) => {
+      const [x, y] = P(u, -0.12);
+      if (n < 3) {
+        shape(
+          H,
+          R,
+          [
+            [x - 7, y],
+            [x + 7, y],
+            [x + 10, y + 27],
+            [x - 9, y + 27]
+          ],
+          'paper',
+          1,
+          0.6
+        );
+        oval(H, R, x, y + 8, 3, 4, 'teal', 0.4);
+        H.line(
+          R,
+          [
+            [x - 5, y + 21],
+            [x + 5, y + 21]
+          ],
+          'coral',
+          1.1
+        );
+      } else {
+        for (let q = 0; q < 3; q++) {
+          H.line(
+            R,
+            [
+              [x, y],
+              [x + (q - 1) * 7, y + 25]
+            ],
+            'sun',
+            1.2
+          );
+          oval(H, R, x + (q - 1) * 6, y + 20 + (q % 2) * 5, 4, 7, q % 2 ? 'paper' : 'coral', 0.6);
+        }
+      }
+    },
+    4.44
+  );
+  for (let tier = 0; tier < 3; tier++)
+    for (let n = 0; n < 8; n++) {
+      const j = 1.58 + tier * 1.24,
+        z = 1.12 - tier * 0.37,
+        i = 0.48 + n * 1.32;
+      shape(H, R, H.faceI(i, j, 1.1, z - 0.27, z - 0.05), 'teal', 0.32, 0.5);
+      for (const u of [0.12, 0.98]) H.dot(...H.p(i + u, j + 0.02, z - 0.13), 0.85, 'sun');
+      H.line(R, [H.p(i + 0.22, j + 0.015, z - 0.2), H.p(i + 0.7, j + 0.015, z - 0.2)], 'paper', 1.4);
+    }
+  const [x, y] = H.p(8.12, 5.64, 1.17);
+  oval(H, R, x, y, 12, 12, 'paper', 1);
+  oval(H, R, x, y, 9, 9, 'sun', 0.3);
+  for (let n = 0; n < 10; n++) {
+    const a = (n * TAU) / 10;
+    H.line(
+      R,
+      [
+        [x + Math.cos(a) * 7, y + Math.sin(a) * 7],
+        [x + Math.cos(a) * 9, y + Math.sin(a) * 9]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  H.line(
+    R,
+    [
+      [x, y],
+      [x + 5, y - 6]
+    ],
+    'coral',
+    1.5
+  );
+  box(H, R, 6.94, 5.1, 0.82, 0.65, 1.04, 0.07, 'paper', 1);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(7.07, 5.21 + n * 0.14, 1.13), H.p(7.63, 5.21 + n * 0.14, 1.13)], 'teal', 0.55);
+  for (let n = 0; n < 8; n++) {
+    const [px, py] = H.p(1.02 + (n % 4) * 0.34, 6.16 + Math.floor(n / 4) * 0.41, 1.06);
+    oval(H, R, px, py, 5, 3, 'coral', 0.58);
+    H.line(
+      R,
+      [
+        [px, py - 2],
+        [px - 1, py - 6]
+      ],
+      'teal',
+      1
+    );
+  }
+  box(H, R, 0.48, 5.43, 2.42, 0.28, 1.62, 0.12, 'teal', 0.6);
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(0.72 + n * 0.44, 5.56, 1.77);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 4, py - 13]
+      ],
+      'sun',
+      1.4
+    );
+    oval(H, R, px + 4, py - 16, 4, 6, 'paper', 1);
+  }
+  for (const i of [9.07, 10.45]) for (const j of [9.13, 10.38]) caster(H, R, i, j);
+  for (const i of [8.96, 10.59]) H.line(R, [H.p(i, 9.05, 0.43), H.p(i, 8.82, 1.3), H.p(i, 9.07, 1.55)], 'blue', 2.5);
+  H.line(R, [H.p(8.96, 9.07, 1.55), H.p(10.59, 9.07, 1.55)], 'coral', 3);
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(2.2 + n * 0.18, 8.8, 0.84);
+    shape(
+      H,
+      R,
+      [
+        [px - 9, py],
+        [px + 9, py],
+        [px + 6, py - 14],
+        [px - 5, py - 17]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 12],
+        [px + 4, py - 9]
+      ],
+      'sun',
+      1.4
+    );
+  }
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(3.8 + n * 0.2, 4.38 + (n % 2) * 0.18, 0.03);
+    shape(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px, py - 5],
+        [px + 5, py + 1]
+      ],
+      'teal',
+      0.5,
+      0.45
+    );
+  }
+}
+
 const room = world('hong-kong-north-point-market', 'North Point · A basket of greens', { floor: 'paper', tone: .55, wall: 'teal', wallTone: .34, height: 3.6, oneWall: true, pattern: 'tiles', head: 20 }, (H, R) => {
   box(H, R, .34, .34, 10.8, 1.23, 0, 1.24, 'blue', .56);
   box(H, R, .34, 1.56, 10.8, 1.24, 0, .86, 'blue', .47);
@@ -161,6 +322,7 @@ const room = world('hong-kong-north-point-market', 'North Point · A basket of g
     box(H, R, i, 5.34, .26, .24, .03, .16, 'blue', .85);
   }
   northPointMarketDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 15);
   const move = u < .18 ? 0 : u < .46 ? ease((u - .18) / .28) : u < .69 ? 1 : u < .95 ? 1 - ease((u - .69) / .26) : 0;

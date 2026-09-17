@@ -80,6 +80,154 @@ function jamaicaBayDetails(H, R) {
     );
 }
 
+function construction(H, R) {
+  for (let n = 0; n < 14; n++) {
+    const i = 0.34 + n * 0.81;
+    H.line(R, [H.p(i, 4.195, 0.24), H.p(i, 4.195, 1.19)], 'blue', 0.65);
+    for (const z of [0.35, 1.06, 2.7, 3.09]) H.dot(...H.p(i + 0.09, 4.21, z), 1, 'sun');
+  }
+  for (const i of [0.26, 3.52, 8.68, 11.71]) H.line(R, [H.p(i, 4.32, 2.74), H.p(i + 0.34, 4.56, 3.28)], 'sun', 1.6);
+  for (const [a, b] of [
+    [0.58, 3.2],
+    [3.83, 8.34],
+    [8.98, 11.43]
+  ]) {
+    H.line(R, [H.p(a, 4.2, 2.55), H.p(b, 4.2, 2.55)], 'blue', 2);
+    for (const i of [a + 0.2, b - 0.2]) H.line(R, [H.p(i, 4.2, 2.56), H.p(i, 4.6, 2.8)], 'teal', 1.1);
+  }
+  box(H, R, 0.28, 5.03, 0.11, 2.24, 1.36, 1.1, 'sun', 0.5);
+  for (let n = 0; n < 4; n++) {
+    const j = 5.21 + n * 0.51,
+      [x, y] = H.p(0.41, j, 1.83);
+    shape(
+      H,
+      R,
+      [
+        [x - 7, y + 8],
+        [x + 8, y + 8],
+        [x + 8, y - 14],
+        [x - 7, y - 14]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    shape(
+      H,
+      R,
+      [
+        [x - 4, y],
+        [x + 1, y - 5],
+        [x + 5, y - 3],
+        [x + 7, y - 6],
+        [x + 6, y + 1],
+        [x - 2, y + 3]
+      ],
+      'teal',
+      0.6,
+      0.45
+    );
+    H.line(
+      R,
+      [
+        [x - 3, y + 5],
+        [x + 4, y + 5]
+      ],
+      'coral',
+      0.6
+    );
+  }
+  const [x, y] = H.p(2.43, 8.94, 0.93);
+  oval(H, R, x, y, 8, 6, 'paper', 1);
+  oval(H, R, x, y, 5, 3.5, 'teal', 0.15);
+  H.line(
+    R,
+    [
+      [x + 5, y + 3],
+      [x + 14, y + 11]
+    ],
+    'blue',
+    2
+  );
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(10.27 + n * 0.19, 9.76, 0.83);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 4, py - 11]
+      ],
+      'sun',
+      0.8
+    );
+    shape(
+      H,
+      R,
+      [
+        [px, py],
+        [px + 1, py - 11],
+        [px + 7, py - 15],
+        [px + 5, py - 4]
+      ],
+      n % 2 ? 'paper' : 'teal',
+      0.45,
+      0.5
+    );
+  }
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(0.82 + n * 0.77, 1.32, 0.035);
+    oval(H, R, px, py, 7 + (n % 2) * 4, 2.4, 'sun', 0.26);
+    H.line(
+      R,
+      [
+        [px - 4, py],
+        [px + 3, py]
+      ],
+      'teal',
+      0.5
+    );
+  }
+  for (let n = 0; n < 4; n++) reeds(H, R, 8.17 + n * 0.87, 1.06 + (n % 2) * 0.35, 0.68 + (n % 2) * 0.22, 'teal');
+  for (const i of [4.24, 7.57]) H.line(R, [H.p(i, 6.1, 0.16), H.p(i, 6.47, 0.57)], 'sun', 1.4);
+  for (let n = 0; n < 7; n++) H.dot(...H.p(4.35 + n * 0.51, 6.7, 0.89), 1.1, 'sun');
+  const [px, py] = H.p(9.49, 8.31, 0.67);
+  shape(
+    H,
+    R,
+    [
+      [px - 10, py],
+      [px + 10, py],
+      [px + 10, py - 10],
+      [px - 10, py - 10]
+    ],
+    'teal',
+    0.55,
+    0.6
+  );
+  for (const dx of [-6, 6])
+    H.line(
+      R,
+      [
+        [px + dx, py - 10],
+        [px + dx, py]
+      ],
+      'paper',
+      1
+    );
+  stroke(
+    H,
+    R,
+    [
+      [px - 4, py - 10],
+      [px - 4, py - 16],
+      [px + 4, py - 16],
+      [px + 4, py - 10]
+    ],
+    'blue',
+    0.9
+  );
+}
+
 const room = world('new-york-jamaica-bay', 'Jamaica Bay · A Quiet Opening', {
   floor: 'teal', tone: .15, wall: false, head: 20,
 }, (H, R) => {
@@ -143,6 +291,7 @@ const room = world('new-york-jamaica-bay', 'Jamaica Bay · A Quiet Opening', {
     H.line(R, [[x - 3, y], [x + 5, y - 2]], 'blue', .5);
   }
   jamaicaBayDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20);
   const dip = u > .37 && u < .68 ? Math.sin((u - .37) / .31 * Math.PI) ** 2 : 0;

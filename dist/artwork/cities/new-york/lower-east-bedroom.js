@@ -1,3 +1,4 @@
+import { cornice, panelFront, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, windowOn, plant } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -96,6 +97,143 @@ function lowerEastBedroomDetails(H, R) {
   framedPanel(H, R, 5.79, 0.18, 1.12, 1.73, 1.09, 'coral');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.8, 3.67, 'teal');
+  cornice(H, R, 'ne', 0.1, 11.8, 3.67, 'teal');
+  for (const [i, j] of [
+    [0.55, 0.7],
+    [5.12, 0.7],
+    [0.55, 5.15],
+    [5.12, 5.15]
+  ]) {
+    for (const z of [0.17, 1.99, 2.39]) H.dot(...H.p(i + 0.1, j + 0.17, z), 1.6, 'sun');
+    H.line(R, [H.p(i, j, 1.64), H.p(i + (i < 1 ? 0.52 : -0.52), j, 2.2)], 'blue', 1.7);
+  }
+  for (let n = 0; n < 6; n++) {
+    const i = 0.68 + n * 0.69;
+    H.line(R, [H.p(i, 5.49, 2.3), H.p(i + 0.41, 5.49, 2.3)], 'sun', 0.7);
+  }
+  for (let n = 0; n < 9; n++) {
+    const j = 1.28 + n * 0.4;
+    H.line(R, [H.p(0.62, j, 2.72), H.p(4.91, j, 2.72)], n % 3 ? 'teal' : 'sun', 0.65);
+  }
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(2.31 + n * 0.58, 4.75, 2.75), H.p(2.31 + n * 0.58, 5.04, 2.68)], 'paper', 1.4);
+  taskLight(H, R, 3.72, 1.27, 0.97, 'coral', -0.65);
+  for (let n = 0; n < 3; n++) {
+    const i = 1.04 + n * 0.94;
+    shape(H, R, H.faceI(i, 2.185, 0.78, 0.49, 0.76), 'sun', 0.35, 0.6);
+    H.line(R, [H.p(i + 0.2, 2.2, 0.64), H.p(i + 0.6, 2.2, 0.64)], 'blue', 1.4);
+  }
+  wallRack(H, R, 'nw', 5.9, 2.05, 2.58, 0.93, 1, 'teal', (P, z) => {
+    for (let n = 0; n < 6; n++) {
+      const u = 0.24 + n * 0.28;
+      shape(
+        H,
+        R,
+        [P(u, z + 0.05), P(u + 0.18, z + 0.05), P(u + 0.18, z + 0.48 + (n % 2) * 0.12), P(u, z + 0.48 + (n % 2) * 0.12)],
+        ['coral', 'paper', 'sun'][n % 3],
+        0.7,
+        0.5
+      );
+      H.line(R, [P(u + 0.02, z + 0.36), P(u + 0.16, z + 0.36)], 'teal', 1);
+    }
+  });
+  panelFront(H, R, 0.43, 7.815, 2.52, 0.19, 0.83, 3, 'coral');
+  hangingRail(H, R, 'nw', 8.61, 2.13, 2.7, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.14);
+    if (n < 2) {
+      shape(
+        H,
+        R,
+        [
+          [x - 8, y + 5],
+          [x - 4, y],
+          [x + 4, y],
+          [x + 8, y + 5],
+          [x + 6, y + 33],
+          [x - 6, y + 33]
+        ],
+        n ? 'teal' : 'coral',
+        0.55,
+        0.6
+      );
+      H.line(
+        R,
+        [
+          [x, y + 2],
+          [x, y + 29]
+        ],
+        'paper',
+        0.8
+      );
+    } else {
+      H.outline(R, ell(x, y + 8, 5, 7), 'blue', 1.1);
+      shape(
+        H,
+        R,
+        [
+          [x - 8, y + 12],
+          [x + 8, y + 12],
+          [x + 8, y + 29],
+          [x - 8, y + 29]
+        ],
+        'sun',
+        0.5,
+        0.6
+      );
+    }
+  });
+  const [x, y] = H.p(8.31, 8.69, 1.76);
+  shape(
+    H,
+    R,
+    [
+      [x - 10, y],
+      [x + 10, y],
+      [x + 10, y - 9],
+      [x - 10, y - 9]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  for (let n = 0; n < 6; n++)
+    H.line(
+      R,
+      [
+        [x - 8 + n * 3, y - 7],
+        [x - 8 + n * 3, y - 2]
+      ],
+      'blue',
+      0.7
+    );
+  H.dot(x + 6, y - 12, 3, 'coral');
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(5.4 + n * 0.23, 10.73, 0.78);
+    H.line(
+      R,
+      [
+        [px - 4, py],
+        [px + 4, py - 3]
+      ],
+      'paper',
+      0.7
+    );
+  }
+  const [px, py] = H.p(10.93, 4.23, 0.94);
+  oval(H, R, px, py, 6, 4, 'paper', 1);
+  H.line(
+    R,
+    [
+      [px + 4, py + 2],
+      [px + 12, py + 9]
+    ],
+    'blue',
+    2
+  );
+  oval(H, R, px, py, 4, 2.5, 'teal', 0.17);
+}
+
 const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other Morning', {
   floor: 'paper', tone: .85, wall: 'paper', wallTone: .74, pattern: 'boards', height: 4.1, head: 20,
 }, (H, R) => {
@@ -180,6 +318,7 @@ const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other 
   oval(H, R, px, py, 13, 11, 'coral', .57);
   shape(H, R, [[px - 18, py + 17], [px, py - 2], [px + 20, py + 14]], 'teal', .54, .6);
   lowerEastBedroomDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), open = ease((u - .23) / .14) * (1 - ease((u - .53) / .17));
   curtain(H, R, open);

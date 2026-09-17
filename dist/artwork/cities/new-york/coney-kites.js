@@ -148,6 +148,186 @@ function coneyKitesDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  for (const i of [2.63, 4.93, 7.72]) {
+    H.line(R, [H.p(i, 5.81, 0.16), H.p(i, 6.79, 0.16)], 'teal', 1.8);
+    H.line(R, [H.p(i, 5.82, 0.18), H.p(i, 6.81, 0.6)], 'blue', 1.4);
+    for (const z of [0.73, 1.05, 1.32]) H.dot(...H.p(i, 5.82, z), 1.35, 'blue');
+  }
+  for (let n = 0; n < 16; n++) {
+    const i = 0.5 + n * 0.7;
+    H.line(R, [H.p(i, 3.48, 0.24), H.p(i, 3.48, 0.95)], 'blue', 0.7);
+    H.dot(...H.p(i, 3.5, 0.88), 0.9, 'sun');
+  }
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(0.44 + n * 1.71, 4.71, 0.025);
+    H.line(
+      R,
+      [
+        [x - 6, y],
+        [x + 7, y - 2]
+      ],
+      'sun',
+      0.7
+    );
+    H.dot(x + 2, y, 1.1, 'blue');
+  }
+  const [x, y] = H.p(2.05, 9.62, 0.82);
+  shape(
+    H,
+    R,
+    [
+      [x - 27, y],
+      [x, y - 28],
+      [x + 23, y - 2],
+      [x - 3, y + 31]
+    ],
+    'paper',
+    1,
+    0.8
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 27, y],
+      [x, y - 28],
+      [x - 2, y + 1]
+    ],
+    'coral',
+    0.5,
+    0.5
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 2, y + 1],
+      [x + 23, y - 2],
+      [x - 3, y + 31]
+    ],
+    'teal',
+    0.5,
+    0.5
+  );
+  H.line(
+    R,
+    [
+      [x, y - 27],
+      [x - 3, y + 30]
+    ],
+    'sun',
+    1.1
+  );
+  H.line(
+    R,
+    [
+      [x - 26, y],
+      [x + 22, y - 2]
+    ],
+    'sun',
+    1.1
+  );
+  for (const [px, py] of [
+    [x, y - 27],
+    [x - 26, y],
+    [x + 22, y - 2],
+    [x - 3, y + 30]
+  ])
+    H.dot(px, py, 1.5, 'blue');
+  stroke(
+    H,
+    R,
+    [
+      [x - 3, y + 31],
+      [x + 4, y + 41],
+      [x - 3, y + 46],
+      [x + 2, y + 54]
+    ],
+    'blue',
+    0.7
+  );
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(1.46 + n * 0.56, 10.16, 0.83);
+    oval(H, R, px, py, 5, 3, 'sun', 0.5);
+    H.line(
+      R,
+      [
+        [px - 4, py - 5],
+        [px + 4, py - 5]
+      ],
+      'blue',
+      1.2
+    );
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 7, py + 8]
+      ],
+      'paper',
+      0.8
+    );
+  }
+  for (const i of [1.19, 3.15]) H.line(R, [H.p(i, 8.94, 0.18), H.p(i, 10.35, 0.59)], 'teal', 1.4);
+  for (let n = 0; n < 5; n++) {
+    const j = 9.19 + n * 0.16;
+    H.line(R, [H.p(7.9, j, 0.76), H.p(9.3, j, 0.76)], 'coral', 0.65);
+  }
+  for (const i of [7.94, 9.28]) {
+    H.line(R, [H.p(i, 10.16, 0.19), H.p(i, 10.16, 0.63)], 'sun', 1.4);
+    H.dot(...H.p(i, 10.18, 0.27), 1.2, 'blue');
+  }
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(10.11 + n * 0.16, 4.78, 0.86);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px, py - 15]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  const [px, py] = H.p(10.87, 8.71, 0.025);
+  shape(
+    H,
+    R,
+    [
+      [px - 7, py],
+      [px + 7, py],
+      [px + 5, py - 17],
+      [px - 5, py - 17]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  H.line(
+    R,
+    [
+      [px - 5, py - 10],
+      [px + 5, py - 10]
+    ],
+    'coral',
+    1.2
+  );
+  H.line(
+    R,
+    [
+      [px + 1, py - 18],
+      [px + 6, py - 26]
+    ],
+    'sun',
+    1.2
+  );
+  for (let n = 0; n < 5; n++) {
+    const [ax, ay] = H.p(1.1 + n * 0.47, 1.98, 0.03);
+    oval(H, R, ax, ay, 2 + (n % 2), 1.2, 'coral', 0.35);
+  }
+}
+
 const room = world('new-york-coney-kites', 'Coney Island · Wind at the Bench', { floor: 'paper', tone: .8, wall: false, pattern: 'boards', head: 20 }, (H, R) => {
   shape(H, R, H.tile(.03, .03, 11.93, 1.72, .023), 'teal', .32, .6);
   for (let k = 0; k < 15; k++) H.line(R, [H.p(.4 + k * .75, .55 + k % 3 * .33, .033), H.p(.78 + k * .75, .55 + k % 3 * .33, .033)], 'paper', 1.4, { tone: .9 });
@@ -208,6 +388,7 @@ const room = world('new-york-coney-kites', 'Coney Island · Wind at the Bench', 
     H.line(R, [[fx, fy - 23], [fx + Math.cos(a) * 18, fy - 23 + Math.sin(a) * 18]], 'blue', .45, { tone: .5 });
   }
   coneyKitesDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   let parentHand;

@@ -1,3 +1,4 @@
+import { cornice } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -108,6 +109,173 @@ function statenFerryDetails(H, R) {
   oval(H, R, ...H.p(0.35, 6.36, 2.58), 5, 5, 'sun', 0.45);
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.84, 3.18, 'paper');
+  for (const i of [1.17, 10.91])
+    for (const j of [3.5, 7.2]) {
+      H.line(R, [H.p(i, j, 2.65), H.p(i + (i < 2 ? 0.48 : -0.48), j, 3.19)], 'blue', 1.7);
+      for (const z of [0.2, 2.77]) H.dot(...H.p(i, j + 0.09, z), 1.4, 'sun');
+    }
+  for (let n = 0; n < 8; n++) {
+    const i = 0.43 + n * 1.42;
+    shape(H, R, H.faceI(i, 0.18, 1.2, 0.25, 0.61), 'coral', 0.55, 0.6);
+    for (let q = 0; q < 5; q++) H.line(R, [H.p(i + 0.17 + q * 0.2, 0.2, 0.32), H.p(i + 0.17 + q * 0.2, 0.2, 0.53)], 'blue', 0.6);
+  }
+  for (const j of [2.2, 5.64, 8.84])
+    for (let n = 0; n < 5; n++) {
+      const i = 2.11 + n * 0.87;
+      H.line(R, [H.p(i, j + 0.14, 0.14), H.p(i, j + 0.14, 0.43)], 'sun', 1.1);
+      H.dot(...H.p(i, j + 0.12, 1.08), 1.1, 'sun');
+    }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(0.35, 6.9 + n * 0.93, 2.35);
+    shape(
+      H,
+      R,
+      [
+        [x - 7, y],
+        [x + 7, y],
+        [x + 7, y - 14],
+        [x - 7, y - 14]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    shape(
+      H,
+      R,
+      [
+        [x - 4, y - 4],
+        [x + 4, y - 4],
+        [x + 2, y - 10],
+        [x - 2, y - 10]
+      ],
+      n % 2 ? 'coral' : 'teal',
+      0.5,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [x - 5, y - 1],
+        [x + 5, y - 1]
+      ],
+      'blue',
+      0.55
+    );
+  }
+  const [x, y] = H.p(0.53, 4.82, 1.91);
+  shape(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 9, y],
+      [x + 9, y - 29],
+      [x - 9, y - 29]
+    ],
+    'coral',
+    0.7,
+    0.8
+  );
+  oval(H, R, x, y - 29, 9, 3.5, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y - 31],
+      [x, y - 38],
+      [x + 8, y - 38]
+    ],
+    'blue',
+    1.7
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x + 6, y - 34],
+      [x + 14, y - 23],
+      [x + 12, y - 7]
+    ],
+    'blue',
+    1.1
+  );
+  const [px, py] = H.p(10.37, 10.14, 0.3);
+  shape(
+    H,
+    R,
+    [
+      [px - 13, py],
+      [px + 13, py],
+      [px + 13, py - 22],
+      [px - 13, py - 22]
+    ],
+    'teal',
+    0.7,
+    0.8
+  );
+  for (const dx of [-8, 8])
+    H.line(
+      R,
+      [
+        [px + dx, py],
+        [px + dx, py - 22]
+      ],
+      'sun',
+      1.2
+    );
+  H.line(
+    R,
+    [
+      [px - 8, py - 22],
+      [px - 8, py - 34],
+      [px + 8, py - 34],
+      [px + 8, py - 22]
+    ],
+    'blue',
+    1.4
+  );
+  H.line(
+    R,
+    [
+      [px - 7, py - 34],
+      [px + 7, py - 34]
+    ],
+    'coral',
+    2.1
+  );
+  for (let n = 0; n < 4; n++) {
+    const [ax, ay] = H.p(7.56 + n * 0.29, 9.81, 0.04);
+    shape(
+      H,
+      R,
+      [
+        [ax - 4, ay],
+        [ax + 4, ay],
+        [ax + 4, ay - 7],
+        [ax - 4, ay - 7]
+      ],
+      'paper',
+      1,
+      0.45
+    );
+    H.line(
+      R,
+      [
+        [ax - 2, ay - 4],
+        [ax + 2, ay - 4]
+      ],
+      'teal',
+      0.6
+    );
+  }
+  for (let n = 0; n < 6; n++) {
+    const i = 4.34 + n * 0.45;
+    H.line(R, [H.p(i, 7.09, 3.19), H.p(i, 7.31, 3.19)], 'sun', 1.5);
+  }
+}
+
 const room = world('new-york-staten-ferry', 'Staten Island Ferry · First Crossing', {
   floor: 'blue', tone: .23, wall: false, head: 20,
 }, (H, R) => {
@@ -162,6 +330,7 @@ const room = world('new-york-staten-ferry', 'Staten Island Ferry · First Crossi
   stroke(H, R, [[ux + 27, uy + 11], [ux + 34, uy + 9], [ux + 34, uy + 1]], 'coral', 3);
   H.line(R, [[ux - 27, uy - 8], [ux - 8, uy - 2]], 'sun', 5);
   statenFerryDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   for (const p of [2.15, 5.85, 9.55]) {

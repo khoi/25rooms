@@ -1,3 +1,4 @@
+import { recessedFrame, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, satchel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -56,6 +57,127 @@ function wanChaiStepsDetails(H, R) {
   const [x, y] = H.p(4.22, 0.26, 2.58);
   oval(H, R, x, y, 9, 11, 'blue', 0.6);
   oval(H, R, x, y, 6, 8, 'sun', 0.4);
+}
+
+function construction(H, R) {
+  for (const [j, z] of [
+    [5.05, 0.96],
+    [6.5, 0.73],
+    [7.95, 0.5],
+    [9.4, 0.27]
+  ]) {
+    for (let n = 0; n < 9; n++) {
+      const i = 0.49 + n * 0.45;
+      H.line(R, [H.p(i, j, z), H.p(i + 0.24, j, z)], 'sun', 1.2);
+    }
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(0.46 + n * 0.84, j + 0.13, z - 0.15), H.p(0.99 + n * 0.84, j + 0.13, z - 0.15)], 'teal', 0.7);
+  }
+  for (let n = 0; n < 9; n++) {
+    const i = 5.46 + n * 0.67;
+    H.line(R, [H.p(i, 0.63, 3.74), H.p(i, 3.91, 3.74)], 'blue', 0.6);
+  }
+  for (const i of [5.14, 11.32])
+    for (const j of [1.6, 3.58]) {
+      H.line(R, [H.p(i, j, 2.95), H.p(i + (i < 6 ? 0.46 : -0.46), j, 3.56)], 'blue', 1.8);
+      box(H, R, i - 0.05, j - 0.04, 0.25, 0.26, 1.03, 0.13, 'blue', 0.6);
+      H.dot(...H.p(i + 0.08, j + 0.15, 1.22), 1.2, 'sun');
+    }
+  for (let n = 0; n < 4; n++) {
+    const i = 5.57 + n * 1.34,
+      [x, y] = H.p(i, 3.99, 3.58);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y + 9]
+      ],
+      'blue',
+      0.9
+    );
+    oval(H, R, x, y + 11, 4, 2, 'sun', 0.8);
+  }
+  box(H, R, 0.4, 0.15, 4.05, 0.17, 2.06, 0.08, 'teal', 0.6);
+  for (let n = 0; n < 3; n++) {
+    const i = 0.64 + n * 1.19;
+    recessedFrame(H, R, 'ne', i, 0.92, 2.2, 1.22, 'teal', (P) => {
+      shape(H, R, [P(0.13, 0.13), P(0.79, 0.13), P(0.79, 1.09), P(0.13, 1.09)], 'blue', 0.55, 0.5);
+      H.line(R, [P(0.45, 0.15), P(0.45, 1.05)], 'paper', 1.3);
+      H.line(R, [P(0.15, 0.59), P(0.77, 0.59)], 'paper', 1.3);
+    });
+  }
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(5.36 + n * 0.7, 1.18, 1.07);
+    shape(
+      H,
+      R,
+      [
+        [x - 10, y],
+        [x + 10, y],
+        [x + 11, y - 17],
+        [x - 11, y - 17]
+      ],
+      'coral',
+      0.5,
+      0.6
+    );
+    oval(H, R, x, y - 17, 11, 4, 'blue', 0.4);
+    specimen(H, R, x, y - 17, 0.55 + n * 0.08, 'teal', n === 1);
+  }
+  for (let n = 0; n < 6; n++) {
+    const i = 8.95 + n * 0.22;
+    shape(H, R, H.faceI(i, 4.09, 0.16, 1.17, 1.49), 'paper', 1, 0.5);
+    H.line(R, [H.p(i + 0.02, 4.105, 1.37), H.p(i + 0.13, 4.105, 1.37)], 'blue', 0.7);
+  }
+  for (let n = 0; n < 7; n++) {
+    const [x, y] = H.p(5.1 + n * 0.8, 9.58, 0.29);
+    oval(H, R, x, y, 11 + (n % 2) * 7, 3, 'paper', 0.7);
+    H.line(
+      R,
+      [
+        [x - 7, y],
+        [x + 7, y]
+      ],
+      'sun',
+      0.6
+    );
+  }
+  const [x, y] = H.p(10.03, 6.71, 1.15);
+  shape(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 9, y],
+      [x + 11, y - 15],
+      [x - 11, y - 15]
+    ],
+    'teal',
+    0.4,
+    0.7
+  );
+  oval(H, R, x, y - 15, 11, 4, 'blue', 0.4);
+  for (let n = 0; n < 3; n++) {
+    H.line(
+      R,
+      [
+        [x - 6 + n * 6, y - 10],
+        [x - 9 + n * 7, y - 40]
+      ],
+      'blue',
+      1.6
+    );
+    stroke(
+      H,
+      R,
+      [
+        [x - 9 + n * 7, y - 40],
+        [x - 12 + n * 7, y - 45],
+        [x - 15 + n * 7, y - 40]
+      ],
+      'sun',
+      1.7
+    );
+  }
 }
 
 const room = world('hong-kong-wan-chai-steps', 'Wan Chai · Rain on the landing', { floor: 'blue', tone: .25, wall: false, head: 20 }, (H, R) => {
@@ -118,6 +240,7 @@ const room = world('hong-kong-wan-chai-steps', 'Wan Chai · Rain on the landing'
   box(H, R, 7.46, 1.35, .71, .52, 1.03, .37, 'paper', 1);
   H.line(R, [H.p(7.81, 1.34, 1.42), H.p(7.81, 1.88, 1.42)], 'coral', 2.3);
   wanChaiStepsDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), wrap = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .17) / .63))) ** 2;
   actor(H, R, 7.23, 4.0, t, 'hongKongUmbrellaFold', { shirt: ['sun', .75], pants: ['blue', .7], hairStyle: 'short', face: 'se', prop(h, r, p) {

@@ -1,3 +1,4 @@
+import { cornice, panelFront, wallRack, hangingRail, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, windowOn, plant, wallRect, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -119,6 +120,165 @@ function choiHungBreakfastDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.9, 3.62, 'teal');
+  cornice(H, R, 'ne', 0.1, 11.9, 3.62, 'teal');
+  panelFront(H, R, 10.34, 1.63, 1.23, 0.13, 3.01, 2, 'teal');
+  for (const j of [1.02, 2.57, 4.12, 5.67]) {
+    shape(H, R, H.faceJ(3.015, j, 1.28, 0.15, 0.85), 'teal', 0.3, 0.7);
+    shape(H, R, H.faceJ(3.025, j + 0.12, 1.02, 0.26, 0.72), 'teal', 0.16, 0.6);
+    H.line(R, [H.p(3.04, j + 0.18, 0.74), H.p(3.04, j + 0.51, 0.74)], 'sun', 1.8);
+  }
+  for (const j of [1.05, 2.31]) {
+    shape(H, R, H.faceJ(0.77, j, 1.02, 2.26, 3.17), 'paper', 1, 0.7);
+    H.line(R, [H.p(0.79, j + 0.79, 2.63), H.p(0.79, j + 0.79, 2.92)], 'teal', 1.8);
+  }
+  hangingRail(H, R, 'nw', 0.9, 2.4, 1.92, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.16);
+    if (n < 2) {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x, y + 15]
+        ],
+        'sun',
+        1.8
+      );
+      oval(H, R, x, y + 21, 5, 7, 'paper', 1);
+    } else {
+      shape(
+        H,
+        R,
+        [
+          [x - 7, y],
+          [x + 7, y],
+          [x + 7, y + 24],
+          [x - 7, y + 28]
+        ],
+        'paper',
+        1,
+        0.6
+      );
+      for (let q = 0; q < 3; q++)
+        H.line(
+          R,
+          [
+            [x - 6, y + 17 + q * 3],
+            [x + 6, y + 14 + q * 3]
+          ],
+          'coral',
+          0.8
+        );
+    }
+  });
+  for (const i of [4.3, 8.33]) {
+    box(H, R, i, 0.08, 0.14, 0.35, 1.53, 2.13, 'teal', 0.5);
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = H.p(i + 0.06, 0.43, 1.77 + n * 0.29);
+      oval(H, R, x, y, 2.6, 1.4, 'sun', 0.8);
+    }
+  }
+  box(H, R, 4.18, 0.11, 4.47, 0.45, 1.49, 0.1, 'paper', 1);
+  specimen(H, R, ...H.p(4.6, 0.38, 1.65), 0.5, 'teal');
+  const [x, y] = H.p(9.96, 5.4, 1.47);
+  shape(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 8, y],
+      [x + 7, y - 16],
+      [x - 6, y - 16]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  oval(H, R, x, y - 16, 7, 3, 'sun', 0.5);
+  H.line(
+    R,
+    [
+      [x - 7, y - 12],
+      [x - 12, y - 13],
+      [x - 12, y - 4],
+      [x - 8, y - 3]
+    ],
+    'blue',
+    1
+  );
+  wallRack(H, R, 'nw', 8.8, 2.4, 1.38, 1.54, 2, 'sun', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const u = 0.28 + n * 0.43;
+      if (row) {
+        shape(H, R, [P(u, z + 0.06), P(u + 0.29, z + 0.06), P(u + 0.29, z + 0.55), P(u, z + 0.55)], n % 2 ? 'teal' : 'coral', 0.55, 0.6);
+        H.line(R, [P(u + 0.04, z + 0.4), P(u + 0.25, z + 0.4)], 'paper', 1.4);
+      } else {
+        const [px, py] = P(u, z + 0.18);
+        oval(H, R, px, py, 5, 3, 'paper', 1);
+        H.line(
+          R,
+          [
+            [px, py],
+            [px + 2, py - 13]
+          ],
+          'sun',
+          1.3
+        );
+      }
+    }
+  });
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(2.5, 8.4 + n * 0.25, 0.9);
+    shape(
+      H,
+      R,
+      [
+        [px - 7, py],
+        [px + 5, py - 2],
+        [px + 7, py - 8],
+        [px - 2, py - 12],
+        [px - 7, py - 8]
+      ],
+      n === 1 ? 'sun' : 'teal',
+      0.6,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 6],
+        [px + 3, py - 5]
+      ],
+      'paper',
+      0.9
+    );
+  }
+  const [rx, ry] = H.p(6.23, 10.06, 0.59);
+  for (let n = 0; n < 5; n++)
+    H.line(
+      R,
+      [
+        [rx - 17, ry - 5 + n * 3],
+        [rx + 17, ry - 5 + n * 3]
+      ],
+      'coral',
+      0.8
+    );
+  H.line(
+    R,
+    [
+      [rx - 14, ry - 9],
+      [rx - 14, ry + 8],
+      [rx + 14, ry + 8],
+      [rx + 14, ry - 9]
+    ],
+    'paper',
+    1.4
+  );
+  taskLight(H, R, 10.41, 6.85, 1.56, 'sun', -0.6);
+}
+
 const room = world('hong-kong-choi-hung-breakfast', 'Choi Hung · A table unfolds', { floor: 'paper', tone: .52, wall: 'paper', wallTone: .92, height: 3.85, head: 22 }, (H, R) => {
   for (let k = 0; k < 110; k++) {
     const i = .22 + R() * 11.55, j = .22 + R() * 11.55;
@@ -172,6 +332,7 @@ const room = world('hong-kong-choi-hung-breakfast', 'Choi Hung · A table unfold
   table(H, R, 8.96, 9.35, 2.16, 1.27, .51, 'paper');
   for (let k = 0; k < 3; k++) box(H, R, 9.16, 9.55, 1.3, .82, .67 + k * .08, .05, ['coral', 'paper', 'teal'][k], .54);
   choiHungBreakfastDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 22);
   const stool = u < .17 ? 0 : u < .31 ? ease((u - .17) / .14) : u < .91 ? 1 : 1 - ease((u - .91) / .09);

@@ -1,5 +1,6 @@
+import { cornice, panelFront, wallRack, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, wallPt, wallRect, ell, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, wallPt, wallRect, ell, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -64,6 +65,121 @@ function yauMaTeiOperaDetails(H, R) {
   const [x, y] = H.p(5.92, 0.16, 3.23);
   oval(H, R, x, y, 8, 10, 'blue', 0.6);
   oval(H, R, x, y, 5, 7, 'paper', 1);
+}
+
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.9, 3.62, 'sun');
+  cornice(H, R, 'ne', 0.1, 11.9, 3.62, 'sun');
+  panelFront(H, R, 1.25, 1.53, 3.64, 0.23, 0.65, 4, 'teal');
+  for (const i of [1.51, 4.52])
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = H.p(i, 0.18, 1.4 + n * 0.32);
+      oval(H, R, x, y, 3.4, 3.8, 'sun', 0.92);
+      H.glow(x, y, 9, 9, 'sun', 0.12);
+    }
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(1.75 + n * 0.43, 0.96, 1.13);
+    oval(H, R, x, y, 5, 2.3, n % 2 ? 'coral' : 'teal', 0.6);
+    oval(H, R, x, y - 5, 5, 2.3, 'paper', 1);
+    H.dot(x, y - 5, 1.2, ['teal', 'sun', 'coral'][n % 3]);
+  }
+  const [x, y] = H.p(4.46, 1.12, 1.13);
+  shape(
+    H,
+    R,
+    [
+      [x - 7, y],
+      [x + 7, y],
+      [x + 6, y - 12],
+      [x - 6, y - 12]
+    ],
+    'teal',
+    0.65,
+    0.6
+  );
+  for (let n = 0; n < 5; n++) {
+    H.line(
+      R,
+      [
+        [x - 4 + n * 2, y - 8],
+        [x - 8 + n * 4, y - 27 - (n % 2) * 5]
+      ],
+      'sun',
+      1
+    );
+    oval(H, R, x - 8 + n * 4, y - 29 - (n % 2) * 5, 2, 3, 'paper', 1);
+  }
+  wallRack(H, R, 'nw', 7.3, 3.56, 1.43, 1.89, 2, 'coral', (P, z, row) => {
+    for (let n = 0; n < 4; n++) {
+      const [px, py] = P(0.53 + n * 0.82, z + 0.13);
+      shape(
+        H,
+        R,
+        [
+          [px - 9, py],
+          [px + 9, py],
+          [px + 7, py - 20],
+          [px - 7, py - 20]
+        ],
+        'paper',
+        1,
+        0.6
+      );
+      oval(H, R, px, py - 20, 8, 3, 'sun', 0.5);
+      for (let q = 0; q < 3; q++)
+        H.line(
+          R,
+          [
+            [px - 5 + q * 5, py - 21],
+            [px - 9 + q * 8, py - 33]
+          ],
+          row ? 'teal' : 'coral',
+          1
+        );
+    }
+  });
+  for (const j of [1.7, 2.8, 3.9, 5.0]) {
+    const [px, py] = H.p(0.95, j, 1.14);
+    for (let n = 0; n < 6; n++) {
+      H.dot(px + (n - 2.5) * 3, py + 12 + (n % 2) * 3, 1.2, 'sun', 1, { knock: true });
+    }
+    H.line(
+      R,
+      [
+        [px - 9, py - 4],
+        [px + 10, py + 2]
+      ],
+      'paper',
+      0.8
+    );
+  }
+  for (const [i, j] of [
+    [1.2, 7.35],
+    [3.4, 8.23]
+  ]) {
+    for (const x0 of [i + 0.12, i + 1.55]) {
+      H.line(R, [H.p(x0, j + 0.02, 0.1), H.p(x0, j + 1.09, 0.1), H.p(x0, j + 1.09, 0.9)], 'sun', 2.1);
+      for (const z of [0.2, 0.72]) H.dot(...H.p(x0, j + 1.1, z), 1.2, 'blue');
+    }
+    shape(H, R, H.faceI(i + 0.72, j + 1.11, 0.24, 0.35, 0.59), 'paper', 1, 0.6);
+    H.line(R, [H.p(i + 0.79, j + 1.12, 0.45), H.p(i + 0.9, j + 1.12, 0.45)], 'blue', 1.4);
+  }
+  taskLight(H, R, 10.15, 8.35, 0.94, 'sun', 0.4);
+  const [px, py] = H.p(8.6, 10.48, 1.2);
+  oval(H, R, px, py, 8, 7, 'coral', 0.55);
+  for (let n = 0; n < 7; n++) {
+    const a = (n * TAU) / 7;
+    H.line(
+      R,
+      [
+        [px + Math.cos(a) * 4, py + Math.sin(a) * 3],
+        [px + Math.cos(a) * 12, py + Math.sin(a) * 10]
+      ],
+      'paper',
+      0.7
+    );
+  }
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(7.45 + n * 0.35, 10.9, 1.2), H.p(7.55 + n * 0.35, 11.18, 1.2)], 'sun', 1);
 }
 
 const room = world('hong-kong-yau-ma-tei-opera', 'Yau Ma Tei · Before the entrance', { floor: 'sun', tone: .2, pattern: 'boards', wall: 'paper', wallTone: .94, height: 3.85, head: 20 }, (H, R) => {
@@ -134,6 +250,7 @@ const room = world('hong-kong-yau-ma-tei-opera', 'Yau Ma Tei · Before the entra
   H.line(R, [H.p(2.5, 3.49, .025), H.p(3.25, 3.8, .025)], 'blue', 1.8);
   oval(H, R, ...H.p(2.48, 3.48, .04), 3, 4, 'paper', 1);
   yauMaTeiOperaDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14), sweep = Math.sin(TAU * u), lift = Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .12) / .61)));
   H.at(6.3, 6.53, 0, HH => actor(HH, R, 6.3, 6.53, t, 'hongKongOperaSleeves', { shirt: ['teal', .62], pants: ['blue', .62], hairStyle: 'bun', face: 'se', prop(h, r, p) {

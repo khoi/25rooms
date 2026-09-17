@@ -1,3 +1,4 @@
+import { panelFront, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -75,6 +76,140 @@ function taiPoCycleDetails(H, R) {
   for (const i of [2.38, 2.7]) H.dot(...H.p(i, 0.97, 1.65), 2, 'teal');
 }
 
+function construction(H, R) {
+  box(H, R, 1.14, 0.39, 4.79, 0.12, 1.41, 1.64, 'teal', 0.22);
+  for (let row = 0; row < 5; row++) for (let col = 0; col < 15; col++) H.dot(...H.p(1.33 + col * 0.31, 0.53, 1.6 + row * 0.27), 0.6, 'blue', 0.55);
+  for (let n = 0; n < 7; n++) {
+    const [x, y] = H.p(1.63 + n * 0.56, 0.57, 2.78);
+    H.dot(x, y, 1.2, 'sun');
+    H.line(
+      R,
+      [
+        [x, y],
+        [x - 1, y + 18]
+      ],
+      'blue',
+      1.8
+    );
+    if (n % 3 === 0) {
+      H.outline(R, ell(x, y + 24, 5, 7), 'blue', 1.4);
+      H.line(
+        R,
+        [
+          [x - 3, y + 28],
+          [x - 6, y + 34]
+        ],
+        'coral',
+        1.6
+      );
+    } else {
+      H.line(
+        R,
+        [
+          [x - 4, y + 16],
+          [x + 4, y + 20]
+        ],
+        'paper',
+        3
+      );
+      H.line(
+        R,
+        [
+          [x, y + 19],
+          [x, y + 29]
+        ],
+        'sun',
+        2.5
+      );
+    }
+  }
+  panelFront(H, R, 1.2, 1.69, 4.64, 0.17, 0.8, 4, 'teal');
+  for (const i of [0.18, 7.24]) {
+    H.line(R, [H.p(i, 0.23, 2.91), H.p(i + (0.18 === i ? 0.7 : -0.7), 0.23, 3.61)], 'blue', 1.8);
+    H.dot(...H.p(i, 0.28, 2.91), 1.6, 'sun');
+  }
+  box(H, R, 0.24, 3.4, 0.95, 0.53, 1.02, 1.55, 'teal', 0.52);
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.faceI(0.31, 3.96, 0.82, 1.1 + n * 0.35, 1.39 + n * 0.35), 'paper', 1, 0.6);
+    H.line(R, [H.p(0.51, 3.975, 1.22 + n * 0.35), H.p(0.89, 3.975, 1.22 + n * 0.35)], 'blue', 1.4);
+  }
+  const [x, y] = H.p(4.13, 1.03, 1.26);
+  oval(H, R, x, y, 12, 6, 'blue', 0.65);
+  for (let n = 0; n < 9; n++) {
+    const a = (n * TAU) / 9;
+    H.line(
+      R,
+      [
+        [x + Math.cos(a) * 7, y + Math.sin(a) * 3],
+        [x + Math.cos(a) * 13, y + Math.sin(a) * 6]
+      ],
+      'sun',
+      1
+    );
+  }
+  H.line(
+    R,
+    [
+      [x - 19, y - 6],
+      [x + 20, y + 7]
+    ],
+    'paper',
+    1.2
+  );
+  H.dot(x, y, 3, 'teal', 1, { knock: true });
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(3.24 + n * 0.73, 10.52, 1.24);
+    oval(H, R, px, py, 9, 5, 'blue', 0.65);
+    oval(H, R, px, py, 5, 2.8, 'paper', 1);
+    for (let q = 0; q < 6; q++) {
+      const a = (q * TAU) / 6;
+      H.line(
+        R,
+        [
+          [px + Math.cos(a) * 5, py + Math.sin(a) * 3],
+          [px + Math.cos(a) * 9, py + Math.sin(a) * 5]
+        ],
+        'teal',
+        0.6
+      );
+    }
+  }
+  taskLight(H, R, 1.42, 0.82, 1.26, 'coral', 0.72);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(10.35, 10.77, 0.23 + n * 0.1);
+    shape(
+      H,
+      R,
+      [
+        [px - 10, py],
+        [px + 10, py],
+        [px + 8, py - 5],
+        [px - 8, py - 5]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 6, py - 2],
+        [px + 6, py - 2]
+      ],
+      'teal',
+      0.7
+    );
+  }
+  for (const [i, j] of [
+    [7.72, 1.05],
+    [10.83, 1.05],
+    [10.83, 3.08]
+  ]) {
+    box(H, R, i, j, 0.8, 0.8, 0.02, 0.38, 'sun', 0.32);
+    specimen(H, R, ...H.p(i + 0.4, j + 0.4, 0.43), 0.85, 'teal', false);
+  }
+}
+
 const room = world('hong-kong-tai-po-cycle', 'Tai Po · One more breath of air', { floor: 'paper', tone: .46, wall: false, head: 20 }, (H, R) => {
   shape(H, R, H.faceI(.15, .13, 7.15, .03, 3.47), 'teal', .4);
   shape(H, R, H.faceJ(.12, .15, 5.48, .03, 3.47), 'paper', .94);
@@ -136,6 +271,7 @@ const room = world('hong-kong-tai-po-cycle', 'Tai Po · One more breath of air',
   oval(H, R, px, py - 1, 7, 3, 'coral', .7);
   H.line(R, [[px - 4, py - 2], [px + 4, py - 2]], 'paper', 1.2);
   taiPoCycleDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), [baseX, baseY] = H.p(6.55, 7.67, .02);
   H.at(6.43, 8.18, 0, HH => actor(HH, R, 6.43, 8.18, t, 'hongKongTyrePump', { shirt: ['paper', 1], apron: ['teal', .64], pants: ['blue', .7], hairStyle: 'short', prop(h, r, p) {

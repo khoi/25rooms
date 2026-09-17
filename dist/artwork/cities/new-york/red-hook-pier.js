@@ -1,5 +1,5 @@
 import { shallowTray, foldedCloth, coiledLine, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -102,6 +102,163 @@ function redHookPierDetails(H, R) {
   }
 }
 
+function construction(H, R) {
+  for (const j of [0.6, 3.65, 7.08, 10.92]) {
+    for (const z of [0.19, 0.58]) {
+      H.line(R, [H.p(7.36, j + 0.49, z), H.p(7.73, j + 0.49, z)], 'sun', 1.4);
+      H.dot(...H.p(7.53, j + 0.5, z), 1.3, 'paper');
+    }
+    const [x, y] = H.p(7.54, j + 0.24, 0.84);
+    oval(H, R, x, y, 6, 3, 'teal', 0.5);
+    oval(H, R, x, y, 3, 1.5, 'blue', 0.6);
+  }
+  for (const j of [1.43, 9.45])
+    for (const i of [5.96, 6.48])
+      for (const y of [j + 0.07, j + 0.56]) {
+        H.dot(...H.p(i, y, 0.34), 1.3, 'sun');
+        H.line(R, [H.p(i - 0.03, y, 0.35), H.p(i + 0.03, y, 0.35)], 'blue', 0.55);
+      }
+  for (const [i, j] of [
+    [0.58, 2.9],
+    [4.08, 2.9],
+    [0.58, 7.09],
+    [4.08, 7.09]
+  ]) {
+    H.line(R, [H.p(i, j, 2.42), H.p(i + (i < 1 ? 0.45 : -0.45), j, 3.03)], 'sun', 1.8);
+    H.line(R, [H.p(i, j, 0.41), H.p(i, j, 0.8)], 'paper', 0.8);
+  }
+  for (let n = 0; n < 8; n++) {
+    const j = 3.06 + n * 0.51;
+    H.line(R, [H.p(0.59, j, 2.85 - (j - 3.06) * 0.06), H.p(0.91, j, 2.85 - (j - 3.06) * 0.06)], 'sun', 1.2);
+  }
+  const [x, y] = H.p(2.36, 6.99, 2.68);
+  H.line(
+    R,
+    [
+      [x, y - 20],
+      [x, y - 7]
+    ],
+    'blue',
+    1.1
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 8, y - 7],
+      [x + 8, y - 7],
+      [x + 10, y + 10],
+      [x - 10, y + 10]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  oval(H, R, x, y + 11, 10, 3, 'sun', 0.7);
+  for (const dx of [-5, 0, 5])
+    H.line(
+      R,
+      [
+        [x + dx, y - 6],
+        [x + dx, y + 10]
+      ],
+      'blue',
+      0.65
+    );
+  H.glow(x, y + 17, 26, 24, 'sun', 0.18);
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(1.35 + n * 0.25, 10.1, 0.93);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 3, py - 13]
+      ],
+      'blue',
+      0.7
+    );
+    oval(H, R, px + 3, py - 14, 3, 5, n % 2 ? 'coral' : 'sun', 0.75);
+    stroke(
+      H,
+      R,
+      [
+        [px, py],
+        [px - 3, py + 4],
+        [px - 5, py + 1]
+      ],
+      'blue',
+      0.6
+    );
+  }
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(2.2 + n * 0.23, 10.47, 0.93);
+    oval(H, R, px, py, 5, 3, 'teal', 0.6);
+    oval(H, R, px, py, 2, 1.2, 'paper', 1);
+  }
+  for (const i of [1.11, 2.87]) H.line(R, [H.p(i, 9.68, 0.3), H.p(i, 10.99, 0.68)], 'teal', 1.5);
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(3.85 + n * 0.23, 8.64, 0.84);
+    shape(
+      H,
+      R,
+      [
+        [px - 3, py],
+        [px + 3, py],
+        [px + 3, py - 9],
+        [px - 3, py - 9]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 2, py - 6],
+        [px + 2, py - 6]
+      ],
+      'coral',
+      0.7
+    );
+  }
+  for (let n = 0; n < 4; n++) {
+    const j = 4.85 + n * 0.4;
+    H.line(R, [H.p(0.68, j, 0.21), H.p(0.96, j, 0.21)], 'blue', 0.8);
+  }
+  const [px, py] = H.p(6.89, 10.53, 0.3);
+  H.line(
+    R,
+    [
+      [px - 6, py],
+      [px + 6, py]
+    ],
+    'sun',
+    2
+  );
+  H.line(
+    R,
+    [
+      [px, py - 4],
+      [px, py + 4]
+    ],
+    'blue',
+    1.3
+  );
+  for (let n = 0; n < 5; n++) {
+    const [ax, ay] = H.p(8.06 + n * 0.72, 9.72 + (n % 2) * 0.35, 0.03);
+    H.line(
+      R,
+      [
+        [ax - 7, ay],
+        [ax + 6, ay]
+      ],
+      'sun',
+      0.8,
+      { tone: 0.4 }
+    );
+  }
+}
+
 const room = world('new-york-red-hook-pier', 'Red Hook · The Patient Line', {
   floor: 'teal', tone: .39, wall: false, head: 20,
 }, (H, R) => {
@@ -173,6 +330,7 @@ const room = world('new-york-red-hook-pier', 'Red Hook · The Patient Line', {
   for (let n = 0; n < 4; n++) H.outline(R, ell(rx, ry, 9 + n * 4, 3 + n * 1.6), 'sun', 1.8, { tone: .7 });
   stroke(H, R, [[rx + 15, ry], [rx + 31, ry + 8], [rx + 40, ry - 1]], 'sun', 1.9);
   redHookPierDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20), raised = smooth((u - .18) / .2) * (1 - smooth((u - .53) / .19));
   for (let n = 0; n < 4; n++) {

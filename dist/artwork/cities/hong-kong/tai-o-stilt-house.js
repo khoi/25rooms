@@ -1,3 +1,4 @@
+import { panelFront, wallRack, hangingRail } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU, ell, bottle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -120,6 +121,7 @@ function house(H, R) {
   oval(H, R, fx, fy, 19, 21, 'paper', 1);
   H.outline(R, ell(fx, fy, 16, 18), 'blue', .6);
   taiOStiltHouseDetails(H, R);
+  construction(H, R);
 }
 
 function taiOStiltHouseDetails(H, R) {
@@ -188,6 +190,147 @@ function taiOStiltHouseDetails(H, R) {
   ]) {
     box(H, R, i, j, 0.39, 0.3, 1.44, 0.08, 'paper', 0.82);
     H.dot(...H.p(i + 0.18, j + 0.15, 1.54), 1.3, 'blue');
+  }
+}
+
+function construction(H, R) {
+  for (const i of [0.62, 3.72, 7.12, 10.93]) {
+    H.line(R, [H.p(i, 0.61, 1.5), H.p(i, 0.61, 4.24)], 'blue', 1.1);
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(i, 0.67, 1.65 + n * 0.5), H.p(i + 0.17, 0.67, 1.65 + n * 0.5)], 'sun', 1.3);
+  }
+  for (const [i, j] of [
+    [0.65, 2.9],
+    [0.65, 7.65],
+    [4.12, 7.65],
+    [7.34, 7.65],
+    [10.93, 7.65]
+  ]) {
+    H.line(R, [H.p(i, j, 0.24), H.p(Math.min(i + 1.66, 11.2), j, 1.22)], 'sun', 2.4);
+    H.line(R, [H.p(i, j, 1.14), H.p(Math.min(i + 1.66, 11.2), j, 0.25)], 'blue', 2);
+    for (const z of [0.4, 1.13]) H.dot(...H.p(i + 0.07, j + 0.15, z), 1.4, 'paper');
+  }
+  for (let n = 0; n < 5; n++) {
+    const j = 1.25 + n * 1.42;
+    H.line(R, [H.p(0.55, j, 1.7), H.p(0.55, j, 3.95)], 'teal', 0.5);
+    H.dot(...H.p(0.56, j, 3.88), 1.1, 'blue');
+  }
+  wallRack(H, R, 'ne', 2.68, 3.27, 2.67, 1.44, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.4 + n * 0.6, z + 0.12);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 5, y],
+            [x + 5, y],
+            [x + 5, y - 15],
+            [x - 5, y - 15]
+          ],
+          n % 2 ? 'paper' : 'coral',
+          0.7,
+          0.6
+        );
+        oval(H, R, x, y - 15, 5, 2, 'sun', 0.6);
+      } else {
+        oval(H, R, x, y, 7, 3, 'paper', 1);
+        H.line(
+          R,
+          [
+            [x - 6, y],
+            [x - 4, y + 7],
+            [x + 4, y + 7],
+            [x + 6, y]
+          ],
+          'teal',
+          0.7
+        );
+      }
+    }
+  });
+  panelFront(H, R, 0.87, 6.37, 1.74, 1.59, 0.78, 2, 'teal');
+  for (const j of [2.8, 3.18]) for (let n = 0; n < 5; n++) H.line(R, [H.p(1.11 + n * 0.56, j, 2.12), H.p(1.39 + n * 0.56, j, 2.12)], 'paper', 0.6);
+  hangingRail(H, R, 'nw', 4.05, 2.69, 3.45, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.15);
+    if (n < 2) {
+      H.outline(R, ell(x, y + 16, 10, 16), 'sun', 2.1);
+      H.line(
+        R,
+        [
+          [x - 8, y + 25],
+          [x + 6, y + 30]
+        ],
+        'blue',
+        1
+      );
+    } else {
+      shape(
+        H,
+        R,
+        [
+          [x - 8, y],
+          [x + 7, y - 2],
+          [x + 9, y + 34],
+          [x - 7, y + 37]
+        ],
+        'paper',
+        1,
+        0.7
+      );
+      H.line(
+        R,
+        [
+          [x - 6, y + 26],
+          [x + 8, y + 23]
+        ],
+        'coral',
+        1.4
+      );
+    }
+  });
+  for (let n = 0; n < 5; n++) {
+    const i = 8.1 + n * 0.51;
+    H.line(R, [H.p(i, 8.48, 1.31), H.p(i, 10.45, 0.33)], 'blue', 0.65);
+  }
+  for (const j of [8.54, 9.07, 9.59, 10.11])
+    H.line(R, [H.p(8.08, j, 1.32 - (j - 8.54) * 0.596), H.p(10.42, j, 1.32 - (j - 8.54) * 0.596)], 'paper', 1.2);
+  const [x, y] = H.p(9.58, 5.82, 1.5);
+  oval(H, R, x, y, 13, 5, 'teal', 0.5);
+  shape(
+    H,
+    R,
+    [
+      [x - 13, y],
+      [x + 13, y],
+      [x + 10, y - 25],
+      [x - 10, y - 25]
+    ],
+    'sun',
+    0.43,
+    0.7
+  );
+  oval(H, R, x, y - 25, 10, 4, 'blue', 0.6);
+  for (let n = 0; n < 4; n++)
+    H.line(
+      R,
+      [
+        [x - 9 + n * 6, y - 23],
+        [x - 9 + n * 6, y - 3]
+      ],
+      'paper',
+      0.7
+    );
+  for (let n = 0; n < 7; n++) {
+    const [px, py] = H.p(9.3 + n * 0.17, 6.36, 1.46);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 8, py - 6]
+      ],
+      'sun',
+      0.8
+    );
   }
 }
 

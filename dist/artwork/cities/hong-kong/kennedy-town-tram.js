@@ -121,6 +121,93 @@ function kennedyTownTramDetails(H, R) {
   for (let n = 0; n < 13; n++) H.line(R, [H.p(1.24 + n * 0.17, 10.88, 0.05), H.p(1.24 + n * 0.17, 11.19, 0.05)], 'paper', 0.8);
 }
 
+function construction(H, R) {
+  for (const z of [1.26, 3.4])
+    for (let n = 0; n < 5; n++) {
+      const i = 1.7 + n * 1.72;
+      box(H, R, i - 0.04, 3.95, 1.49, 0.19, z - 0.1, 0.1, 'paper', 1);
+      for (const x of [i + 0.09, i + 1.31])
+        for (const h of [z + 0.1, z + 0.97]) {
+          H.dot(...H.p(x, 4.015, h), 1.15, 'sun');
+          H.line(R, [H.p(x - 0.025, 4.02, h), H.p(x + 0.025, 4.02, h)], 'blue', 0.55);
+        }
+      H.line(R, [H.p(i + 0.2, 4.01, z + 0.8), H.p(i + 0.45, 4.01, z + 0.98)], 'paper', 1.7);
+      shape(H, R, H.faceI(i + 0.17, 4.05, 1.05, z - 0.38, z - 0.18), n % 2 ? 'paper' : 'sun', 0.6, 0.6);
+      for (let k = 0; k < 3; k++)
+        H.line(R, [H.p(i + 0.25 + k * 0.25, 4.06, z - 0.34), H.p(i + 0.34 + k * 0.25, 4.06, z - 0.24)], n % 2 ? 'teal' : 'coral', 1.1);
+    }
+  for (const i of [2.3, 4.1, 5.9]) {
+    H.line(R, [H.p(i, 4.08, 4.9), H.p(i, 5.28, 4.9)], 'blue', 1.5);
+    const [x, y] = H.p(i, 5.28, 4.88);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y + 15]
+      ],
+      'sun',
+      2
+    );
+    H.outline(R, ell(x, y + 22, 6, 7), 'blue', 1.8);
+  }
+  for (let n = 0; n < 6; n++) {
+    const i = 1.51 + n * 0.34;
+    H.line(R, [H.p(i, 5.58, 1.05 + n * 0.32), H.p(i, 6.9, 1.05 + n * 0.32)], 'blue', 2);
+    H.line(R, [H.p(i + 0.04, 5.58, 1.065 + n * 0.32), H.p(i + 0.04, 6.9, 1.065 + n * 0.32)], 'sun', 0.9);
+  }
+  for (const i of [3.3, 8.3]) {
+    const [x, y] = H.p(i, 7.7, 0.52);
+    for (let n = 0; n < 6; n++)
+      H.line(
+        R,
+        [
+          [x - 13, y - n * 2],
+          [x + 13, y - n * 2]
+        ],
+        n % 2 ? 'blue' : 'paper',
+        1.1
+      );
+    H.line(
+      R,
+      [
+        [x - 16, y - 12],
+        [x - 16, y + 4],
+        [x + 16, y + 4],
+        [x + 16, y - 12]
+      ],
+      'blue',
+      2
+    );
+  }
+  H.line(R, [H.p(2.14, 7.62, 3.09), H.p(6.9, 7.62, 3.09)], 'sun', 1.8);
+  for (let n = 0; n < 11; n++) H.dot(...H.p(1.7 + n * 0.82, 8.0, 0.64), 1.2, 'paper');
+  const [x, y] = H.p(7.44, 7.255, 1.64);
+  for (let n = 0; n < 3; n++)
+    H.line(
+      R,
+      [
+        [x - 5, y + n * 3],
+        [x + 5, y + n * 3]
+      ],
+      'sun',
+      1
+    );
+  box(H, R, 7.14, 6.8, 0.6, 0.4, 0.89, 0.21, 'coral', 0.5);
+  H.line(R, [H.p(7.23, 7.22, 1.01), H.p(7.63, 7.22, 1.01)], 'blue', 1.8);
+  for (const i of [3.2, 5.4]) {
+    box(H, R, i, 0.75, 0.72, 0.36, 3.24, 0.2, 'teal', 0.6);
+    H.line(R, [H.p(i + 0.1, 0.88, 3.46), H.p(i + 0.6, 0.88, 3.46)], 'sun', 1.7);
+  }
+  for (let n = 0; n < 4; n++) {
+    box(H, R, 7.4 + n * 0.46, 0.59, 0.3, 0.45, 0.37, 0.67 + (n % 2) * 0.2, 'paper', 1);
+    shape(H, R, H.faceI(7.43 + n * 0.46, 1.06, 0.24, 0.57, 0.86), 'teal', 0.4, 0.5);
+  }
+  for (const i of [2.03, 6.33]) {
+    H.line(R, [H.p(i, 0.68, 2.5), H.p(i + 0.55, 0.68, 3.05)], 'blue', 2);
+    H.line(R, [H.p(i, 0.68, 2.5), H.p(i - 0.55, 0.68, 3.05)], 'blue', 2);
+  }
+}
+
 const room = world('hong-kong-kennedy-town-tram', 'Kennedy Town · Bell before departure', { floor: 'blue', tone: .16, wall: false, head: 46 }, (H, R) => {
   for (const j of [4.1, 7.55]) for (const d of [0, .13]) stroke(H, R, [H.p(.1, j + d, .03), H.p(5.3, j + d, .03), H.p(11.8, j + d + .3, .03)], 'blue', 1.9);
   box(H, R, .35, .32, 10.9, 2.65, .01, .34, 'paper', .82);
@@ -135,6 +222,7 @@ const room = world('hong-kong-kennedy-town-tram', 'Kennedy Town · Bell before d
   for (let k = 0; k < 7; k++) H.line(R, [H.p(.6 + k * 1.6, 10.45, .02), H.p(1.17 + k * 1.6, 10.45, .02)], 'sun', 2.5, { tone: .7 });
   body(H, R);
   kennedyTownTramDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20);
   H.at(8.91, 6.86, .73, HH => actor(HH, R, 8.91, 6.86, u * 20, 'hongKongTramCheck', { shirt: ['paper', 1], pants: ['blue', .76], hairStyle: 'short' }, .73, 1.27));

@@ -1,3 +1,4 @@
+import { specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, satchel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -68,6 +69,141 @@ function jacksonHeightsDetails(H, R) {
     oval(H, R, ...H.p(i, j, 0.03), 4, 2, 'coral', 0.35);
 }
 
+function construction(H, R) {
+  for (let n = 0; n < 8; n++) {
+    const i = 0.5 + n * 1.45;
+    shape(H, R, H.tile(i, 0.91, 1.25, 0.3, 0.025), 'teal', 0.25, 0.5);
+    H.line(R, [H.p(i + 0.1, 1.23, 0.03), H.p(i + 1.14, 1.23, 0.03)], 'paper', 1.1);
+  }
+  for (const [i, j] of [
+    [0.79, 2.3],
+    [10.48, 1.51],
+    [10.62, 5.17]
+  ]) {
+    const [x, y] = H.p(i, j, 0.86);
+    specimen(H, R, x, y, 0.87, 'teal', true);
+    for (let n = 0; n < 4; n++)
+      H.line(
+        R,
+        [
+          [x - 13 + n * 8, y + 12],
+          [x - 13 + n * 8, y + 21]
+        ],
+        'sun',
+        0.65
+      );
+  }
+  for (const i of [4.76, 7.29])
+    for (const j of [4.86, 7.18]) {
+      H.line(R, [H.p(i, j, 0.15), H.p(i, j, 0.89)], 'sun', 0.8);
+      H.dot(...H.p(i, j, 0.67), 1.3, 'blue');
+    }
+  const [x, y] = H.p(7.31, 5.91, 1.45);
+  for (const dx of [-5, 5]) {
+    oval(H, R, x + dx, y, 4, 4, 'paper', 1);
+    H.line(
+      R,
+      [
+        [x + dx, y],
+        [x + dx + 2, y - 2]
+      ],
+      'blue',
+      0.8
+    );
+  }
+  H.line(
+    R,
+    [
+      [x - 7, y - 8],
+      [x - 2, y - 8]
+    ],
+    'sun',
+    2
+  );
+  H.line(
+    R,
+    [
+      [x + 3, y - 8],
+      [x + 8, y - 8]
+    ],
+    'paper',
+    2
+  );
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(4.87 + n * 0.23, 7.17, 1.18);
+    piece(H, R, px, py, n % 2 ? 'blue' : 'paper', n === 3, 0.57);
+  }
+  const [px, py] = H.p(1.46, 7.71, 0.72);
+  shape(
+    H,
+    R,
+    [
+      [px - 13, py],
+      [px + 11, py],
+      [px + 13, py - 14],
+      [px - 10, py - 14]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  for (let n = 0; n < 4; n++)
+    H.line(
+      R,
+      [
+        [px - 8, py - 10 + n * 3],
+        [px + 7, py - 10 + n * 3]
+      ],
+      'teal',
+      0.5
+    );
+  H.line(
+    R,
+    [
+      [px + 10, py - 10],
+      [px + 17, py + 4]
+    ],
+    'coral',
+    1.1
+  );
+  box(H, R, 1.01, 5.27, 0.81, 0.65, 0.04, 1.44, 'teal', 0.5);
+  shape(H, R, H.faceI(1.09, 5.945, 0.63, 0.63, 1.25), 'paper', 1, 0.6);
+  for (let n = 0; n < 5; n++) {
+    const z = 0.7 + n * 0.1;
+    H.line(R, [H.p(1.2, 5.96, z), H.p(1.63, 5.96, z)], n % 2 ? 'coral' : 'teal', 0.8);
+  }
+  box(H, R, 0.95, 5.22, 0.94, 0.77, 1.49, 0.09, 'sun', 0.5);
+  for (const i of [8.95, 10.73]) H.line(R, [H.p(i, 10.11, 0.14), H.p(i, 10.73, 0.52)], 'blue', 1.4);
+  for (let n = 0; n < 3; n++) {
+    const [ax, ay] = H.p(3.39 + n * 0.25, 10.47, 0.03);
+    shape(
+      H,
+      R,
+      [
+        [ax - 5, ay],
+        [ax + 5, ay],
+        [ax + 3, ay - 5]
+      ],
+      'sun',
+      0.3,
+      0.45
+    );
+  }
+  const [ax, ay] = H.p(3.92, 2.92, 3.72);
+  for (let n = 0; n < 6; n++) {
+    const a = (n * TAU) / 6;
+    H.line(
+      R,
+      [
+        [ax + Math.cos(a) * 8, ay + Math.sin(a) * 3],
+        [ax + Math.cos(a) * 41, ay + Math.sin(a) * 18 + 11]
+      ],
+      'blue',
+      0.6
+    );
+  }
+}
+
 const room = world('new-york-jackson-heights', 'Jackson Heights · One More Move', { floor: 'paper', tone: .78, wall: false, head: 20 }, (H, R) => {
   for (let i = 0; i < 12; i += 1.5) for (let j = 0; j < 12; j += 1.5) H.outline(R, H.tile(i, j, 1.5, 1.5, .02), 'blue', .5, { tone: .24, amp: .08 });
   shape(H, R, H.tile(.15, .15, 11.65, 1.1, .04), 'blue', .38, .6);
@@ -117,6 +253,7 @@ const room = world('new-york-jackson-heights', 'Jackson Heights · One More Move
   H.dot(px + 7, py - 12, .9, 'blue', 1);
   for (const dx of [-2, 3]) H.line(R, [[px + dx, py], [px + dx - 1, py + 4]], 'coral', 1);
   jacksonHeightsDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   actor(H, R, 5.81, 4.04, u * 16, 'newYorkChessReply', { face: 'se', shirt: ['teal', .7], hairStyle: 'curly', skin: ['coral', .5] }, .05, 1.32);

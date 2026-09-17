@@ -1,3 +1,4 @@
+import { cornice, wallRack, taskLight, caster } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -106,6 +107,147 @@ function theaterBoothDetails(H, R) {
   foldedCloth(H, R, 10.07, 8.99, 0.76, 0.92, 0.95, 'paper', 'coral');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.84, 3.55, 'teal');
+  wallRack(H, R, 'nw', 5.18, 2.65, 1.84, 1.44, 2, 'blue', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.33 + n * 0.48, z + 0.14);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 5, y],
+            [x + 5, y],
+            [x + 5, y - 18],
+            [x - 5, y - 18]
+          ],
+          n % 2 ? 'paper' : 'coral',
+          0.65,
+          0.5
+        );
+        H.line(
+          R,
+          [
+            [x - 4, y - 10],
+            [x + 4, y - 10]
+          ],
+          'sun',
+          1.3
+        );
+      } else {
+        H.outline(R, ell(x, y - 4, 7, 10), 'teal', 2);
+        H.line(
+          R,
+          [
+            [x + 4, y + 3],
+            [x + 8, y + 10]
+          ],
+          'paper',
+          1
+        );
+      }
+    }
+  });
+  for (let n = 0; n < 7; n++) {
+    const z = 0.23 + n * 0.17;
+    H.line(R, [H.p(0.25, 4.94, z), H.p(1.38, 4.94, z)], 'paper', 0.55);
+    for (const i of [0.25, 1.38]) H.dot(...H.p(i, 4.95, z + 0.07), 0.9, 'sun');
+  }
+  for (let n = 0; n < 12; n++) {
+    const i = 3.2 + n * 0.4,
+      [x, y] = H.p(i, 3.67, 1.39);
+    oval(H, R, x, y, 2.3, 2, 'sun', 0.65);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y - 2]
+      ],
+      'paper',
+      0.55
+    );
+    H.line(R, [H.p(i, 4.05, 1.29), H.p(i, 4.18, 1.27)], 'coral', 1.3);
+  }
+  for (let n = 0; n < 5; n++) {
+    const i = 3.17 + n * 1.03;
+    shape(H, R, H.faceI(i, 6.05, 0.88, 0.34, 0.82), 'blue', 0.84, 0.6);
+    for (let q = 0; q < 6; q++) H.line(R, [H.p(i + 0.12 + q * 0.12, 6.07, 0.42), H.p(i + 0.12 + q * 0.12, 6.07, 0.7)], 'teal', 0.7);
+  }
+  taskLight(H, R, 7.97, 3.69, 1.4, 'coral', -0.56);
+  const [x, y] = H.p(5.83, 10.27, 0.83);
+  shape(
+    H,
+    R,
+    [
+      [x - 19, y],
+      [x + 18, y],
+      [x + 18, y - 13],
+      [x - 19, y - 13]
+    ],
+    'teal',
+    0.6,
+    0.8
+  );
+  for (let n = 0; n < 8; n++) {
+    oval(H, R, x - 14 + n * 4, y - 7, 1.2, 1.2, n % 2 ? 'coral' : 'sun', 0.8);
+    H.line(
+      R,
+      [
+        [x - 14 + n * 4, y - 3],
+        [x - 14 + n * 4, y - 1]
+      ],
+      'paper',
+      0.6
+    );
+  }
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(4.77 + n * 0.36, 10.02, 0.83);
+    stroke(
+      H,
+      R,
+      [
+        [px, py],
+        [px - 8, py - 9],
+        [px - 6, py - 17],
+        [px + 1, py - 12],
+        [px + 9, py - 17]
+      ],
+      'blue',
+      1.2
+    );
+    oval(H, R, px + 9, py - 17, 2, 3, 'sun', 0.7);
+  }
+  for (const i of [1.16, 3.46]) for (const j of [6.19, 7.19]) caster(H, R, i, j);
+  for (const i of [9.96, 10.95]) for (const z of [0.2, 0.69]) H.dot(...H.p(i, 10.13, z), 1.4, 'sun');
+  H.line(R, [H.p(10.28, 10.15, 0.42), H.p(10.65, 10.15, 0.42)], 'blue', 2);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(9.28 + n * 0.39, 1.77, 0.99);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 5, py],
+        [px + 5, py - 10],
+        [px - 5, py - 10]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 5],
+        [px + 4, py - 5]
+      ],
+      'coral',
+      1
+    );
+  }
+}
+
 const room = world('new-york-theater-booth', 'Theater District · Before the Cue', {
   floor: 'blue', tone: .38, wall: 'blue', wallTone: .68, height: 3.8,
 }, (H, R) => {
@@ -143,6 +285,7 @@ const room = world('new-york-theater-booth', 'Theater District · Before the Cue
     H.line(R, [H.p(8.64, 6.07, .09), H.p(8.64 + Math.cos(a) * .58, 6.07 + Math.sin(a) * .58, .03)], 'blue', 1.6);
   }
   theaterBoothDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), light = u < .16 ? 0 : u < .34 ? (1 - Math.cos((u - .16) / .18 * Math.PI)) / 2 : u < .66 ? 1 : u < .86 ? (1 + Math.cos((u - .66) / .2 * Math.PI)) / 2 : 0;
   stage(H, R, light);

@@ -1,5 +1,6 @@
+import { cornice, recessedFrame, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -93,6 +94,147 @@ function taiHangDragonDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.15, 11.8, 3.36, 'sun');
+  wallRack(H, R, 'nw', 1.2, 3.84, 1.44, 1.52, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.44 + n * 0.71, z + 0.16);
+      oval(H, R, x, y, 7, 5, row ? 'sun' : 'coral', 0.6);
+      oval(H, R, x, y, 3, 2, 'paper', 1);
+      H.line(
+        R,
+        [
+          [x + 5, y],
+          [x + 8, y + 9]
+        ],
+        'blue',
+        0.6
+      );
+    }
+  });
+  recessedFrame(H, R, 'ne', 2.24, 2.22, 1.24, 1.71, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(2.1, 0.13), P(2.1, 1.58), P(0.12, 1.58)], 'paper', 1, 0.5);
+    for (let n = 0; n < 4; n++) {
+      const z = 0.3 + n * 0.34;
+      stroke(H, R, [P(0.3, z), P(0.6, z + 0.12), P(1.1, z - 0.03), P(1.7, z + 0.12), P(1.96, z + 0.01)], n % 2 ? 'teal' : 'coral', 1.2);
+      H.dot(...P(0.33, z), 1.5, 'blue');
+    }
+  });
+  hangingRail(H, R, 'nw', 6.95, 3.83, 2.69, 6, (P, u, n) => {
+    const [x, y] = P(u, -0.14);
+    if (n < 3) {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x - 2, y + 25]
+        ],
+        'sun',
+        2.4
+      );
+      H.line(
+        R,
+        [
+          [x - 7, y + 22],
+          [x + 4, y + 22]
+        ],
+        'blue',
+        3
+      );
+    } else {
+      H.outline(R, ell(x, y + 14, 9, 12), 'teal', 2);
+      H.line(
+        R,
+        [
+          [x + 5, y + 24],
+          [x + 10, y + 33]
+        ],
+        'coral',
+        1.3
+      );
+    }
+  });
+  for (const i of [5.55, 8.43]) {
+    H.line(R, [H.p(i, 1.08, 0.12), H.p(i, 2.06, 0.77)], 'sun', 1.6);
+    H.dot(...H.p(i, 2.07, 0.3), 1.4, 'blue');
+  }
+  const [x, y] = H.p(7.57, 1.95, 0.95);
+  oval(H, R, x, y, 10, 5, 'paper', 1);
+  oval(H, R, x, y - 7, 8, 3, 'coral', 0.4);
+  H.line(
+    R,
+    [
+      [x - 6, y - 3],
+      [x + 6, y - 3]
+    ],
+    'sun',
+    1
+  );
+  taskLight(H, R, 8.36, 1.08, 0.97, 'sun', -0.65);
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(3.02 + n * 0.72, 8.93, 0.08);
+    oval(H, R, px, py, 13, 6, 'sun', 0.37);
+    for (let q = 0; q < 7; q++)
+      H.line(
+        R,
+        [
+          [px - 10 + q * 3, py - 3],
+          [px - 8 + q * 3, py + 4]
+        ],
+        'coral',
+        0.55
+      );
+    H.line(
+      R,
+      [
+        [px - 5, py - 6],
+        [px - 3, py + 6]
+      ],
+      'teal',
+      1.3
+    );
+  }
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(7.12 + n * 0.28, 10.52, 0.035);
+    stroke(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px + 2, py - 4],
+        [px + 10, py - 3]
+      ],
+      'sun',
+      0.8
+    );
+  }
+  const [px, py] = H.p(10.76, 6.54, 0.06);
+  shape(
+    H,
+    R,
+    [
+      [px - 11, py],
+      [px + 11, py],
+      [px + 14, py - 22],
+      [px - 13, py - 22]
+    ],
+    'teal',
+    0.5,
+    0.8
+  );
+  oval(H, R, px, py - 22, 13, 5, 'blue', 0.6);
+  for (let n = 0; n < 6; n++)
+    H.line(
+      R,
+      [
+        [px - 7 + n * 3, py - 18],
+        [px - 11 + n * 4, py - 41 + (n % 2) * 5]
+      ],
+      'sun',
+      1.2
+    );
+}
+
 const room = world('hong-kong-tai-hang-dragon', 'Tai Hang · The dragon waits', { floor: 'paper', tone: .4, wall: 'paper', wallTone: .88, height: 3.63, head: 20 }, (H, R) => {
   shape(H, R, H.faceI(.45, .03, 4.7, .25, 3.35), 'teal', .45);
   for (let q = 0; q < 18; q++) H.line(R, [H.p(.48, .04, .39 + q * .16), H.p(5.13, .04, .39 + q * .16)], 'blue', .8, { tone: .52 });
@@ -149,6 +291,7 @@ const room = world('hong-kong-tai-hang-dragon', 'Tai Hang · The dragon waits', 
   oval(H, R, cx, cy - 19, 10, 4, 'blue', .6);
   stroke(H, R, [[cx - 9, cy - 17], [cx - 12, cy - 30], [cx + 10, cy - 30], [cx + 10, cy - 17]], 'blue', .9);
   taiHangDragonDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14), pull = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .13) / .67))) ** 2;
   actor(H, R, 6.27, 6.29, t, 'hongKongDragonSupport', { shirt: ['coral', .7], hairStyle: 'short', face: 'nw', prop(h, r, p) {

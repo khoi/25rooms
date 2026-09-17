@@ -1,5 +1,6 @@
+import { specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, wallRect, wallPt, windowOn, table } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, wallRect, wallPt, windowOn, table, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -108,6 +109,95 @@ function bedStuyStoopDetails(H, R) {
     shape(H, R, H.tile(i, j, 0.28, 0.14, 0.04), 'sun', 0.4, 0.3);
 }
 
+function construction(H, R) {
+  for (const i of [0.4, 3.46, 7.22, 11.32]) {
+    for (let n = 0; n < 7; n++) box(H, R, i, 0.27, 0.29, 0.32, 2.16 + n * 0.31, 0.22, 'coral', 0.43);
+  }
+  for (const i of [4.16, 5.52]) {
+    shape(H, R, H.faceI(i, 0.53, 1.01, 2.25, 4.2), 'teal', 0.65, 0.8);
+    for (const z of [2.47, 3.12, 3.71]) shape(H, R, H.faceI(i + 0.12, 0.55, 0.77, z, z + 0.38), 'blue', 0.42, 0.65);
+    H.line(R, [H.p(i + 0.83, 0.57, 3.21), H.p(i + 0.83, 0.57, 3.53)], 'sun', 2);
+    for (const z of [2.7, 3.94]) H.line(R, [H.p(i + 0.03, 0.565, z), H.p(i + 0.15, 0.565, z)], 'sun', 2);
+  }
+  shape(H, R, H.faceI(4.13, 0.51, 2.45, 4.26, 4.46), 'sun', 0.3, 0.7);
+  for (let n = 0; n < 7; n++) H.line(R, [H.p(4.26 + n * 0.33, 0.53, 4.27), H.p(4.26 + n * 0.33, 0.53, 4.43)], 'blue', 0.8);
+  for (const i of [1.61, 9.56]) {
+    box(H, R, i - 1, 0.35, 2, 0.35, 4.13, 0.13, 'coral', 0.65);
+    for (const z of [2.38, 3.16, 3.86]) H.line(R, [H.p(i - 0.88, 0.39, z), H.p(i + 0.87, 0.39, z)], 'paper', 1);
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = H.p(i - 0.67 + n * 0.35, 0.7, 2.14);
+      H.line(
+        R,
+        [
+          [x, y],
+          [x, y - 13]
+        ],
+        'blue',
+        1.2
+      );
+      H.dot(x, y - 15, 1.8, 'sun');
+    }
+  }
+  for (let n = 0; n < 5; n++) {
+    const j = 2.86 + n * 0.79,
+      z = 1.86 - n * 0.31;
+    H.line(R, [H.p(3.17, j, z), H.p(7.03, j, z)], 'sun', 1.1);
+    for (const i of [3.26, 6.94]) H.dot(...H.p(i, j + 0.1, z - 0.11), 1.2, 'blue');
+  }
+  for (const j of [1.05, 2.04, 3.03, 4.02, 5.01, 6.0, 6.99, 7.98, 8.97, 9.96]) {
+    const [x, y] = H.p(0.55, j, 0.96);
+    H.outline(R, ell(x, y, 4.5, 7), 'blue', 1.2);
+    H.line(
+      R,
+      [
+        [x, y + 7],
+        [x, y + 15]
+      ],
+      'blue',
+      1.2
+    );
+  }
+  for (let n = 0; n < 4; n++) specimen(H, R, ...H.p(8.49 + n * 0.75, 0.82, 0.32), 0.55 + (n % 2) * 0.15, 'teal', n === 2);
+  const [x, y] = H.p(10.17, 8.07, 0.77);
+  oval(H, R, x, y, 9, 4, 'paper', 1);
+  oval(H, R, x, y - 9, 7, 3, 'sun', 0.35);
+  H.line(
+    R,
+    [
+      [x - 6, y - 8],
+      [x - 4, y],
+      [x + 4, y],
+      [x + 6, y - 8]
+    ],
+    'blue',
+    0.7
+  );
+  H.line(
+    R,
+    [
+      [x + 6, y - 6],
+      [x + 13, y - 15]
+    ],
+    'teal',
+    1.4
+  );
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(1.35 + n * 0.31, 10.46, 0.03);
+    shape(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px, py - 4],
+        [px + 6, py]
+      ],
+      n % 2 ? 'sun' : 'coral',
+      0.4,
+      0.4
+    );
+  }
+}
+
 const room = world('new-york-bed-stuy-stoop', 'Bedford-Stuyvesant · The Extra Step', {
   floor: 'paper', tone: 1, wall: false, head: 20,
 }, (H, R) => {
@@ -190,6 +280,7 @@ const room = world('new-york-bed-stuy-stoop', 'Bedford-Stuyvesant · The Extra S
   H.line(R, [[lx, ly - 10], [lx + 13, ly - 10], [lx + 13, ly + 6]], 'blue', 1.8);
   shape(H, R, [[lx + 5, ly + 1], [lx + 22, ly + 1], [lx + 19, ly + 18], [lx + 8, ly + 18]], 'sun', .56, .8);
   bedStuyStoopDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   const tilt = u < .26 ? Math.max(0, (u - .13) / .13) : u < .58 ? 1 : Math.max(0, 1 - (u - .58) / .16);

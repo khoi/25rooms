@@ -1,3 +1,4 @@
+import { wallCourse, cornice, recessedFrame, wallRack, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -93,6 +94,126 @@ function mapRoomDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.8, 3.64, 'sun');
+  wallCourse(H, R, 'nw', 0.1, 11.8, 0.79, 'teal');
+  wallRack(H, R, 'ne', 0.45, 3.03, 2.16, 1.06, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 6; n++) {
+      const u = 0.28 + n * 0.46;
+      shape(H, R, [P(u, z + 0.05), P(u + 0.29, z + 0.05), P(u + 0.29, z + 0.38), P(u, z + 0.38)], n % 3 ? 'paper' : 'coral', 0.75, 0.5);
+      H.line(R, [P(u + 0.04, z + 0.24), P(u + 0.25, z + 0.24)], row ? 'sun' : 'teal', 1.3);
+    }
+  });
+  recessedFrame(H, R, 'ne', 8.98, 2.28, 1.75, 1.51, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(2.16, 0.13), P(2.16, 1.38), P(0.12, 1.38)], 'paper', 1, 0.5);
+    for (let n = 0; n < 6; n++) {
+      H.line(R, [P(0.21 + n * 0.35, 0.2), P(0.21 + n * 0.35, 1.3)], 'teal', 0.6);
+      H.line(R, [P(0.2, 0.25 + n * 0.19), P(2.08, 0.25 + n * 0.19)], 'teal', 0.6);
+    }
+    stroke(H, R, [P(0.35, 0.23), P(0.58, 0.57), P(1.1, 0.63), P(1.43, 1.12), P(1.94, 1.24)], 'coral', 2);
+    H.dot(...P(1.1, 0.63), 2.4, 'sun');
+  });
+  for (const i of [3.15, 8.72]) {
+    H.line(R, [H.p(i, 3.91, 0.18), H.p(i, 7.76, 0.18)], 'blue', 2);
+    H.line(R, [H.p(i, 3.91, 0.2), H.p(i, 7.76, 0.89)], 'teal', 1.3);
+  }
+  for (let n = 0; n < 5; n++) {
+    const i = 3.27 + n * 1.08;
+    shape(H, R, H.faceI(i, 7.985, 0.9, 0.51, 0.86), 'sun', 0.38, 0.6);
+    H.line(R, [H.p(i + 0.27, 8.0, 0.7), H.p(i + 0.64, 8.0, 0.7)], 'blue', 1.6);
+  }
+  const [x, y] = H.p(4.33, 4.67, 1.12);
+  oval(H, R, x, y, 8, 6, 'paper', 1);
+  oval(H, R, x, y, 5.5, 4, 'teal', 0.15);
+  H.line(
+    R,
+    [
+      [x + 5, y + 4],
+      [x + 17, y + 12]
+    ],
+    'blue',
+    2.5
+  );
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(5.1 + n * 0.76, 7.39, 1.1);
+    shape(
+      H,
+      R,
+      [
+        [px - 7, py],
+        [px + 7, py],
+        [px + 5, py - 5],
+        [px - 5, py - 5]
+      ],
+      'teal',
+      0.7,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [px - 3, py - 3],
+        [px + 3, py - 3]
+      ],
+      'sun',
+      0.7
+    );
+  }
+  for (let n = 0; n < 7; n++) {
+    const [px, py] = H.p(6.03 + n * 0.36, 0.77, 2.7);
+    shape(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px + 4, py],
+        [px + 4, py - 18 - (n % 2) * 5],
+        [px - 4, py - 18 - (n % 2) * 5]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    oval(H, R, px, py - 18 - (n % 2) * 5, 4, 2, 'teal', 0.4);
+    H.line(
+      R,
+      [
+        [px - 4, py - 8],
+        [px + 4, py - 8]
+      ],
+      n % 2 ? 'coral' : 'sun',
+      1.2
+    );
+  }
+  taskLight(H, R, 4.64, 10.03, 0.83, 'teal', 0.55);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(10.66, 6.77, 0.94 + n * 0.08);
+    shape(
+      H,
+      R,
+      [
+        [px - 12, py],
+        [px + 12, py],
+        [px + 12, py - 3],
+        [px - 12, py - 3]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 8, py - 1],
+        [px + 8, py - 1]
+      ],
+      'coral',
+      0.55
+    );
+  }
+  for (const i of [9.68, 11.16]) for (const j of [6.21, 7.91]) caster(H, R, i, j);
+}
+
 const room = world('new-york-map-room', 'Midtown · Find Our Block', {
   floor: 'sun', tone: .17, pattern: 'tiles', accent: 'coral', wall: 'paper', wallTone: .94, height: 3.9,
 }, (H, R) => {
@@ -150,6 +271,7 @@ const room = world('new-york-map-room', 'Midtown · Find Our Block', {
   stroke(H, R, [[px - 8, py - 16], [px - 7, py - 28], [px + 7, py - 28], [px + 8, py - 16]], 'blue', 1.4);
   for (let q = 0; q < 3; q++) H.line(R, [[px - 10, py - 9 + q * 4], [px + 11, py - 9 + q * 4]], 'paper', .7);
   mapRoomDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12);
   H.at(7.94, 8.71, 0, HH => actor(HH, R, 7.94, 8.71, t, 'newYorkMapTrace', {

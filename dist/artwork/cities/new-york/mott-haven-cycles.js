@@ -1,3 +1,4 @@
+import { cornice, windowBay, cityView, taskLight, caster } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -76,6 +77,124 @@ function mottHavenCyclesDetails(H, R) {
   boundBook(H, R, 3.48, 9.47, 0.91, 0.6, 0.68, 'teal');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.8, 3.47, 'teal');
+  windowBay(H, R, 'ne', 6.5, 4.6, 1.83, 1.65, {
+    divisions: 4,
+    view(P) {
+      cityView(H, R, P, 4.6, 1.65);
+    }
+  });
+  for (let row = 0; row < 6; row++) for (let n = 0; n < 18; n++) H.dot(...H.p(0.1, 1.31 + n * 0.31, 1.51 + row * 0.27), 0.65, 'blue', 0.6);
+  for (let n = 0; n < 8; n++) {
+    const [x, y] = H.p(0.17, 1.52 + n * 0.63, 2.95);
+    H.dot(x, y, 1.4, 'sun');
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y + 8]
+      ],
+      'blue',
+      0.8
+    );
+    wrench(H, R, x, y + 14, 0.45 + (n % 2) * 0.12, n % 3 ? 'blue' : 'coral');
+  }
+  for (let n = 0; n < 6; n++) {
+    const j = 1.53 + n * 0.89;
+    shape(H, R, H.faceJ(1.77, j, 0.64, 0.36, 0.91), 'paper', 1, 0.6);
+    H.line(R, [H.p(1.78, j + 0.13, 0.79), H.p(1.78, j + 0.46, 0.79)], 'teal', 1.5);
+  }
+  for (let n = 0; n < 5; n++) {
+    const z = 0.28 + n * 0.18;
+    shape(H, R, H.faceJ(1.975, 7.86, 2.15, z, z + 0.14), 'coral', 0.5, 0.6);
+    H.line(R, [H.p(1.99, 8.44, z + 0.09), H.p(1.99, 9.36, z + 0.09)], 'paper', 1.4);
+  }
+  for (const i of [0.58, 1.79]) for (const j of [7.79, 10.19]) caster(H, R, i, j);
+  taskLight(H, R, 7.61, 0.83, 1.38, 'coral', 0.8);
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(8.41 + n * 0.85, 1.17, 1.39);
+    oval(H, R, x, y, 9, 5, 'blue', 0.5);
+    oval(H, R, x, y, 4, 2.4, 'paper', 1);
+    for (let q = 0; q < 8; q++) {
+      const a = (q * TAU) / 8;
+      H.line(
+        R,
+        [
+          [x + Math.cos(a) * 5, y + Math.sin(a) * 2.5],
+          [x + Math.cos(a) * 10, y + Math.sin(a) * 5]
+        ],
+        'sun',
+        0.8
+      );
+    }
+  }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(6.22 + n * 0.36, 10.21, 0.74);
+    H.line(
+      R,
+      [
+        [x - 7, y],
+        [x + 7, y - 5]
+      ],
+      'blue',
+      0.8
+    );
+    oval(H, R, x - 7, y, 3, 2, 'teal', 0.6);
+  }
+  const [x, y] = H.p(10.66, 5.46, 0.1);
+  oval(H, R, x, y, 15, 6, 'blue', 0.65);
+  shape(
+    H,
+    R,
+    [
+      [x - 15, y],
+      [x + 15, y],
+      [x + 15, y - 25],
+      [x - 15, y - 25]
+    ],
+    'coral',
+    0.55,
+    0.8
+  );
+  oval(H, R, x, y - 25, 15, 6, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x - 8, y - 18],
+      [x + 8, y - 18]
+    ],
+    'teal',
+    2
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 12, y - 23],
+      [x - 9, y - 41],
+      [x + 9, y - 41],
+      [x + 12, y - 23]
+    ],
+    'blue',
+    1.1
+  );
+  coiledLine(H, R, 10.96, 6.48, 0.04, 17, 'blue');
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(4.8 + n * 0.18, 9.15, 0.03);
+    H.dot(px, py, 1, 'sun', 1);
+    H.line(
+      R,
+      [
+        [px - 2, py],
+        [px + 2, py]
+      ],
+      'blue',
+      0.5
+    );
+  }
+}
+
 const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { floor: 'blue', tone: .17, wall: 'paper', wallTone: .9, height: 3.7, head: 20 }, (H, R) => {
   for (const side of ['nw', 'ne']) {
     for (let z = .3; z < 3.65; z += .35) {
@@ -138,6 +257,7 @@ const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { f
   shape(H, R, H.tile(5.15, 9.8, .67, .83, .03), 'paper', 1, .5);
   for (let n = 0; n < 3; n++) H.line(R, [H.p(5.24, 10 + n * .16, .05), H.p(5.7, 10 + n * .16, .05)], 'teal', .6);
   mottHavenCyclesDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), spin = Math.min(1, Math.max(0, (u - .1) / .34));
   const angle = TAU * 5 * (1 - (1 - spin) ** 3);

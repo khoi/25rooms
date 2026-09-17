@@ -1,3 +1,4 @@
+import { wallCourse, cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, plant, rug, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -101,6 +102,114 @@ function coronaTrumpetDetails(H, R) {
   for (const j of [7.19, 7.52]) oval(H, R, ...H.p(2.17, j, 0.06), 8, 4, 'blue', 0.65);
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.85, 3.61, 'sun');
+  cornice(H, R, 'ne', 0.1, 11.85, 3.61, 'sun');
+  wallCourse(H, R, 'ne', 0.12, 11.82, 0.87, 'teal');
+  for (const j of [1.2, 4.5, 6.6, 9.5]) {
+    H.line(R, [H.p(0.43, j, 1.12), H.p(0.43, j, 3.51)], 'sun', 1.2);
+    for (const z of [1.21, 3.31]) H.dot(...H.p(0.45, j, z), 1.2, 'blue');
+  }
+  wallRack(H, R, 'ne', 1.85, 4.53, 1.63, 1.18, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 12; n++) {
+      const u = 0.24 + n * 0.34;
+      shape(
+        H,
+        R,
+        [P(u, z + 0.03), P(u + 0.21, z + 0.03), P(u + 0.21, z + 0.44), P(u, z + 0.44)],
+        ['coral', 'paper', 'sun', 'teal'][(n + row) % 4],
+        0.65,
+        0.45
+      );
+      H.line(R, [P(u + 0.035, z + 0.33), P(u + 0.17, z + 0.33)], 'blue', 0.65);
+    }
+  });
+  panelFront(H, R, 9.48, 5.59, 1.68, 0.14, 1.05, 2, 'teal');
+  const [x, y] = H.p(9.5, 1.62, 1.17);
+  oval(H, R, x, y, 14, 7, 'blue', 0.8);
+  oval(H, R, x, y, 5, 2.6, 'sun', 0.6);
+  H.dot(x, y, 1.1, 'paper');
+  H.line(
+    R,
+    [
+      [x + 13, y - 5],
+      [x + 17, y + 4],
+      [x + 7, y + 8]
+    ],
+    'paper',
+    1.2
+  );
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(10.39 + n * 0.065, 1.99, 1.1), H.p(10.39 + n * 0.065, 1.99, 1.4)], 'blue', 0.7);
+  for (const i of [8.76, 10.87]) for (const j of [1.14, 2.26]) H.dot(...H.p(i, j, 0.7), 1.3, 'sun');
+  const [px, py] = H.p(1.84, 9.94, 0.69);
+  shape(
+    H,
+    R,
+    [
+      [px - 17, py],
+      [px + 17, py],
+      [px + 19, py - 8],
+      [px - 16, py - 8]
+    ],
+    'blue',
+    0.7,
+    0.7
+  );
+  for (let n = 0; n < 3; n++) {
+    H.line(
+      R,
+      [
+        [px - 11 + n * 10, py - 3],
+        [px - 11 + n * 10, py - 12]
+      ],
+      'sun',
+      1.3
+    );
+    oval(H, R, px - 11 + n * 10, py - 13, 3, 2, 'paper', 1);
+  }
+  H.line(
+    R,
+    [
+      [px - 13, py - 2],
+      [px + 13, py - 2]
+    ],
+    'coral',
+    0.8
+  );
+  const [ax, ay] = H.p(2.74, 10.2, 0.69);
+  H.line(
+    R,
+    [
+      [ax - 6, ay],
+      [ax + 7, ay - 13]
+    ],
+    'blue',
+    1.2
+  );
+  oval(H, R, ax + 7, ay - 14, 4, 5, 'paper', 1);
+  recessedFrame(H, R, 'ne', 7.26, 1.13, 1.74, 1.53, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(1, 0.13), P(1, 1.4), P(0.12, 1.4)], 'paper', 1, 0.5);
+    for (let n = 0; n < 4; n++) H.line(R, [P(0.2, 0.33 + n * 0.18), P(0.93, 0.33 + n * 0.18)], 'teal', 0.6);
+    for (let n = 0; n < 4; n++) {
+      H.dot(...P(0.3 + n * 0.16, 0.5 + (n % 2) * 0.18), 1.3, 'blue');
+      H.line(R, [P(0.3 + n * 0.16, 0.5 + (n % 2) * 0.18), P(0.3 + n * 0.16, 0.78 + (n % 2) * 0.18)], 'blue', 0.7);
+    }
+  });
+  taskLight(H, R, 10.86, 4.48, 1.35, 'sun', -0.55);
+  for (let n = 0; n < 4; n++) {
+    const [bx, by] = H.p(5.1 + n * 0.29, 10.92, 0.23);
+    H.line(
+      R,
+      [
+        [bx - 3, by],
+        [bx + 5, by - 5]
+      ],
+      'sun',
+      0.9
+    );
+  }
+}
+
 const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window', {
   floor: 'sun', tone: .18, pattern: 'boards', wall: 'paper', wallTone: .95, height: 3.9,
 }, (H, R) => {
@@ -158,6 +267,7 @@ const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window
   shape(H, R, [[cx - 13, cy - 1], [cx + 13, cy - 1], [cx + 8, cy - 14], [cx - 7, cy - 15]], 'sun', .72, .7);
   H.line(R, [[cx - 9, cy - 6], [cx + 10, cy - 5]], 'coral', 2.2);
   coronaTrumpetDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), raised = u < .12 ? 0 : u < .28 ? (1 - Math.cos((u - .12) / .16 * Math.PI)) / 2 : u < .8 ? 1 : u < .91 ? (1 + Math.cos((u - .8) / .11 * Math.PI)) / 2 : 0;
   H.at(4.4, 6.32, 0, HH => actor(HH, R, 4.4, 6.32, t, 'newYorkTrumpetPhrase', {

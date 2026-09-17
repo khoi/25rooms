@@ -1,3 +1,4 @@
+import { cornice, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -105,6 +106,164 @@ function astoriaBakeryDetails(H, R) {
   boundBook(H, R, 10.36, 3.19, 0.74, 0.58, 0.03, 'coral');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.8, 3.47, 'teal');
+  wallRack(H, R, 'nw', 3.33, 3.31, 1.88, 1.39, 2, 'sun', (P, z, row) => {
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = P(0.35 + n * 0.52, z + 0.13);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 4, y],
+            [x + 4, y],
+            [x + 4, y - 14],
+            [x - 4, y - 14]
+          ],
+          n % 2 ? 'paper' : 'teal',
+          0.6,
+          0.5
+        );
+        oval(H, R, x, y - 14, 4, 2, 'coral', 0.6);
+      } else {
+        oval(H, R, x, y, 7, 4, 'sun', 0.5);
+        H.line(
+          R,
+          [
+            [x - 3, y - 3],
+            [x + 2, y]
+          ],
+          'paper',
+          0.7
+        );
+      }
+    }
+  });
+  hangingRail(H, R, 'ne', 4.35, 2.65, 3.15, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.15);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y + 19]
+      ],
+      'sun',
+      2
+    );
+    if (n < 2) {
+      shape(
+        H,
+        R,
+        [
+          [x - 7, y + 19],
+          [x + 7, y + 19],
+          [x + 8, y + 33],
+          [x - 8, y + 33]
+        ],
+        'sun',
+        0.4,
+        0.6
+      );
+      H.line(
+        R,
+        [
+          [x - 5, y + 22],
+          [x + 5, y + 30]
+        ],
+        'paper',
+        0.7
+      );
+    } else {
+      oval(H, R, x, y + 26, 6, 9, 'paper', 1);
+      for (let q = 0; q < 3; q++)
+        H.line(
+          R,
+          [
+            [x - 3 + q * 3, y + 18],
+            [x - 3 + q * 3, y + 33]
+          ],
+          'blue',
+          0.5
+        );
+    }
+  });
+  for (let row = 0; row < 2; row++) {
+    const z = 0.28 + row * 0.76;
+    shape(H, R, H.faceI(0.66, 2.705, 3.27, z, z + 0.61), 'blue', 0.72, 0.8);
+    shape(H, R, H.faceI(0.85, 2.72, 2.89, z + 0.12, z + 0.46), 'sun', 0.25, 0.6);
+    H.line(R, [H.p(1.01, 2.75, z + 0.5), H.p(3.52, 2.75, z + 0.5)], 'paper', 2.1);
+    for (let n = 0; n < 3; n++) H.dot(...H.p(0.79 + n * 1.4, 2.755, z + 0.54), 1.3, 'sun');
+  }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(0.82 + n * 0.99, 2.74, 1.83);
+    oval(H, R, x, y, 4, 4, 'coral', 0.7);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x + 1, y - 3]
+      ],
+      'paper',
+      0.8
+    );
+  }
+  for (let n = 0; n < 8; n++) H.line(R, [H.p(1.34 + n * 0.2, 1.32, 3.17), H.p(1.34 + n * 0.2, 1.32, 3.47)], 'blue', 0.6);
+  for (let n = 0; n < 4; n++) {
+    const i = 3.87 + n * 0.91;
+    shape(H, R, H.faceI(i, 6.49, 0.79, 0.29, 0.76), 'teal', 0.32, 0.6);
+    H.line(R, [H.p(i + 0.18, 6.5, 0.65), H.p(i + 0.58, 6.5, 0.65)], 'sun', 1.5);
+  }
+  const [x, y] = H.p(8.63, 1.77, 1.03);
+  shape(
+    H,
+    R,
+    [
+      [x - 12, y],
+      [x + 13, y],
+      [x + 11, y - 13],
+      [x - 10, y - 13]
+    ],
+    'teal',
+    0.6,
+    0.8
+  );
+  oval(H, R, x, y - 21, 11, 11, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y - 21],
+      [x + 5, y - 27]
+    ],
+    'coral',
+    1.3
+  );
+  for (let n = 0; n < 8; n++) {
+    const a = (n * TAU) / 8;
+    H.dot(x + Math.cos(a) * 8, y - 21 + Math.sin(a) * 8, 0.7, 'blue');
+  }
+  for (const i of [1.03, 2.89]) for (const j of [7.43, 10.83]) caster(H, R, i, j);
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(9.21 + n * 0.33, 10.19, 1.02);
+    oval(H, R, px, py, 7, 3.6, 'sun', 0.5);
+    for (let q = 0; q < 3; q++)
+      H.line(
+        R,
+        [
+          [px - 4 + q * 4, py - 3],
+          [px - 2 + q * 4, py + 2]
+        ],
+        'paper',
+        0.7
+      );
+  }
+  taskLight(H, R, 3.94, 4.82, 1.04, 'teal', 0.6);
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(6.61 + n * 0.26, 7.54, 0.03);
+    H.dot(px, py, 0.7 + (n % 2) * 0.6, 'paper', 1);
+  }
+}
+
 const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfast', {
   floor: 'paper', tone: 1, pattern: 'tiles', accent: 'teal', wall: 'paper', wallTone: 1, height: 3.75, head: 20,
 }, (H, R) => {
@@ -182,6 +341,7 @@ const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfa
   shape(H, R, H.tile(4.44, 9.96, 1.74, .84, .21), 'paper', 1, .65);
   for (let q = 0; q < 4; q++) loaf(H, R, 4.78 + q % 2 * .72, 10.18 + Math.floor(q / 2) * .42, .27, 9);
   astoriaBakeryDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(7.84, 5.65, 0, HH => actor(HH, R, 7.84, 5.65, u * 14, 'newYorkAstoriaRoll', {

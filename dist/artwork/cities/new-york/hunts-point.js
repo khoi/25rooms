@@ -1,3 +1,4 @@
+import { cornice, panelFront, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, boundBook, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -112,6 +113,144 @@ function huntsPointDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.15, 11.85, 3.72, 'teal');
+  for (const i of [0.4, 4.2, 8.05, 11.52]) {
+    for (const z of [1.35, 2.63, 3.51]) {
+      box(H, R, i - 0.02, 0.32, 0.3, 0.25, z, 0.12, 'paper', 1);
+      H.dot(...H.p(i + 0.13, 0.59, z + 0.06), 1.5, 'blue');
+    }
+  }
+  hangingRail(H, R, 'ne', 5.43, 2.7, 2.97, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.14);
+    shape(
+      H,
+      R,
+      [
+        [x - 8, y],
+        [x + 8, y],
+        [x + 8, y + 27],
+        [x - 8, y + 27]
+      ],
+      'paper',
+      1,
+      0.65
+    );
+    H.line(
+      R,
+      [
+        [x - 4, y + 6],
+        [x + 5, y + 6]
+      ],
+      n % 2 ? 'teal' : 'coral',
+      1.4
+    );
+    for (let q = 0; q < 3; q++)
+      H.line(
+        R,
+        [
+          [x - 5, y + 13 + q * 4],
+          [x + 4, y + 13 + q * 4]
+        ],
+        'blue',
+        0.5
+      );
+    H.line(
+      R,
+      [
+        [x - 4, y],
+        [x + 4, y]
+      ],
+      'sun',
+      2.5
+    );
+  });
+  panelFront(H, R, 5.49, 1.54, 2.56, 0.14, 1.09, 3, 'teal');
+  const [x, y] = H.p(2.57, 1.39, 1.87);
+  for (let n = 0; n < 4; n++) {
+    H.line(
+      R,
+      [
+        [x - 8 + n * 5, y - 6],
+        [x - 8 + n * 5, y + 3]
+      ],
+      'sun',
+      1.4
+    );
+    H.line(
+      R,
+      [
+        [x - 9 + n * 5, y - 6],
+        [x - 6 + n * 5, y - 6]
+      ],
+      'sun',
+      0.8
+    );
+  }
+  for (let n = 0; n < 7; n++) {
+    const [px, py] = H.p(5.23 + n * 0.43, 6.67, 1.15);
+    oval(H, R, px, py, 3, 3, 'blue', 0.6);
+    H.dot(px, py, 1, 'sun');
+  }
+  for (const i of [5.1, 7.91]) H.line(R, [H.p(i, 4.93, 0.18), H.p(i, 6.54, 0.87)], 'blue', 1.7);
+  for (const j of [9.39, 10.92]) {
+    const [px, py] = H.p(6.74, j, 0.15);
+    oval(H, R, px, py, 5, 6, 'blue', 0.8);
+    H.dot(px, py, 1.8, 'sun');
+  }
+  stroke(H, R, [H.p(7.05, 8.89, 0.56), H.p(7.45, 8.73, 1.3), H.p(7.3, 8.57, 1.79), H.p(6.95, 8.75, 1.82), H.p(6.91, 8.87, 1.49)], 'blue', 3);
+  H.line(R, [H.p(7.06, 8.85, 1.79), H.p(7.34, 8.7, 1.76)], 'coral', 4);
+  wallRack(H, R, 'nw', 7.55, 3.45, 1.49, 1.74, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const u = 0.35 + n * 0.62;
+      shape(H, R, [P(u, z + 0.06), P(u + 0.43, z + 0.06), P(u + 0.43, z + 0.59), P(u, z + 0.59)], row ? 'paper' : 'sun', 0.7, 0.6);
+      H.line(R, [P(u + 0.19, z + 0.06), P(u + 0.19, z + 0.59)], 'teal', 1.3);
+      H.line(R, [P(u + 0.03, z + 0.28), P(u + 0.4, z + 0.28)], 'paper', 1.4);
+    }
+  });
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(2.58 + n * 0.23, 10.3, 0.69);
+    shape(
+      H,
+      R,
+      [
+        [px - 6, py],
+        [px + 6, py],
+        [px + 5, py - 12],
+        [px - 4, py - 15]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 4, py - 6],
+        [px + 4, py - 6]
+      ],
+      'coral',
+      0.8
+    );
+  }
+  taskLight(H, R, 5.79, 0.83, 1.39, 'sun', 0.6);
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(9.7 + n * 0.17, 7.21, 0.04);
+    shape(
+      H,
+      R,
+      [
+        [px - 4, py],
+        [px + 4, py],
+        [px + 2, py - 5]
+      ],
+      'teal',
+      0.4,
+      0.4
+    );
+  }
+}
+
 const room = world('new-york-hunts-point', 'Hunts Point · Before the Grocers', {
   floor: 'blue', tone: .21, wall: 'paper', wallTone: 1, height: 4.0, head: 20,
 }, (H, R) => {
@@ -175,6 +314,7 @@ const room = world('new-york-hunts-point', 'Hunts Point · Before the Grocers', 
     shape(H, R, [[x - 5, y], [x, y - 5], [x + 7, y - 1], [x + 1, y + 3]], 'teal', .48, .5);
   }
   huntsPointDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   H.at(8.35, 6.18, 0, HH => actor(HH, R, 8.35, 6.18, u * 14, 'newYorkProduceInspect', {

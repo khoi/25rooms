@@ -1,3 +1,4 @@
+import { cornice, windowBay, cityView, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -74,6 +75,173 @@ function shamShuiPoFabricDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.2, 11.8, 3.5, 'sun');
+  windowBay(H, R, 'ne', 8.23, 3.32, 1.55, 1.87, {
+    divisions: 3,
+    view(P) {
+      cityView(H, R, P, 3.32, 1.87);
+    }
+  });
+  wallRack(H, R, 'nw', 1.3, 4.05, 2.23, 1.1, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 9; n++) {
+      const [x, y] = P(0.3 + n * 0.43, z + 0.13);
+      oval(H, R, x, y, 4.5, 2.3, 'paper', 1);
+      shape(
+        H,
+        R,
+        [
+          [x - 3, y],
+          [x + 3, y],
+          [x + 3, y - 9],
+          [x - 3, y - 9]
+        ],
+        ['coral', 'teal', 'sun'][(n + row) % 3],
+        0.6,
+        0.5
+      );
+      oval(H, R, x, y - 9, 4.5, 2, 'paper', 1);
+      H.dot(x, y - 9, 1, 'blue');
+    }
+  });
+  hangingRail(H, R, 'nw', 5.6, 2.73, 3.06, 5, (P, u, n) => {
+    const [x, y] = P(u, -0.17);
+    shape(
+      H,
+      R,
+      [
+        [x - 8, y],
+        [x + 8, y - 3],
+        [x + 9, y + 27 + (n % 2) * 8],
+        [x - 7, y + 30 + (n % 2) * 8]
+      ],
+      ['teal', 'paper', 'coral'][n % 3],
+      0.65,
+      0.6
+    );
+    for (let q = 0; q < 5; q++)
+      H.line(
+        R,
+        [
+          [x - 7 + q * 3, y + 3],
+          [x - 6 + q * 3, y + 24 + (n % 2) * 8]
+        ],
+        n % 2 ? 'teal' : 'paper',
+        0.6
+      );
+    H.line(
+      R,
+      [
+        [x - 5, y],
+        [x + 4, y - 1]
+      ],
+      'sun',
+      2
+    );
+  });
+  for (let n = 0; n < 6; n++) {
+    const i = 2.53 + n * 1.23;
+    shape(H, R, H.faceI(i, 6.17, 1.08, 0.19, 0.93), 'teal', 0.34, 0.7);
+    shape(H, R, H.faceI(i + 0.12, 6.18, 0.84, 0.28, 0.81), 'paper', 1, 0.55);
+    H.line(R, [H.p(i + 0.32, 6.2, 0.74), H.p(i + 0.73, 6.2, 0.74)], 'blue', 1.5);
+  }
+  for (const x of [0.45, 2.21, 4.56, 6.91])
+    for (const z of [0.4, 1.52, 2.61]) H.line(R, [H.p(x, 0.28, z), H.p(x + 0.43, 0.28, z + 0.52)], 'paper', 0.9);
+  taskLight(H, R, 9.75, 4.34, 1.18, 'sun', -0.85);
+  const [x, y] = H.p(8.87, 2.63, 0.98);
+  box(H, R, 8.45, 2.31, 1.12, 0.6, 0.97, 0.07, 'blue', 0.65);
+  shape(
+    H,
+    R,
+    [
+      [x - 18, y],
+      [x - 18, y - 23],
+      [x - 12, y - 31],
+      [x + 14, y - 31],
+      [x + 19, y - 25],
+      [x + 19, y - 6],
+      [x + 11, y - 6],
+      [x + 10, y - 20],
+      [x - 7, y - 20],
+      [x - 8, y]
+    ],
+    'teal',
+    0.65,
+    0.8
+  );
+  oval(H, R, x + 20, y - 22, 7, 8, 'blue', 0.7);
+  oval(H, R, x + 20, y - 22, 3.5, 4, 'sun', 0.5);
+  H.line(
+    R,
+    [
+      [x - 14, y - 8],
+      [x - 14, y + 4]
+    ],
+    'blue',
+    1.1
+  );
+  H.line(
+    R,
+    [
+      [x - 17, y + 4],
+      [x - 11, y + 4]
+    ],
+    'sun',
+    1.5
+  );
+  H.line(
+    R,
+    [
+      [x + 3, y - 32],
+      [x + 3, y - 39]
+    ],
+    'blue',
+    1
+  );
+  oval(H, R, x + 3, y - 38, 4, 2, 'coral', 0.7);
+  stroke(
+    H,
+    R,
+    [
+      [x + 3, y - 37],
+      [x - 9, y - 30],
+      [x - 14, y - 5]
+    ],
+    'paper',
+    0.6
+  );
+  foldedCloth(H, R, 8.46, 2.54, 0.75, 0.47, 1.09, 'paper', 'teal');
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(6.06 + n * 0.28, 9.95, 0.76);
+    oval(H, R, px, py, 5, 4, 'coral', 0.6);
+    H.line(
+      R,
+      [
+        [px, py - 2],
+        [px + 3, py - 9]
+      ],
+      'sun',
+      0.7
+    );
+    H.dot(px + 3, py - 9, 1, 'paper');
+  }
+  for (let n = 0; n < 3; n++) {
+    const [px, py] = H.p(7.91 + n * 0.15, 9.88, 0.025);
+    stroke(
+      H,
+      R,
+      [
+        [px - 8, py],
+        [px, py - 4],
+        [px + 8, py + 2],
+        [px + 15, py - 3]
+      ],
+      'coral',
+      0.8
+    );
+  }
+}
+
 const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue metres', { floor: 'paper', tone: .5, wall: 'paper', wallTone: .82, pattern: 'tiles', height: 3.72, head: 20 }, (H, R) => {
   for (const i of [.35, 2.7, 5.05, 7.4]) box(H, R, i, .17, .1, 1.23, .02, 3.52, 'teal', .7);
   for (const z of [.24, 1.34, 2.44, 3.54]) box(H, R, .35, .17, 7.15, 1.24, z, .12, 'teal', .6);
@@ -125,6 +293,7 @@ const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue
   oval(H, R, bx, by - 23, 9, 4, 'paper', 1);
   for (let q = 0; q < 5; q++) stroke(H, R, [[bx - 6 + q * 3, by - 22], [bx - 8 + q * 3, by - 30], [bx - 2 + q * 2, by - 26]], q % 2 ? 'coral' : 'teal', 2);
   shamShuiPoFabricDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   actor(H, R, 7.44, 6.91, t, 'hongKongFabricMeasure', { shirt: ['coral', .58], apron: ['paper', 1], glasses: true, hairStyle: 'short', face: 'nw', prop(HH, RR, points) {

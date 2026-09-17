@@ -1,3 +1,4 @@
+import { cornice, panelFront, wallRack, taskLight, specimen } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, loop, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -71,6 +72,157 @@ function greenbeltCenterDetails(H, R) {
       0.6
     );
   satchel(H, R, 9.67, 10.4, 0.03, 'coral', 0.8);
+}
+
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.83, 3.34, 'sun');
+  for (const i of [1.07, 3.52, 5.97, 8.43, 10.87]) {
+    box(H, R, i, 0.08, 0.12, 0.3, 0.95, 2.08, 'teal', 0.6);
+    for (const z of [1.12, 2.84]) H.dot(...H.p(i + 0.06, 0.4, z), 1.3, 'sun');
+  }
+  box(H, R, 0.98, 0.1, 10.04, 0.44, 0.84, 0.11, 'sun', 0.5);
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(1.55 + n * 1.43, 0.41, 0.99);
+    specimen(H, R, x, y, 0.42 + (n % 2) * 0.16, 'teal', n === 2);
+  }
+  for (const j of [1.5, 3.34, 5.18])
+    for (const z of [0.3, 1.2, 2.13]) {
+      const [x, y] = H.p(1.37, j + 0.63, z + 0.19);
+      shape(
+        H,
+        R,
+        [
+          [x - 8, y],
+          [x + 8, y],
+          [x + 8, y - 9],
+          [x - 8, y - 9]
+        ],
+        'paper',
+        1,
+        0.5
+      );
+      H.line(
+        R,
+        [
+          [x - 5, y - 4],
+          [x + 5, y - 4]
+        ],
+        'coral',
+        0.8
+      );
+    }
+  wallRack(H, R, 'nw', 6.95, 0.9, 1.25, 1.85, 3, 'teal', (P, z, row) => {
+    const [x, y] = P(0.45, z + 0.16);
+    oval(H, R, x, y, 7, 3, 'paper', 1);
+    shape(
+      H,
+      R,
+      [
+        [x - 6, y],
+        [x + 6, y],
+        [x + 6, y - 19],
+        [x - 6, y - 19]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    cone(H, R, x, y - 7, 0.42 + row * 0.05);
+    oval(H, R, x, y - 20, 6, 2.5, 'sun', 0.5);
+  });
+  panelFront(H, R, 8.12, 1.57, 3.01, 0.15, 1.04, 4, 'teal');
+  const [x, y] = H.p(9.61, 1.02, 1.35);
+  shape(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 10, y],
+      [x + 9, y - 6],
+      [x - 9, y - 6]
+    ],
+    'blue',
+    0.7,
+    0.7
+  );
+  H.line(
+    R,
+    [
+      [x, y - 5],
+      [x - 5, y - 27],
+      [x + 5, y - 37]
+    ],
+    'teal',
+    3.4
+  );
+  H.line(
+    R,
+    [
+      [x + 4, y - 35],
+      [x + 11, y - 39]
+    ],
+    'blue',
+    4
+  );
+  oval(H, R, x + 2, y - 18, 4, 4, 'sun', 0.8);
+  H.line(
+    R,
+    [
+      [x - 9, y - 13],
+      [x + 7, y - 13]
+    ],
+    'paper',
+    2.3
+  );
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(1.41 + n * 0.52, 9.72, 0.84);
+    shape(
+      H,
+      R,
+      [
+        [px - 8, py],
+        [px + 8, py],
+        [px + 8, py - 17],
+        [px - 8, py - 17]
+      ],
+      'paper',
+      1,
+      0.6
+    );
+    leaf(H, R, px, py - 4, 0.4, n % 2 ? 'teal' : 'coral', n * 0.2, n === 1);
+    H.dot(px, py - 16, 1.2, 'sun');
+  }
+  for (const i of [4.13, 7.52]) H.line(R, [H.p(i, 5.45, 0.18), H.p(i, 6.99, 0.89)], 'teal', 1.6);
+  const [px, py] = H.p(7.22, 6.08, 1.23);
+  oval(H, R, px, py, 8, 5, 'paper', 1);
+  oval(H, R, px, py, 5.5, 3.5, 'teal', 0.14);
+  H.line(
+    R,
+    [
+      [px + 5, py + 3],
+      [px + 14, py + 11]
+    ],
+    'blue',
+    2
+  );
+  for (let n = 0; n < 3; n++) {
+    const [ax, ay] = H.p(9.47 + n * 0.32, 8.76, 1.19);
+    shape(
+      H,
+      R,
+      [
+        [ax - 5, ay],
+        [ax + 5, ay],
+        [ax + 5, ay - 11],
+        [ax - 5, ay - 11]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    oval(H, R, ax, ay - 11, 5, 2, 'teal', 0.4);
+  }
+  taskLight(H, R, 10.69, 0.75, 1.34, 'sun', -0.45);
 }
 
 const room = world('new-york-greenbelt-center', 'Staten Island · The Leaf Table', { floor: 'paper', tone: .63, wall: 'teal', wallTone: .15, pattern: 'boards', height: 3.55, head: 20 }, (H, R) => {
@@ -154,6 +306,7 @@ const room = world('new-york-greenbelt-center', 'Staten Island · The Leaf Table
   stroke(H, R, [H.p(9.3, 8.55, 1.17), H.p(9.7, 8.51, 1.53), H.p(10.1, 8.56, 1.17)], 'blue', 1.5);
   cone(H, R, ...H.p(10.86, 10.62, .04), .7);
   greenbeltCenterDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   actor(H, R, 8.45, 5.39, u * 18, 'newYorkLeafGuide', { shirt: ['paper', 1], vest: ['teal', .62], hairStyle: 'curly', face: 'sw', glasses: true }, .04, 1.31);

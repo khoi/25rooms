@@ -1,3 +1,4 @@
+import { recessedFrame, wallRack } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, bottle, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -82,6 +83,7 @@ function hide(H, R) {
   box(H, R, .38, 5.7, .69, .77, .22, .55, 'teal', .6);
   oval(H, R, ...H.p(.72, 6.08, .79), 9, 4, 'blue', .56);
   tinShuiWaiHideDetails(H, R);
+  construction(H, R);
 }
 
 function tinShuiWaiHideDetails(H, R) {
@@ -117,6 +119,156 @@ function tinShuiWaiHideDetails(H, R) {
     ],
     'teal',
     2
+  );
+}
+
+function construction(H, R) {
+  for (let n = 0; n < 11; n++) {
+    const i = 0.45 + n * 1.03;
+    H.line(R, [H.p(i, 2.39, 0.31), H.p(i, 2.39, 1.67)], 'blue', 0.6, { tone: 0.5 });
+    for (const z of [0.4, 1.53, 2.71, 3.09]) H.dot(...H.p(i + 0.12, 2.41, z), 1, 'sun');
+  }
+  for (const i of [0.25, 4.18, 8.02, 11.69]) {
+    H.line(R, [H.p(i, 2.43, 2.58), H.p(i + 0.56, 2.87, 3.28)], 'blue', 2);
+    H.line(R, [H.p(i, 2.43, 0.4), H.p(i + 0.13, 2.43, 0.4)], 'paper', 2);
+  }
+  for (let n = 0; n < 3; n++) {
+    const i = 0.62 + n * 3.85;
+    box(H, R, i, 2.32, 3.09, 0.12, 2.73, 0.12, 'sun', 0.52);
+    for (const x of [i + 0.15, i + 2.83]) H.line(R, [H.p(x, 2.36, 2.82), H.p(x, 2.99, 2.55)], 'blue', 1.2);
+  }
+  wallRack(H, R, 'nw', 3.4, 1.8, 1.03, 1.38, 2, 'sun', (P, z, row) => {
+    for (let n = 0; n < 4; n++) {
+      const u = 0.27 + n * 0.37;
+      shape(H, R, [P(u, z + 0.04), P(u + 0.25, z + 0.04), P(u + 0.25, z + 0.47), P(u, z + 0.47)], n % 2 ? 'paper' : 'teal', 0.7, 0.5);
+      H.line(R, [P(u + 0.04, z + 0.33), P(u + 0.22, z + 0.33)], row ? 'coral' : 'sun', 1.2);
+    }
+  });
+  recessedFrame(H, R, 'nw', 6.63, 3.24, 1.32, 1.14, 'teal', (P) => {
+    shape(H, R, [P(0.14, 0.13), P(3.1, 0.13), P(3.1, 1), P(0.14, 1)], 'paper', 1, 0.5);
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = P(0.5 + n * 0.74, 0.53);
+      shape(
+        H,
+        R,
+        [
+          [x - 9, y],
+          [x - 3, y - 5],
+          [x + 5, y - 3],
+          [x + 12, y - 7],
+          [x + 8, y + 1],
+          [x - 4, y + 4]
+        ],
+        n % 2 ? 'teal' : 'blue',
+        0.55,
+        0.5
+      );
+      H.line(
+        R,
+        [
+          [x, y + 3],
+          [x - 1, y + 10]
+        ],
+        'coral',
+        0.8
+      );
+      H.dot(x + 6, y - 3, 0.8, 'sun');
+    }
+  });
+  const [x, y] = H.p(3.02, 7.98, 1.06);
+  oval(H, R, x, y, 8, 6, 'paper', 1);
+  oval(H, R, x, y, 5, 3.5, 'teal', 0.2);
+  H.line(
+    R,
+    [
+      [x + 5, y + 4],
+      [x + 16, y + 12]
+    ],
+    'blue',
+    2.2
+  );
+  for (let n = 0; n < 5; n++) {
+    const [px, py] = H.p(1.7 + n * 0.36, 7.55, 1.04);
+    H.line(
+      R,
+      [
+        [px, py],
+        [px + 8, py - 8]
+      ],
+      'sun',
+      1.1
+    );
+    shape(
+      H,
+      R,
+      [
+        [px, py],
+        [px + 2, py - 11],
+        [px + 10, py - 15],
+        [px + 7, py - 5]
+      ],
+      n % 2 ? 'teal' : 'coral',
+      0.35,
+      0.5
+    );
+  }
+  for (const j of [6.08, 9.18]) {
+    box(H, R, 0.13, j, 0.4, 0.12, 0.3, 1.27, 'blue', 0.5);
+    H.line(R, [H.p(0.15, j, 0.51), H.p(0.66, j, 1.54)], 'sun', 1.4);
+  }
+  for (let n = 0; n < 5; n++) {
+    const i = 0.5 + n * 2.23;
+    reeds(H, R, i, 0.58, 0.52 + (n % 2) * 0.15, 0.1);
+  }
+  for (let n = 0; n < 10; n++) {
+    const i = 0.6 + n * 1.05,
+      [px, py] = H.p(i, 1.52, 0.04);
+    oval(H, R, px, py, 7 + (n % 3) * 3, 2.5, 'teal', 0.35);
+    H.line(
+      R,
+      [
+        [px - 4, py],
+        [px + 3, py]
+      ],
+      'paper',
+      0.7
+    );
+  }
+  const [bx, by] = H.p(10.45, 6.85, 0.28);
+  shape(
+    H,
+    R,
+    [
+      [bx - 9, by],
+      [bx + 9, by],
+      [bx + 7, by - 26],
+      [bx - 7, by - 26]
+    ],
+    'teal',
+    0.6,
+    0.7
+  );
+  oval(H, R, bx, by - 26, 7, 3, 'sun', 0.7);
+  H.line(
+    R,
+    [
+      [bx - 7, by - 6],
+      [bx + 7, by - 6]
+    ],
+    'paper',
+    1
+  );
+  stroke(
+    H,
+    R,
+    [
+      [bx - 6, by - 25],
+      [bx - 8, by - 36],
+      [bx + 6, by - 36],
+      [bx + 7, by - 25]
+    ],
+    'blue',
+    0.9
   );
 }
 

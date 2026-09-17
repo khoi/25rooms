@@ -1,3 +1,4 @@
+import { wallCourse, cornice, recessedFrame, wallRack, hangingRail, radiator } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, windowOn, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -105,7 +106,151 @@ function eastHarlemDominoesDetails(H, R) {
   boundBook(H, R, 3.62, 2.61, 0.8, 0.46, 0.68, 'sun');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.86, 3.31, 'teal');
+  cornice(H, R, 'ne', 0.1, 11.86, 3.31, 'teal');
+  wallCourse(H, R, 'nw', 4.1, 11.8, 0.85, 'teal');
+  wallCourse(H, R, 'ne', 0.15, 8.3, 0.85, 'teal');
+  wallRack(H, R, 'ne', 1.7, 3.2, 1.42, 1.55, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = P(0.35 + n * 0.51, z + 0.13);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 6, y],
+            [x + 6, y],
+            [x + 6, y - 13],
+            [x - 6, y - 13]
+          ],
+          n % 2 ? 'paper' : 'coral',
+          0.65,
+          0.55
+        );
+        for (let q = 0; q < 3; q++) H.dot(x - 3 + q * 3, y - 8, 1, 'blue');
+      } else {
+        oval(H, R, x, y, 6, 2.8, 'paper', 1);
+        H.line(
+          R,
+          [
+            [x - 5, y],
+            [x - 4, y + 7],
+            [x + 4, y + 7],
+            [x + 5, y]
+          ],
+          'teal',
+          0.65
+        );
+      }
+    }
+  });
+  recessedFrame(H, R, 'ne', 5.6, 1.72, 1.6, 1.28, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(1.6, 0.13), P(1.6, 1.15), P(0.12, 1.15)], 'paper', 1, 0.5);
+    for (let n = 0; n < 5; n++) {
+      H.line(R, [P(0.2, 0.3 + n * 0.16), P(1.51, 0.3 + n * 0.16)], 'teal', 0.5);
+      for (let q = 0; q < 3; q++) H.line(R, [P(0.28 + q * 0.42, 0.26 + n * 0.16), P(0.36 + q * 0.42, 0.37 + n * 0.16)], 'blue', 0.6);
+    }
+  });
+  for (const i of [4.64, 7.48]) {
+    H.line(R, [H.p(i, 4.4, 0.17), H.p(i, 7.22, 0.17)], 'sun', 1.8);
+    H.line(R, [H.p(i, 4.4, 0.2), H.p(i, 7.22, 0.91)], 'teal', 1.3);
+  }
+  for (const [i, j] of [
+    [4.73, 4.49],
+    [7.51, 4.49],
+    [4.73, 7.27],
+    [7.51, 7.27]
+  ])
+    H.dot(...H.p(i, j, 1.11), 1.3, 'sun');
+  const [x, y] = H.p(10.69, 4.59, 1.32);
+  shape(
+    H,
+    R,
+    [
+      [x - 13, y],
+      [x + 12, y],
+      [x + 12, y - 15],
+      [x - 13, y - 15]
+    ],
+    'sun',
+    0.55,
+    0.7
+  );
+  for (let n = 0; n < 7; n++)
+    H.line(
+      R,
+      [
+        [x - 10 + n * 2, y - 12],
+        [x - 10 + n * 2, y - 3]
+      ],
+      'blue',
+      0.6
+    );
+  for (const dx of [6, 10]) oval(H, R, x + dx, y - 7, 1.8, 1.8, 'coral', 0.7);
+  H.line(
+    R,
+    [
+      [x + 8, y - 16],
+      [x + 14, y - 31]
+    ],
+    'blue',
+    0.9
+  );
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(1.02 + n * 0.27, 9.58, 0.83);
+    shape(
+      H,
+      R,
+      [
+        [px - 3, py],
+        [px + 3, py],
+        [px + 3, py - 8],
+        [px - 3, py - 8]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.dot(px, py - 5, 1, 'blue');
+  }
+  hangingRail(H, R, 'nw', 6.16, 3.5, 2.33, 3, (P, u, n) => {
+    const [x, y] = P(u, -0.16);
+    if (n < 2) {
+      shape(
+        H,
+        R,
+        [
+          [x - 7, y + 3],
+          [x - 3, y - 1],
+          [x + 4, y - 1],
+          [x + 8, y + 4],
+          [x + 5, y + 29],
+          [x - 5, y + 29]
+        ],
+        n ? 'sun' : 'teal',
+        0.55,
+        0.6
+      );
+      H.line(
+        R,
+        [
+          [x, y + 4],
+          [x, y + 24]
+        ],
+        'paper',
+        0.7
+      );
+    } else {
+      oval(H, R, x, y + 9, 10, 5, 'coral', 0.5);
+      oval(H, R, x, y + 6, 6, 6, 'coral', 0.6);
+    }
+  });
+}
+
 const room = world('new-york-east-harlem-dominoes', 'East Harlem · The Last Double', { floor: 'coral', tone: .2, wall: 'paper', wallTone: .9, height: 3.53, head: 20 }, (H, R) => {
+  radiator(H,R,'nw',.5,2.68,.75);
+
   for (const side of ['nw', 'ne']) {
     shape(H, R, wallRect(H, side, .03, 11.94, .1, .87), 'teal', .34, .65);
     for (let z = 1; z < 3.5; z += .32) {
@@ -162,6 +307,7 @@ const room = world('new-york-east-harlem-dominoes', 'East Harlem · The Last Dou
   oval(H, R, x + 7, y - 25, 4, 3, 'coral', .75);
   stroke(H, R, [H.p(.23, 9.38, 3.2), H.p(5.39, 7.98, 3.05), H.p(10.85, .24, 3.26)], 'blue', .8);
   eastHarlemDominoesDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   H.at(5.78, 3.53, 0, h => actor(h, R, 5.78, 3.53, t, 'newYorkDominoTap', { shirt: ['paper', 1], hairStyle: 'cap', face: 'se' }, .2, 1.27, 'elder'));
   H.at(3.53, 5.59, 0, h => actor(h, R, 3.53, 5.59, 0, 'sit', { shirt: ['coral', .69], hairStyle: 'curly', face: 'se' }, .2, 1.32));

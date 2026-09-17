@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, windowBay, cityView, panelFront, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, windowOn, steam, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -148,6 +149,179 @@ function sheungWanMilkTeaDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.15, 11.85, 3.54, 'teal');
+  cornice(H, R, 'ne', 0.15, 11.85, 3.54, 'teal');
+  panelFront(H, R, 2.3, 2.425, 8.9, 0.08, 0.98, 6, 'teal');
+  windowBay(H, R, 'nw', 0.5, 3.5, 2.12, 1.26, {
+    divisions: 3,
+    view(P) {
+      cityView(H, R, P, 3.5, 1.26);
+    }
+  });
+  wallRack(H, R, 'nw', 4.25, 2.35, 1.9, 1.35, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = P(0.3 + n * 0.42, z + 0.2);
+      cup(H, R, x, y, n === 3 ? 'sun' : 'paper', 0.7);
+      if (row === 1) oval(H, R, x, y - 10, 4, 1.6, 'paper', 1);
+    }
+  });
+  hangingRail(H, R, 'ne', 3.1, 3.5, 2.7, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.14);
+    if (n < 2) {
+      oval(H, R, x, y + 10, 8, 3, 'paper', 1);
+      shape(
+        H,
+        R,
+        [
+          [x - 8, y + 10],
+          [x + 8, y + 10],
+          [x + 5, y + 37],
+          [x - 3, y + 40],
+          [x - 6, y + 30]
+        ],
+        'coral',
+        0.4,
+        0.6
+      );
+      H.line(
+        R,
+        [
+          [x, y + 13],
+          [x - 2, y + 34]
+        ],
+        'blue',
+        0.6
+      );
+    } else {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x, y + 23]
+        ],
+        'blue',
+        2
+      );
+      oval(H, R, x, y + 26, 6, 4, 'paper', 1);
+      oval(H, R, x, y + 26, 3.5, 2, 'teal', 0.3);
+    }
+  });
+  for (let n = 0; n < 8; n++) {
+    const [x, y] = H.p(3.22 + n * 0.47, 1.07, 3.18);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x, y - 9]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  const [x, y] = H.p(10.76, 5.03, 0.93);
+  shape(
+    H,
+    R,
+    [
+      [x - 14, y],
+      [x + 13, y],
+      [x + 13, y - 13],
+      [x - 10, y - 13]
+    ],
+    'teal',
+    0.65,
+    0.8
+  );
+  shape(
+    H,
+    R,
+    [
+      [x - 10, y - 13],
+      [x + 13, y - 13],
+      [x + 8, y - 23],
+      [x - 8, y - 23]
+    ],
+    'paper',
+    1,
+    0.7
+  );
+  for (let n = 0; n < 9; n++) H.dot(x - 6 + (n % 3) * 5, y - 16 - Math.floor(n / 3) * 3, 1, 'blue');
+  H.line(
+    R,
+    [
+      [x - 9, y - 5],
+      [x + 8, y - 5]
+    ],
+    'sun',
+    1.5
+  );
+  shape(
+    H,
+    R,
+    [
+      [x + 4, y - 23],
+      [x + 12, y - 24],
+      [x + 12, y - 39],
+      [x + 5, y - 37]
+    ],
+    'paper',
+    1,
+    0.5
+  );
+  for (let n = 0; n < 3; n++)
+    H.line(
+      R,
+      [
+        [x + 6, y - 28 - n * 3],
+        [x + 10, y - 28 - n * 3]
+      ],
+      'teal',
+      0.5
+    );
+  for (let n = 0; n < 4; n++) {
+    cup(H, R, ...H.p(9.2 + n * 0.41, 4.66, 0.95), 'paper', 0.6);
+  }
+  taskLight(H, R, 9.11, 7.09, 1.3, 'sun', 0.7);
+  for (const j of [3.05, 4.97, 6.9]) {
+    shape(H, R, H.faceJ(2.24, j + 0.12, 1.5, 0.15, 0.8), 'teal', 0.28, 0.65);
+    H.line(R, [H.p(2.26, j + 0.25, 0.7), H.p(2.26, j + 0.58, 0.7)], 'sun', 1.5);
+  }
+  const [dx, dy] = H.p(2.21, 7.62, 1.23);
+  shape(
+    H,
+    R,
+    [
+      [dx - 11, dy],
+      [dx + 8, dy - 4],
+      [dx + 10, dy + 28],
+      [dx - 9, dy + 32]
+    ],
+    'paper',
+    1,
+    0.65
+  );
+  for (let n = 0; n < 3; n++)
+    H.line(
+      R,
+      [
+        [dx - 8, dy + 19 + n * 3],
+        [dx + 9, dy + 15 + n * 3]
+      ],
+      'coral',
+      1
+    );
+  for (const i of [9.0, 11.1]) for (const j of [4.43, 5.35]) caster(H, R, i, j);
+  recessedFrame(H, R, 'nw', 9.1, 1.64, 1.2, 1.95, 'sun', (P) => {
+    for (let n = 0; n < 12; n++) {
+      const u = 0.25 + (n % 3) * 0.43,
+        z = 0.24 + Math.floor(n / 3) * 0.39;
+      shape(H, R, [P(u, z), P(u + 0.31, z), P(u + 0.31, z + 0.27), P(u, z + 0.27)], n === 7 ? 'coral' : 'paper', 0.8, 0.4);
+      if (n < 7) H.line(R, [P(u, z), P(u + 0.31, z + 0.27)], 'blue', 0.55);
+    }
+  });
+}
+
 const room = world('hong-kong-sheung-wan-milk-tea', 'Sheung Wan · The long pour', { floor: 'paper', tone: .67, wall: 'paper', wallTone: .88, height: 3.75, wallStyle: 'tile', pattern: 'tiles', accent: 'teal', head: 22 }, (H, R) => {
   shape(H, R, wallRect(H, 'nw', .5, 4.0, 2.12, 3.38), 'blue', .28);
   for (let z = 2.2; z < 3.35; z += .16) H.line(R, [H.p(.04, .61, z), H.p(.04, 3.89, z)], 'paper', 2);
@@ -176,6 +350,7 @@ const room = world('hong-kong-sheung-wan-milk-tea', 'Sheung Wan · The long pour
   shape(H, R, H.tile(3.16, 9.76, 4.69, .25, .04), 'blue', .72);
   for (let i = 3.24; i < 7.8; i += .18) H.line(R, [H.p(i, 9.77, .05), H.p(i, 10.0, .05)], 'paper', .7);
   sheungWanMilkTeaDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
   H.at(5.6, 6.1, 0, HH => actor(HH, R, 5.6, 6.1, u * 18, 'hongKongTeaTransfer', { shirt: ['paper', 1], pants: ['blue', .73], apron: ['teal', .73], hairStyle: 'short', prop: (h, r, p) => {

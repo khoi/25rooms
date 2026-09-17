@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -95,6 +96,105 @@ function shaTinRowingDetails(H, R) {
   );
 }
 
+function construction(H, R) {
+  cornice(H, R, 'ne', 0.2, 11.8, 3.5, 'paper');
+  wallRack(H, R, 'ne', 0.45, 2.4, 1.45, 1.78, 3, 'teal', (P, z, row) => {
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = P(0.38 + n * 0.53, z + 0.12);
+      oval(H, R, x, y, 6, 3.2, 'blue', 0.6);
+      oval(H, R, x, y, 3, 1.4, 'sun', 0.7);
+      H.line(
+        R,
+        [
+          [x + 4, y],
+          [x + 7, y - 10]
+        ],
+        'paper',
+        1.1
+      );
+    }
+  });
+  recessedFrame(H, R, 'ne', 3.3, 2.55, 1.65, 1.48, 'sun', (P) => {
+    shape(H, R, [P(0.16, 0.15), P(2.39, 0.15), P(2.39, 1.32), P(0.16, 1.32)], 'paper', 1, 0.5);
+    stroke(H, R, [P(0.3, 0.25), P(0.6, 0.5), P(1, 0.46), P(1.4, 0.87), P(2.22, 1.12)], 'teal', 2.4);
+    for (let n = 0; n < 5; n++) {
+      H.line(R, [P(0.35 + n * 0.4, 0.2), P(0.35 + n * 0.4, 1.24)], 'blue', 0.4);
+      H.dot(...P(0.45 + n * 0.39, 0.35 + n * 0.14), 1.5, 'coral');
+    }
+  });
+  for (const j of [0.76, 4.84, 9.0])
+    for (const z of [1.04, 2.09, 3.09]) {
+      for (const i of [0.72, 2.23]) {
+        box(H, R, i, j - 0.11, 0.23, 0.34, z - 0.06, 0.11, 'paper', 1);
+        H.dot(...H.p(i + 0.11, j + 0.06, z + 0.08), 1.2, 'coral');
+      }
+      H.line(R, [H.p(0.67, j, 0.18), H.p(0.67, j, 0.64)], 'paper', 1.1);
+    }
+  for (const z of [1.13, 2.18, 3.18])
+    for (const j of [3.18, 5.13, 7.14]) {
+      const [x, y] = H.p(1.7, j, z);
+      H.line(
+        R,
+        [
+          [x - 5, y],
+          [x + 5, y]
+        ],
+        'sun',
+        1.1
+      );
+      for (const dx of [-3, 3])
+        H.line(
+          R,
+          [
+            [x + dx, y],
+            [x + dx, y + 7]
+          ],
+          'paper',
+          0.7
+        );
+    }
+  table(H, R, 6.62, 2.15, 0.88, 2.68, 0.43, 'blue');
+  const [x, y] = H.p(7.04, 2.45, 0.94);
+  oval(H, R, x, y, 18, 18, 'teal', 0.6);
+  oval(H, R, x, y, 13, 13, 'paper', 1);
+  for (let n = 0; n < 10; n++) {
+    const a = (n * TAU) / 10;
+    H.line(
+      R,
+      [
+        [x + Math.cos(a) * 4, y + Math.sin(a) * 4],
+        [x + Math.cos(a) * 12, y + Math.sin(a) * 12]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  H.dot(x, y, 3, 'coral');
+  H.line(R, [H.p(7.05, 2.86, 0.62), H.p(7.05, 4.61, 0.62)], 'sun', 3);
+  box(H, R, 6.76, 3.63, 0.61, 0.6, 0.63, 0.16, 'teal', 0.65);
+  for (const i of [6.71, 7.29]) {
+    box(H, R, i, 2.9, 0.2, 0.56, 0.5, 0.09, 'blue', 0.65);
+    H.line(R, [H.p(i, 2.98, 0.61), H.p(i + 0.16, 3.31, 0.61)], 'coral', 1.3);
+  }
+  stroke(H, R, [[x + 12, y + 9], H.p(7.05, 3.5, 0.9), H.p(7.07, 3.83, 0.94)], 'blue', 1);
+  H.line(R, [H.p(6.79, 3.83, 0.94), H.p(7.35, 3.83, 0.94)], 'teal', 3.3);
+  panelFront(H, R, 1.82, 11.21, 2.56, 0.13, 0.92, 3, 'sun');
+  taskLight(H, R, 4.1, 9.89, 1.18, 'teal', -0.5);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(10.83, 9.74, 0.53 + n * 0.09);
+    oval(H, R, px, py, 7, 4, 'paper', 1);
+    H.line(
+      R,
+      [
+        [px - 4, py - 2],
+        [px + 3, py - 2]
+      ],
+      'coral',
+      0.7
+    );
+  }
+}
+
 const room = world('hong-kong-sha-tin-rowing', 'Sha Tin · Oars in parallel', { floor: 'paper', tone: .58, wall: 'teal', wallTone: .22, height: 3.7, head: 20 }, (H, R) => {
   shape(H, R, wallRect(H, 'ne', 6.48, 11.71, .28, 3.43, .04), 'paper', 1);
   shape(H, R, wallRect(H, 'ne', 6.66, 11.55, .41, 3.26, .06), 'teal', .14);
@@ -155,6 +255,7 @@ const room = world('hong-kong-sha-tin-rowing', 'Sha Tin · Oars in parallel', { 
   for (let q = 0; q < 6; q++) H.line(R, [H.p(4.7 + q * .36, 11.02, .025), H.p(4.7 + q * .36, 11.49, .025)], 'teal', 1.2, { tone: .5 });
   H.line(R, [H.p(3.0, 2.92, .02), H.p(3.0, 10.36, .02)], 'sun', 2, { tone: .6 });
   shaTinRowingDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), lift = u < .13 ? 0 : u < .27 ? (1 - Math.cos((u - .13) / .14 * Math.PI)) / 2 : u < .58 ? 1 : u < .75 ? (1 + Math.cos((u - .58) / .17 * Math.PI)) / 2 : 0;
   H.at(5.95, 6.48, 0, HH => actor(HH, R, 5.95 + lift * .13, 6.48 - lift * .1, t, 'hongKongOarInspect', { shirt: ['teal', .76], pants: ['blue', .7], hairStyle: 'pony', prop(h, r, p) {

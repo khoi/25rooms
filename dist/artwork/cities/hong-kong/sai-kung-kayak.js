@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, hangingRail } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -102,6 +103,118 @@ function saiKungKayakDetails(H, R) {
   boundBook(H, R, 10.7, 9.79, 0.58, 0.69, 1.05, 'blue');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.2, 11.8, 3.45, 'teal');
+  for (const i of [1.16, 3.44, 5.74, 7.26]) {
+    box(H, R, i, 0.05, 0.12, 0.32, 0.05, 3.1, 'blue', 0.54);
+    for (const z of [0.72, 1.81, 2.85]) {
+      H.dot(...H.p(i + 0.06, 0.39, z), 1.4, 'sun');
+      H.line(R, [H.p(i + 0.06, 0.36, z), H.p(i + 0.36, 0.74, z + 0.2)], 'teal', 1.5);
+    }
+  }
+  hangingRail(H, R, 'nw', 1.3, 5.8, 2.65, 6, (P, u, n) => {
+    const [x, y] = P(u, -0.16);
+    if (n < 3) {
+      oval(H, R, x, y + 14, 10, 12, n % 2 ? 'sun' : 'coral', 0.7);
+      oval(H, R, x, y + 16, 6, 7, 'paper', 1);
+      H.line(
+        R,
+        [
+          [x - 8, y + 20],
+          [x, y + 33],
+          [x + 8, y + 20]
+        ],
+        'blue',
+        1.1
+      );
+    } else {
+      shape(
+        H,
+        R,
+        [
+          [x - 7, y + 3],
+          [x + 7, y],
+          [x + 8, y + 33],
+          [x - 6, y + 35]
+        ],
+        'paper',
+        1,
+        0.6
+      );
+      for (let q = 0; q < 4; q++)
+        H.line(
+          R,
+          [
+            [x - 4 + q * 3, y + 7],
+            [x - 3 + q * 3, y + 28]
+          ],
+          'teal',
+          0.5
+        );
+    }
+  });
+  recessedFrame(H, R, 'ne', 8.12, 3.55, 0.9, 2.48, 'teal', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(3.4, 0.13), P(3.4, 2.32), P(0.12, 2.32)], 'paper', 1, 0.5);
+    shape(H, R, [P(0.12, 0.15), P(3.4, 0.15), P(3.4, 0.72), P(2.9, 1.1), P(2.3, 0.87), P(1.72, 1.25), P(0.85, 0.7), P(0.12, 0.91)], 'teal', 0.3, 0.6);
+    for (let n = 0; n < 5; n++) H.line(R, [P(0.35 + n * 0.61, 0.35), P(0.62 + n * 0.61, 0.35)], 'paper', 1);
+    H.line(R, [P(1.8, 0.14), P(1.8, 2.3)], 'blue', 2.8);
+  });
+  for (const [i, j] of [
+    [3.5, 4.36],
+    [7.5, 4.36],
+    [3.5, 6.48],
+    [7.5, 6.48]
+  ]) {
+    H.line(R, [H.p(i - 0.25, j, 0.13), H.p(i + 0.25, j, 0.13)], 'blue', 3);
+    H.dot(...H.p(i, j, 0.23), 1.8, 'sun');
+  }
+  const [x, y] = H.p(10.91, 2.88, 0.93);
+  oval(H, R, x, y - 14, 11, 11, 'paper', 1);
+  oval(H, R, x, y - 14, 8, 8, 'teal', 0.35);
+  H.line(
+    R,
+    [
+      [x, y - 14],
+      [x + 5, y - 20]
+    ],
+    'coral',
+    1.4
+  );
+  for (let n = 0; n < 6; n++) {
+    const a = (n * TAU) / 6;
+    H.dot(x + Math.cos(a) * 6, y - 14 + Math.sin(a) * 6, 0.7, 'blue');
+  }
+  H.line(
+    R,
+    [
+      [x - 10, y + 2],
+      [x + 9, y + 2]
+    ],
+    'blue',
+    1.6
+  );
+  stroke(H, R, [[x + 9, y - 5], H.p(11.44, 3.65, 0.2), H.p(11.13, 4.02, 0.06)], 'teal', 2);
+  for (let n = 0; n < 6; n++) {
+    const [px, py] = H.p(3.95 + n * 0.48, 10.23, 0.035);
+    shape(
+      H,
+      R,
+      [
+        [px - 5, py],
+        [px + 8, py - 3],
+        [px + 9, py + 2],
+        [px - 2, py + 4]
+      ],
+      'teal',
+      0.17,
+      0.4
+    );
+  }
+  box(H, R, 8.74, 8.99, 0.54, 0.44, 0.06, 0.88, 'paper', 1);
+  shape(H, R, H.faceI(8.8, 9.445, 0.42, 0.32, 0.75), 'coral', 0.45, 0.6);
+  H.line(R, [H.p(8.92, 9.19, 0.98), H.p(9.22, 9.19, 0.98)], 'blue', 2);
+}
+
 const room = world('hong-kong-sai-kung-kayak', 'Sai Kung · Salt rinsed away', { floor: 'paper', tone: .58, wall: 'paper', wallTone: .83, height: 3.65, head: 20 }, (H, R) => {
   shape(H, R, wallRect(H, 'nw', .13, 11.84, .08, .86, .02), 'teal', .43);
   for (const j of [.4, 1.2, 2.0, 2.8, 3.6, 4.4, 5.2, 6.0, 6.8, 7.6, 8.4, 9.2, 10, 10.8, 11.6]) H.line(R, [wallPt(H, 'nw', j, .12, .04), wallPt(H, 'nw', j, .84, .04)], 'paper', .8);
@@ -169,6 +282,7 @@ const room = world('hong-kong-sai-kung-kayak', 'Sai Kung · Salt rinsed away', {
   const [fx, fy] = H.p(10.55, 7.55, .06);
   shape(H, R, [[fx - 4, fy + 8], [fx + 5, fy + 8], [fx + 5, fy - 8], [fx + 16, fy - 20], [fx + 17, fy - 27], [fx + 8, fy - 25], [fx - 5, fy - 11]], 'teal', .6, .65);
   saiKungKayakDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), spraying = u > .15 && u < .73;
   H.at(5.93, 8.03, 0, HH => actor(HH, R, 5.93, 8.03, t, 'hongKongKayakRinse', { shirt: ['paper', 1], pants: ['teal', .72], hairStyle: 'cap', face: 'nw', prop(h, r, p) {

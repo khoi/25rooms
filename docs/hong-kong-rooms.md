@@ -10,6 +10,8 @@ The animated action in each entry has a reversible inspection gesture or an expl
 
 This revision develops the existing 25 scenes in place. Each room combines its original focal activity with additional construction, storage, supporting tools and personal possessions. The new layouts and objects are original design choices. Repeated books, containers, tiles and fasteners count as groups when assessing detail; their number alone does not establish richness.
 
+The September 17, 2026 construction revision develops all 25 existing scenes against the original collection. The [construction review](room-construction-review.md) records the fitted assemblies, close-up discoveries, and visual checks for every room.
+
 ## 1. First rope ashore — Aberdeen mooring deck
 
 ID: `hong-kong-aberdeen-mooring`.

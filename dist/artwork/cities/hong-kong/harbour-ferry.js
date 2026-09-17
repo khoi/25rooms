@@ -1,5 +1,6 @@
+import { windowBay, cityView } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, actor, cycle, ell, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, cycle, ell, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -76,12 +77,157 @@ function harbourFerryDetails(H, R) {
   coiledLine(H, R, 10.86, 0.92, 0.06, 12, 'sun');
 }
 
+function construction(H, R) {
+  for (const pos of [0.46, 4.32, 8.23])
+    windowBay(H, R, 'ne', pos, 3.42, 1.44, 1.82, {
+      ink: 'paper',
+      divisions: 2,
+      view(P) {
+        shape(H, R, [P(0.12, 0.12), P(3.3, 0.12), P(3.3, 0.73), P(0.12, 0.73)], 'teal', 0.32, 0.4);
+        cityView(H, R, (u, v) => P(u, v + 0.54), 3.42, 1.08);
+        for (let n = 0; n < 5; n++) H.line(R, [P(0.3 + n * 0.6, 0.32), P(0.64 + n * 0.6, 0.32)], 'paper', 0.9);
+      }
+    });
+
+  for (const i of [0.2, 4.05, 7.95, 11.8]) {
+    box(H, R, i - 0.06, 0.15, 0.29, 0.38, 0.02, 0.19, 'teal', 0.7);
+    H.line(R, [H.p(i, 0.33, 2.75), H.p(i + 0.58, 0.33, 3.4)], 'blue', 1.7);
+    for (const z of [0.25, 2.9]) H.dot(...H.p(i + 0.075, 0.425, z), 1.5, 'sun');
+  }
+  for (const j of [0.65, 3.7, 7.6, 11.45]) {
+    H.line(R, [H.p(0.27, j, 2.72), H.p(0.27, j + 0.6, 3.31)], 'blue', 1.6);
+    H.line(R, [H.p(0.31, j, 0.22), H.p(0.31, j, 0.66)], 'paper', 1);
+  }
+  for (const j of [4.82, 8.06])
+    for (const i of [1.51, 3.17, 4.82, 6.47]) {
+      H.line(R, [H.p(i, j, 0.1), H.p(i, j + 0.18, 0.61), H.p(i, j + 0.61, 0.61), H.p(i, j + 0.75, 0.1)], 'blue', 2.4);
+      for (const z of [0.69, 1.0, 1.22]) H.dot(...H.p(i, j + 0.14, z), 1.2, 'blue');
+      H.line(R, [H.p(i - 0.14, j + 0.78, 0.13), H.p(i + 0.17, j + 0.78, 0.13)], 'teal', 2);
+    }
+  for (let n = 0; n < 6; n++) {
+    const i = 0.64 + n * 1.86;
+    shape(H, R, H.faceI(i, 0.525, 1.58, 0.12, 0.45), 'teal', 0.38, 0.6);
+    for (let q = 0; q < 5; q++) H.line(R, [H.p(i + 0.21 + q * 0.24, 0.54, 0.2), H.p(i + 0.21 + q * 0.24, 0.54, 0.37)], 'blue', 0.6);
+  }
+  for (const i of [2.05, 6.1, 10.11]) {
+    const [x, y] = H.p(i, 0.45, 3.2);
+    shape(
+      H,
+      R,
+      [
+        [x - 15, y],
+        [x + 15, y],
+        [x + 11, y - 8],
+        [x - 11, y - 8]
+      ],
+      'paper',
+      1,
+      0.7
+    );
+    oval(H, R, x, y, 13, 3.5, 'sun', 0.7);
+    for (const dx of [-9, 0, 9])
+      H.line(
+        R,
+        [
+          [x + dx, y - 7],
+          [x + dx, y + 3]
+        ],
+        'blue',
+        0.65
+      );
+    H.glow(x, y + 8, 28, 20, 'sun', 0.12);
+  }
+  for (const j of [2.04, 2.45]) {
+    shape(H, R, H.faceI(9.88, j + 0.35, 1.28, 0.31, 0.76), 'paper', 1, 0.6);
+    H.line(R, [H.p(10.2, j + 0.365, 0.64), H.p(10.68, j + 0.365, 0.64)], 'teal', 1.8);
+  }
+  const [x, y] = H.p(11.1, 2.25, 1.45);
+  shape(
+    H,
+    R,
+    [
+      [x - 7, y],
+      [x + 7, y],
+      [x + 7, y - 22],
+      [x - 7, y - 22]
+    ],
+    'coral',
+    0.7,
+    0.8
+  );
+  oval(H, R, x, y - 22, 7, 3, 'paper', 1);
+  H.line(
+    R,
+    [
+      [x, y - 23],
+      [x, y - 31],
+      [x + 8, y - 31]
+    ],
+    'blue',
+    1.6
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x + 4, y - 28],
+      [x + 12, y - 18],
+      [x + 10, y - 5]
+    ],
+    'blue',
+    1.2
+  );
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(9.5 + n * 0.45, 7.64, 0.3);
+    shape(
+      H,
+      R,
+      [
+        [px - 7, py],
+        [px + 7, py],
+        [px + 7, py - 18],
+        [px - 7, py - 18]
+      ],
+      n % 2 ? 'paper' : 'coral',
+      0.65,
+      0.6
+    );
+    H.line(
+      R,
+      [
+        [px - 6, py - 4],
+        [px + 6, py - 4]
+      ],
+      'sun',
+      1.1
+    );
+    stroke(
+      H,
+      R,
+      [
+        [px - 4, py - 18],
+        [px - 3, py - 24],
+        [px + 3, py - 24],
+        [px + 4, py - 18]
+      ],
+      'blue',
+      0.9
+    );
+  }
+  for (let n = 0; n < 8; n++) {
+    const j = 9.35 + n * 0.2;
+    H.line(R, [H.p(0.34, j, 0.78), H.p(0.68, j, 0.78)], 'blue', 0.6);
+  }
+  box(H, R, 0.13, 9.2, 0.6, 1.9, 0.78, 0.07, 'sun', 0.45);
+  foldedCloth(H, R, 0.25, 9.4, 0.35, 0.73, 0.88, 'paper', 'teal');
+}
+
 const room = world('hong-kong-harbour-ferry', 'Victoria Harbour · Across the working water', { floor: 'teal', tone: .25, wall: false, pattern: 'boards', head: 20 }, (H, R) => {
   const backdrop = H.faceI(.05, .03, 11.9, .2, 3.5);
   shape(H, R, backdrop, 'paper', 1);
   shape(H, R, H.faceI(.1, .05, 11.8, .22, 1.65), 'teal', .24, .6);
   const skyline = [[.12, 1.48], [.4, 1.48], [.4, 2.01], [.95, 2.01], [.95, 1.65], [1.4, 1.65], [1.4, 2.38], [1.86, 2.38], [1.86, 1.76], [2.24, 1.76], [2.24, 2.21], [2.68, 2.21], [2.68, 1.66], [3.12, 1.66], [3.12, 2.62], [3.3, 2.8], [3.55, 2.62], [3.55, 1.75], [4.0, 1.75], [4.0, 2.04], [4.57, 2.04], [4.57, 1.62], [5.22, 1.62], [5.22, 2.25], [5.75, 2.25], [5.75, 1.7], [6.13, 1.7], [6.13, 2.95], [6.46, 3.11], [6.76, 2.95], [6.76, 1.75], [7.23, 1.75], [7.23, 2.15], [7.66, 2.15], [7.66, 1.65], [8.24, 1.65], [8.24, 2.34], [8.79, 2.34], [8.79, 1.76], [9.4, 1.76], [9.4, 2.14], [10.02, 2.14], [10.02, 1.73], [10.55, 1.73], [10.55, 2.48], [10.98, 2.48], [10.98, 1.73], [11.82, 1.73], [11.82, 1.4], [.12, 1.4]].map(([i, z]) => H.p(i, .08, z));
-  shape(H, R, skyline, 'blue', .19, .65);
+  shape(H, R, skyline, 'blue', .38, .65);
   for (let i = .5; i < 11.7; i += .58) for (const z of [1.62, 1.8, 1.98]) H.line(R, [H.p(i, .1, z), H.p(i + .17, .1, z)], 'paper', .6, { tone: .75 });
   for (const i of [.2, 4.05, 7.95, 11.8]) box(H, R, i, .19, .16, .22, .02, 3.42, 'paper', 1);
   box(H, R, .12, .19, 11.8, .23, 3.4, .26, 'paper', 1);
@@ -121,6 +267,7 @@ const room = world('hong-kong-harbour-ferry', 'Victoria Harbour · Across the wo
   box(H, R, 7.56, 10.65, 2.73, .54, .02, .07, 'blue', .45);
   for (let q = 0; q < 12; q++) H.line(R, [H.p(7.62 + q * .22, 10.7, .1), H.p(7.62 + q * .22, 11.15, .1)], 'paper', .8);
   harbourFerryDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   H.clip(H.faceI(.2, .11, 11.55, .63, 1.48), () => {

@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, panelFront } from '../joinery.js';
 import { shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -120,6 +121,121 @@ function queensPanoramaDetails(H, R) {
   for (const i of [3.42, 5.3, 7.27]) H.line(R, [H.p(i, 9.1, 0.31), H.p(i, 9.1, 0.58)], 'sun', 1.1);
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.85, 3.32, 'teal');
+  cornice(H, R, 'ne', 0.12, 11.85, 3.32, 'teal');
+  for (let n = 0; n < 6; n++) {
+    const i = 2.48 + n * 1.13;
+    shape(H, R, H.faceI(i, 9.16, 0.94, 0.2, 0.55), 'blue', 0.62, 0.6);
+    for (const u of [0.13, 0.8]) H.dot(...H.p(i + u, 9.18, 0.32), 1, 'sun');
+  }
+  for (let n = 0; n < 5; n++) {
+    const j = 2.37 + n * 1.29;
+    shape(H, R, H.faceJ(9.46, j, 1.1, 0.2, 0.55), 'blue', 0.56, 0.6);
+    H.line(R, [H.p(9.48, j + 0.35, 0.44), H.p(9.48, j + 0.7, 0.44)], 'paper', 0.8);
+  }
+  recessedFrame(H, R, 'nw', 1.27, 3.15, 1.33, 1.65, 'teal', (P) => {
+    shape(H, R, [P(0.13, 0.13), P(3.02, 0.13), P(3.02, 1.52), P(0.13, 1.52)], 'paper', 1, 0.5);
+    for (let n = 0; n < 9; n++) {
+      const u = 0.26 + n * 0.3,
+        h = 0.28 + (n % 4) * 0.19;
+      shape(H, R, [P(u, 0.25), P(u + 0.19, 0.25), P(u + 0.19, h + 0.25), P(u, h + 0.25)], n % 2 ? 'teal' : 'coral', 0.5, 0.45);
+      for (let q = 0; q < 3; q++) H.line(R, [P(u + 0.04, 0.36 + q * 0.13), P(u + 0.15, 0.36 + q * 0.13)], 'paper', 0.5);
+    }
+    H.line(R, [P(0.25, 0.18), P(2.87, 0.18)], 'sun', 1.4);
+  });
+  recessedFrame(H, R, 'nw', 5.14, 2.57, 1.66, 1.32, 'sun', (P) => {
+    shape(H, R, [P(0.12, 0.13), P(2.45, 0.13), P(2.45, 1.2), P(0.12, 1.2)], 'paper', 1, 0.5);
+    stroke(H, R, [P(0.25, 0.24), P(0.6, 0.54), P(0.95, 0.48), P(1.46, 0.94), P(2.25, 1.03)], 'teal', 2);
+    for (let n = 0; n < 5; n++) H.dot(...P(0.36 + n * 0.43, 0.38 + n * 0.13), 1.7, 'coral');
+  });
+  for (const i of [1.83, 4.02, 6.25, 8.5]) {
+    const [x, y] = H.p(i, 0.72, 3.19);
+    H.line(
+      R,
+      [
+        [x - 8, y - 7],
+        [x - 13, y - 3],
+        [x - 10, y + 8]
+      ],
+      'sun',
+      1.1
+    );
+    H.line(
+      R,
+      [
+        [x + 8, y - 7],
+        [x + 13, y - 3],
+        [x + 10, y + 8]
+      ],
+      'sun',
+      1.1
+    );
+    H.dot(x, y - 11, 1.6, 'paper');
+  }
+  for (let n = 0; n < 6; n++) {
+    const [x, y] = H.p(0.85 + (n % 2) * 0.43, 7.62 + Math.floor(n / 2) * 0.45, 1.19);
+    H.line(
+      R,
+      [
+        [x - 3, y],
+        [x + 3, y]
+      ],
+      'paper',
+      0.6
+    );
+    H.dot(x, y - 2, 1.1, 'coral');
+  }
+  panelFront(H, R, 7.16, 1.25, 1.32, 0.13, 0.78, 2, 'teal');
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(8.7 + n * 0.21, 11.2, 0.65);
+    H.line(
+      R,
+      [
+        [x - 2, y],
+        [x + 2, y - 3]
+      ],
+      'teal',
+      0.8
+    );
+  }
+  for (const i of [3.51, 6.13]) H.line(R, [H.p(i, 10.79, 0.14), H.p(i, 11.21, 0.52)], 'sun', 1.5);
+  const [x, y] = H.p(2.1, 10.43, 0.05);
+  shape(
+    H,
+    R,
+    [
+      [x - 8, y],
+      [x + 8, y - 3],
+      [x + 8, y - 18],
+      [x - 8, y - 16]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 4, y - 11],
+      [x, y - 7],
+      [x + 5, y - 12]
+    ],
+    'teal',
+    1
+  );
+  H.line(
+    R,
+    [
+      [x - 6, y - 3],
+      [x + 5, y - 6]
+    ],
+    'sun',
+    0.8
+  );
+}
+
 const room = world('new-york-queens-panorama', 'Flushing Meadows · A City on a Table', { floor: 'blue', tone: .12, wall: 'paper', wallTone: .8, height: 3.55, head: 20 }, (H, R) => {
   for (const side of ['nw', 'ne']) {
     shape(H, R, wallRect(H, side, .1, 11.9, .12, .35), 'blue', .6, .6);
@@ -157,6 +273,7 @@ const room = world('new-york-queens-panorama', 'Flushing Meadows · A City on a 
   box(H, R, 10.77, 9.4, .58, .54, .06, .93, 'paper', 1);
   oval(H, R, ...H.p(11.06, 9.67, 1.02), 12, 5, 'blue', .6);
   queensPanoramaDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   H.at(5.55, 1.2, 0, h => actor(h, R, 5.55, 1.2, 0, 'hold', { shirt: ['blue', .64], hairStyle: 'short', prop(hh, rr, p) {
     const [x, y] = p.nearHand;

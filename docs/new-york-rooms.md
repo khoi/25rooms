@@ -10,6 +10,8 @@ The proposed loops below begin in a readable pose and use pauses, visible return
 
 This revision develops the existing 25 scenes in place. Each room combines its original focal activity with additional construction, storage, supporting tools and personal possessions. The new layouts and objects are original design choices. Repeated books, containers, tiles and fasteners count as groups when assessing detail; their number alone does not establish richness.
 
+The September 17, 2026 construction revision develops all 25 existing scenes against the original collection. The [construction review](room-construction-review.md) records the fitted assemblies, close-up discoveries, and visual checks for every room.
+
 ## 1. First Crossing. Staten Island ferry cabin.
 
 ID: `new-york-staten-ferry`. A cool September dawn finds commuters between St. George and Lower Manhattan. NYC DOT documents the ferry as a year-round service connecting Staten Island and Lower Manhattan. This shortened cabin is a fictional composite, with no claim to a particular vessel class. [NYC DOT: Staten Island Ferry](https://www.nyc.gov/html/dot/html/ferrybus/staten-island-ferry.shtml).

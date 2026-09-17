@@ -1,3 +1,4 @@
+import { cornice, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -124,6 +125,158 @@ function stGeorgeStageDetails(H, R) {
   satchel(H, R, 7.4, 10.46, 0.03, 'teal', 0.85);
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.1, 11.84, 3.41, 'sun');
+  for (let n = 0; n < 5; n++) {
+    const i = 0.65 + n * 1.4;
+    shape(H, R, H.faceI(i, 1.75, 1.17, 0.48, 0.88), 'teal', 0.38, 0.6);
+    H.line(R, [H.p(i + 0.37, 1.77, 0.73), H.p(i + 0.8, 1.77, 0.73)], 'sun', 1.6);
+  }
+  for (let n = 0; n < 3; n++) {
+    const j = 2.06 + n * 1.07;
+    shape(H, R, H.faceJ(1.75, j, 0.9, 0.46, 0.86), 'teal', 0.35, 0.6);
+    H.line(R, [H.p(1.77, j + 0.25, 0.72), H.p(1.77, j + 0.64, 0.72)], 'sun', 1.4);
+  }
+  for (let n = 0; n < 8; n++) {
+    const [x, y] = H.p(1.3 + n * 0.71, 0.28, 3.25);
+    H.line(
+      R,
+      [
+        [x - 4, y],
+        [x + 4, y]
+      ],
+      'sun',
+      1.6
+    );
+  }
+  for (const i of [9.13, 11.29]) {
+    H.line(R, [H.p(i, 2.27, 0.22), H.p(i, 2.27, 2.83)], 'sun', 1.4);
+    for (const z of [0.49, 2.45]) H.dot(...H.p(i, 2.29, z), 1.5, 'blue');
+  }
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(9.4 + n * 0.38, 1.27, 2.63);
+    stroke(
+      H,
+      R,
+      [
+        [x - 7, y + 8],
+        [x, y],
+        [x + 7, y + 8],
+        [x - 7, y + 8]
+      ],
+      'sun',
+      1
+    );
+    H.line(
+      R,
+      [
+        [x, y],
+        [x + 2, y - 6]
+      ],
+      'blue',
+      0.7
+    );
+  }
+  hangingRail(H, R, 'nw', 5.88, 2.24, 2.8, 3, (P, u, n) => {
+    const [x, y] = P(u, -0.15);
+    shape(
+      H,
+      R,
+      [
+        [x - 8, y + 5],
+        [x - 3, y],
+        [x + 4, y],
+        [x + 9, y + 5],
+        [x + 6, y + 34],
+        [x - 6, y + 34]
+      ],
+      ['teal', 'paper', 'coral'][n],
+      0.65,
+      0.7
+    );
+    H.line(
+      R,
+      [
+        [x, y + 3],
+        [x, y + 29]
+      ],
+      'sun',
+      0.8
+    );
+    for (const dy of [10, 17, 24]) H.dot(x + 2, y + dy, 0.9, 'blue');
+  });
+  const [x, y] = H.p(5.84, 7.96, 1.04);
+  oval(H, R, x, y, 9, 6, 'coral', 0.6);
+  for (let n = 0; n < 7; n++) {
+    const a = (n * TAU) / 7;
+    H.line(
+      R,
+      [
+        [x + Math.cos(a) * 4, y + Math.sin(a) * 3],
+        [x + Math.cos(a) * 12, y + Math.sin(a) * 10]
+      ],
+      'paper',
+      0.7
+    );
+    H.dot(x + Math.cos(a) * 12, y + Math.sin(a) * 10, 1.1, 'sun');
+  }
+  taskLight(H, R, 4.42, 7.64, 1.04, 'sun', 0.6);
+  for (const i of [0.83, 3.55]) for (const j of [8.49, 9.95]) caster(H, R, i, j);
+  for (const i of [0.83, 3.56]) {
+    H.line(R, [H.p(i, 10.17, 0.2), H.p(i, 10.17, 0.9)], 'sun', 2);
+    for (const z of [0.27, 0.85]) H.dot(...H.p(i, 10.2, z), 1.3, 'blue');
+  }
+  H.line(R, [H.p(1.82, 10.18, 0.59), H.p(2.53, 10.18, 0.59)], 'paper', 2.2);
+  for (let n = 0; n < 4; n++) {
+    const [px, py] = H.p(10.02 + n * 0.28, 5.9, 2.27);
+    shape(
+      H,
+      R,
+      [
+        [px - 3, py],
+        [px + 3, py],
+        [px + 3, py - 15],
+        [px - 3, py - 15]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.line(
+      R,
+      [
+        [px - 2, py - 9],
+        [px + 2, py - 9]
+      ],
+      n % 2 ? 'coral' : 'teal',
+      1
+    );
+  }
+  const [px, py] = H.p(6.42, 10.48, 0.52);
+  shape(
+    H,
+    R,
+    [
+      [px - 10, py],
+      [px + 10, py],
+      [px + 10, py - 7],
+      [px - 10, py - 7]
+    ],
+    'paper',
+    1,
+    0.6
+  );
+  H.line(
+    R,
+    [
+      [px - 7, py - 4],
+      [px + 6, py - 4]
+    ],
+    'teal',
+    0.8
+  );
+}
+
 const room = world('new-york-st-george-stage', 'St. George · Five Minutes', { floor: 'paper', tone: .64, wall: 'coral', wallTone: .2, pattern: 'boards', height: 3.62, head: 20 }, (H, R) => {
   for (const side of ['nw', 'ne']) {
     shape(H, R, wallRect(H, side, .03, 11.95, .09, .31), 'blue', .66, .65);
@@ -174,6 +327,7 @@ const room = world('new-york-st-george-stage', 'St. George · Five Minutes', { f
   shape(H, R, curtain, 'blue', .67, .9);
   for (let j = 6.28; j < 7.75; j += .31) stroke(H, R, [H.p(.18, j, 3.31), H.p(.23, j + .1, 1.8), H.p(.19, j, .59)], 'paper', .75, .5);
   stGeorgeStageDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
   const shift = u < .54 ? 0 : u < .69 ? (u - .54) / .15 : u < .84 ? 1 : (1 - u) / .16;

@@ -1,3 +1,4 @@
+import { cornice, recessedFrame, panelFront, wallRack, hangingRail, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -104,6 +105,177 @@ function washingtonHeightsDetails(H, R) {
   handTool(H, R, 1.29, 5.76, 1.17, 'brush', 'sun');
 }
 
+function construction(H, R) {
+  cornice(H, R, 'nw', 0.12, 11.85, 3.66, 'sun');
+  cornice(H, R, 'ne', 0.12, 11.85, 3.66, 'sun');
+  wallRack(H, R, 'nw', 0.51, 5.43, 2.18, 1.22, 2, 'teal', (P, z, row) => {
+    for (let n = 0; n < 9; n++) {
+      const [x, y] = P(0.4 + n * 0.57, z + 0.12);
+      if (row) {
+        shape(
+          H,
+          R,
+          [
+            [x - 4, y],
+            [x + 4, y],
+            [x + 4, y - 12 - (n % 2) * 4],
+            [x - 4, y - 12 - (n % 2) * 4]
+          ],
+          ['sun', 'coral', 'paper'][n % 3],
+          0.65,
+          0.5
+        );
+        oval(H, R, x, y - 13 - (n % 2) * 3, 4, 2, 'teal', 0.6);
+      } else {
+        oval(H, R, x, y, 6, 3, 'paper', 1);
+        H.line(
+          R,
+          [
+            [x - 5, y],
+            [x - 4, y + 6],
+            [x + 4, y + 6],
+            [x + 5, y]
+          ],
+          'teal',
+          0.7
+        );
+      }
+    }
+  });
+  hangingRail(H, R, 'nw', 3.44, 2.45, 1.95, 4, (P, u, n) => {
+    const [x, y] = P(u, -0.13);
+    if (n < 2) {
+      H.line(
+        R,
+        [
+          [x, y],
+          [x, y + 14]
+        ],
+        'sun',
+        1.7
+      );
+      oval(H, R, x, y + 20, 5, 7, 'paper', 1);
+    } else {
+      shape(
+        H,
+        R,
+        [
+          [x - 7, y],
+          [x + 7, y],
+          [x + 8, y + 28],
+          [x - 7, y + 30]
+        ],
+        'paper',
+        1,
+        0.6
+      );
+      for (let q = 0; q < 3; q++)
+        H.line(
+          R,
+          [
+            [x - 5, y + 19 + q * 3],
+            [x + 6, y + 17 + q * 3]
+          ],
+          'coral',
+          0.8
+        );
+    }
+  });
+  for (let n = 0; n < 5; n++) {
+    const j = 0.73 + n * 1.08;
+    shape(H, R, H.faceJ(1.985, j, 0.73, 0.24, 0.76), 'teal', 0.3, 0.6);
+    H.line(R, [H.p(2, j + 0.14, 0.7), H.p(2, j + 0.52, 0.7)], 'sun', 1.4);
+  }
+  for (let n = 0; n < 4; n++) {
+    const [x, y] = H.p(2.01, 6.97 + n * 0.31, 1.66 - (n % 2) * 0.25);
+    shape(
+      H,
+      R,
+      [
+        [x - 5, y],
+        [x + 6, y],
+        [x + 6, y - 12],
+        [x - 5, y - 12]
+      ],
+      'paper',
+      1,
+      0.5
+    );
+    H.dot(x, y - 10, 1.7, n % 2 ? 'coral' : 'teal');
+    H.line(
+      R,
+      [
+        [x - 3, y - 5],
+        [x + 4, y - 5]
+      ],
+      'sun',
+      0.8
+    );
+  }
+  for (const i of [5.02, 9.78]) {
+    box(H, R, i, 0.11, 0.12, 0.3, 1.48, 2.1, 'teal', 0.53);
+    for (const z of [1.68, 3.32]) H.dot(...H.p(i + 0.06, 0.43, z), 1.3, 'sun');
+  }
+  for (let n = 0; n < 5; n++) {
+    const [x, y] = H.p(6.18 + n * 0.49, 0.5, 1.53);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x - 2, y - 15]
+      ],
+      'blue',
+      0.8
+    );
+    specimen(H, R, x, y, 0.34, 'teal', n === 2);
+  }
+  const [x, y] = H.p(7.31, 4.76, 1.12);
+  oval(H, R, x, y, 7, 3, 'paper', 1);
+  shape(
+    H,
+    R,
+    [
+      [x - 5, y],
+      [x + 5, y],
+      [x + 3, y - 7],
+      [x - 3, y - 7]
+    ],
+    'sun',
+    0.5,
+    0.5
+  );
+  H.line(
+    R,
+    [
+      [x - 4, y - 4],
+      [x + 4, y - 4]
+    ],
+    'coral',
+    0.8
+  );
+  panelFront(H, R, 9.59, 10.4, 1.76, 0.14, 1.44, 2, 'teal');
+  taskLight(H, R, 9.91, 9.03, 1.75, 'sun', 0.6);
+  recessedFrame(H, R, 'nw', 9.07, 1.93, 1.37, 1.71, 'sun', (P) => {
+    for (let n = 0; n < 4; n++) {
+      const u = 0.23 + (n % 2) * 0.8,
+        z = 0.24 + Math.floor(n / 2) * 0.73;
+      shape(H, R, [P(u, z), P(u + 0.62, z), P(u + 0.62, z + 0.56), P(u, z + 0.56)], 'paper', 1, 0.5);
+      const [px, py] = P(u + 0.3, z + 0.33);
+      oval(H, R, px, py, 5, 6, 'coral', 0.5);
+      H.line(
+        R,
+        [
+          [px - 7, py + 12],
+          [px, py + 5],
+          [px + 7, py + 12]
+        ],
+        'teal',
+        1.6
+      );
+    }
+  });
+}
+
 const room = world('new-york-washington-heights', 'Washington Heights · Window Wide', {
   floor: 'paper', tone: 1, pattern: 'tiles', accent: 'sun', wall: 'paper', wallTone: 1, height: 3.9, head: 20,
 }, (H, R) => {
@@ -193,6 +365,7 @@ const room = world('new-york-washington-heights', 'Washington Heights · Window 
   shape(H, R, H.tile(4.15, 8.04, 3.43, 2.25, .02), 'coral', .19, .7);
   for (let q = 0; q < 6; q++) H.line(R, [H.p(4.2, 8.14 + q * .4, .025), H.p(7.5, 8.14 + q * .4, .025)], 'paper', 1.3);
   washingtonHeightsDetails(H, R);
+  construction(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14);
   for (const [i, dir] of [[4.92, 1], [9.79, -1]]) {
