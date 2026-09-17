@@ -15,9 +15,29 @@ const selectedCollection = COLLECTIONS.find(entry => entry.id === query.get('col
 const collection = selectedCollection.id;
 const layout = createLayout(5, collection);
 const caption = document.querySelector('#room-caption');
+const collections = document.querySelector('.collections');
+const collectionsToggle = document.querySelector('.collections-toggle');
 for (const link of document.querySelectorAll('[data-collection]')) {
-  if (link.dataset.collection === collection) link.setAttribute('aria-current', 'page');
+  if (link.dataset.collection === collection) {
+    link.setAttribute('aria-current', 'page');
+    document.querySelector('#current-collection').textContent = link.textContent;
+  }
 }
+collections.addEventListener('click', event => {
+  if (event.target.closest('[data-collection]')) collections.open = false;
+});
+collections.addEventListener('focusout', event => {
+  if (!collections.contains(event.relatedTarget)) collections.open = false;
+});
+document.addEventListener('pointerdown', event => {
+  if (!collections.contains(event.target)) collections.open = false;
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || !collections.open) return;
+  event.preventDefault();
+  collections.open = false;
+  collectionsToggle.focus();
+});
 document.title = selectedCollection.title;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#262320');
@@ -280,7 +300,7 @@ stage.addEventListener('dblclick', event => {
   if (room) { focusRoom(room.index); idleSince = performance.now(); }
 });
 addEventListener('keydown', event => {
-  if (event.metaKey || event.ctrlKey || event.altKey || event.target instanceof HTMLButtonElement) return;
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.target instanceof HTMLButtonElement || collections.contains(event.target)) return;
   const key = event.key.toLowerCase(), step = 120 / view.zoom;
   if (!['arrowleft', 'arrowright', 'arrowup', 'arrowdown', 'w', 'a', 's', 'd', '+', '=', '-', '_', '0', 'escape', ' '].includes(key)) return;
   event.preventDefault(); interrupt();

@@ -12,13 +12,17 @@
 </head>
 <body>
 <h1 class="sr-only">25rooms</h1>
-<nav class="collections" aria-label="Room collections">
+<details class="collections">
+<summary class="collections-toggle"><span class="sr-only">Choose collection: </span><span id="current-collection">01 · Tokyo</span></summary>
+<nav class="collections-list" aria-label="Room collections">
+<p class="collections-heading">Collections</p>
 <a href="?collection=tokyo" data-collection="tokyo">01 · Tokyo</a>
 <a href="?collection=hong-kong" data-collection="hong-kong">02 · Hong Kong</a>
 <a href="?collection=new-york" data-collection="new-york">03 · New York</a>
 <a href="?collection=new" data-collection="new">04 · Somewhere else</a>
 <a href="?collection=original" data-collection="original">05 · Original</a>
 </nav>
+</details>
 <a class="repository-link" href="https://github.com/khoi/25rooms" target="_blank" rel="noopener noreferrer">Open GitHub ↗</a>
 <canvas id="stage" tabindex="0" aria-label="An isometric block of printed rooms. Drag to pan, scroll or pinch to zoom, and double click a room to explore it. Press zero to view all rooms, space to pause the tour, and arrow keys to pan."></canvas>
 <p id="status" role="status">Printing the rooms…</p>
