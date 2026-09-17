@@ -89,7 +89,84 @@ function bench(H, R) {
   }
 }
 
+function repairQueue(H, R) {
+  shape(H, R, H.tile(2.02, 4.93, 3.58, 2.97, .02), 'teal', .18);
+  for (let q = 0; q < 6; q++) H.line(R, [H.p(2.08 + q * .56, 4.98, .03), H.p(2.08 + q * .56, 7.85, .03)], 'paper', 1.5);
+  shape(H, R, H.faceJ(.08, 7.0, 3.71, 1.6, 3.08), 'sun', .42);
+  for (let row = 0; row < 3; row++) for (let q = 0; q < 6; q++) H.dot(...H.p(.12, 7.2 + q * .6, 1.76 + row * .48), 1.1, 'blue', .5);
+  for (let q = 0; q < 6; q++) {
+    const [x, y] = H.p(.18, 7.3 + q * .6, 2.76);
+    if (q % 2) {
+      H.line(R, [[x - 6, y + 22], [x - 3, y + 7], [x + 5, y - 4]], 'blue', 2);
+      H.line(R, [[x + 6, y + 22], [x + 3, y + 7], [x - 5, y - 4]], 'blue', 2);
+      H.line(R, [[x - 6, y + 22], [x - 4, y + 13]], 'coral', 3.5);
+      H.line(R, [[x + 6, y + 22], [x + 4, y + 13]], 'coral', 3.5);
+    } else {
+      H.line(R, [[x, y + 26], [x, y - 9]], 'blue', 1.5);
+      H.line(R, [[x, y + 24], [x, y + 8]], q === 2 ? 'teal' : 'coral', 5);
+    }
+  }
+  for (let q = 0; q < 3; q++) coil(H, R, ...H.p(.18, 7.72 + q * 1.06, 1.97), .73, inks[q]);
+  box(H, R, .31, 2.67, 1.02, 3.62, 0, .88, 'blue', .64);
+  for (let q = 0; q < 4; q++) {
+    const j = 2.82 + q * .85;
+    box(H, R, .4, j, .83, .7, .91, .2, q % 2 ? 'teal' : 'sun', .62);
+    for (let n = 0; n < 3; n++) {
+      const [x, y] = H.p(.61 + n * .19, j + .41, 1.18);
+      shape(H, R, [[x - 4, y], [x + 4, y], [x + 3, y - 14], [x - 3, y - 14]], inks[(q + n) % 3], .75, .6);
+      for (const d of [-2, 2]) H.line(R, [[x + d, y], [x + d, y + 5]], 'blue', .75);
+    }
+    H.line(R, [H.p(1.35, j + .09, .37), H.p(1.35, j + .61, .37)], 'paper', 1.4);
+  }
+  table(H, R, 2.38, 5.19, 2.61, 1.74, .95, 'sun');
+  shape(H, R, H.tile(2.54, 5.37, 2.26, 1.37, 1.09), 'blue', .71);
+  box(H, R, 2.75, 5.7, 1.48, .85, 1.1, .15, 'paper', 1);
+  shape(H, R, H.tile(2.88, 5.83, 1.18, .59, 1.27), 'teal', .68);
+  for (let q = 0; q < 3; q++) box(H, R, 3.02 + q * .3, 5.97, .22, .22, 1.29, .15, q ? 'blue' : 'sun', .77);
+  box(H, R, 2.72, 5.29, 1.48, .17, 1.25, 1.02, 'paper', 1);
+  shape(H, R, H.faceI(2.84, 5.48, 1.24, 1.39, 2.11), 'blue', .86);
+  for (let q = 0; q < 3; q++) H.line(R, [H.p(2.94, 5.51, 1.62 + q * .16), H.p(3.83, 5.51, 1.62 + q * .16)], 'teal', .75, { dash: [5, 3] });
+  box(H, R, 4.29, 5.44, .43, .59, 1.09, .32, 'teal', .7);
+  oval(H, R, ...H.p(4.5, 6.05, 1.3), 5, 4, 'sun');
+  coil(H, R, ...H.p(4.48, 6.42, 1.1), .64, 'coral');
+  box(H, R, 3.58, 7.16, .81, .74, 0, .59, 'coral', .61);
+  box(H, R, 8.17, 4.3, 2.01, 1.15, .22, .61, 'teal', .6);
+  box(H, R, 8.17, 4.3, 2.01, 1.15, 1.07, .1, 'paper', 1);
+  for (const [i, j] of [[8.35, 4.46], [9.97, 4.46], [8.35, 5.31], [9.97, 5.31]]) oval(H, R, ...H.p(i, j, .1), 4, 5, 'blue');
+  box(H, R, 8.37, 4.47, 1.58, .85, 1.2, .57, 'paper', .94);
+  shape(H, R, H.tile(8.58, 4.57, 1.15, .59, 1.79), 'teal', .57);
+  shape(H, R, H.faceI(8.58, 5.35, 1.19, 1.39, 1.53), 'blue', .8);
+  shape(H, R, [H.p(8.62, 5.38, 1.38), H.p(9.68, 5.38, 1.38), H.p(9.68, 5.93, 1.13), H.p(8.62, 5.93, 1.13)], 'paper', 1);
+  for (let q = 0; q < 4; q++) H.line(R, [H.p(8.75, 5.48 + q * .09, 1.34 - q * .035), H.p(9.48, 5.48 + q * .09, 1.34 - q * .035)], 'teal', .7);
+  table(H, R, 1.93, 10.26, 5.08, 1.14, .68, 'coral');
+  for (let q = 0; q < 4; q++) {
+    const i = 2.08 + q * 1.22;
+    box(H, R, i, 10.39, 1.03, .82, .82, .21, q % 2 ? 'teal' : 'paper', .8);
+    if (q === 0) {
+      box(H, R, i + .17, 10.57, .69, .47, 1.04, .6, 'blue', .62);
+      oval(H, R, ...H.p(i + .51, 11.06, 1.34), 10, 11, 'sun', .51);
+    } else if (q === 1) {
+      for (let n = 0; n < 2; n++) oval(H, R, ...H.p(i + .26 + n * .52, 10.87, 1.1), 9, 5, 'blue', .8);
+    } else if (q === 2) {
+      box(H, R, i + .17, 10.47, .7, .51, 1.04, .39, 'paper', 1);
+      shape(H, R, H.faceI(i + .26, 11.0, .49, 1.13, 1.35), 'teal', .7);
+    } else {
+      for (let n = 0; n < 3; n++) box(H, R, i + .13 + n * .26, 10.6, .18, .45, 1.04, .15, inks[n], .7);
+    }
+    shape(H, R, H.faceI(i + .35, 11.24, .37, .88, 1.03), 'sun', .71, .4);
+  }
+  for (let q = 0; q < 3; q++) {
+    box(H, R, 7.47 + q * .42, 10.74, .35, .79, 0, .75 + q % 2 * .34, 'paper', .86);
+    shape(H, R, H.faceI(7.55 + q * .42, 11.55, .19, .24, .58), inks[q], .62, .5);
+  }
+  box(H, R, 9.69, 9.15, 1.71, .79, 0, .5, 'coral', .48);
+  box(H, R, 9.69, 9.16, 1.71, .12, .5, .57, 'teal', .6);
+  box(H, R, 10.55, 7.18, .73, .66, 0, .54, 'sun', .56);
+  for (let q = 0; q < 3; q++) coil(H, R, ...H.p(9.09 + q * .59, 11.01, .055), .8, inks[q]);
+}
+
 function furnishings(H, R) {
+  repairQueue(H, R);
   drawers(H, R);
   box(H, R, .12, 1.2, .16, 9.75, 3.11, .12, 'paper', 1);
   for (let q = 0; q < 5; q++) {
@@ -171,4 +248,16 @@ export default world('tokyo-akihabara-repair', 'Akihabara · One more connection
     const [x, y] = H.p(5.71, 2.89, 1.53), rise = cycle(t, 2.2);
     H.opacity(Math.sin(rise * Math.PI) * .55, () => stroke(H, R, [[x, y], [x - 8 - rise * 10, y - 11], [x - 23 - rise * 12, y - 20], [x - 42, y - 28]], 'paper', 1.5));
   }
+  actor(H, R, 4.01, 7.4, t * .68, 'write', { shirt: ['sun', .66], hairStyle: 'curly', face: 'nw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    HH.line(RR, [[x + 3, y + 4], [x - 10, y - 15]], 'blue', 1.8);
+  } }, .1, 1.24);
+  actor(H, R, 9.15, 8.05, t * .35, 'hold', { shirt: ['teal', .64], hairStyle: 'pony', face: 'sw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    shape(HH, RR, [[x - 15, y - 8], [x + 15, y - 2], [x + 14, y + 14], [x - 16, y + 8]], 'paper', 1);
+    oval(HH, RR, x - 5, y + 2, 5, 6, 'blue');
+    HH.line(RR, [[x + 4, y], [x + 11, y + 2]], 'teal', 1.7);
+  } }, 0, 1.24);
+  actor(H, R, 10.9, 9.72, t * .25, 'phone', { shirt: ['coral', .7], hairStyle: 'short', face: 'sw' }, .04, 1.2);
+  for (let q = 0; q < 4; q++) H.dot(...H.p(2.97 + q * .24, 5.52, 1.46), 1.6, Math.sin(t * 2 + q) > 0 ? 'sun' : 'teal', .8);
 });

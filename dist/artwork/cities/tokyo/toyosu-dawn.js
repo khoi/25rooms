@@ -43,6 +43,81 @@ function cart(H, R, i, j) {
   box(H, R, i + 1.3, j + .2, .12, .4, .44, .16, 'coral', .8);
 }
 
+
+function smallFish(H, R, i, j, z, ink = 'teal', size = 1) {
+  const [x, y] = H.p(i, j, z);
+  const p = (a, b) => [x + a * size, y + b * size];
+  shape(H, R, [p(-17, 0), p(-10, -5), p(5, -6), p(17, -1), p(10, 5), p(-10, 4)], ink, .65, .7);
+  shape(H, R, [p(-15, 0), p(-25, -6), p(-23, 5)], ink, .7, .6);
+  line(H, R, [p(-12, 1), p(10, 1)], 1, 'paper');
+  H.dot(...p(11, -1), 1.1, 'blue', 1);
+}
+
+function marketStations(H, R) {
+  for (const z of [1.65, 2.65]) {
+    box(H, R, .2, 3.3, .75, 3.95, z, .12, 'teal', .7);
+    for (const j of [3.5, 6.8]) line(H, R, [H.p(.22, j, z), H.p(.22, j, z - .35), H.p(.92, j, z)], 1.5);
+    for (let k = 0; k < 5; k++) {
+      const j = 3.45 + k * .72;
+      box(H, R, .27, j, .62, .59, z + .13, .4, k % 2 ? 'sun' : 'paper', k % 2 ? .6 : 1);
+      line(H, R, [H.p(.92, j + .1, z + .28), H.p(.92, j + .45, z + .28)], 2, 'blue');
+      line(H, R, [H.p(.35, j + .29, z + .54), H.p(.87, j + .29, z + .54)], 2, 'coral');
+    }
+  }
+  box(H, R, .3, .24, .43, 7.1, 3.32, .27, 'paper', .85);
+  for (let j = .6; j < 7; j += .6) line(H, R, [H.p(.74, j, 3.38), H.p(.74, j, 3.52)], .7);
+  for (const z of [3.46, 3.63]) line(H, R, [H.p(5.6, .08, z), H.p(11.65, .08, z), H.p(11.65, .08, 1.1)], 2.3, z > 3.5 ? 'teal' : 'paper');
+  const [vx, vy] = H.p(11.65, .1, 1.6);
+  H.outline(R, ell(vx, vy, 8, 8), 'coral', 1.7, {tone: .9, amp: .08});
+  for (const d of [-1, 1]) line(H, R, [[vx - 6, vy - d * 6], [vx + 6, vy + d * 6]], 1, 'coral');
+  table(H, R, 6.35, 1.18, 3.65, 1.1, .86, 'teal');
+  box(H, R, 6.55, 1.35, 1.0, .61, 1.0, .1, 'paper', 1);
+  for (let k = 0; k < 4; k++) line(H, R, [H.p(6.65, 1.43 + k * .11, 1.12), H.p(7.36, 1.43 + k * .11, 1.12)], .6);
+  line(H, R, [H.p(7.57, 1.35, 1.04), H.p(7.78, 1.91, 1.04)], 1.6, 'coral');
+  box(H, R, 8.4, 1.22, .9, .55, 1.01, .48, 'blue', .85);
+  shape(H, R, H.faceI(8.5, 1.78, .68, 1.13, 1.4), 'sun', .5, .6);
+  for (let k = 0; k < 3; k++) H.dot(...H.p(8.57 + k * .21, 1.79, 1.2), 1.5, 'teal', 1);
+  box(H, R, 8.3, 1.83, 1.1, .3, 1.01, .07, 'paper', 1);
+  for (let k = 0; k < 6; k++) line(H, R, [H.p(8.4 + k * .15, 1.85, 1.1), H.p(8.4 + k * .15, 2.08, 1.1)], .65);
+  for (const i of [7.85, 9.55]) {
+    const [x, y] = H.p(i, 1.58, 1.04);
+    oval(H, R, x, y - 7, 7, 7, 'sun', .75);
+    oval(H, R, x, y - 7, 3, 3, 'paper', 1);
+    line(H, R, [[x + 5, y - 3], [x + 14, y + 3]], 3, 'paper');
+  }
+  for (let k = 0; k < 3; k++) tub(H, R, 7.2 + k * .78, 1.25, .03);
+  table(H, R, 3.15, 7.25, 3.55, 1.17, .72, 'paper');
+  tub(H, R, 3.3, 7.37, .88, true);
+  tub(H, R, 4.58, 7.37, .88, true);
+  for (let k = 0; k < 4; k++) smallFish(H, R, 3.65 + k % 2 * .34, 7.57 + Math.floor(k / 2) * .25, 1.35, k % 2 ? 'blue' : 'teal', .65);
+  for (let k = 0; k < 6; k++) {
+    const [x, y] = H.p(4.85 + k % 3 * .23, 7.56 + Math.floor(k / 3) * .27, 1.36);
+    stroke(H, R, [[x - 3, y - 4], [x + 3, y - 5], [x + 6, y], [x + 2, y + 4], [x - 3, y + 1]], 'coral', 3.2);
+    for (let n = 0; n < 3; n++) line(H, R, [[x + n, y + 1], [x + n - 3, y + 5]], .6, 'coral');
+  }
+  box(H, R, 6, 7.35, .48, .6, .88, .08, 'sun', .5);
+  const [ix, iy] = H.p(6.16, 7.53, 1.08);
+  shape(H, R, [[ix - 9, iy], [ix + 10, iy], [ix + 13, iy + 8], [ix - 5, iy + 11]], 'paper', 1, .7);
+  line(H, R, [[ix + 10, iy + 4], [ix + 24, iy - 4]], 2.5, 'blue');
+  for (let k = 0; k < 3; k++) box(H, R, 3.3 + k * 1.0, 7.5, .85, .72, .04, .4, k % 2 ? 'teal' : 'sun', .55);
+  table(H, R, 1.65, 9.5, 2.4, 1.15, .73, 'teal');
+  for (let k = 0; k < 5; k++) box(H, R, 1.85, 9.65, .95, .7, .87 + k * .07, .06, 'paper', 1);
+  shape(H, R, H.tile(3.05, 9.65, .75, .72, .88), 'sun', .4, .6);
+  for (const i of [3.15, 3.48]) smallFish(H, R, i, 10, .98, 'coral', .55);
+  box(H, R, 2.7, 10.8, 1.25, .85, .04, .6, 'paper', 1);
+  line(H, R, [H.p(3.33, 10.8, .66), H.p(3.33, 11.65, .66)], 3, 'teal');
+  line(H, R, [H.p(2.71, 11.23, .66), H.p(3.94, 11.23, .66)], 3, 'teal');
+  for (let k = 0; k < 4; k++) {
+    const i = 10.3 + k % 2 * .68, j = 4.2 + Math.floor(k / 2) * 1.1;
+    box(H, R, i, j, .6, .92, .02, .25, 'sun', .5);
+    for (let n = 0; n < 3; n++) box(H, R, i + .03, j + .04, .53, .83, .28 + n * .24, .21, n % 2 ? 'paper' : 'teal', n % 2 ? 1 : .52);
+  }
+  box(H, R, 4.7, 10.9, 2.45, .82, .02, .12, 'coral', .4);
+  for (let k = 0; k < 5; k++) box(H, R, 4.8 + k * .47, 10.94, .34, .73, .15, .12, 'sun', .45);
+  tub(H, R, 5.1, 10.92, .28, true);
+  tub(H, R, 6.45, 10.92, .02, false);
+}
+
 export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
   floor: 'blue', tone: .2, wall: 'paper', wallTone: .82, height: 3.8, head: 20,
 }, (H, R) => {
@@ -126,6 +201,7 @@ export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
   box(H, R, 2.05, 7.9, .63, .42, 1.03, .07, 'paper', 1);
   const [gx, gy] = H.p(1.9, 8.2, 1.08);
   for (let k = 0; k < 4; k++) line(H, R, [[gx + k * 2.5, gy], [gx + k * 2.5 - 3, gy - 7]], 2.5, 'sun', .6);
+  marketStations(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14), inspect = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .12) / .62))) ** 2;
   H.at(5.35, 2.85, 0, HH => {
@@ -139,5 +215,23 @@ export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
   const j = 9.35 - park * 1.4;
   H.at(10.45, j + 1.75, 0, HH => actor(HH, R, 10.45, j + 1.75, (u < .17 || u > .85) ? t : 2, 'hold', { shirt: ['paper', 1], apron: ['coral', .78], hairStyle: 'cap' }, 0, 1.2));
   H.at(10.2, j + .7, 0, HH => cart(HH, R, 9.55, j));
+  H.at(7.6, 2.7, 0, HH => actor(HH, R, 7.6, 2.7, t * .45, 'hold', { shirt: ['paper', 1], apron: ['teal', .7], hairStyle: 'cap', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    shape(h, r, [[x - 9, y - 12], [x + 10, y - 8], [x + 8, y + 9], [x - 11, y + 5]], 'paper', 1, .6);
+    for (let k = 0; k < 4; k++) line(h, r, [[x - 6, y - 6 + k * 3], [x + 6, y - 3 + k * 3]], .5);
+  } }, 0, 1.25));
+  H.at(4.75, 8.68, 0, HH => {
+    actor(HH, R, 4.75, 8.68, t * .45, 'water', {shirt: ['paper', 1], apron: ['teal', .8], hairStyle: 'cap', face: 'nw'}, 0, 1.3);
+    const scoop = Math.max(0, Math.sin(t * Math.PI / 5));
+    const [x, y] = HH.p(4.8, 8.18, 1.13 + scoop * .33);
+    shape(HH, R, [[x - 9, y], [x + 8, y - 3], [x + 11, y + 5], [x - 6, y + 9]], 'paper', 1, .6);
+    if (scoop > .7) for (let k = 0; k < 5; k++) HH.dot(x - 5 + k * 4, y + 12 + (1 - scoop) * 25, 1.8, 'paper', 1);
+  });
+  H.at(2.3, 9.08, 0, HH => actor(HH, R, 2.3, 9.08, t * .4, 'kneel', {shirt: ['blue', .7], apron: ['paper', 1], hairStyle: 'cap'}, 0, 1.2));
+  H.at(1.9, 6.58, 0, HH => actor(HH, R, 1.9, 6.58, t * .3, 'hold', {shirt: ['sun', .6], hairStyle: 'cap', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    shape(h, r, [[x - 12, y - 5], [x + 12, y - 5], [x + 10, y + 5], [x - 10, y + 5]], 'paper', 1, .6);
+    oval(h, r, x, y - 4, 10, 3, 'teal', .6);
+  }}, 0, 1.17));
   steam(H, R, ...H.p(1.5, 1.1, 1.2), t, 1, 'paper');
 });

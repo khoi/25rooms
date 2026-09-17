@@ -1,4 +1,4 @@
-import { world, box, table, shape, oval, stroke, windowOn, cycle, lamp, ell } from '../../worlds/common.js';
+import { world, box, table, shape, oval, stroke, windowOn, cycle, ell, actor, wallRect } from '../../worlds/common.js';
 import { FIGURES, arcPts } from '../../drawings.js';
 
 function dish(H, R, x, y, r = 16) {
@@ -71,6 +71,101 @@ function workbench(H, R) {
   H.line(R, [H.p(8.28, 6.1, 1.4), H.p(8.28, 6.1, 1.65)], 'blue', 1);
 }
 
+function sampleMeal(H, R, x, y, kind = 0, s = 1) {
+  dish(H, R, x, y, 25 * s);
+  if (kind === 0) {
+    oval(H, R, x - 8 * s, y - 4 * s, 11 * s, 8 * s, 'paper', 1);
+    oval(H, R, x + 7 * s, y - 1 * s, 13 * s, 6 * s, 'coral', .48);
+    for (let k = 0; k < 5; k++) H.dot(x + (3 + k * 3) * s, y - (k % 2 * 4) * s, 2 * s, 'sun', .8);
+    for (let k = 0; k < 7; k++) H.line(R, [[x - 15 * s + k * 2.4 * s, y - 4 * s], [x - 14 * s + k * 2.4 * s, y - 7 * s]], 'blue', .5, { tone: .35 });
+  } else if (kind === 1) {
+    oval(H, R, x, y - 5 * s, 19 * s, 9 * s, 'sun', .8);
+    stroke(H, R, [[x - 12 * s, y - 7 * s], [x - 5 * s, y - 11 * s], [x + 4 * s, y - 7 * s], [x + 11 * s, y - 10 * s]], 'coral', 2.5 * s);
+    for (let k = 0; k < 4; k++) H.dot(x + (14 + k % 2 * 3) * s, y + (k % 3 - 1) * 2 * s, 2 * s, 'teal', .65);
+  } else if (kind === 2) {
+    for (let k = 0; k < 6; k++) {
+      const xx = x + (k % 3 - 1) * 12 * s, yy = y - 7 * s + Math.floor(k / 3) * 10 * s;
+      oval(H, R, xx, yy, 5.5 * s, 3.5 * s, 'paper', 1);
+      shape(H, R, [[xx - 6 * s, yy - 4 * s], [xx + 6 * s, yy - 5 * s], [xx + 5 * s, yy - 1 * s], [xx - 5 * s, yy]], k % 3 ? 'coral' : 'sun', .7, .5);
+      if (k % 3 === 0) H.line(R, [[xx, yy - 4 * s], [xx, yy + 1 * s]], 'blue', 2 * s);
+    }
+  } else if (kind === 3) {
+    oval(H, R, x, y - 3 * s, 18 * s, 8 * s, 'blue', .65);
+    for (let k = 0; k < 10; k++) stroke(H, R, [[x - 14 * s, y - 4 * s + k % 3 * 2], [x + Math.sin(k) * 7 * s, y - 9 * s + k * .6], [x + 14 * s, y - 3 * s + k % 3 * 2]], 'sun', 1.2 * s);
+    for (let k = 0; k < 5; k++) H.line(R, [[x - 6 + k * 3, y - 9], [x - 2 + k * 3, y - 3]], 'teal', 1.1);
+  } else {
+    shape(H, R, [[x - 24 * s, y - 11 * s], [x + 24 * s, y - 11 * s], [x + 24 * s, y + 10 * s], [x - 24 * s, y + 10 * s]], 'coral', .65, .8);
+    shape(H, R, [[x - 21 * s, y - 8 * s], [x - 2 * s, y - 8 * s], [x - 2 * s, y + 7 * s], [x - 21 * s, y + 7 * s]], 'paper', 1, .5);
+    H.dot(x - 11 * s, y, 3 * s, 'coral', .8);
+    shrimp(H, R, x + 9 * s, y - 3 * s, .48 * s);
+    for (let k = 0; k < 3; k++) oval(H, R, x + (4 + k * 6) * s, y + 5 * s, 3 * s, 2.5 * s, k === 1 ? 'teal' : 'sun', .7);
+  }
+}
+
+function productionDetails(H, R) {
+  table(H, R, 2.5, 1.85, 4.4, 1.36, .95, 'coral');
+  shape(H, R, H.tile(2.69, 2.04, 2.45, .98, 1.09), 'teal', .43);
+  for (let k = 0; k < 4; k++) {
+    box(H, R, 2.82 + k % 2 * 1.04, 2.12 + Math.floor(k / 2) * .46, .87, .37, 1.1, .08, 'paper', 1);
+    const [x, y] = H.p(3.25 + k % 2 * 1.04, 2.3 + Math.floor(k / 2) * .46, 1.2);
+    if (k % 2) shrimp(H, R, x, y, .43);
+    else oval(H, R, x, y, 11, 4, 'coral', .27);
+  }
+  for (let k = 0; k < 4; k++) {
+    const [x, y] = H.p(5.55 + k % 2 * .7, 2.17 + Math.floor(k / 2) * .68, 1.09);
+    shape(H, R, [[x - 7, y], [x + 7, y], [x + 7, y - 19], [x - 7, y - 19]], 'paper', 1, .65);
+    oval(H, R, x, y - 19, 7, 3, ['sun', 'coral', 'teal', 'blue'][k], .7);
+    H.line(R, [[x - 4, y - 11], [x + 4, y - 11]], ['sun', 'coral', 'teal', 'blue'][k], 4);
+  }
+  for (let k = 0; k < 3; k++) box(H, R, 2.65 + k * 1.35, 2.13, 1.11, .85, .02, .46, 'sun', .38);
+  table(H, R, .65, 3.85, 1.75, 1.85, .91, 'sun');
+  sampleMeal(H, R, ...H.p(1.47, 4.34, 1.05), 0, .83);
+  sampleMeal(H, R, ...H.p(1.47, 5.17, 1.05), 4, .81);
+  const board = wallRect(H, 'nw', .67, 1.73, 1.62, 3.61);
+  shape(H, R, board, 'teal', .3);
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(.06, .94, 3.25 - k * .52);
+    oval(H, R, x, y, 12, 13, 'blue', .7);
+    H.line(R, [[x, y - 12], [x - 2, y - 27]], 'blue', 3);
+    oval(H, R, x, y, 9, 10, 'paper', .5);
+  }
+  for (const i of [10.6, 11.52]) for (const j of [6.54, 8]) box(H, R, i, j, .075, .075, .07, 2.38, 'blue', .68);
+  for (let row = 0; row < 4; row++) {
+    const z = .46 + row * .54;
+    box(H, R, 10.55, 6.49, 1.06, 1.57, z, .065, 'paper', 1);
+    for (let k = 0; k < 3; k++) {
+      const [x, y] = H.p(11.06, 6.77 + k * .52, z + .08);
+      if (row % 2) shrimp(H, R, x, y, .42);
+      else oval(H, R, x, y, 8, 4, row === 0 ? 'paper' : 'sun', row === 0 ? 1 : .6);
+    }
+  }
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(8.85, 1.71 + k * .57, .05);
+    shape(H, R, [[x - 10, y], [x + 10, y], [x + 12, y - 24], [x - 12, y - 24]], 'paper', 1);
+    oval(H, R, x, y - 24, 12, 4, ['coral', 'sun', 'teal'][k], .65);
+    H.line(R, arcPts(x, y - 18, 11, 10, 0, Math.PI, 12), 'blue', .8);
+  }
+  table(H, R, .96, 10.6, 2.65, .85, .55, 'teal');
+  sampleMeal(H, R, ...H.p(1.61, 11.01, .69), 1, .78);
+  sampleMeal(H, R, ...H.p(2.95, 11.01, .69), 3, .77);
+  for (const [i, j, kind] of [[3.1, 8.3, 2], [7.9, 9.9, 4]]) {
+    table(H, R, i - .38, j - .35, .85, .78, .8, 'sun');
+    sampleMeal(H, R, ...H.p(i, j, .94), kind, .88);
+  }
+  for (let k = 0; k < 5; k++) {
+    const [x, y] = H.p(6.48 + k * .28, 6.2, 1.2);
+    H.line(R, [[x, y], [x - 4 + k, y - 15 - k % 2 * 3]], k % 2 ? 'blue' : 'sun', 1.2);
+  }
+  const [mx, my] = H.p(3.04, 6.07, .03);
+  oval(H, R, mx, my - 5, 12, 8, 'coral', .3);
+  for (let k = 0; k < 5; k++) H.line(R, [[mx - 8, my - 4 + k], [mx + 8, my - 2 + k]], 'paper', .8);
+  const [wx, wy] = H.p(8.8, 5.77, .07);
+  H.line(R, [[wx, wy], [wx + 3, wy - 30]], 'blue', 2);
+  oval(H, R, wx + 3, wy - 31, 10, 9, 'sun', .55);
+  oval(H, R, wx + 3, wy - 31, 6, 5, 'paper', 1);
+  stroke(H, R, [[wx + 10, wy - 31], [wx + 15, wy - 23], [wx + 12, wy - 12], [wx + 19, wy - 9]], 'blue', .8);
+}
+
 const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kappabashi food-sample studio', { floor: 'sun', tone: .14, wall: 'paper', wallTone: 1, pattern: 'tiles', height: 4.15, head: 20 }, (H, R) => {
   windowOn(H, R, 'nw', 7.7, .7, 6.65, 3.03, { sky: 'teal', skyTone: .1, frameInk: 'coral' });
   for (const z of [.58, 1.75, 2.92]) {
@@ -79,8 +174,8 @@ const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kap
       const [x, y] = H.p(1.2 + k * 1.35, .83, z + .11);
       if (z > 2.5) {
         for (let q = 0; q < 3; q++) oval(H, R, x, y - q * 4, 12, 5, 'paper', 1);
-      } else if (k % 3 === 0) parfait(H, R, x, y, .62);
-      else if (k % 3 === 1) soda(H, R, x, y, .64);
+      } else if (k % 3 === 0) sampleMeal(H, R, x, y, k % 5, .75);
+      else if (k % 3 === 1) soda(H, R, x, y, .78);
       else {
         dish(H, R, x, y, 15);
         oval(H, R, x - 4, y - 4, 6, 3, 'paper', 1);
@@ -129,6 +224,7 @@ const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kap
   shape(H, R, [[fx - 9, fy], [fx + 9, fy], [fx, fy - 15]], 'coral', .6);
   H.line(R, [[fx - 9, fy], [fx + 9, fy]], 'teal', 3);
   for (const dx of [-3, 2]) H.dot(fx + dx, fy - 5, 1, 'blue');
+  productionDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 11);
   H.at(5.05, 3.6, 0, HH => {
@@ -154,6 +250,25 @@ const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kap
     oval(HH, R, x, y, 19, 7, 'blue', .7);
     H.line(R, [[x, y], [x + Math.cos(t * .22) * 16, y + Math.sin(t * .22) * 5]], 'sun', 1.5);
     parfait(HH, R, x + Math.sin(t * .22) * 3, y - 4, .75);
+  });
+  H.at(2.16, 2.8, 0, HH => {
+    const [x, y] = HH.p(2.16, 2.8);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 4, scale: 1.25, face: 'se', opts: { shirt: ['blue', .6], apron: ['paper', 1], prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand, press = Math.sin(t * .85) * 3;
+      shape(A, B, [[hx - 12, hy], [hx + 12, hy], [hx + 10, hy - 5], [hx - 10, hy - 5]], 'coral', .4);
+      oval(A, B, hx, hy - 8 + press, 8, 4, 'paper', 1);
+    } } });
+  });
+  H.at(3.18, 7.29, 0, HH => {
+    const [x, y] = HH.p(3.18, 7.29);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 7, scale: 1.35, face: 'se', opts: { shirt: ['teal', .65], hairStyle: 'pony', prop: (A, B, p) => sampleMeal(A, B, p.nearHand[0] - 3, p.nearHand[1] - 2, 4, .52) } });
+  });
+  H.at(2.83, 9.59, 0, HH => actor(HH, R, 2.83, 9.59, t * .27, 'point', { shirt: ['coral', .7], face: 'nw' }, 0, 1.18, 'child'));
+  H.at(11.1, 6.95, 1.61, HH => {
+    const [x, y] = HH.p(11.06, 6.77, 1.63);
+    const sway = Math.sin(t * .45) * 2;
+    HH.line(R, [[x, y - 8], [x + sway, y + 7]], 'paper', 1.1);
+    shape(HH, R, [[x - 4 + sway, y + 5], [x + 5 + sway, y + 5], [x + 5 + sway, y + 13], [x - 4 + sway, y + 13]], 'sun', .65, .6);
   });
 });
 

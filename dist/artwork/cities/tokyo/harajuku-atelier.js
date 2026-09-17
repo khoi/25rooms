@@ -21,7 +21,77 @@ function garment(H, R, x, y, ink, s = 1, skirt = false) {
   else {
     H.line(R, [[x, y + 7 * s], [x + s, y + 37 * s]], 'paper', .9);
     shape(H, R, [[x - 8 * s, y + 15 * s], [x - 2 * s, y + 15 * s], [x - 2 * s, y + 23 * s], [x - 8 * s, y + 23 * s]], 'coral', .5, .5);
+    for (let q = 0; q < 5; q++) H.line(R, [[x - 9 * s, y + (12 + q * 5) * s], [x + 10 * s, y + (12 + q * 5) * s]], ink === 'teal' ? 'sun' : 'paper', 1.2, { tone: .7 });
   }
+}
+
+function atelierStock(H, R) {
+  shape(H, R, H.tile(7.17, 8.11, 4.06, 3.16, .015), 'coral', .21);
+  for (let q = 0; q < 9; q++) H.line(R, [H.p(7.22 + q * .46, 8.17, .024), H.p(7.22 + q * .46, 11.2, .024)], 'paper', 1.7);
+  shape(H, R, H.faceI(3.29, .04, 3.58, 1.65, 3.43), 'teal', .4);
+  for (let row = 0; row < 2; row++) for (let q = 0; q < 4; q++) {
+    const i = 3.44 + q * .83, z = 1.81 + row * .75;
+    shape(H, R, H.faceI(i, .08, .66, z, z + .61), 'paper', 1);
+    const [x, y] = H.p(i + .34, .1, z + .45);
+    garment(H, R, x, y, colors[q % 3], .35, q % 2 === 0);
+    H.line(R, [H.p(i + .11, .11, z + .08), H.p(i + .57, .11, z + .08)], 'coral', 1.1);
+  }
+  box(H, R, 3.23, .39, 3.54, 1.1, 0, 1.13, 'teal', .57);
+  for (let row = 0; row < 3; row++) for (let q = 0; q < 5; q++) {
+    const i = 3.34 + q * .66, z = .12 + row * .31;
+    shape(H, R, H.faceI(i, 1.51, .55, z, z + .25), q % 2 ? 'paper' : 'sun', .6, .65);
+    H.line(R, [H.p(i + .2, 1.53, z + .12), H.p(i + .38, 1.53, z + .12)], 'blue', 1.4);
+  }
+  for (let q = 0; q < 4; q++) {
+    const i = 3.49 + q * .73;
+    for (let n = 0; n < 3; n++) box(H, R, i, .51, .62, .76, 1.14 + n * .1, .075, colors[(q + n) % 3], .63);
+    H.line(R, [H.p(i + .3, .52, 1.48), H.p(i + .3, 1.26, 1.48)], 'paper', 1.2);
+  }
+  table(H, R, 4.03, 2.38, 2.75, 1.38, 1.01, 'coral');
+  box(H, R, 4.19, 2.57, .95, .83, 1.14, .13, 'blue', .77);
+  box(H, R, 4.59, 2.62, .52, .54, 1.28, .56, 'paper', 1);
+  for (let q = 0; q < 3; q++) {
+    const [x, y] = H.p(4.35 + q * .27, 2.67, 1.89);
+    H.line(R, [[x, y + 14], [x, y - 6]], 'blue', .9);
+    shape(H, R, [[x - 4, y + 4], [x + 4, y + 4], [x + 3, y - 7], [x - 3, y - 7]], colors[q], .76, .6);
+    stroke(H, R, [[x, y - 7], [x + 6, y - 12], H.p(4.59, 3.03, 1.3)], colors[q], .65);
+  }
+  shape(H, R, H.tile(4.18, 3.24, 1.14, .39, 1.29), 'teal', .7);
+  box(H, R, 5.51, 2.59, .93, .78, 1.14, .045, 'paper', 1);
+  for (let q = 0; q < 4; q++) shape(H, R, H.tile(5.6 + q % 2 * .36, 2.7 + Math.floor(q / 2) * .27, .27, .2, 1.2), colors[q], .54, .45);
+  scissors(H, R, ...H.p(6.46, 3.39, 1.19), .83);
+  box(H, R, 5.77, 3.94, .76, .7, 0, .58, 'sun', .5);
+  box(H, R, 2.87, 2.96, .8, .83, 0, .48, 'paper', 1);
+  for (let q = 0; q < 7; q++) {
+    const [x, y] = H.p(3.03 + q % 3 * .22, 3.13 + Math.floor(q / 3) * .19, .51 + q % 2 * .07);
+    shape(H, R, [[x - 7, y], [x - 5, y - 8], [x + 9, y - 5], [x + 5, y + 4]], colors[q % 3], .58, .6);
+  }
+  box(H, R, .23, 11.16, 2.28, .61, 0, .34, 'teal', .62);
+  for (const z of [.35, .87, 1.39]) {
+    box(H, R, .23, 11.16, 2.28, .61, z, .06, 'sun', .61);
+    for (let q = 0; q < 3; q++) {
+      const [x, y] = H.p(.58 + q * .69, 11.47, z + .14);
+      shape(H, R, [[x - 10, y], [x + 12, y], [x + 11, y - 8], [x, y - 16], [x - 8, y - 12]], q % 2 ? 'coral' : 'blue', .75);
+      H.line(R, [[x - 9, y - 3], [x + 10, y - 3]], 'paper', 1.6);
+    }
+  }
+  for (const i of [.23, 2.51]) H.line(R, [H.p(i, 11.16, .02), H.p(i, 11.16, 1.49)], 'blue', 1.5);
+  box(H, R, 7.05, 10.16, 1.25, 1.06, 0, .72, 'sun', .49);
+  shape(H, R, H.tile(7.12, 10.23, 1.11, .92, .74), 'paper', 1);
+  for (let q = 0; q < 5; q++) {
+    const [x, y] = H.p(7.39 + q % 2 * .42, 10.49 + Math.floor(q / 2) * .19, .79 + q % 2 * .05);
+    oval(H, R, x, y, 13, 7, colors[q % 3], .66);
+    stroke(H, R, [[x - 8, y], [x - 3, y - 4], [x + 7, y + 2]], 'paper', 1);
+  }
+  table(H, R, 10.74, 4.41, .84, 2.08, .67, 'teal');
+  for (let q = 0; q < 3; q++) {
+    box(H, R, 10.86, 4.58 + q * .47, .59, .39, .82, .07, colors[q], .56);
+    shape(H, R, H.tile(10.97, 4.68 + q * .47, .3, .2, .9), 'paper', 1, .5);
+  }
+  const [bx, by] = H.p(9.9, 10.65, .04);
+  shape(H, R, [[bx - 15, by], [bx + 14, by], [bx + 17, by - 26], [bx - 15, by - 26]], 'teal', .55);
+  stroke(H, R, [[bx - 8, by - 26], [bx - 8, by - 36], [bx + 8, by - 36], [bx + 8, by - 26]], 'blue', 1.5);
+  bird(H, R, bx, by - 12, .87);
 }
 
 function scissors(H, R, x, y, s = 1) {
@@ -43,6 +113,7 @@ function sewingMachine(H, R) {
 }
 
 function furnishings(H, R) {
+  atelierStock(H, R);
   windowOn(H, R, 'nw', 4.6, 1.35, 4.8, 2.1, { sky: 'sun', skyTone: .13, frameInk: 'teal', inside() {
     for (let q = 0; q < 4; q++) box(H, R, -.12, 2.5 + q * .94, .03, .72, 1.4, .65 + q % 2 * .45, 'teal', .22);
   } });
@@ -100,7 +171,7 @@ function furnishings(H, R) {
     const [x, y] = H.p(.75, 8.1 + q * .69, 2.42);
     stroke(H, R, [[x, y - 3], [x + 4, y - 7], [x + 6, y - 2], [x, y + 3]], 'blue', .75);
     H.line(R, [[x, y + 3], [x - 14, y + 12], [x + 15, y + 12], [x, y + 3]], 'blue', .7);
-    garment(H, R, x, y + 10, colors[q % 3], .8, q === 1);
+    garment(H, R, x, y + 10, colors[q % 3], 1.15, q === 1);
     if (q === 0) bird(H, R, x + 6, y + 27, .46);
   }
   const [dx, dy] = H.p(8.85, 5.11, .04);
@@ -146,4 +217,10 @@ export default world('tokyo-harajuku-atelier', 'Harajuku · Made upstairs', { fl
   shape(H, R, [[ix - 17, iy], [ix + 18, iy], [ix + 8, iy - 10], [ix - 6, iy - 14]], 'paper', 1);
   stroke(H, R, [[ix - 7, iy - 10], [ix - 6, iy - 21], [ix + 7, iy - 21], [ix + 10, iy - 8]], 'teal', 3);
   stroke(H, R, [[ix + 14, iy], [ix + 23, iy + 12], [ix + 19, iy + 23], [ix + 2, iy + 26]], 'blue', .9);
+  actor(H, R, 6.18, 4.11, t * .5, 'type', { shirt: ['blue', .64], hairStyle: 'curly', face: 'nw' }, .09, 1.23);
+  actor(H, R, 10.33, 8.17, t * .35, 'hold', { shirt: ['teal', .68], hairStyle: 'bun', face: 'sw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    garment(HH, RR, x - 5, y - 8 + Math.sin(t * .8) * 2, 'sun', .62, true);
+  } }, 0, 1.26);
+  actor(H, R, 8.36, 10.09, t * .27, 'think', { shirt: ['coral', .62], hairStyle: 'long', face: 'ne' }, 0, 1.22);
 });

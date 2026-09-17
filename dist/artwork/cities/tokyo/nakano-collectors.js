@@ -53,6 +53,77 @@ function train(H, R, i, j, z) {
   H.line(R, [H.p(i - .07, j + .3, z - .025), H.p(i + 1.9, j + .3, z - .025)], 'blue', .8);
 }
 
+function collectorStock(H, R) {
+  shape(H, R, H.tile(2.02, 2.76, 4.13, 4.79, .025), 'teal', .2);
+  shape(H, R, H.tile(7.73, 6.98, 3.58, 2.82, .025), 'coral', .18);
+  for (let q = 0; q < 7; q++) {
+    const i = .45 + q * .9;
+    box(H, R, i, .38, .78, .74, 2.84, .62 + q % 2 * .18, colors[q % 3], .56);
+    shape(H, R, H.faceI(i + .11, 1.15, .56, 2.93, 3.37), 'paper', 1);
+    const [x, y] = H.p(i + .39, 1.17, 3.07);
+    if (q % 2) bird(H, R, x, y, .91);
+    else creature(H, R, x, y + 4, .7, colors[(q + 1) % 3]);
+    H.line(R, [H.p(i + .12, 1.18, 2.91), H.p(i + .65, 1.18, 2.91)], 'sun', 1.1);
+  }
+  for (let q = 0; q < 6; q++) {
+    const j = 1.83 + q * .81;
+    box(H, R, .3, j, .83, .69, 2.84, .51 + q % 3 * .12, colors[(q + 1) % 3], .56);
+    shape(H, R, H.faceJ(1.15, j + .1, .5, 2.94, 3.29), 'paper', 1);
+    H.line(R, [H.p(1.18, j + .16, 3.04), H.p(1.18, j + .54, 3.22)], 'coral', 3);
+  }
+  box(H, R, 2.11, 3.0, 2.34, 2.07, 0, .83, 'coral', .6);
+  box(H, R, 2.19, 3.08, 2.18, 1.91, .84, .08, 'sun', .64);
+  box(H, R, 2.62, 3.41, 1.31, 1.1, .93, .26, 'teal', .54);
+  creature(H, R, ...H.p(3.25, 4.04, 1.23), 1.61, 'teal');
+  for (let q = 0; q < 4; q++) {
+    const [x, y] = H.p(2.43 + q % 2 * 1.51, 3.34 + Math.floor(q / 2) * 1.29, .98);
+    creature(H, R, x, y, .88, colors[q % 3]);
+  }
+  for (let q = 0; q < 8; q++) {
+    const i = 2.24 + q * .26;
+    box(H, R, i, 4.51, .2, .39, .16, .51 + q % 3 * .04, colors[q % 3], .55);
+    H.line(R, [H.p(i + .04, 4.93, .4), H.p(i + .16, 4.93, .4)], 'paper', 1.1);
+  }
+  for (let row = 0; row < 2; row++) {
+    box(H, R, 1.84, 10.36 + row * .77, 2.45, .65, 0, .41, row ? 'sun' : 'teal', .56);
+    for (let q = 0; q < 10; q++) {
+      box(H, R, 1.99 + q * .22, 10.45 + row * .77, .16, .44, .22, .51 + q % 3 * .09, colors[q % 4], .58);
+      H.line(R, [H.p(2.01 + q * .22, 10.91 + row * .77, .52), H.p(2.11 + q * .22, 10.91 + row * .77, .52)], 'paper', 1.1);
+    }
+  }
+  box(H, R, 5.15, 10.79, 2.33, .77, 0, .51, 'paper', 1);
+  for (let q = 0; q < 5; q++) {
+    box(H, R, 5.32 + q * .43, 10.97, .34, .45, .52, .47, colors[q % 3], .53);
+    const [x, y] = H.p(5.5 + q * .43, 11.44, .7);
+    bird(H, R, x, y, .63);
+  }
+  table(H, R, 9.13, 6.27, 2.3, 1.48, .77, 'teal');
+  box(H, R, 9.4, 6.53, 1.18, .89, .91, .54, 'sun', .5);
+  shape(H, R, H.tile(9.49, 6.62, 1.0, .72, 1.47), 'paper', .7);
+  shape(H, R, [H.p(9.4, 6.53, 1.47), H.p(10.58, 6.53, 1.47), H.p(10.58, 6.22, 1.74), H.p(9.4, 6.22, 1.74)], 'sun', .5);
+  shape(H, R, [H.p(9.4, 7.42, 1.47), H.p(10.58, 7.42, 1.47), H.p(10.58, 7.68, 1.26), H.p(9.4, 7.68, 1.26)], 'sun', .5);
+  creature(H, R, ...H.p(10.01, 7.02, 1.5), .98, 'paper');
+  for (let q = 0; q < 3; q++) {
+    const [x, y] = H.p(10.89, 6.54 + q * .33, .94);
+    shape(H, R, [[x - 9, y], [x - 5, y - 11], [x + 9, y - 7], [x + 10, y + 4]], 'paper', 1, .6);
+    H.line(R, [[x - 6, y - 5], [x + 5, y - 2]], 'teal', .8);
+  }
+  box(H, R, 9.53, 6.51, 1.42, .92, .12, .43, 'coral', .58);
+  for (const i of [9.38, 11.21]) for (const j of [6.46, 7.56]) oval(H, R, ...H.p(i, j, .06), 4, 5, 'blue');
+  box(H, R, 7.33, 3.47, 1.04, .88, 0, .42, 'sun', .48);
+  for (let q = 0; q < 5; q++) box(H, R, 7.44 + q * .17, 3.57, .13, .67, .23, .68, colors[q % 3], .54);
+  shape(H, R, H.faceI(7.55, .08, 1.09, 2.22, 3.17), 'paper', 1);
+  const [px, py] = H.p(8.09, .1, 2.48);
+  shape(H, R, [[px - 15, py + 6], [px - 4, py - 20], [px + 15, py + 1], [px + 2, py - 3]], 'coral', .68);
+  H.dot(px - 9, py - 22, 3, 'sun');
+  box(H, R, 8.34, 10.1, 1.07, 1.01, 0, .47, 'teal', .49);
+  for (let q = 0; q < 3; q++) {
+    const [x, y] = H.p(8.59 + q * .25, 10.49, .51);
+    oval(H, R, x, y, 9, 7, 'paper');
+    oval(H, R, x + 2, y - 4, 4, 3, colors[q]);
+  }
+}
+
 function cabinet(H, R, i, j, w, d, h, side) {
   box(H, R, i, j, w, d, 0, .27, 'blue', .72);
   for (const z of [.29, 1.08, 1.88, 2.68]) {
@@ -63,13 +134,13 @@ function cabinet(H, R, i, j, w, d, h, side) {
         const x = i + (side ? .44 : .42 + q * .92), y = j + (side ? .44 + q * .92 : .44), zz = z + .12;
         const [px, py] = H.p(x, y, zz);
         if (z < .4) {
-          if (q % 2) creature(H, R, px, py, .69, colors[q % 3]);
-          else robot(H, R, px, py, .36, colors[q % 3]);
+          if (q % 2) creature(H, R, px, py, .96, colors[q % 3]);
+          else robot(H, R, px, py, .42, colors[q % 3]);
         } else if (z < 1.2) {
-          box(H, R, x - .25, y - .2, .52, .4, zz, .57, colors[q % 3], .32);
+          box(H, R, x - .33, y - .28, .68, .53, zz, .62, colors[q % 3], .63);
           const [bx, by] = H.p(x, y + .21, zz + .12);
-          if (q % 2) bird(H, R, bx, by, .73);
-          else creature(H, R, bx, by, .49, 'paper');
+          if (q % 2) bird(H, R, bx, by, .97);
+          else creature(H, R, bx, by, .66, 'paper');
         } else if (q % 3 === 0) {
           const p = [[px - 14, py - 6], [px, py - 22], [px + 17, py - 4], [px + 3, py - 7], [px, py + 1], [px - 4, py - 7]];
           shape(H, R, p, 'paper', 1);
@@ -92,6 +163,7 @@ function cabinet(H, R, i, j, w, d, h, side) {
 }
 
 function furnishings(H, R) {
+  collectorStock(H, R);
   cabinet(H, R, .35, .34, 6.53, .98, 2.77, false);
   cabinet(H, R, .25, 1.61, 1.03, 5.29, 2.77, true);
   box(H, R, 7.53, .42, 3.81, 1.85, 0, .45, 'blue', .75);
@@ -171,4 +243,17 @@ export default world('tokyo-nakano-collectors', 'Nakano · The missing piece', {
   const lid = [H.p(4.62, 5.67, 1.17), H.p(5.54, 5.67, 1.17), H.p(5.54, 5.67 + closed * .79, 1.18 + (1 - closed) * .64), H.p(4.62, 5.67 + closed * .79, 1.18 + (1 - closed) * .64)];
   H.tint(lid, 'teal', .09);
   H.outline(R, lid, 'blue', .8);
+  actor(H, R, 2.69, 6.18, t * .3, 'hold', { shirt: ['coral', .68], hairStyle: 'curly', face: 'nw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    shape(HH, RR, [[x - 13, y - 12], [x + 12, y - 7], [x + 12, y + 11], [x - 13, y + 6]], 'paper', 1);
+    creature(HH, RR, x, y + 7, .55, 'teal');
+  } }, 0, 1.25);
+  actor(H, R, 10.65, 8.29, t * .43, 'hold', { shirt: ['blue', .63], hairStyle: 'short', face: 'nw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    creature(HH, RR, x - 4, y - 2 + Math.sin(t * .9) * 2, .77, 'coral');
+  } }, 0, 1.26);
+  actor(H, R, 7.53, 10.31, t * .31, 'kneel', { shirt: ['teal', .67], hairStyle: 'pony', face: 'se', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    bird(HH, RR, x + 3, y - 3, .85);
+  } }, 0, 1.2);
 });

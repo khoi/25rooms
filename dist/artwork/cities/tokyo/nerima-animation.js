@@ -67,7 +67,84 @@ function storyboard(H, R) {
   }
 }
 
+function productionMaterials(H, R) {
+  shape(H, R, H.tile(3.72, 3.74, 3.39, 4.53, .017), 'sun', .22);
+  for (let q = 0; q < 6; q++) H.line(R, [H.p(3.78, 3.84 + q * .74, .025), H.p(7.05, 3.84 + q * .74, .025)], 'coral', .75, { tone: .32 });
+  box(H, R, .24, .27, 3.33, .76, 0, .85, 'paper', 1);
+  for (let row = 0; row < 4; row++) {
+    shape(H, R, H.faceI(.34, 1.05, 3.13, .1 + row * .17, .24 + row * .17), row % 2 ? 'teal' : 'paper', .54, .6);
+    for (let q = 0; q < 3; q++) H.line(R, [H.p(.65 + q * 1.04, 1.07, .18 + row * .17), H.p(.96 + q * 1.04, 1.07, .18 + row * .17)], 'blue', 1.5);
+  }
+  for (let q = 0; q < 4; q++) {
+    box(H, R, .37 + q * .77, .35, .67, .55, .87, .2 + q % 2 * .11, colors[q % 3], .58);
+    H.line(R, [H.p(.7 + q * .77, .37, 1.1 + q % 2 * .11), H.p(.7 + q * .77, .88, 1.1 + q % 2 * .11)], 'paper', 1.2);
+  }
+  box(H, R, .06, 7.22, .28, 4.44, 1.67, 1.72, 'teal', .65);
+  for (const z of [1.66, 2.21, 2.78, 3.36]) {
+    box(H, R, .05, 7.22, .91, 4.44, z, .065, 'sun', .55);
+    if (z < 3.3) for (let q = 0; q < 5; q++) {
+      const j = 7.35 + q * .83;
+      for (let n = 0; n < 3; n++) box(H, R, .19, j, .69, .66, z + .075 + n * .11, .075, n === 1 ? colors[q % 3] : 'paper', n === 1 ? .57 : 1);
+      H.line(R, [H.p(.9, j + .13, z + .28), H.p(.9, j + .47, z + .28)], 'blue', .65);
+    }
+  }
+  for (let q = 0; q < 6; q++) box(H, R, .08, 7.25 + q * .87, .82, .08, 1.67, 1.73, 'teal', .57);
+  table(H, R, 4.02, 4.47, 2.51, 2.39, .94, 'coral');
+  shape(H, R, H.tile(4.18, 4.66, 2.13, 1.99, 1.09), 'teal', .24);
+  for (let row = 0; row < 2; row++) for (let q = 0; q < 2; q++) {
+    const i = 4.28 + q * 1.0, j = 4.81 + row * .83;
+    for (let n = 0; n < 3; n++) box(H, R, i + n * .025, j, .83, .65, 1.11 + n * .024, .018, 'paper', 1);
+    const [x, y] = H.p(i + .45, j + .35, 1.22);
+    bird(H, R, x, y, .7, row ? .75 : -.3);
+    for (let n = 0; n < 3; n++) oval(H, R, ...H.p(i + .13 + n * .26, j + .04, 1.21), 1.5, .8, 'blue', .65);
+  }
+  pencils(H, R, 6.15, 4.55, 1.09);
+  box(H, R, 6.17, 6.15, .22, .33, 1.1, .12, 'sun', .65);
+  for (let q = 0; q < 4; q++) box(H, R, 4.28 + q * .41, 4.63, .29, .17, 1.18, .05, colors[q], .63);
+  H.line(R, [H.p(4.23, 6.47, 1.12), H.p(5.58, 6.47, 1.12)], 'blue', 1.8);
+  for (let q = 0; q < 12; q++) H.line(R, [H.p(4.25 + q * .11, 6.43, 1.13), H.p(4.25 + q * .11, 6.54, 1.13)], 'paper', .6);
+  box(H, R, 4.62, 5.15, 1.31, .83, .12, .62, 'teal', .58);
+  for (let q = 0; q < 3; q++) H.line(R, [H.p(4.73, 6.01, .23 + q * .18), H.p(5.81, 6.01, .23 + q * .18)], 'paper', 1.3);
+  chair(H, R, 4.67, 7.08, 'coral');
+  box(H, R, 10.81, 3.67, .17, 2.19, .3, 2.46, 'blue', .69);
+  shape(H, R, H.faceJ(11.01, 3.87, 1.8, .62, 2.56), 'paper', 1);
+  for (let row = 0; row < 2; row++) {
+    const j = 4.04 + row * .79;
+    shape(H, R, H.faceJ(11.03, j, .66, .87, 2.24), row ? 'teal' : 'sun', .2);
+    const [x, y] = H.p(11.06, j + .35, 1.34);
+    shape(H, R, [[x - 14, y + 12], [x - 4, y - 20], [x + 16, y + 5]], 'teal', .66);
+    bird(H, R, x + 3, y - 17, .69, .5);
+  }
+  H.line(R, [H.p(10.83, 3.8, .08), H.p(10.83, 3.8, 2.78)], 'sun', 2);
+  H.line(R, [H.p(10.83, 5.78, .08), H.p(10.83, 5.78, 2.78)], 'sun', 2);
+  box(H, R, 10.47, 8.8, 1.05, 1.22, .12, 1.07, 'teal', .57);
+  for (const z of [.21, .57, .95, 1.2]) box(H, R, 10.47, 8.8, 1.05, 1.22, z, .055, 'paper', 1);
+  for (let row = 0; row < 3; row++) for (let q = 0; q < 3; q++) box(H, R, 10.54, 8.89 + q * .33, .91, .27, .27 + row * .37, .17, colors[(row + q) % 3], .51);
+  for (const [i, j] of [[10.62, 8.95], [11.36, 8.95], [10.62, 9.86], [11.36, 9.86]]) oval(H, R, ...H.p(i, j, .06), 3, 4, 'blue');
+  for (let q = 0; q < 3; q++) {
+    const i = 2.33 + q * .39;
+    box(H, R, i, 10.44, .3, .45, 0, 1.13 + q % 2 * .22, q % 2 ? 'coral' : 'paper', .73);
+    oval(H, R, ...H.p(i + .15, 10.67, 1.15 + q % 2 * .22), 6, 3, 'teal', .59);
+    oval(H, R, ...H.p(i + .15, 10.67, 1.15 + q % 2 * .22), 2.2, 1.4, 'paper');
+  }
+  table(H, R, 7.4, 10.33, 1.85, 1.06, .71, 'teal');
+  for (let q = 0; q < 2; q++) {
+    const [x, y] = H.p(7.9 + q * .77, 10.88, .87);
+    oval(H, R, x, y, 15, 7, 'paper', 1);
+    for (let n = 0; n < 5; n++) H.dot(x + Math.cos(n * TAU / 5) * 9, y + Math.sin(n * TAU / 5) * 4, 2, 'blue', .6);
+    H.dot(x, y, 2.5, 'coral', .7);
+  }
+  shape(H, R, H.tile(7.62, 10.39, .53, .48, .86), 'paper', 1);
+  const [fx, fy] = H.p(8.91, 10.6, .87);
+  stroke(H, R, [[fx, fy], [fx + 15, fy - 4], [fx + 21, fy + 5], [fx + 10, fy + 11], [fx - 7, fy + 6]], 'blue', 2.5);
+  for (let q = 0; q < 5; q++) H.line(R, [[fx + q * 3, fy + 7], [fx + q * 3, fy + 11]], 'paper', .7);
+  const [wx, wy] = H.p(6.58, 8.53, .04);
+  shape(H, R, [[wx - 10, wy], [wx + 10, wy], [wx + 13, wy - 20], [wx - 13, wy - 20]], 'teal', .37);
+  for (let q = 0; q < 4; q++) oval(H, R, wx - 6 + q * 4, wy - 18 - q % 2 * 3, 5, 3, 'paper');
+}
+
 function furnishings(H, R) {
+  productionMaterials(H, R);
   windowOn(H, R, 'nw', 3.34, 1.12, 5.54, 2.1, { sky: 'sun', skyTone: .11, frameInk: 'teal', inside() {
     for (let q = 0; q < 5; q++) {
       const j = .89 + q * 1.07;
@@ -192,4 +269,16 @@ export default world('tokyo-nerima-animation', 'Nerima · A few frames of flight
   H.dot(fx, fy - 12, 3, 'sun', 1, { knock: true });
   const flutter = Math.sin(t * 1.4) * .07;
   shape(H, R, [H.p(4.51, 5.41, .04), H.p(5.13, 5.41, .04), H.p(5.13, 6.13, .07 + flutter), H.p(4.51, 6.13, .04)], 'paper', 1, .6);
+  actor(H, R, 5.13, 7.43, t * .39, 'read', { shirt: ['coral', .67], hairStyle: 'long', face: 'nw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    shape(HH, RR, [[x - 15, y - 9], [x + 13, y - 2], [x + 13, y + 15], [x - 15, y + 8]], 'paper', 1);
+    bird(HH, RR, x - 1, y + 4, .7, Math.sin(t * .8) * .6);
+  } }, .1, 1.23);
+  actor(H, R, 1.9, 11.12, t * .4, 'hold', { shirt: ['blue', .62], hairStyle: 'short', face: 'nw', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    shape(HH, RR, [[x - 14, y - 9], [x + 12, y - 1], [x + 12, y + 10], [x - 14, y + 3]], 'paper', 1);
+    HH.line(RR, [[x - 10, y - 3], [x + 7, y + 2]], 'teal', 1.2);
+  } }, 0, 1.24);
+  const scan = cycle(t, 6);
+  H.line(R, [H.p(.6, 9.66 + scan * .79, 1.235), H.p(1.4, 9.66 + scan * .79, 1.235)], 'sun', 2.2);
 });

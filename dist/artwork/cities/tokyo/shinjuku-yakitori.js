@@ -34,6 +34,81 @@ function foreground(H, R) {
   H.line(R, [H.p(1.65, 6.14, 1.19), H.p(10.5, 6.14, 1.19)], 'sun', 1.4);
 }
 
+function alleyDetails(H, R) {
+  for (const z of [1.8, 2.1]) {
+    box(H, R, 6.74, .22, 2.69, .53, z, .08, 'coral', .6);
+    for (let k = 0; k < 8; k++) bottle(H, R, ...H.p(6.91 + k * .32, .49, z + .09), ['teal', 'sun', 'coral'][k % 3], .34 + k % 2 * .07);
+  }
+  box(H, R, .09, 2.87, .67, 3.85, 2.25, .09, 'coral', .55);
+  for (let k = 0; k < 7; k++) {
+    const j = 3.02 + k * .51;
+    if (k < 4) for (let q = 0; q < 4; q++) oval(H, R, ...H.p(.41, j, 2.35 + q * .045), 9, 4, 'paper');
+    else bottle(H, R, ...H.p(.41, j, 2.35), 'teal', .57);
+  }
+  H.line(R, [H.p(.11, 2.91, 1.98), H.p(.11, 6.81, 1.98)], 'sun', 1.6);
+  for (let k = 0; k < 6; k++) {
+    const [x, y] = H.p(.15, 3.15 + k * .61, 1.89);
+    stroke(H, R, [[x, y - 7], [x + 3, y - 10], [x + 6, y - 6], [x + 3, y]], 'blue', .8);
+    H.line(R, [[x + 3, y], [x + 3, y + 18]], 'paper', 2);
+    if (k % 2) oval(H, R, x + 3, y + 23, 5, 7, 'teal', .5);
+    else {
+      oval(H, R, x + 3, y + 25, 9, 9, 'blue', .66);
+      H.outline(R, ell(x + 3, y + 25, 6, 6), 'paper', .7);
+    }
+  }
+  table(H, R, .43, 7.39, 1.48, 1.57, .9, 'teal');
+  shape(H, R, H.tile(.58, 7.53, 1.16, 1.24, 1.04), 'blue', .73);
+  shape(H, R, H.tile(.71, 7.67, .91, .96, 1.05), 'paper', .9);
+  for (let k = 0; k < 3; k++) oval(H, R, ...H.p(.98 + k * .19, 8.03 + k * .12, 1.12), 11, 6, 'paper');
+  stroke(H, R, [H.p(.48, 7.66, 1.06), H.p(.48, 7.66, 1.7), H.p(1.03, 7.87, 1.7), H.p(1.03, 7.87, 1.45)], 'blue', 2);
+  bottle(H, R, ...H.p(.64, 8.76, 1.05), 'sun', .32);
+  box(H, R, .67, 7.61, .89, 1.08, .15, .4, 'coral', .45);
+  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(.9, 8.06, .57 + k * .045), 12, 6, 'paper');
+  table(H, R, 2.15, 8.11, 1.62, 1.15, .68, 'coral');
+  for (const [i, j, r] of [[2.66, 8.64, 14], [3.33, 8.49, 11]]) {
+    const [x, y] = H.p(i, j, .84);
+    shape(H, R, [[x - r, y], [x + r, y], [x + r, y - 18], [x - r, y - 18]], 'blue', .65);
+    oval(H, R, x, y - 18, r, r * .45, 'paper');
+    oval(H, R, x, y - 19, r - 3, (r - 3) * .45, 'coral', .52);
+    H.line(R, [[x - r - 6, y - 10], [x - r, y - 10]], 'sun', 2.3);
+    H.line(R, [[x + r, y - 10], [x + r + 6, y - 10]], 'sun', 2.3);
+  }
+  box(H, R, 6.44, 9.64, 4.24, 1.21, 0, .85, 'coral', .57);
+  box(H, R, 6.38, 9.58, 4.36, 1.33, .85, .1, 'sun', .69);
+  for (let k = 0; k < 5; k++) {
+    const i = 6.58 + k * .78;
+    box(H, R, i, 9.82, .67, .66, .96, .15, 'paper');
+    if (k < 3) {
+      for (let q = 0; q < 3; q++) skewer(H, R, i + .32, 9.98 + q * .14, 1.17, -.32, q === 2 ? 1 : 0);
+    } else {
+      box(H, R, i, 9.82, .67, .66, 1.12, .03, 'paper');
+      H.line(R, [H.p(i + .31, 9.82, 1.16), H.p(i + .31, 10.48, 1.16)], 'coral', 1.5);
+    }
+  }
+  box(H, R, 10.99, 9.42, .77, .8, 0, .77, 'teal', .48);
+  for (let k = 0; k < 3; k++) box(H, R, 11.06, 9.51, .62, .63, .78 + k * .16, .14, 'paper');
+  for (const [i, j] of [[5.01, 9.91], [8.92, 11.05], [10.27, 11.05]]) {
+    box(H, R, i, j, 1.1, .65, 0, .58, 'teal', .43);
+    for (let k = 0; k < 6; k++) bottle(H, R, ...H.p(i + .18 + k % 3 * .35, j + .17 + Math.floor(k / 3) * .28, .62), 'teal', .43);
+    for (let k = 0; k < 4; k++) H.line(R, [H.p(i + .12 + k * .28, j + .67, .12), H.p(i + .12 + k * .28, j + .67, .49)], 'blue', .7);
+  }
+  box(H, R, 7.41, 11.17, .86, .56, 0, .79, 'paper');
+  stroke(H, R, [H.p(7.5, 11.46, .79), H.p(7.74, 11.46, 1.08), H.p(8.17, 11.46, .79)], 'coral', 1.2);
+  box(H, R, 7.94, 3.79, 1.29, .84, .15, .43, 'sun', .54);
+  for (let k = 0; k < 7; k++) {
+    const [x, y] = H.p(8.14 + k % 4 * .27, 3.99 + Math.floor(k / 4) * .29, .65);
+    oval(H, R, x, y, 5, 3, 'teal', .66);
+    H.line(R, [[x, y], [x + 3, y - 4]], 'blue', .7);
+  }
+  box(H, R, 7.03, 1.36, .84, .69, 1.22, .09, 'sun', .5);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(7.15 + k * .12, 1.49, 1.34), H.p(7.26 + k * .12, 1.94, 1.34)], 'teal', 3.5);
+  H.line(R, [H.p(7.12, 1.69, 1.37), H.p(7.82, 1.69, 1.37)], 'paper', 1);
+  const [qx, qy] = H.p(8.19, 1.88, 1.24);
+  shape(H, R, [[qx - 13, qy - 2], [qx + 10, qy - 10], [qx + 12, qy - 4], [qx - 10, qy + 3]], 'paper', .9);
+  H.line(R, [[qx - 13, qy - 2], [qx - 22, qy + 1]], 'blue', 3.1);
+  lantern(H, R, 4.5, 11.12, 2.17, 'coral');
+}
+
 export default world('tokyo-shinjuku-yakitori', 'Omoide Yokocho · Six stools and a charcoal grill', { floor: 'blue', tone: .45, wall: 'blue', wallTone: .82, pattern: 'boards', height: 3.45, head: 20 }, (H, R) => {
   for (const i of [.2, 3.8, 7.4, 11.3]) box(H, R, i, .05, .15, .18, 0, 3.38, 'coral', .45);
   box(H, R, .1, .08, 11.7, .38, 3.15, .24, 'coral', .58);
@@ -108,6 +183,7 @@ export default world('tokyo-shinjuku-yakitori', 'Omoide Yokocho · Six stools an
   for (const i of [.72, 3.27]) box(H, R, i, 9.94, .15, .18, 0, 2.58, 'coral', .65);
   H.line(R, [H.p(.65, 10.06, 2.61), H.p(3.5, 10.06, 2.61)], 'blue', 3);
   lantern(H, R, 10.84, 8.27, 2.63, 'sun');
+  alleyDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 13) * 13;
   actor(H, R, 4.51, 3.17, t * .35, u < 5 ? 'water' : 'hold', { shirt: ['paper', 1], apron: ['teal', .72], hairStyle: 'cap', face: 'se' }, 0, 1.3);
@@ -131,4 +207,19 @@ export default world('tokyo-shinjuku-yakitori', 'Omoide Yokocho · Six stools an
     const sway = Math.sin(t * .9 + k) * .06 + (u > 9 && u < 11 ? Math.sin((u - 9) * Math.PI / 2) * .25 : 0);
     shape(H, R, [H.p(.87 + k * .77, 10.05, 2.58), H.p(1.57 + k * .77, 10.05, 2.58), H.p(1.57 + k * .77, 10.05 + sway, 1.72), H.p(.87 + k * .77, 10.05 + sway, 1.69)], 'teal', .72);
   }
+  actor(H, R, 2.04, 7.6, t * .3, 'water', { shirt: ['teal', .63], apron: ['paper', .9], face: 'nw' }, 0, 1.16);
+  const wash = cycle(t, 7), [wx, wy] = H.p(1.33, 8.09, 1.3);
+  oval(H, R, wx, wy + Math.sin(t * 1.5) * 2, 11, 6, 'paper');
+  if (wash < .6) for (let k = 0; k < 3; k++) H.dot(wx + 4 + k * 3, wy + 6 + cycle(t + k * .2, .8) * 7, .8, 'teal', .65);
+  for (let k = 0; k < 3; k++) {
+    const p = cycle(t + k * 1.3, 4.3), [sx, sy] = H.p(2.68, 8.64, 1.53);
+    H.opacity(Math.sin(p * Math.PI) * .48, () => stroke(H, R, [[sx + k * 4, sy - p * 28], [sx - 4 + k * 4, sy - p * 28 - 8], [sx + 2 + k * 4, sy - p * 28 - 17]], 'paper', 1.4));
+  }
+  actor(H, R, 8.43, 9.03, t * .23, 'hold', { shirt: ['paper', .9], apron: ['teal', .7], face: 'se' }, 0, 1.17);
+  shape(H, R, H.faceI(6.44, 10.87, 4.24, .04, .85), 'coral', .57);
+  actor(H, R, 6.55, 11.36, t * .2, u > 7 && u < 10 ? 'hold' : 'idle', { shirt: ['blue', .72], face: 'nw' }, 0, 1.2);
+  const parcel = Math.max(0, Math.min(1, (u - 6.5) / 2)) * Math.max(0, Math.min(1, (12 - u) / 2));
+  box(H, R, 7.15 - parcel * .52, 10.24 + parcel * .55, .74, .6, .98, .2, 'paper');
+  H.line(R, [H.p(7.5 - parcel * .52, 10.24 + parcel * .55, 1.2), H.p(7.5 - parcel * .52, 10.84 + parcel * .55, 1.2)], 'coral', 1.2);
+  actor(H, R, 3.31, 11.11, t * .3, 'sit', { fur: ['paper', .9], stripes: true, face: 'ne' }, 0, .72, 'cat');
 });

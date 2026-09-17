@@ -51,6 +51,69 @@ function smallTable(H, R, i, j) {
   cup(H, R, i + .4, j + .62, .96);
 }
 
+function cafeDetails(H, R) {
+  box(H, R, .47, 8.38, 1.43, 1.18, 1.21, .85, 'teal', .24);
+  for (const z of [1.38, 1.78]) {
+    shape(H, R, H.tile(.57, 8.46, 1.22, .97, z), 'paper', .9);
+    for (let k = 0; k < 6; k++) {
+      const [x, y] = H.p(.75 + k % 2 * .65, 8.62 + Math.floor(k / 2) * .29, z + .04);
+      if (z < 1.5) {
+        oval(H, R, x, y, 8, 4, 'sun', .62);
+        for (let q = 0; q < 3; q++) H.line(R, [[x - 4 + q * 3, y - 3], [x - 1 + q * 3, y + 2]], 'coral', .8);
+      } else {
+        shape(H, R, [[x - 6, y + 3], [x + 6, y + 3], [x + 5, y - 7], [x - 5, y - 7]], 'paper');
+        oval(H, R, x, y - 7, 6, 3, 'coral', .56);
+        H.dot(x, y - 10, 2, 'teal', .8);
+      }
+    }
+  }
+  H.outline(R, H.faceJ(1.92, 8.38, 1.18, 1.24, 2.06), 'blue', 1.2);
+  H.line(R, [H.p(1.93, 8.56, 1.37), H.p(1.93, 9.24, 1.96)], 'paper', 1.6);
+  for (let k = 0; k < 3; k++) box(H, R, .62, 9.73, .95, .43, 1.2 + k * .11, .1, k % 2 ? 'teal' : 'paper', .65);
+  table(H, R, 1.04, 10.55, 3.72, .96, .53, 'coral');
+  box(H, R, 1.03, 10.53, 3.74, .14, .55, .92, 'teal', .6);
+  for (const [i, ink] of [[1.25, 'paper'], [2.48, 'sun'], [3.7, 'coral']]) {
+    box(H, R, i, 10.73, .91, .63, .66, .17, ink, .57);
+    H.line(R, [H.p(i + .1, 11.35, .76), H.p(i + .8, 11.35, .76)], 'blue', .7);
+  }
+  table(H, R, 5.03, 10.4, 2.06, 1.12, .57, 'teal');
+  for (let k = 0; k < 4; k++) box(H, R, 5.18 + k % 2 * .82, 10.58, .72, .64, .71 + Math.floor(k / 2) * .065, .055, ['paper', 'coral', 'sun', 'blue'][k], .6);
+  cup(H, R, 6.55, 11.19, .71);
+  oval(H, R, ...H.p(5.66, 11.17, .87), 12, 5, 'paper');
+  oval(H, R, ...H.p(5.66, 11.17, .92), 7, 3.5, 'sun', .7);
+  box(H, R, 4.55, 10.89, .7, .54, .03, .69, 'blue', .52);
+  stroke(H, R, [H.p(4.59, 11.14, .72), H.p(4.83, 11.14, 1), H.p(5.17, 11.14, .72)], 'coral', 1.3);
+  table(H, R, 10.08, 5.41, 1.46, 1.32, .93, 'teal');
+  shape(H, R, H.tile(10.2, 5.54, 1.2, 1.07, .41), 'sun', .5);
+  for (const i of [10.22, 11.36]) for (const j of [5.52, 6.61]) oval(H, R, ...H.p(i, j, .08), 3, 4, 'blue');
+  for (let k = 0; k < 4; k++) cup(H, R, 10.4 + k % 2 * .67, 5.67 + Math.floor(k / 2) * .64, 1.08, k % 2 ? 'teal' : 'paper');
+  for (let k = 0; k < 5; k++) oval(H, R, ...H.p(10.82, 6.08, .48 + k * .035), 10, 4, 'paper');
+  bottle(H, R, ...H.p(11.25, 6.35, 1.08), 'teal', .47, false);
+  box(H, R, 10.43, 5.61, .79, .58, .46, .23, 'paper');
+  shape(H, R, H.faceJ(.08, 6.41, 1.03, 2.21, 3.13), 'coral', .4);
+  shape(H, R, H.faceJ(.1, 6.55, .75, 2.34, 2.99), 'paper');
+  const [px, py] = H.p(.12, 6.92, 2.66);
+  oval(H, R, px, py, 10, 13, 'teal', .6);
+  H.line(R, [[px - 13, py + 8], [px + 12, py - 8]], 'sun', 2.5);
+  for (const j of [7.75, 8.76, 9.77]) {
+    box(H, R, .09, j, .45, .86, 2.41, .08, 'sun', .6);
+    for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(.34, j + .16 + k * .24, 2.5), ['teal', 'sun', 'coral'][k], .36);
+  }
+  box(H, R, .7, 7.46, .49, .46, 1.2, .54, 'blue', .65);
+  oval(H, R, ...H.p(.96, 7.7, 1.88), 9, 7, 'paper', .6);
+  oval(H, R, ...H.p(.96, 7.7, 1.91), 7, 4, 'coral', .5);
+  plant(H, R, ...H.p(.84, 5.13, 0), 1.7);
+  plant(H, R, ...H.p(10.92, 7.39, 0), 1.3);
+  plant(H, R, ...H.p(11.08, 1.15, 1.25), .65);
+  for (let k = 0; k < 3; k++) box(H, R, 5.02, .77, .64, .46, 1.27 + k * .065, .055, ['teal', 'paper', 'coral'][k], .6);
+  box(H, R, 6.02, .77, .82, .57, 1.27, .04, 'blue', .65);
+  shape(H, R, H.faceI(6.02, .78, .82, 1.32, 1.93), 'paper');
+  H.line(R, [H.p(6.21, .79, 1.51), H.p(6.66, .79, 1.74)], 'teal', 1.3);
+  box(H, R, 6.26, 2.38, .81, .59, .02, .58, 'sun', .5);
+  stroke(H, R, [H.p(6.36, 2.65, .62), H.p(6.66, 2.65, .9), H.p(6.95, 2.65, .62)], 'blue', 1.2);
+  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(7.72, 1.06, 1.28 + k * .04), 9, 4, 'paper');
+}
+
 export default world('tokyo-shibuya-window', 'Shibuya · A window above the crossing', { floor: 'paper', tone: .8, wall: 'teal', wallTone: .28, height: 5, head: 20, pattern: 'boards' }, (H, R) => {
   crossing(H, R);
   const side = H.faceJ(.04, .3, 5.5, 1.28, 4.74);
@@ -113,6 +176,7 @@ export default world('tokyo-shibuya-window', 'Shibuya · A window above the cros
   H.line(R, [[lx, ly], [lx, ly - 27]], 'blue', 2);
   shape(H, R, [[lx - 13, ly - 25], [lx - 7, ly - 40], [lx + 7, ly - 40], [lx + 13, ly - 25]], 'sun', .8);
   H.glow(lx, ly - 23, 42, 25, 'sun', .22);
+  cafeDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 24) * 24;
   H.clip(pane(H), () => {
@@ -153,4 +217,23 @@ export default world('tokyo-shibuya-window', 'Shibuya · A window above the cros
   actor(H, R, 2.36, 7.83, t * .25, 'hold', { shirt: ['paper', 1], apron: ['teal', .7], face: 'nw' }, 0, 1.2);
   const [wx, wy] = H.p(1.88, 7.52 + Math.sin(t * .5) * .12, 1.23);
   oval(H, R, wx, wy, 7, 3, 'paper');
+  actor(H, R, 5.81, 2.45, t * .28, 'type', { shirt: ['sun', .68], face: 'nw', glasses: true }, .25, 1.17);
+  actor(H, R, 8.42, 2.43, t * .2, 'phone', { shirt: ['paper', .9], face: 'nw' }, .25, 1.17);
+  actor(H, R, 2.24, 11.06, t * .19, 'read', { shirt: ['teal', .62], face: 'se' }, .23, 1.19);
+  actor(H, R, 3.55, 11.05, t * .3, 'drink', { shirt: ['sun', .66], face: 'se' }, .31, 1.07, 'child');
+  const serving = Math.sin(cycle(t, 16) * Math.PI * 2), serverI = 7 + serving * .46;
+  actor(H, R, serverI, 4.59, t * .4, 'hold', { shirt: ['paper', 1], apron: ['teal', .7], face: 'se' }, 0, 1.18);
+  oval(H, R, ...H.p(serverI + .35, 4.83, 1.19), 21, 8, 'coral', .55);
+  cup(H, R, serverI + .28, 4.85, 1.25);
+  cup(H, R, serverI + .74, 4.82, 1.25, 'teal');
+  const [vx, vy] = H.p(serverI + .27, 4.86, 1.57);
+  for (let k = 0; k < 2; k++) {
+    const rise = cycle(t + k * 1.2, 3.2);
+    H.opacity(Math.sin(rise * Math.PI) * .5, () => stroke(H, R, [[vx + k * 6, vy - rise * 18], [vx + k * 6 - 3, vy - rise * 18 - 7], [vx + k * 6 + 1, vy - rise * 18 - 13]], 'paper', 1));
+  }
+  const [gx, gy] = H.p(.96, 7.7, 1.93);
+  const grind = Math.min(1, cycle(t, 9) / .24);
+  const turn = (grind * grind * (3 - 2 * grind)) * Math.PI * 2;
+  H.line(R, [[gx, gy], [gx + Math.cos(turn) * 14, gy + Math.sin(turn) * 6]], 'blue', 1.5);
+  H.dot(gx + Math.cos(turn) * 14, gy + Math.sin(turn) * 6, 2.5, 'coral', .8, { knock: true });
 });

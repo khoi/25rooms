@@ -48,6 +48,66 @@ function drum(H, R, i, j, z, angle, big = false) {
   stroke(H, R, [[x - 12, y - 14], [x - 16, y - 2], [x - 13, y + 9]], 'paper', 1.25);
 }
 
+function laundryDetails(H, R) {
+  table(H, R, .98, 7.62, 2.79, 1.24, 1.03, 'coral');
+  box(H, R, 1.34, 7.93, 1.02, .62, 1.17, .11, 'blue', .65);
+  const [x, y] = H.p(1.89, 8.3, 1.31);
+  shape(H, R, [[x - 17, y], [x + 17, y], [x + 16, y - 26], [x + 7, y - 32], [x - 14, y - 32], [x - 14, y - 23], [x + 1, y - 23], [x + 1, y - 6], [x - 17, y - 6]], 'teal', .68);
+  oval(H, R, x + 16, y - 20, 5, 8, 'sun', .8);
+  H.line(R, [[x - 10, y - 24], [x - 10, y - 3]], 'blue', 1.4);
+  H.line(R, [[x + 2, y - 33], [x + 2, y - 39]], 'blue', 1.2);
+  oval(H, R, x + 2, y - 39, 4, 2, 'coral', .7);
+  shape(H, R, H.tile(1.08, 8.1, 1.25, .65, 1.32), 'sun', .54);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(1.15 + k * .2, 8.14, 1.34), H.p(1.15 + k * .2, 8.71, 1.34)], 'teal', .7);
+  for (let k = 0; k < 6; k++) {
+    const [sx, sy] = H.p(2.65 + k % 3 * .33, 7.83 + Math.floor(k / 3) * .41, 1.19);
+    shape(H, R, [[sx - 3, sy], [sx + 3, sy], [sx + 3, sy - 10], [sx - 3, sy - 10]], ['coral', 'teal', 'sun'][k % 3], .65, .6);
+    H.line(R, [[sx - 4, sy], [sx + 4, sy]], 'blue', .8);
+    H.line(R, [[sx - 4, sy - 10], [sx + 4, sy - 10]], 'blue', .8);
+  }
+  const [cx, cy] = H.p(3.23, 8.5, 1.2);
+  oval(H, R, cx - 5, cy, 3, 2.5, 'paper'); oval(H, R, cx + 3, cy, 3, 2.5, 'paper');
+  H.line(R, [[cx - 5, cy], [cx + 6, cy - 12]], 'blue', 1.1);
+  H.line(R, [[cx + 3, cy], [cx - 7, cy - 11]], 'blue', 1.1);
+  oval(H, R, ...H.p(2.59, 8.51, 1.25), 7, 4, 'coral', .7);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(2.58, 8.51, 1.3), H.p(2.51 + k * .04, 8.48, 1.51)], 'blue', .6);
+  box(H, R, 2.19, 8.01, .64, .49, .04, .09, 'blue', .7);
+  stroke(H, R, [H.p(2.4, 8.2, .14), H.p(3.46, 7.97, .09), H.p(3.48, 7.99, 1.14)], 'blue', .9);
+  table(H, R, 1.63, 9.17, .75, .72, .47, 'sun');
+  basket(H, R, 3.06, 9.17, 'teal', true);
+  for (let k = 0; k < 4; k++) towel(H, R, .51, 8.81, .05 + k * .12, k % 2 ? 'paper' : 'coral', .57, .6);
+  for (const i of [6.96, 8.61]) {
+    H.line(R, [H.p(i, 8.24, .04), H.p(i + .51, 9.03, 1.04)], 'blue', 1.9);
+    H.line(R, [H.p(i + .51, 9.03, .04), H.p(i, 8.24, 1.04)], 'blue', 1.9);
+  }
+  shape(H, R, [H.p(6.67, 8.11, 1.08), H.p(9.07, 8.11, 1.08), H.p(9.47, 8.56, 1.08), H.p(9.07, 9.05, 1.08), H.p(6.67, 9.05, 1.08)], 'teal', .62);
+  shape(H, R, H.tile(6.83, 8.23, 1.43, .7, 1.12), 'paper');
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(6.93 + k * .24, 8.27, 1.13), H.p(6.93 + k * .24, 8.89, 1.13)], 'coral', .85);
+  bottle(H, R, ...H.p(8.96, 8.57, 1.12), 'sun', .37);
+  stroke(H, R, [H.p(8.37, 8.95, 1.12), H.p(8.63, 9.28, .63), H.p(8.45, 9.45, .02), H.p(9.31, 9.53, .02)], 'blue', 1);
+  for (const i of [8.98, 11.32]) {
+    H.line(R, [H.p(i, 11.09, .06), H.p(i, 11.09, 2.38)], 'blue', 2.2);
+    H.line(R, [H.p(i, 10.79, .06), H.p(i, 11.41, .06)], 'teal', 2.6);
+    for (const j of [10.81, 11.38]) oval(H, R, ...H.p(i, j, .06), 3, 4, 'blue');
+  }
+  H.line(R, [H.p(8.96, 11.09, 2.38), H.p(11.35, 11.09, 2.38)], 'sun', 2.3);
+  for (const [i, j, ink] of [[3.08, 3.27, 'teal'], [5.02, 3.65, 'coral'], [10.28, 8.22, 'sun']]) {
+    basket(H, R, i, j, ink, true);
+    towel(H, R, i + .18, j + .04, .79, 'paper', .62, .55);
+  }
+  for (let k = 0; k < 4; k++) towel(H, R, 8.15, .72, 3.58 + k * .1, ['paper', 'teal', 'coral', 'paper'][k], 1.05, .72);
+  for (let k = 0; k < 3; k++) box(H, R, 5.5 + k * .48, .73, .39, .6, 3.59, .39, ['sun', 'coral', 'teal'][k], .58);
+  for (const j of [6.81, 7.22]) {
+    shape(H, R, H.faceJ(.11, j, .29, 2.93, 3.39), 'paper');
+    oval(H, R, ...H.p(.12, j + .14, 3.18), 4, 5, 'teal', .62);
+  }
+  box(H, R, 5.88, 10.7, 1.11, .65, .73, .04, 'paper');
+  H.line(R, [H.p(6.43, 10.73, .79), H.p(6.43, 11.31, .79)], 'blue', .75);
+  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(6.02 + k * .23, 10.94, .8), 3.8, 3, k % 2 ? 'coral' : 'teal', .6);
+  basket(H, R, 7.74, 11.19, 'coral');
+  for (let k = 0; k < 5; k++) sock(H, R, 7.94 + k % 3 * .28, 11.42 + Math.floor(k / 3) * .23, .71);
+}
+
 export default world('tokyo-koenji-laundry', 'Koenji · Until the last dryer stops', { floor: 'paper', tone: .8, wall: 'teal', wallTone: .26, height: 4.2, head: 20, pattern: 'tiles' }, (H, R) => {
   for (const i of dryerColumns) for (const z of [0, 1.8]) machine(H, R, i, .48, z, true);
   machine(H, R, .31, 3.05, 0);
@@ -125,6 +185,7 @@ export default world('tokyo-koenji-laundry', 'Koenji · Until the last dryer sto
   const [ux, uy] = H.p(2.17, 9.86, .17);
   stroke(H, R, [[ux, uy], [ux - 3, uy - 53], [ux + 3, uy - 59], [ux + 8, uy - 54]], 'blue', 1.5);
   shape(H, R, [[ux - 6, uy - 3], [ux - 8, uy - 43], [ux - 2, uy - 51], [ux + 6, uy - 42], [ux + 3, uy - 3]], 'coral', .66);
+  laundryDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 20) * 20, speed = TAU * 4 / 9.5;
   const spin = u < 7 ? speed * u : u < 10 ? speed * (7 + (u - 7) - (u - 7) ** 2 / 6) : u < 18 ? speed * 8.5 : speed * (8.5 + (u - 18) ** 2 / 4);
@@ -160,4 +221,22 @@ export default world('tokyo-koenji-laundry', 'Koenji · Until the last dryer sto
       stroke(H, R, [[x, y], [x + 21, y - 13], [x + 42, y + 14], [x + 17, y + 5], [x, y]], 'blue', 2);
     });
   });
+  actor(H, R, 2.04, 9.53, t * .3, 'type', { shirt: ['sun', .69], face: 'nw', glasses: true }, .13, 1.17);
+  const [nx, ny] = H.p(1.89, 8.3, 1.31);
+  H.line(R, [[nx - 10, ny - 21], [nx - 10, ny - 4 + Math.sin(t * 8) * 2]], 'paper', 1.1);
+  actor(H, R, 7.13, 9.4, t * .25, 'hold', { shirt: ['coral', .63], face: 'nw' }, 0, 1.17);
+  const press = Math.sin(t * .8) * .23, [ix, iy] = H.p(7.44 + press, 8.6, 1.15);
+  shape(H, R, [[ix - 12, iy + 4], [ix + 13, iy + 4], [ix + 7, iy - 6], [ix - 5, iy - 9]], 'blue', .7);
+  stroke(H, R, [[ix - 4, iy - 6], [ix - 4, iy - 15], [ix + 4, iy - 15], [ix + 7, iy - 6]], 'coral', 2.2);
+  for (let k = 0; k < 2; k++) {
+    const v = cycle(t + k * .8, 2.8);
+    H.opacity(Math.sin(v * Math.PI) * .44, () => stroke(H, R, [[ix + k * 4, iy - 7 - v * 21], [ix - 3 + k * 4, iy - 13 - v * 21], [ix + 2 + k * 4, iy - 19 - v * 21]], 'paper', 1.1));
+  }
+  actor(H, R, 6.72, 10.51, t * .28, 'read', { shirt: ['teal', .67], face: 'se' }, .34, 1, 'child');
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(9.31 + k * .78, 11.09, 2.34), sway = Math.sin(t * .47 + k) * 1.2;
+    stroke(H, R, [[x, y - 4], [x + 3, y - 7], [x + 5, y - 3], [x - 10, y + 7], [x + 13, y + 7], [x + 5, y - 3]], 'blue', .8);
+    shape(H, R, [[x - 8, y + 6], [x - 19, y + 13], [x - 14, y + 24], [x - 9, y + 19], [x - 9 + sway, y + 44], [x + 10 + sway, y + 44], [x + 10, y + 19], [x + 16, y + 25], [x + 21, y + 13], [x + 9, y + 6], [x + 1, y + 10]], ['coral', 'paper', 'teal'][k], .62);
+    for (let q = 0; q < 4; q++) H.line(R, [[x - 8, y + 19 + q * 6], [x + 9, y + 19 + q * 6]], k === 1 ? 'teal' : 'paper', .8);
+  }
 });

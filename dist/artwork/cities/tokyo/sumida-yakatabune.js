@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, box, table, actor, bottle, lantern, cycle, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, bottle, lantern, steam, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES, loop, ell } from '../../drawings.js';
 
 const sitting = FIGURES.sample('sitfloor', 0);
@@ -38,6 +38,64 @@ function cabinWindows(H, R) {
     H.line(R, [H.p(i + .93, 1.94, 1.43), H.p(i + .93, 1.94, 3.11)], 'sun', 2);
     for (let n = 0; n < 6; n++) H.line(R, [H.p(i, 1.97, 3.16 - n * .048), H.p(i + 1.93, 1.97, 3.16 - n * .048)], 'sun', 1, { tone: .65 });
     stroke(H, R, [H.p(i + 1.74, 2, 3.14), H.p(i + 1.74, 2, 2.65), H.p(i + 1.67, 2, 2.61)], 'paper', .6);
+  }
+}
+
+function boatFittings(H, R) {
+  table(H, R, 1.65, 7.57, 2.92, 1.63, .81, 'coral');
+  meal(H, R, 1.72, 7.72);
+  meal(H, R, 3.16, 7.72);
+  for (const [i, j] of [[1.65, 6.15], [3.3, 9.37], [5.5, 5.44], [7.1, 5.43]]) {
+    box(H, R, i, j, 1.05, .89, .46, .12, i < 3 ? 'blue' : 'teal', .56);
+    H.outline(R, H.tile(i + .1, j + .1, .85, .69, .6), 'paper', .7);
+  }
+  box(H, R, 1.04, 2.55, 1.11, 1.47, .46, 1.08, 'teal', .5);
+  box(H, R, .97, 2.49, 1.25, 1.59, 1.55, .08, 'paper', 1);
+  for (const j of [2.75, 3.43]) {
+    const [x, y] = H.p(1.55, j, 1.65);
+    oval(H, R, x, y, 14, 6.5, 'blue', .66);
+    shape(H, R, [[x - 12, y - 2], [x + 12, y - 2], [x + 9, y - 15], [x - 9, y - 15]], 'paper', 1);
+    oval(H, R, x, y - 15, 11, 4, 'teal', .36);
+    for (const side of [-1, 1]) stroke(H, R, [[x + side * 10, y - 10], [x + side * 17, y - 12], [x + side * 17, y - 5], [x + side * 10, y - 4]], 'blue', 1.1);
+  }
+  for (const j of [2.8, 3.5]) H.dot(...H.p(2.17, j, 1.13), 2.5, 'coral', .8, { knock: true });
+  box(H, R, 1.16, 2.03, .94, .21, 1.94, .07, 'sun', .57);
+  for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(1.29 + k * .28, 2.14, 2.04), ['teal', 'coral', 'sun'][k], .32);
+  const [cx, cy] = H.p(10.57, 2.53, 1.72);
+  box(H, R, 10.04, 2.03, 1.03, .84, .46, .91, 'teal', .47);
+  shape(H, R, [H.p(10.02, 2.89, 1.32), H.p(11.13, 2.89, 1.32), H.p(11.13, 2.28, 1.8), H.p(10.02, 2.28, 1.8)], 'sun', .42);
+  H.outline(R, ell(cx, cy, 15, 15), 'blue', 2.3);
+  for (let k = 0; k < 6; k++) {
+    const a = k * TAU / 6;
+    H.line(R, [[cx, cy], [cx + Math.cos(a) * 19, cy + Math.sin(a) * 19]], 'coral', 1.7);
+  }
+  H.dot(cx, cy, 3.5, 'sun', .8, { knock: true });
+  for (const off of [.18, .49, .79]) oval(H, R, ...H.p(10.04 + off, 2.39, 1.77), 3.1, 2.2, 'paper', 1);
+  box(H, R, 10.73, 6.26, .67, 1.28, .46, .5, 'paper', 1);
+  for (let k = 0; k < 3; k++) box(H, R, 10.79, 6.33 + k * .39, .54, .29, .99, .07, 'coral', .6);
+  for (const [i, j] of [[3.55, 4.85], [6.81, 7.18], [3.01, 7.84]]) {
+    bottle(H, R, ...H.p(i, j, 1.02), 'teal', .46);
+    box(H, R, i - .24, j + .7, .56, .29, 1, .09, 'paper', 1);
+    for (let k = 0; k < 2; k++) bowl(H, R, i + .45 + k * .24, j + .1, 1.08, 'paper', .38);
+  }
+  for (const [i, j] of [[1.12, 5.24], [9.67, 9.24]]) {
+    const [x, y] = H.p(i, j, .45);
+    shape(H, R, [[x - 12, y], [x + 11, y], [x + 13, y - 22], [x - 11, y - 22]], 'blue', .59);
+    stroke(H, R, [[x - 7, y - 20], [x - 6, y - 31], [x + 7, y - 31], [x + 8, y - 20]], 'coral', 1.5);
+    H.line(R, [[x - 8, y - 10], [x + 8, y - 10]], 'paper', 1);
+  }
+  for (const i of [1.12, 9.89]) {
+    box(H, R, i, 9.5, .13, .13, .43, 2.84, 'coral', .5);
+    stroke(H, R, [H.p(i + .05, 9.56, 3.27), H.p(i + .05, 5.87, 3.44), H.p(i + .05, 2.11, 3.46)], 'sun', 3);
+  }
+  for (let k = 0; k < 4; k++) {
+    const i = 1.28 + k * 2.15;
+    H.clip(H.faceI(i, 1.93, 1.93, 1.43, 2.72), () => {
+      stroke(H, R, [H.p(.9, 1.96, 2.18), H.p(4.18, 1.96, 2.29), H.p(7.12, 1.96, 2.21), H.p(10.1, 1.96, 2.09)], 'teal', 7);
+      for (const p of [2.03, 5.79, 9.01]) shape(H, R, H.faceI(p, 1.97, .32, 1.46, 2.22), 'paper', .6, .5);
+      for (let p = 1.1; p < 10; p += .43) H.line(R, [H.p(p, 1.96, 2.2), H.p(p, 1.96, 2.4)], 'paper', .7);
+    });
+    H.line(R, [H.p(i + .93, 1.98, 1.43), H.p(i + .93, 1.98, 3.11)], 'sun', 2);
   }
 }
 
@@ -94,8 +152,19 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
   }
   for (let k = 0; k < 5; k++) H.outline(R, ell(...H.p(1.51, 10.14, .45 + k * .025), 18 - k * 2, 7 - k * .6), 'sun', 1.4);
   stroke(H, R, [H.p(1.15, 10.1, .49), H.p(.9, 10.4, .51), H.p(.71, 10.63, .21)], 'sun', 1.6);
+  boatFittings(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 22);
+  steam(H, R, ...H.p(1.58, 3.42, 2.03), t * .6, 2);
+  actor(H, R, 2.51, 3.22, t, 'hold', { shirt: ['paper', 1], apron: ['blue', .65], face: 'nw' }, .44, 1.12);
+  actor(H, R, 10.88, 3.08, t, 'hold', { shirt: ['blue', .66], face: 'nw' }, .44, 1.08);
+  actor(H, R, 2.18, 6.63, t, 'sitfloor', { shirt: ['sun', .55], face: 'se', hairStyle: 'bun' }, .61, 1.1);
+  actor(H, R, 3.8, 9.81, t, 'sitfloor', { shirt: ['teal', .63], face: 'nw', glasses: true }, .61, 1.1);
+  actor(H, R, 6.04, 5.89, t, 'tokyoRiverWatch', { shirt: ['paper', 1], face: 'nw' }, .61, 1.08);
+  actor(H, R, 7.64, 5.87, t, 'sitfloor', { shirt: ['sun', .55], face: 'se', prop: (HH, RR, pts) => {
+    const [x, y] = pts.nearHand;
+    for (const off of [0, 2]) H.line(R, [[x - 2, y + off], [x - 16, y - 6 + off + Math.sin(t) * 2]], 'sun', 1);
+  } }, .61, 1.11);
   for (let k = 0; k < 4; k++) {
     const i = 1.28 + k * 2.15;
     H.clip(H.faceI(i, 1.93, 1.93, 1.44, 2.86), () => {
@@ -103,6 +172,9 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
         const a = i + ((n * .52 + t * .1) % 2.1);
         H.line(R, [H.p(a, 1.94, 1.54 + n * .1), H.p(a + .39, 1.94, 1.54 + n * .1)], n % 2 ? 'coral' : 'sun', 1.3, { tone: .5 });
       }
+      const boat = -1 + cycle(t, 22) * 12;
+      shape(H, R, [H.p(boat, 1.95, 1.75), H.p(boat + 1.2, 1.95, 1.75), H.p(boat + .94, 1.95, 1.58), H.p(boat + .19, 1.95, 1.58)], 'paper', 1, .5);
+      shape(H, R, H.faceI(boat + .26, 1.95, .53, 1.76, 1.91), 'coral', .67, .5);
       if (u > .22 && u < .45) {
         const a = i - 1 + (u - .22) * 18;
         H.fill(H.faceI(a, 1.95, .55, 1.4, 3), 'blue', .95);
@@ -146,4 +218,10 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
   shape(H, R, hull, 'blue', .78);
   stroke(H, R, [H.p(.7, 9.7, .43), H.p(1.45, 10.9, .43), H.p(10.35, 10.9, .43), H.p(11.6, 8.8, .43)], 'coral', 3);
   for (const i of [2.2, 5.6, 9]) oval(H, R, ...H.p(i, 11.04, .15), 3.7, 7, 'paper', 1);
+  for (const i of [3.55, 7.32]) {
+    const [x, y] = H.p(i, 11.09, .12);
+    H.line(R, [[x, y - 12], [x, y + 13]], 'sun', 1.1);
+    oval(H, R, x, y + 13, 6.5, 13, 'paper', 1);
+    H.line(R, [[x - 5, y + 13], [x + 5, y + 13]], 'coral', 1.5);
+  }
 });

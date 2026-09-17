@@ -43,6 +43,65 @@ function blossom(H, R, x, y, r = 3) {
   H.dot(x, y, .9, 'coral', .7);
 }
 
+function picnicBasket(H, R, i, j) {
+  box(H, R, i, j, 1.17, .75, .08, .53, 'sun', .47);
+  for (let k = 0; k < 7; k++) H.line(R, [H.p(i + .08 + k * .16, j + .77, .14), H.p(i + .08 + k * .16, j + .77, .57)], 'coral', .7);
+  for (const z of [.2, .35, .5]) H.line(R, [H.p(i + .06, j + .78, z), H.p(i + 1.1, j + .78, z)], 'coral', .6);
+  stroke(H, R, [H.p(i + .15, j + .38, .61), H.p(i + .57, j + .38, 1.01), H.p(i + 1.03, j + .38, .61)], 'blue', 1.6);
+}
+
+function parkLife(H, R) {
+  shape(H, R, H.tile(.58, 5.49, 2.11, 3.71, .055), 'coral', .5);
+  H.outline(R, H.tile(.73, 5.64, 1.81, 3.41, .06), 'paper', 1.2);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(.62, 5.63 + k * .72, .07), H.p(2.65, 5.63 + k * .72, .07)], 'sun', 1.4);
+  cushion(H, R, .8, 5.91, 'paper');
+  cushion(H, R, 1.1, 8.11, 'sun');
+  bento(H, R, .93, 7.05);
+  cup(H, R, .88, 7.1);
+  cup(H, R, 2.43, 7.96);
+  bottle(H, R, ...H.p(2.34, 6.52, .14), 'teal', .54);
+  picnicBasket(H, R, .6, 9.77);
+  for (let k = 0; k < 3; k++) box(H, R, 2.03, 9.95, .59, .49, .05 + k * .12, .1, ['teal', 'paper', 'coral'][k], k === 1 ? 1 : .43);
+  const [x, y] = H.p(1.3, 10.87, .03);
+  shape(H, R, loop([[x - 15, y], [x - 16, y - 20], [x - 7, y - 30], [x + 8, y - 27], [x + 17, y - 16], [x + 14, y]], 1), 'blue', .57);
+  stroke(H, R, [[x - 6, y - 27], [x - 7, y - 38], [x + 7, y - 38], [x + 8, y - 26]], 'coral', 1.5);
+  box(H, R, 4.15, 2.94, 2.61, 1.06, .04, .58, 'paper', 1);
+  shape(H, R, H.tile(4.24, 3.03, 2.43, .88, .64), 'sun', .44);
+  for (let k = 0; k < 4; k++) box(H, R, 4.36 + k * .54, 3.1, .44, .53, .67, .18, ['coral', 'teal', 'sun', 'blue'][k], .56);
+  for (const i of [4.15, 6.75]) for (const j of [3.03, 3.89]) oval(H, R, ...H.p(i, j, .08), 6, 6, 'blue', .78);
+  stroke(H, R, [H.p(6.82, 3.85, .36), H.p(7.24, 3.95, 1.15), H.p(7.24, 3.05, 1.15), H.p(6.82, 3.02, .36)], 'blue', 1.8);
+  bottle(H, R, ...H.p(4.47, 3.35, .9), 'coral', .41);
+  for (let k = 0; k < 3; k++) cup(H, R, 5.17 + k * .31, 3.76, .92, true);
+  const [ux, uy] = H.p(7.35, 3.07, .05);
+  stroke(H, R, [[ux, uy], [ux, uy - 93]], 'blue', 1.8);
+  shape(H, R, loop([[ux - 47, uy - 74], [ux - 24, uy - 102], [ux, uy - 111], [ux + 30, uy - 96], [ux + 47, uy - 74]], 1), 'paper', 1);
+  for (const dx of [-29, 0, 29]) stroke(H, R, [[ux, uy - 108], [ux + dx, uy - 77]], 'coral', 1.3);
+  for (const i of [8.57, 9.85]) {
+    box(H, R, i, 2.57, 1.08, .56, .05, .56, 'teal', .44);
+    for (let k = 0; k < 4; k++) {
+      const [px, py] = H.p(i + .16 + k * .23, 2.83, .61);
+      stroke(H, R, [[px, py], [px + Math.sin(k) * 5, py - 19]], 'teal', 1);
+      for (let n = 0; n < 4; n++) H.dot(px + Math.cos(n * TAU / 4) * 4, py - 19 + Math.sin(n * TAU / 4) * 4, 3, k % 2 ? 'coral' : 'sun', .72, { knock: true });
+    }
+  }
+  const [mx, my] = H.p(11.1, 1.8, .08);
+  shape(H, R, [[mx - 13, my], [mx + 13, my], [mx + 14, my - 36], [mx - 14, my - 36]], 'teal', .6);
+  oval(H, R, mx, my - 36, 14, 6, 'paper', 1);
+  oval(H, R, mx, my - 36, 8, 3.5, 'blue', .7);
+  for (let k = -2; k <= 2; k++) H.line(R, [[mx + k * 5, my - 30], [mx + k * 5, my - 3]], 'paper', .75);
+  picnicBasket(H, R, 9.96, 9.58);
+  box(H, R, 10.17, 9.75, .37, .33, .64, .45, 'coral', .58);
+  bottle(H, R, ...H.p(10.83, 10.03, .64), 'teal', .55);
+  for (let k = 0; k < 3; k++) box(H, R, 9.56, 11.03, 1.3, .22, .07 + k * .09, .07, ['teal', 'sun', 'coral'][k], .52);
+  stroke(H, R, [H.p(9.74, 11.15, .36), H.p(9.74, 11.15, 1.11), H.p(10.69, 11.15, 1.11), H.p(10.69, 11.15, .36)], 'blue', 1.4);
+  for (const i of [9.73, 10.71]) oval(H, R, ...H.p(i, 11.15, .05), 5, 5, 'blue', .7);
+  for (const [i, j] of [[3.16, 3.35], [10.9, 5.34]]) {
+    const [px, py] = H.p(i, j, .07);
+    shape(H, R, loop([[px - 26, py + 3], [px - 18, py - 11], [px - 4, py - 17], [px + 16, py - 14], [px + 29, py + 3]], 1), 'teal', .46);
+    for (let k = 0; k < 6; k++) H.dot(px - 18 + k * 7, py - 4 - Math.sin(k) * 5, 2.1, 'sun', .7);
+  }
+}
+
 export default world('tokyo-ueno-hanami', 'Ueno · A place saved under the blossoms', { wall: false, floor: 'teal', tone: .2, head: 20 }, (H, R) => {
   shape(H, R, H.tile(.15, .15, 11.7, 2.2, .02), 'paper', 1);
   for (let i = .2; i < 12; i += 1.4) H.line(R, [H.p(i, .15, .03), H.p(i, 2.35, .03)], 'blue', .7, { tone: .4 });
@@ -57,10 +116,15 @@ export default world('tokyo-ueno-hanami', 'Ueno · A place saved under the bloss
   for (const [dx, dy] of branches) {
     stroke(H, R, [[tx, ty - 65], [tx + dx * .35, ty - 130], [tx + dx, ty + dy]], 'blue', 5);
     const cluster = blob(R, tx + dx, ty + dy, 45, 28, .1);
-    shape(H, R, cluster, 'coral', .2, .75);
+    shape(H, R, cluster, 'coral', .29, .75);
     H.clip(cluster, () => {
-      for (let k = 0; k < 34; k++) blossom(H, R, tx + dx + (R() - .5) * 78, ty + dy + (R() - .5) * 45, 2.2 + R() * 2);
+      for (let k = 0; k < 5; k++) stroke(H, R, [[tx + dx, ty + dy + 14], [tx + dx - 29 + k * 14, ty + dy - 3], [tx + dx - 35 + k * 17, ty + dy - 18]], 'blue', .8, .55);
+      for (let k = 0; k < 34; k++) blossom(H, R, tx + dx + (R() - .5) * 78, ty + dy + (R() - .5) * 45, 3.2 + R() * 2.7);
     });
+    for (let k = 0; k < 8; k++) {
+      const a = k * TAU / 8;
+      blossom(H, R, tx + dx + Math.cos(a) * 42, ty + dy + Math.sin(a) * 25, 4 + R() * 3);
+    }
   }
   shape(H, R, H.tile(3, 4.6, 6.2, 5.65, .04), 'teal', .66);
   H.outline(R, H.tile(3.13, 4.73, 5.94, 5.39, .05), 'paper', 1.2);
@@ -101,8 +165,26 @@ export default world('tokyo-ueno-hanami', 'Ueno · A place saved under the bloss
   const [gx, gy] = H.p(10.65, 8.75, .02);
   shape(H, R, loop([[gx - 13, gy], [gx - 17, gy - 18], [gx - 6, gy - 27], [gx, gy - 24], [gx + 12, gy - 18], [gx + 15, gy]], 1), 'paper', 1);
   stroke(H, R, [[gx - 6, gy - 26], [gx + 3, gy - 29], [gx + 5, gy - 23]], 'blue', 1);
+  parkLife(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16);
+  actor(H, R, 1.24, 6.37, t, 'sitfloor', { shirt: ['teal', .57], face: 'se', hairStyle: 'bun' }, .15, 1.12, 'elder');
+  actor(H, R, 1.51, 8.56, t, 'sitfloor', { shirt: ['paper', 1], face: 'nw' }, .15, 1.12);
+  actor(H, R, 6.03, 4.26, t, 'hold', { shirt: ['coral', .53], apron: ['paper', 1], face: 'sw', prop: (HH, RR, pts) => {
+    const [x, y] = pts.nearHand;
+    shape(HH, RR, [[x - 9, y - 5], [x + 9, y - 5], [x + 9, y + 3], [x - 9, y + 3]], 'paper', 1, .7);
+    H.line(R, [[x - 7, y - 3], [x + 7, y - 3]], 'coral', 1.3);
+  } }, 0, 1.15);
+  actor(H, R, 9.68, 5.66, t, 'hold', { shirt: ['sun', .55], face: 'sw', prop: (HH, RR, pts) => {
+    const [x, y] = pts.nearHand;
+    shape(HH, RR, [[x - 8, y - 7], [x + 8, y - 7], [x + 8, y + 2], [x - 8, y + 2]], 'blue', .8, .6);
+    oval(HH, RR, x, y - 3, 4, 4, 'paper', 1);
+  } }, 0, 1.14);
+  actor(H, R, 10.95, 6.19 + Math.sin(t * .5) * .4, t, 'walk', { shirt: ['coral', .65], face: 'sw' }, 0, .96, 'child');
+  const [px, py] = H.p(10.42, 6.33 + Math.sin(t * .5) * .4, .14);
+  const a = t * 4;
+  for (let k = 0; k < 4; k++) shape(H, R, [[px, py - 26], [px + Math.cos(a + k * TAU / 4) * 11, py - 26 + Math.sin(a + k * TAU / 4) * 11], [px + Math.cos(a + k * TAU / 4 + .8) * 9, py - 26 + Math.sin(a + k * TAU / 4 + .8) * 9]], k % 2 ? 'sun' : 'coral', .67, .5);
+  H.line(R, [[px, py - 26], [px, py - 6]], 'sun', 1);
   if (u < .22) actor(H, R, 3.8 + u * 21, 1.25, t, 'walk', { shirt: ['teal', .45], face: 'se' }, .02, .94);
   actor(H, R, 3.95, 5.75, t, 'tokyoHanamiPass', {
     shirt: ['sun', .6], face: 'se',

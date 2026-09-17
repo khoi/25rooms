@@ -1,4 +1,4 @@
-import { world, box, table, shape, oval, stroke, wallRect, cycle, ell } from '../../worlds/common.js';
+import { world, box, table, shape, oval, stroke, wallRect, cycle, ell, actor, wallPt, steam } from '../../worlds/common.js';
 import { FIGURES, arcPts } from '../../drawings.js';
 
 function sweet(H, R, x, y, kind, s = 1) {
@@ -48,6 +48,95 @@ function caseFront(H, R) {
     for (const q of [.35, .55]) H.line(R, [H.p(i + w * q, j + d, 1.35), H.p(i + w * q + .4, j + d, 1.69)], 'paper', 1.2);
     H.outline(R, H.tile(i, j, w, d, 1.91), 'blue', .65, { tone: .5 });
   }
+}
+
+function teaPot(H, R, x, y, s = 1, tilt = 0) {
+  oval(H, R, x, y - 10 * s, 14 * s, 12 * s, 'teal', .6);
+  oval(H, R, x, y - 21 * s, 8 * s, 3 * s, 'paper', 1);
+  H.dot(x, y - 25 * s, 2.6 * s, 'sun', .9);
+  shape(H, R, [[x + 10 * s, y - 13 * s], [x + 23 * s, y - 24 * s + tilt], [x + 25 * s, y - 20 * s + tilt], [x + 13 * s, y - 5 * s]], 'teal', .6, .7);
+  H.line(R, arcPts(x - 13 * s, y - 10 * s, 7 * s, 9 * s, Math.PI / 2, Math.PI * 1.5, 13), 'blue', 2 * s);
+}
+
+function teaCup(H, R, x, y, s = 1) {
+  oval(H, R, x, y + 2, 9 * s, 3.5 * s, 'sun', .38);
+  shape(H, R, [[x - 6 * s, y], [x + 6 * s, y], [x + 8 * s, y - 11 * s], [x - 8 * s, y - 11 * s]], 'paper', 1, .65);
+  oval(H, R, x, y - 11 * s, 8 * s, 2.6 * s, 'teal', .35);
+}
+
+function sweetHallDetails(H, R) {
+  for (let k = 0; k < 4; k++) {
+    box(H, R, 1.04 + k * 1.13, .63, 1.03, .85, .04, .96, 'sun', .23);
+    for (let q = 0; q < 3; q++) {
+      H.outline(R, H.faceI(1.1 + k * 1.13, 1.5, .91, .15 + q * .26, .36 + q * .26), 'blue', .65, { tone: .6 });
+      H.line(R, [H.p(1.46 + k * 1.13, 1.52, .26 + q * .26), H.p(1.68 + k * 1.13, 1.52, .26 + q * .26)], 'sun', 2);
+    }
+  }
+  const display = wallRect(H, 'nw', 1.24, 5.97, 1.4, 3.61);
+  shape(H, R, display, 'sun', .24);
+  for (let k = 0; k < 4; k++) {
+    const j = 1.42 + k * 1.12;
+    box(H, R, .12, j, .46, 1, 1.6, .07, 'blue', .6);
+    const [x, y] = H.p(.25, j + .48, 1.68);
+    sweet(H, R, x, y, k % 2, 1.38);
+    H.line(R, [H.p(.06, j + .05, 3.37), H.p(.06, j + .05, 2.7)], 'sun', 2);
+  }
+  box(H, R, .39, 6.97, .9, .73, 0, 1.17, 'teal', .36);
+  for (let k = 0; k < 6; k++) {
+    const [x, y] = H.p(.63 + k % 2 * .37, 7.2 + Math.floor(k / 2) * .15, 1.2);
+    H.line(R, [[x, y], [x + 2, y - 36 - k % 3 * 7]], k % 2 ? 'coral' : 'paper', 6);
+    oval(H, R, x + 2, y - 36 - k % 3 * 7, 3, 1.5, 'sun', .5);
+  }
+  for (let k = 0; k < 4; k++) {
+    const i = 4.92 + k * .34;
+    shape(H, R, [H.p(i, 2.65, 1.28), H.p(i, 2.65, 1.77), H.p(i + .25, 2.96, 1.77), H.p(i + .25, 2.96, 1.28)], k % 2 ? 'coral' : 'sun', .4, .6);
+  }
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 6.76, 1.64 + k * .68, 1.02, .54, .08, .24, 'sun', .5);
+    for (let q = 0; q < 3; q++) sweet(H, R, ...H.p(6.96 + q * .3, 1.91 + k * .68, .35), q % 2, .32);
+  }
+  for (let k = 0; k < 2; k++) {
+    box(H, R, 10.47, 1.42 + k * 1.05, 1.03, .83, .02, .66, 'paper', 1);
+    gift(H, R, 10.55, 1.5 + k * 1.05, .7, .87, .65, 'sun');
+  }
+  table(H, R, 2.13, 9.58, 2.7, 1.42, .77, 'coral');
+  box(H, R, 2.3, 9.76, 2.33, 1.07, .9, .1, 'blue', .7);
+  box(H, R, 2.6, 9.9, 1.7, .73, 1, .33, 'sun', .4);
+  box(H, R, 2.81, 10.03, 1.29, .45, 1.33, .09, 'blue', .75);
+  for (let k = 0; k < 3; k++) sweet(H, R, ...H.p(2.46 + k * .96, 10.52, 1.01), k % 2, .82);
+  for (let k = 0; k < 2; k++) sweet(H, R, ...H.p(3.02 + k * .7, 10.27, 1.45), k % 2, .92);
+  const [ax, ay] = H.p(4.46, 9.86, 1.03);
+  shape(H, R, [[ax - 9, ay], [ax + 9, ay], [ax + 9, ay - 22], [ax - 9, ay - 22]], 'paper', 1);
+  sweet(H, R, ax, ay - 6, 1, .58);
+  table(H, R, 7.96, 10.15, 2.93, 1.26, .93, 'teal');
+  shape(H, R, H.tile(8.13, 10.34, 2.57, .87, 1.07), 'blue', .62);
+  for (let k = 0; k < 3; k++) teaCup(H, R, ...H.p(8.45 + k * .88, 10.67, 1.09), .71);
+  for (let k = 0; k < 2; k++) {
+    const [x, y] = H.p(8.51 + k * 1.55, 11.12, 1.09);
+    oval(H, R, x, y, 10, 4, 'paper', 1);
+    sweet(H, R, x, y, k === 0 ? 2 : 4, .55);
+  }
+  teaPot(H, R, ...H.p(10.69, 10.35, 1.08), .67);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 8.13 + k * .85, 10.42, .72, .68, .06, .51, 'sun', .3);
+    H.line(R, [H.p(8.49 + k * .85, 10.42, .59), H.p(8.49 + k * .85, 11.1, .59)], 'paper', 1.7);
+  }
+  for (const [i, j] of [[6.22, 7.79], [7.35, 8.61]]) {
+    const [x, y] = H.p(i, j);
+    oval(H, R, x, y, 10, 4, 'sun', .5);
+    H.line(R, [[x, y], [x, y - 36]], 'blue', 2.2);
+    H.dot(x, y - 38, 3, 'sun', 1);
+  }
+  stroke(H, R, [H.p(6.22, 7.79, 1.24), H.p(6.79, 8.2, 1.04), H.p(7.35, 8.61, 1.24)], 'coral', 2.6);
+  const [bx, by] = H.p(8.16, 8.24, .02);
+  shape(H, R, [[bx - 10, by], [bx + 10, by], [bx + 10, by - 25], [bx - 10, by - 25]], 'sun', .38);
+  H.line(R, arcPts(bx, by - 25, 5, 8, Math.PI, Math.PI * 2, 10), 'coral', 1.3);
+  for (let k = 0; k < 2; k++) gift(H, R, .65, 10.1 + k * .81, .02, .94, .65, k ? 'coral' : 'paper');
+  const [mx, my] = H.p(10.82, 6.1, .03);
+  oval(H, R, mx, my, 12, 5, 'paper', 1);
+  H.line(R, [[mx, my], [mx, my - 42]], 'sun', 3);
+  shape(H, R, [[mx - 17, my - 40], [mx + 17, my - 40], [mx + 17, my - 60], [mx - 17, my - 60]], 'teal', .38);
+  for (let k = 0; k < 3; k++) H.dot(mx - 9 + k * 9, my - 50, 3, ['coral', 'sun', 'paper'][k], 1);
 }
 
 const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza department-store food hall', { floor: 'paper', tone: 1, wall: 'paper', wallTone: 1, pattern: 'tiles', accent: 'sun', height: 4.4, head: 20 }, (H, R) => {
@@ -121,6 +210,7 @@ const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza depar
     stroke(H, R, [[fx, fy - 16], [fx + dx * .3, fy - 30], [fx + dx, fy + dy]], 'teal', 1);
     sweet(H, R, fx + dx, fy + dy, k % 2, .55);
   }
+  sweetHallDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18), fold = Math.min(1, u / .32), present = Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .55) / .4)));
   H.at(4.15, 4.1, 0, HH => {
@@ -153,6 +243,33 @@ const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza depar
       A.line(B, arcPts(hx + 2, hy - 5, 3, 4, Math.PI, Math.PI * 2, 8), 'blue', 1.4);
     } } });
   });
+  H.at(3.24, 8.46, 0, HH => {
+    const [x, y] = HH.p(3.24, 8.46);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'think', phase: t / 10, scale: 1.29, face: 'se', opts: { shirt: ['blue', .55], hairStyle: 'pony', prop: (A, B, p) => {
+      const [hx, hy] = p.farHand;
+      shape(A, B, [[hx - 9, hy + 18], [hx + 9, hy + 18], [hx + 8, hy + 1], [hx - 8, hy + 1]], 'paper', 1, .65);
+      A.line(B, arcPts(hx, hy + 1, 5, 7, Math.PI, Math.PI * 2, 10), 'coral', 1);
+    } } });
+  });
+  H.at(5.78, 10.17, 0, HH => {
+    const [x, y] = HH.p(5.78, 10.17);
+    FIGURES.draw(HH, R, { who: 'child', x, y, t, clip: 'hold', phase: t / 6, scale: 1.26, face: 'se', opts: { shirt: ['sun', .75], prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand;
+      shape(A, B, [[hx - 9, hy], [hx + 9, hy], [hx + 9, hy - 11], [hx - 9, hy - 11]], 'paper', 1, .65);
+      A.line(B, [[hx, hy], [hx, hy - 12]], 'coral', 1.7);
+      A.line(B, [[hx - 8, hy - 7], [hx + 8, hy - 7]], 'coral', 1.7);
+    } } });
+  });
+  H.at(9.44, 9.45, 0, HH => {
+    const [x, y] = HH.p(9.44, 9.45);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 9, scale: 1.3, face: 'se', opts: { shirt: ['paper', 1], apron: ['teal', .55], hairStyle: 'bun', prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand, pour = Math.max(0, Math.sin(t * .47));
+      teaPot(A, B, hx, hy - 2, .62, pour * 6);
+      if (pour > .35) A.line(B, [[hx + 15, hy - 14 + pour * 6], [hx + 20, hy + 7]], 'teal', .8, { tone: .55 });
+      teaCup(A, B, hx + 20, hy + 16, .6);
+    } } });
+  });
+  H.at(8.55, 10.64, 1.35, HH => steam(HH, R, ...HH.p(8.55, 10.64, 1.35), t * .6, 2));
 });
 
 export default room;

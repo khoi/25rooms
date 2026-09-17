@@ -1,4 +1,4 @@
-import { world, box, table, shape, oval, stroke, windowOn, cycle, lamp, ell } from '../../worlds/common.js';
+import { world, box, table, shape, oval, stroke, windowOn, cycle, lamp, ell, actor, wallRect } from '../../worlds/common.js';
 import { FIGURES, arcPts } from '../../drawings.js';
 
 function glass(H, R, x, y, ink = 'blue', s = 1, cut = 2, turn = 0) {
@@ -47,6 +47,84 @@ function wheelBench(H, R) {
   for (const dx of [-9, 6]) H.line(R, [[cx + dx, cy + 7], [cx + dx - 3, cy - 5]], 'blue', 1.2);
 }
 
+function cutVessel(H, R, x, y, kind = 0, ink = 'blue', s = 1) {
+  const raw = kind === 0 ? [[-21, -22], [21, -22], [15, -6], [6, 0], [-6, 0], [-15, -6]] : [[-14, 0], [14, 0], [17, -26], [7, -38], [6, -60], [-6, -60], [-7, -38], [-17, -26]];
+  const body = raw.map(([a, b]) => [x + a * s, y + b * s]);
+  shape(H, R, body, ink, .6);
+  H.clip(body, () => {
+    for (let k = -5; k < 6; k++) {
+      const a = k * 8 * s;
+      H.line(R, [[x - 35 * s, y + a], [x + 35 * s, y - 70 * s + a]], 'paper', 1.1);
+      H.line(R, [[x + 35 * s, y + a], [x - 35 * s, y - 70 * s + a]], 'paper', 1.1);
+    }
+  });
+  oval(H, R, x, y - (kind ? 60 : 22) * s, (kind ? 6 : 21) * s, (kind ? 2.6 : 7) * s, 'paper', 1);
+  oval(H, R, x, y - (kind ? 60 : 22) * s, (kind ? 4 : 17) * s, (kind ? 1.5 : 4) * s, ink, .3);
+  if (kind) {
+    shape(H, R, [[x - 6 * s, y - 63 * s], [x, y - 73 * s], [x + 6 * s, y - 63 * s], [x, y - 58 * s]], ink, .55, .65);
+  }
+}
+
+function finishingRoom(H, R) {
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 1.32 + k * 3.24, 1.02, 2.88, .73, .04, .62, 'teal', .38);
+    for (let q = 0; q < 3; q++) {
+      const i = 1.42 + k * 3.24 + q * .91;
+      H.outline(R, H.faceI(i, 1.76, .76, .14, .53), 'blue', .65);
+      H.line(R, [H.p(i + .27, 1.78, .36), H.p(i + .49, 1.78, .36)], 'sun', 2);
+    }
+  }
+  for (const [i, ink] of [[2.8, 'coral'], [6.25, 'blue'], [9.7, 'coral']]) cutVessel(H, R, ...H.p(i, 1.04, 2.88), 0, ink, .72);
+  const board = wallRect(H, 'nw', 6.25, 8.5, 2.42, 3.75);
+  shape(H, R, board, 'sun', .3);
+  for (let k = 0; k < 7; k++) {
+    const [x, y] = H.p(.05, 6.48 + k % 4 * .47, 3.38 - Math.floor(k / 4) * .53);
+    H.line(R, [[x, y - 9], [x, y + 14]], 'blue', 1.4);
+    if (k % 2) {
+      H.line(R, [[x - 6, y + 10], [x - 6, y + 17], [x + 6, y + 17], [x + 6, y + 10]], 'blue', 1.1);
+    } else oval(H, R, x, y + 14, 6, 7, 'coral', .4);
+  }
+  box(H, R, .65, 6.34, 1.3, 2.13, 0, .94, 'teal', .6);
+  basin(H, R, .63, 6.36, .95, 1.34);
+  basin(H, R, .63, 7.4, .95, 1.34);
+  const [fx, fy] = H.p(.84, 7.41, 1.13);
+  stroke(H, R, [[fx, fy], [fx, fy - 30], [fx + 14, fy - 34], [fx + 14, fy - 20]], 'blue', 2.2);
+  for (let k = 0; k < 3; k++) glass(H, R, ...H.p(1.48, 6.55 + k * .28, 1.16), k % 2 ? 'coral' : 'blue', .47, 0);
+  const [sx, sy] = H.p(1.8, 8.37, 1.08);
+  shape(H, R, [[sx - 9, sy - 1], [sx + 9, sy + 1], [sx + 8, sy + 21], [sx - 7, sy + 19]], 'paper', 1);
+  for (const dy of [6, 10, 14]) H.line(R, [[sx - 7, sy + dy], [sx + 7, sy + dy + 2]], 'coral', .8);
+  table(H, R, 5.77, 2.35, 1.45, 1.68, 1.02, 'sun');
+  shape(H, R, H.tile(5.93, 2.54, 1.13, 1.3, 1.15), 'blue', .23);
+  for (let k = 0; k < 3; k++) glass(H, R, ...H.p(6.12 + k % 2 * .62, 2.88 + Math.floor(k / 2) * .62, 1.17), k % 2 ? 'coral' : 'blue', .67, k);
+  const [cx, cy] = H.p(6.72, 3.6, 1.18);
+  H.line(R, [[cx - 12, cy + 2], [cx + 10, cy - 7]], 'blue', 1.3);
+  for (const dx of [-8, 5]) H.line(R, [[cx + dx, cy + 6], [cx + dx - 4, cy - 7]], 'blue', 1.2);
+  table(H, R, 5.6, 6.9, 1.65, 1.1, .68, 'coral');
+  cutVessel(H, R, ...H.p(6.03, 7.39, .81), 1, 'blue', .76);
+  cutVessel(H, R, ...H.p(6.91, 7.54, .81), 0, 'coral', .72);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 10.95, 2.15 + k * .54, .6, .4, .04, .25 + k * .11, 'sun', .45);
+    oval(H, R, ...H.p(11.25, 2.34 + k * .54, .31 + k * .11), 7, 3, 'blue', .5);
+  }
+  for (const i of [10.7, 11.4]) for (const j of [6.5, 7.75]) box(H, R, i, j, .08, .08, .05, 1.89, 'blue', .65);
+  for (const z of [.43, 1.02, 1.61]) {
+    box(H, R, 10.63, 6.42, .91, 1.43, z, .055, 'paper', 1);
+    for (let k = 0; k < 4; k++) glass(H, R, ...H.p(10.85 + k % 2 * .44, 6.78 + Math.floor(k / 2) * .7, z + .07), k % 2 ? 'coral' : 'blue', .43, 2);
+  }
+  const [wx, wy] = H.p(3.55, 5.13, .025);
+  oval(H, R, wx, wy, 31, 10, 'teal', .12);
+  H.line(R, [[wx - 22, wy], [wx - 2, wy + 4], [wx + 22, wy + 1]], 'paper', 1.1);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 8.15 + k, 10.69, .85, .73, 0, .45 + k % 2 * .2, 'sun', .48);
+    H.line(R, [H.p(8.56 + k, 10.69, .45 + k % 2 * .2), H.p(8.56 + k, 11.42, .45 + k % 2 * .2)], 'coral', 2);
+  }
+  for (let k = 0; k < 3; k++) shape(H, R, H.tile(9.49 + k * .035, 9.61 + k * .025, .9, .58, .99 + k * .005), 'paper', 1, .5);
+  const [rx, ry] = H.p(7.86, 9.76, .02);
+  oval(H, R, rx, ry, 11, 5, 'sun', .5);
+  oval(H, R, rx, ry - 15, 10, 5, 'paper', 1);
+  for (let k = 0; k < 7; k++) H.line(R, [[rx - 9 + k * 3, ry], [rx - 8 + k * 2.6, ry - 15]], 'coral', .8);
+}
+
 const room = world('tokyo-sumida-kiriko', 'Light through cut glass — Sumida Edo kiriko workshop', { floor: 'paper', tone: 1, wall: 'paper', wallTone: 1, pattern: 'tiles', accent: 'teal', height: 4.2, head: 20 }, (H, R) => {
   windowOn(H, R, 'nw', 3.45, 1.6, 5.5, 2.15, { sky: 'sun', skyTone: .16, frameInk: 'teal' });
   for (const j of [1.5, 3.4, 5.3]) H.line(R, [H.p(.03, j, 1.62), H.p(.03, j, 3.73)], 'teal', 1.7);
@@ -92,6 +170,7 @@ const room = world('tokyo-sumida-kiriko', 'Light through cut glass — Sumida Ed
   const [qx, qy] = H.p(10.65, 9.72, .99);
   for (let k = 0; k < 4; k++) H.line(R, [[qx - 4 + k * 3, qy - 11], [qx - 7 + k * 4, qy - 33 - k % 2 * 4]], k % 2 ? 'blue' : 'sun', 1.4);
   H.line(R, [[qx + 3, qy - 17], [qx - 1, qy - 8], [qx + 2, qy - 3]], 'blue', .65);
+  finishingRoom(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 14), inspection = Math.max(0, Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .42) / .42))));
   H.at(3.85, 5.65, 0, HH => {
@@ -126,6 +205,26 @@ const room = world('tokyo-sumida-kiriko', 'Light through cut glass — Sumida Ed
       const [x, y] = HH.p(4.15 + k * .16, 4.75, 1.22);
       HH.tint([[x, y - 3], [x + 5, y], [x, y + 4], [x - 5, y]], k % 2 ? 'coral' : 'blue', .08 + inspection * .15);
     }
+  });
+  H.at(4.75, 10.76, 0, HH => {
+    const [x, y] = HH.p(4.75, 10.76);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 8, scale: 1.3, face: 'nw', opts: { shirt: ['coral', .6], prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand, lift = Math.max(0, Math.sin(t * .42)) * 7;
+      glass(A, B, hx, hy - lift, 'blue', .7, 2, t * 1.5);
+    } } });
+  });
+  H.at(7.66, 9.02, 0, HH => {
+    const [x, y] = HH.p(7.66, 9.02);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 6, scale: 1.27, face: 'se', opts: { shirt: ['sun', .65], apron: ['teal', .55], prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand, fold = Math.sin(t * .7) * 4;
+      shape(A, B, [[hx - 15, hy + 5], [hx + 15, hy + 5], [hx + 10 - fold, hy - 15], [hx - 12 + fold, hy - 13]], 'paper', 1, .65);
+      glass(A, B, hx, hy, 'coral', .47, 2);
+    } } });
+  });
+  H.at(6.54, 4.4, 0, HH => actor(HH, R, 6.54, 4.4, t * .21, 'think', { shirt: ['blue', .55], apron: ['paper', 1], glasses: true, face: 'nw' }, 0, 1.25));
+  H.at(1.35, 7.44, 1.16, HH => {
+    const [x, y] = HH.p(.84, 7.41, 1.13), drip = cycle(t, 2.6);
+    HH.dot(x + 14, y - 18 + drip * 26, 1.2, 'teal', 1 - drip * .4);
   });
 });
 

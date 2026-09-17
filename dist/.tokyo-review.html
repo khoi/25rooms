@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Room review</title>
+<style>body{margin:0;background:#eee6d8;font:16px monospace;color:#262320}main{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:12px}article{min-width:0;background:#f3ebdd;padding:8px}h2{font:14px monospace;margin:0}canvas{display:block;width:100%}</style>
+<main></main><script type="module">
+import {createLayout} from './artwork/layout.js';
+import {RoomPainter} from './artwork/painter.js';
+window.review = async (collection = 'tokyo', indices = [0,1,2,3], time = 7) => {
+  const layout = createLayout(5, collection);
+  document.querySelector('main').replaceChildren();
+  const rows=[];
+  for (const index of indices) {
+    const room=layout.rooms[index];
+    const painter=new RoomPainter(room,{...layout,drawOrder:[room]});
+    painter.prepare(1.5);
+    while(painter.pending) painter.service(performance.now()+1000);
+    painter.paint(time,Math.floor(time*12));
+    const article=document.createElement('article');
+    const title=document.createElement('h2');
+    title.textContent=(index+1)+' · '+room.id;
+    article.append(title,painter.canvas);
+    document.querySelector('main').append(article);
+    rows.push({id:room.id,width:painter.canvas.width,height:painter.canvas.height,paintMs:painter.paintMs});
+  }
+  return rows;
+};
+await window.review();
+</script></html>

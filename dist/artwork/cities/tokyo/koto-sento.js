@@ -24,6 +24,64 @@ function bathEdge(H, R) {
   for (let k = 0; k < 16; k++) H.line(R, [H.p(3.15 + k * .52, 4.83, .1), H.p(3.15 + k * .52, 4.83, .65)], 'teal', .65, { tone: .6 });
 }
 
+function bathingRoutines(H, R) {
+  box(H, R, 4.08, 5.73, 1.94, .48, .04, 1.76, 'teal', .35);
+  for (let k = 0; k < 4; k++) H.line(R, [H.p(4.15 + k * .47, 6.23, .08), H.p(4.15 + k * .47, 6.23, 1.76)], 'blue', .65, { tone: .45 });
+  for (let z = .18; z < 1.77; z += .32) H.line(R, [H.p(4.11, 6.23, z), H.p(5.98, 6.23, z)], 'blue', .55, { tone: .4 });
+  shape(H, R, H.faceI(4.31, 6.25, 1.42, .86, 1.63), 'paper', 1);
+  H.tint(H.faceI(4.34, 6.26, 1.36, .9, 1.59), 'blue', .18);
+  box(H, R, 4.11, 6.21, 1.88, .4, .64, .09, 'paper', 1);
+  for (const i of [4.43, 5.23]) {
+    const [x, y] = H.p(i, 6.43, .93);
+    stroke(H, R, [[x - 3, y - 4], [x - 3, y + 5], [x + 5, y + 7]], 'blue', 2);
+    H.line(R, [[x - 7, y - 4], [x + 2, y - 4]], i < 5 ? 'coral' : 'teal', 2.5);
+  }
+  table(H, R, 4.71, 7.02, .72, .64, .31, 'teal');
+  basin(H, R, ...H.p(5.76, 7.26, .04), .92);
+  for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(4.3 + k * .27, 6.5, .78), ['teal', 'coral', 'sun'][k], .26 + k * .04);
+  const [sx, sy] = H.p(5.61, 6.46, .81);
+  oval(H, R, sx, sy, 6, 3, 'paper', 1);
+  oval(H, R, sx, sy - 2, 4, 2, 'coral', .6);
+  box(H, R, 3.51, 8.82, 2.78, 2.7, .01, .58, 'paper', 1);
+  shape(H, R, H.tile(3.77, 9.08, 2.26, 2.18, .6), 'teal', .65);
+  for (let k = 0; k < 6; k++) H.line(R, [H.p(3.6 + k * .45, 11.54, .03), H.p(3.6 + k * .45, 11.54, .58)], 'teal', .9);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(6.31, 8.91 + k * .48, .03), H.p(6.31, 8.91 + k * .48, .58)], 'teal', .9);
+  stroke(H, R, [H.p(5.67, 8.77, .07), H.p(5.67, 8.77, 1.01), H.p(5.67, 9.42, 1.01), H.p(5.67, 9.55, .6)], 'blue', 2.5);
+  towel(H, R, 3.83, 8.84, .62);
+  bench(H, R, .61, 10.37, 2.18, 'paper');
+  for (let k = 0; k < 3; k++) towel(H, R, .77 + k * .57, 10.58, .72, k % 2 ? 'coral' : 'paper');
+  for (const j of [9.73, 10.24, 10.75]) basin(H, R, ...H.p(.48, j, .07), .68);
+  box(H, R, 2.06, 9.53, .64, .53, .03, .74, 'teal', .43);
+  for (let k = 0; k < 2; k++) bottle(H, R, ...H.p(2.22 + k * .24, 9.86, .79), k ? 'sun' : 'coral', .39);
+  const [hx, hy] = H.p(2.73, 9.84, .08);
+  H.line(R, [[hx, hy], [hx - 12, hy - 61]], 'sun', 1.8);
+  for (let k = 0; k < 7; k++) H.line(R, [[hx - 8 + k * 2.6, hy], [hx - 12 + k * 3.5, hy + 8]], 'paper', 1.5);
+  box(H, R, 6.69, 8.51, .13, 2.6, .03, 1.89, 'sun', .4);
+  for (let k = 0; k < 15; k++) H.line(R, [H.p(6.84, 8.57 + k * .17, .09), H.p(6.84, 8.57 + k * .17, 1.89)], 'coral', .75);
+  table(H, R, 7.12, 10.62, .74, .83, .85, 'sun');
+  shape(H, R, H.faceJ(7.08, 10.56, .98, 1.05, 2.14), 'paper', 1);
+  H.tint(H.faceJ(7.1, 10.63, .84, 1.14, 2.06), 'teal', .23);
+  const [dx, dy] = H.p(7.59, 11.05, 1.08);
+  oval(H, R, dx, dy, 7, 5, 'coral', .55);
+  stroke(H, R, [[dx + 1, dy + 2], [dx + 5, dy + 12]], 'coral', 4);
+  stroke(H, R, [[dx + 4, dy + 13], [dx + 13, dy + 21], [dx + 4, dy + 29], [dx + 13, dy + 36]], 'blue', .8);
+  bottle(H, R, ...H.p(7.38, 10.92, 1), 'teal', .28);
+  for (let k = 0; k < 5; k++) {
+    const i = 8.39 + k * .55;
+    box(H, R, i, 7.26, .47, .38, 2.15, .24, 'paper', 1);
+    for (let n = 0; n < 3; n++) H.line(R, [H.p(i + .05 + n * .14, 7.66, 2.18), H.p(i + .05 + n * .14, 7.66, 2.36)], 'coral', .65);
+  }
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(8.36 + k * .38, 8.13, .12);
+    shape(H, R, [[x - 6, y], [x + 6, y], [x + 4, y - 18], [x - 4, y - 18]], ['coral', 'teal', 'sun'][k], .48);
+    stroke(H, R, [[x - 3, y - 18], [x - 3, y - 25], [x + 3, y - 25], [x + 4, y - 18]], 'blue', .7);
+  }
+  for (const [i, j] of [[10.84, 11.23], [11.2, 11.23], [8.21, 11.41], [8.54, 11.41]]) {
+    oval(H, R, ...H.p(i, j, .06), 7, 3, 'coral', .6);
+    oval(H, R, ...H.p(i + .03, j, .1), 3.5, 1.8, 'paper', 1);
+  }
+}
+
 export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { wall: false, floor: 'teal', tone: .19, pattern: 'tiles', accent: 'teal', head: 20 }, (H, R) => {
   shape(H, R, H.faceI(.1, .1, 11.8, 0, 4.55), 'paper', 1);
   shape(H, R, H.faceJ(.1, .1, 9.75, 0, 2.85), 'teal', .24);
@@ -101,13 +159,37 @@ export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { w
   oval(H, R, cx, cy, 16, 16, 'paper', 1);
   for (let k = 0; k < 12; k++) H.dot(cx + Math.sin(k * TAU / 12) * 12, cy - Math.cos(k * TAU / 12) * 12, .9, 'blue');
   stroke(H, R, [[cx, cy - 8], [cx, cy], [cx + 6, cy + 4]], 'blue', 1.2);
-  box(H, R, 5.15, 10.98, 1.59, .64, .04, .68, 'sun', .43);
+  box(H, R, 9.1, 11.18, 1.59, .64, .04, .68, 'sun', .43);
   for (let k = 0; k < 3; k++) {
-    shape(H, R, H.faceI(5.24 + k * .49, 11.63, .41, .16, .6), 'blue', .53);
-    oval(H, R, ...H.p(5.43 + k * .49, 11.66, .25), 5, 2.5, 'coral', .7);
+    shape(H, R, H.faceI(9.19 + k * .49, 11.83, .41, .16, .6), 'blue', .53);
+    oval(H, R, ...H.p(9.38 + k * .49, 11.86, .25), 5, 2.5, 'coral', .7);
   }
+  bathingRoutines(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 18);
+  actor(H, R, 1.77, 4.36, t + 3, 'tokyoSentoRinse', { shirt: ['coral', .3], pants: ['paper', 1], skin: ['coral', .3], sleeve: ['coral', .3], face: 'nw' }, .29, 1.1);
+  actor(H, R, 5.1, 7.43, t, 'sit', { shirt: ['coral', .28], pants: ['paper', 1], skin: ['coral', .28], sleeve: ['coral', .28], face: 'nw', prop: (HH, RR, pts) => {
+    const [x, y] = pts.nearHand;
+    oval(HH, RR, x - 1, y + Math.sin(t * 2) * 2, 5, 3, 'paper', 1);
+    for (let k = 0; k < 3; k++) H.dot(x - 5 + k * 4, y - 3 - Math.sin(t * 1.5 + k) * 3, 1.4, 'paper', 1, { knock: true });
+  } }, .3, 1.12);
+  actor(H, R, 10.76, 8.63, t, 'hold', { shirt: ['teal', .45], pants: ['blue', .56], face: 'sw', prop: (HH, RR, pts) => {
+    const [x, y] = pts.nearHand;
+    shape(HH, RR, [[x - 12, y - 3], [x + 10, y - 3], [x + 9, y + 16], [x - 11, y + 14]], 'paper', 1, .65);
+    H.line(R, [[x - 10, y + 10], [x + 9, y + 12]], 'teal', 1.2);
+  } }, .05, 1.13);
+  H.clip(H.tile(3.78, 9.09, 2.24, 2.16, .61), () => {
+    for (let k = 0; k < 3; k++) {
+      const f = cycle(t + k * 1.4, 4.2);
+      H.opacity(1 - f, () => H.outline(R, ell(...H.p(4.85, 10.16, .64), 5 + f * 46, 3 + f * 18), 'paper', .8));
+    }
+  });
+  const [bx, by] = H.p(4.8, 9.94, .65);
+  shape(H, R, loop([[bx - 16, by + 2], [bx - 14, by - 10], [bx - 5, by - 14], [bx + 8, by - 14], [bx + 17, by], [bx + 11, by + 4]], 1), 'coral', .27);
+  oval(H, R, bx, by - 20, 7, 8, 'coral', .28);
+  shape(H, R, loop([[bx - 7, by - 19], [bx - 8, by - 28], [bx + 1, by - 31], [bx + 7, by - 26], [bx + 6, by - 23]], 1), 'blue', .7, .6);
+  H.line(R, [[bx + 1, by - 19], [bx + 4, by - 19]], 'blue', .65);
+  stroke(H, R, [[bx - 21, by + 1], [bx, by + 5], [bx + 23, by]], 'paper', 1.2);
   H.clip(H.tile(3.4, 1.39, 7.8, 3.12, .43), () => {
     for (let k = 0; k < 4; k++) {
       const f = cycle(t + k * 1.4, 5.6);

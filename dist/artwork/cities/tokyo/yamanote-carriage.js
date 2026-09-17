@@ -62,6 +62,81 @@ function stroller(H, R) {
   line(H, R, [p(.1, .1, .65), p(.53, .17, .65)], 2, 'blue');
 }
 
+
+function suitcase(H, R, i, j, ink, h = 1.0) {
+  for (const dx of [.1, .65]) oval(H, R, ...H.p(i + dx, j + .27, .09), 2.5, 4, 'blue', .85);
+  box(H, R, i, j, .77, .48, .13, h, ink, .66);
+  for (const dx of [.15, .35, .55]) line(H, R, [H.p(i + dx, j + .49, .25), H.p(i + dx, j + .49, h + .04)], .7, 'paper', .65);
+  for (const dx of [.21, .57]) line(H, R, [H.p(i + dx, j + .18, h + .13), H.p(i + dx, j + .18, h + .68)], 1.4);
+  line(H, R, [H.p(i + .21, j + .18, h + .68), H.p(i + .57, j + .18, h + .68)], 2.5);
+  box(H, R, i + .68, j + .29, .12, .09, h * .6, .23, 'paper', 1);
+}
+
+function carriageDetails(H, R) {
+  for (const [side, start, end] of [['nw', .55, 3.55], ['nw', 8.15, 11.55], ['ne', 3.25, 10.75]]) {
+    const count = side === 'ne' ? 4 : 2;
+    for (let k = 0; k < count; k++) {
+      const a = start + k * (end - start) / count;
+      const b = a + (end - start) / count - .15;
+      panel(H, R, side, a, b, 3.1, 3.4, k % 2 ? 'teal' : 'coral', .65, .16);
+      const [x, y] = wallPt(H, side, (a + b) / 2, 3.28, .18);
+      oval(H, R, x - 5, y, 5, 4, 'paper', 1);
+      shape(H, R, [[x + 3, y + 3], [x + 8, y - 5], [x + 15, y + 4]], 'sun', .85, .45);
+      line(H, R, [wallPt(H, side, a + .1, 3.15, .2), wallPt(H, side, b - .1, 3.15, .2)], .7, 'paper');
+    }
+  }
+  for (const [i, ink] of [[2.1, 'coral'], [4.7, 'teal'], [8.5, 'sun']]) {
+    for (const x of [i, i + 1.3]) line(H, R, [H.p(x, 5.6, 3.6), H.p(x, 5.6, 3.3)], .8);
+    shape(H, R, H.faceI(i, 5.6, 1.3, 2.63, 3.3), 'paper', 1, .7);
+    shape(H, R, H.faceI(i + .06, 5.62, 1.18, 2.69, 3.23), ink, .65, .5);
+    const [x, y] = H.p(i + .65, 5.63, 2.99);
+    if (ink === 'teal') {
+      oval(H, R, x, y, 10, 5, 'paper', 1);
+      line(H, R, [[x - 8, y + 5], [x + 7, y + 5]], 1, 'sun');
+    } else {
+      H.dot(x - 7, y - 4, 5, 'paper', 1, {knock: true});
+      shape(H, R, [[x - 2, y + 8], [x + 6, y - 8], [x + 15, y + 8]], ink === 'sun' ? 'blue' : 'sun', .85, .5);
+    }
+  }
+  for (const [i, ink, w] of [[1.7, 'coral', .9], [3.25, 'teal', 1.1], [5.4, 'sun', .85], [9.6, 'paper', .8]]) {
+    box(H, R, i, .4, w, .53, 3.23, .32, ink, ink === 'paper' ? 1 : .6);
+    stroke(H, R, [H.p(i + w * .25, .7, 3.56), H.p(i + w * .3, .7, 3.72), H.p(i + w * .7, .7, 3.72), H.p(i + w * .75, .7, 3.56)], 'blue', 1.1);
+    line(H, R, [H.p(i + w * .2, .94, 3.38), H.p(i + w * .8, .94, 3.38)], .7, 'paper');
+  }
+  for (const j of [8.65, 10.5]) line(H, R, [H.p(.3, j, 3.16), H.p(1.1, j, 3.16)], 1.2);
+  line(H, R, [H.p(1.1, 8.6, 3.16), H.p(1.1, 11.5, 3.16)], 2);
+  for (let j = 8.7; j < 11.5; j += .35) line(H, R, [H.p(.2, j, 3.16), H.p(1.08, j, 3.16)], .7);
+  box(H, R, .25, 9.1, .6, 1.7, 3.18, .32, 'teal', .7);
+  for (const j of [9.5, 10.25]) line(H, R, [H.p(.3, j, 3.51), H.p(.78, j, 3.51)], 2.5, 'paper');
+  suitcase(H, R, 1.02, 9.1, 'coral', .97);
+  suitcase(H, R, 1.95, 9.55, 'blue', .8);
+  bag(H, R, 1.15, 9.12, 1.14, 'sun');
+  bag(H, R, 3.3, 1.72, .78, 'paper');
+  bag(H, R, 8.45, 2.08, .02, 'teal');
+  bag(H, R, 7.6, 9.22, .03, 'coral');
+  for (const [i, j] of [[4.15, 2.6], [8.65, 8.7]]) {
+    const [x, y] = H.p(i, j, .02);
+    shape(H, R, [[x - 7, y], [x + 7, y], [x + 6, y - 19], [x - 6, y - 19]], 'paper', 1, .65);
+    stroke(H, R, [[x - 4, y - 19], [x - 4, y - 25], [x + 4, y - 25], [x + 4, y - 19]], 'coral', .85);
+    line(H, R, [[x - 4, y - 10], [x + 4, y - 10]], 3, 'teal');
+  }
+  for (const i of [4.5, 8.4]) {
+    line(H, R, [H.p(i, 7.8, .02), H.p(i, 7.8, 3.55)], 3, 'paper');
+    line(H, R, [H.p(i, 7.8, .02), H.p(i, 7.8, 3.55)], .95);
+  }
+  panel(H, R, 'nw', 8.35, 8.9, 1.8, 2.33, 'paper', 1, .15);
+  H.dot(...wallPt(H, 'nw', 8.62, 2.12, .2), 4, 'coral', .8);
+  for (let k = 0; k < 3; k++) line(H, R, [wallPt(H, 'nw', 8.44, 1.9 + k * .06, .2), wallPt(H, 'nw', 8.82, 1.9 + k * .06, .2)], .6);
+  panel(H, R, 'nw', 9.35, 11.55, .6, 1.16, 'blue', .15, .1);
+  for (let j = 9.45; j < 11.45; j += .17) line(H, R, [wallPt(H, 'nw', j, .7, .13), wallPt(H, 'nw', j, 1.05, .13)], .75);
+  shape(H, R, H.tile(1.1, 7.5, 2.55, .65, .02), 'teal', .14, .5);
+  for (let k = 0; k < 4; k++) {
+    const [x, y] = H.p(1.3 + k * .54, 7.8, .03);
+    oval(H, R, x, y, 3, 1.5, 'paper', 1);
+    line(H, R, [[x - 3, y + 3], [x + 3, y + 3]], .6, 'paper');
+  }
+}
+
 const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between stations', {
   wall: false, floor: 'blue', tone: .16, head: 20,
 }, (H, R) => {
@@ -114,6 +189,7 @@ const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between
   line(H, R, [H.p(.55, 3.5, .01), H.p(.55, 8.15, .01)], 2, 'sun');
   for (let i = .8; i < 11.6; i += .8) line(H, R, [H.p(i, 3.65, .01), H.p(i + .3, 3.65, .01)], .5, 'blue', .25);
   for (const j of [9.7, 10.9]) line(H, R, [H.p(5.8, j, .02), H.p(11.7, j, .02)], 1, 'blue', .28);
+  carriageDetails(H, R);
 }, (H, R, t) => {
   const s = cycle(t, 18) * 18;
   const distance = s < 4 ? s - s * s / 8 : s < 12 ? 2 : s < 16 ? 2 + (s - 12) ** 2 / 8 : 4 + s - 16;
@@ -147,6 +223,27 @@ const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between
   }, .78, 1.15, 'elder'));
   H.at(7.3, 3.2, 0, HH => actor(HH, R, 7.3, 3.2, moving ? t * .2 : 0, 'reach', { shirt: ['blue', .68], hairStyle: 'short' }, 0, 1.32));
   H.at(10.1, 5.8, 0, HH => actor(HH, R, 10.1, 5.8, moving ? t * .16 : 0, 'hold', { shirt: ['teal', .7], hairStyle: 'pony' }, 0, 1.23));
+  for (const [i, ink, clip, hair] of [[4.05, 'coral', 'phone', 'pony'], [5.38, 'paper', 'sit', 'short'], [8.05, 'teal', 'read', 'short'], [9.62, 'sun', 'phone', 'bun']]) {
+    H.at(i, 1.57, .78, HH => actor(HH, R, i, 1.57, moving ? t * .16 : 0, clip, {shirt: [ink, ink === 'paper' ? 1 : .7], hairStyle: hair, prop: (h, r, p) => {
+      if (clip === 'phone') {
+        const [x, y] = p.nearHand;
+        shape(h, r, [[x - 4, y - 8], [x + 4, y - 7], [x + 4, y + 5], [x - 4, y + 4]], 'blue', .85, .5);
+        line(h, r, [[x - 2, y - 5], [x + 2, y - 4]], 1.5, 'paper');
+      }
+      if (clip === 'read') {
+        const [x, y] = p.nearHand;
+        shape(h, r, [[x - 9, y - 6], [x + 8, y - 6], [x + 8, y + 6], [x - 9, y + 6]], 'paper', 1, .5);
+        line(h, r, [[x, y - 6], [x, y + 6]], .6, 'coral');
+      }
+    }}, .78, 1.16));
+  }
+  for (const [i, ink, clip] of [[6.93, 'paper', 'sit'], [8.23, 'coral', 'phone'], [9.5, 'blue', 'read']]) H.at(i, 9.72, .78, HH => actor(HH, R, i, 9.72, moving ? t * .12 : 0, clip, {shirt: [ink, ink === 'paper' ? 1 : .64], face: 'nw', hairStyle: i > 9 ? 'pony' : 'short'}, .78, 1.18));
+  H.at(4.6, 3.65, 0, HH => actor(HH, R, 4.6, 3.65, moving ? t * .17 : 0, 'reach', {shirt: ['paper', 1], hairStyle: 'bun'}, 0, 1.25));
+  H.at(5.7, 7.1, 0, HH => actor(HH, R, 5.7, 7.1, moving ? t * .15 : 0, 'hold', {shirt: ['teal', .65], face: 'nw', hairStyle: 'short', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    shape(h, r, [[x - 7, y - 2], [x + 8, y - 2], [x + 8, y + 14], [x - 7, y + 14]], 'sun', .65, .6);
+    line(h, r, [[x - 3, y - 2], [x - 3, y - 7], [x + 4, y - 7], [x + 4, y - 2]], .8);
+  }}, 0, 1.2));
   if (s < 7.4) {
     const progress = Math.max(0, Math.min(1, (s - 6) / 1.4));
     const i = 2.7 * (1 - progress);

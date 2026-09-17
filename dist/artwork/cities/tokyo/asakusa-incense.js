@@ -52,6 +52,90 @@ function burner(H, R) {
   }
 }
 
+
+function charm(H, R, i, j, z, ink = 'coral', size = 1) {
+  const [x, y] = H.p(i, j, z);
+  shape(H, R, [[x - 5 * size, y], [x + 5 * size, y], [x + 6 * size, y - 15 * size], [x, y - 20 * size], [x - 6 * size, y - 15 * size]], ink, .74, .6);
+  H.outline(R, [[x - 3 * size, y - 3 * size], [x + 3 * size, y - 3 * size], [x + 3 * size, y - 13 * size], [x - 3 * size, y - 13 * size]], 'sun', .7, {tone: .85, amp: .07});
+  stroke(H, R, [[x, y - 18 * size], [x - 4 * size, y - 24 * size], [x, y - 27 * size], [x + 4 * size, y - 24 * size], [x, y - 18 * size]], 'paper', .8);
+}
+
+function courtyardDetails(H, R) {
+  box(H, R, 1.75, 8.56, 1.4, 2.05, .03, .85, 'coral', .48);
+  box(H, R, 1.66, 8.48, 1.58, 2.2, .89, .11, 'sun', .48);
+  for (const j of [8.8, 9.44, 10.08]) {
+    box(H, R, 1.87, j, 1.12, .51, 1.01, .13, 'paper', 1);
+    for (let k = 0; k < 4; k++) box(H, R, 1.98 + k * .22, j + .05, .16, .39, 1.16, .045, k % 2 ? 'coral' : 'teal', .6);
+    line(H, R, [H.p(1.86, j + .52, .7), H.p(2.99, j + .52, .7)], .75);
+  }
+  for (const j of [8.55, 10.6]) box(H, R, 1.78, j, .12, .12, 1, 1.4, 'coral', .65);
+  box(H, R, 1.76, 8.55, .15, 2.15, 2.25, .12, 'sun', .65);
+  for (const z of [1.49, 1.99]) for (let k = 0; k < 5; k++) charm(H, R, 1.86, 8.83 + k * .34, z, ['coral', 'teal', 'sun'][k % 3], .72);
+  box(H, R, 2.03, 8.08, .85, .33, .04, .58, 'blue', .62);
+  for (let k = 0; k < 5; k++) box(H, R, 2.05, 8.1, .81, .28, .64 + k * .045, .038, 'paper', 1);
+  box(H, R, 9.94, 4.44, 1.48, 2.14, .02, .81, 'coral', .45);
+  box(H, R, 9.87, 4.37, 1.63, 2.29, .85, .12, 'sun', .4);
+  for (let k = 0; k < 4; k++) {
+    const j = 4.55 + k * .46;
+    box(H, R, 10.02, j, 1.12, .35, 1.0, .14, 'paper', 1);
+    for (let n = 0; n < 5; n++) {
+      const [x, y] = H.p(10.13 + n * .18, j + .19, 1.17);
+      line(H, R, [[x, y], [x + 5, y - 8]], 2.2, k % 2 ? 'coral' : 'teal');
+      line(H, R, [[x + 1, y - 2], [x + 4, y - 4]], 2, 'paper');
+    }
+    box(H, R, 10.05, j, 1.0, .33, .1, .32, 'paper', 1);
+  }
+  for (const j of [4.5, 6.3]) box(H, R, 11.48, j, .13, .13, .02, 2.42, 'coral', .65);
+  box(H, R, 11.45, 4.48, .16, 1.99, 2.4, .14, 'coral', .7);
+  for (const z of [1.34, 1.95]) {
+    line(H, R, [H.p(11.51, 4.58, z), H.p(11.51, 6.35, z)], 1.2, 'sun');
+    for (let k = 0; k < 5; k++) charm(H, R, 11.53, 4.71 + k * .33, z - .05, k % 2 ? 'paper' : 'coral', .64);
+  }
+  for (let k = 0; k < 3; k++) box(H, R, 10.1, 6.86, 1.3, .7, .02 + k * .26, .24, k === 1 ? 'teal' : 'paper', k === 1 ? .5 : 1);
+  for (const i of [1.4, 3.62]) {
+    box(H, R, i, 1.25, .69, .7, .43, .48, 'paper', .88);
+    const [x, y] = H.p(i + .35, 1.6, .95);
+    shape(H, R, [[x - 10, y], [x + 10, y], [x + 15, y - 30], [x - 15, y - 30]], 'teal', .6, .8);
+    oval(H, R, x, y - 30, 15, 5, 'blue', .65);
+    for (let k = 0; k < 5; k++) {
+      const dx = (k - 2) * 7, dy = 43 + k % 2 * 13;
+      line(H, R, [[x + dx * .4, y - 26], [x + dx, y - dy]], 1.2, 'teal');
+      for (let n = 0; n < 5; n++) {
+        const a = n * TAU / 5;
+        oval(H, R, x + dx + Math.cos(a) * 4, y - dy + Math.sin(a) * 4, 4, 3, k % 2 ? 'paper' : 'coral', .7);
+      }
+      H.dot(x + dx, y - dy, 2, 'sun', 1);
+    }
+  }
+  for (const i of [2.6, 9.6]) {
+    box(H, R, i, 2.68, .5, .5, .02, .41, 'paper', .9);
+    box(H, R, i + .17, 2.85, .17, .17, .43, 1.0, 'paper', .8);
+    box(H, R, i - .05, 2.63, .6, .6, 1.42, .15, 'blue', .58);
+    box(H, R, i + .04, 2.72, .43, .43, 1.59, .49, 'sun', .5);
+    for (const dx of [.04, .37]) box(H, R, i + dx, 2.72, .07, .43, 1.59, .49, 'blue', .7);
+    box(H, R, i - .15, 2.53, .8, .8, 2.1, .16, 'blue', .65);
+    box(H, R, i + .16, 2.84, .19, .19, 2.26, .14, 'paper', .9);
+  }
+  box(H, R, 3.1, 10.82, 3.36, .8, .02, .45, 'paper', .84);
+  for (const i of [3.35, 5.93]) box(H, R, i, 10.94, .36, .51, .01, .25, 'blue', .45);
+  for (const [i, ink] of [[3.35, 'teal'], [5.82, 'coral']]) {
+    box(H, R, i, 10.98, .48, .32, .49, .47, ink, .68);
+    stroke(H, R, [H.p(i + .1, 11.12, .98), H.p(i + .1, 11.12, 1.17), H.p(i + .37, 11.12, 1.17), H.p(i + .37, 11.12, .98)], 'blue', 1);
+  }
+  const [ux, uy] = H.p(6.55, 11.06, .04);
+  shape(H, R, [[ux - 3, uy], [ux + 4, uy], [ux + 2, uy - 49], [ux - 1, uy - 49]], 'coral', .75, .6);
+  stroke(H, R, [[ux, uy - 48], [ux, uy - 58], [ux + 7, uy - 58], [ux + 7, uy - 52]], 'blue', 1.2);
+  for (const j of [4.05, 5.4, 6.76]) {
+    const [x, y] = H.p(2.27, j, .05);
+    H.outline(R, ell(x, y, 6, 3), 'coral', .8, {tone: .5, amp: .1});
+  }
+  box(H, R, 8.2, 10.65, .63, .63, .02, .83, 'teal', .55);
+  const [bx, by] = H.p(8.52, 10.98, .89);
+  oval(H, R, bx, by, 11, 6, 'blue', .65);
+  for (const dx of [-3, 3]) line(H, R, [[bx + dx, by], [bx + dx + 4, by - 42]], 1.3, 'coral');
+  shape(H, R, [[bx - 8, by - 31], [bx + 8, by - 30], [bx + 6, by - 14], [bx - 6, by - 15]], 'paper', 1, .6);
+}
+
 const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowds', {
   floor: 'paper', tone: 1, wall: false, head: 20,
 }, (H, R) => {
@@ -105,7 +189,7 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
       line(H, R, [[x - 4, y + 1], [x + 4, y + 2]], .7, 'coral', .45);
     }
   }
-  for (const [i, j] of [[4.25, 4.65], [8.2, 4.65], [4.25, 8.1], [8.2, 8.1]]) box(H, R, i, j, .2, .2, .03, 3.2, 'blue', .6);
+  for (const [i, j] of [[4.25, 4.65], [8.2, 4.65], [4.25, 8.1], [8.2, 8.1]]) box(H, R, i, j, .2, .2, .03, 3.78, 'blue', .6);
   for (const i of [4.2, 8.25]) {
     line(H, R, [H.p(i, 5.2, .7), H.p(i, 7.55, .7)], 1.8, 'teal');
     for (const j of [5.2, 7.55]) line(H, R, [H.p(i, j, .03), H.p(i, j, .7)], 1.8, 'teal');
@@ -128,6 +212,7 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
     const [x, y] = H.p(i, j, .04);
     shape(H, R, [[x - 4, y], [x + turn * 4, y - 4], [x + 5, y + 1], [x, y + 3]], 'sun', .55, .5);
   }
+  courtyardDetails(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 16), waft = Math.sin(u * Math.PI * 2) * .5 + .5;
   H.at(8.8, 6.5, 0, HH => actor(HH, R, 8.8, 6.5, waft * 1.2, 'talk', { shirt: ['teal', .6], hairStyle: 'pony', face: 'nw' }, 0, 1.2));
@@ -153,13 +238,28 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
     const [x, y] = H.p(6.25 + (k - 2) * .17, 6.25, 1.43 + p * 1.25);
     H.opacity(Math.sin(p * Math.PI) * .5, () => stroke(H, R, [[x, y], [x + 8 * Math.sin(t * .4 + k), y - 13], [x - 8, y - 23], [x + 3, y - 36]], k % 2 ? 'paper' : 'sun', 2, .65));
   }
+  H.at(3.8, 9.18, 0, HH => actor(HH, R, 3.8, 9.18, t * .22, 'hold', {shirt: ['coral', .65], hairStyle: 'bun', face: 'nw', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    shape(h, r, [[x - 4, y], [x + 5, y], [x + 5, y - 12], [x, y - 15], [x - 4, y - 12]], 'sun', .75, .6);
+  }}, 0, 1.18));
+  H.at(9.4, 5.25, 0, HH => actor(HH, R, 9.4, 5.25, t * .24, 'hold', {shirt: ['paper', 1], pants: ['blue', .65], hairStyle: 'short', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    for (let k = 0; k < 3; k++) line(h, r, [[x + k * 2, y], [x + k * 2 + 6, y - 14]], 1.4, 'coral');
+  }}, 0, 1.16));
+  H.at(4.8, 11.2, .45, HH => actor(HH, R, 4.8, 11.2, t * .15, 'read', {shirt: ['teal', .6], hair: ['blue', .35], glasses: true}, .45, 1.18, 'elder'));
+  H.at(7.3, 9.45, 0, HH => actor(HH, R, 7.3, 9.45, t * .17, 'lookup', {shirt: ['sun', .65], hairStyle: 'short'}, 0, 1.06, 'child'));
+  H.at(7.9, 9.3, 0, HH => actor(HH, R, 7.9, 9.3, t * .13, 'talk', {shirt: ['paper', 1], hairStyle: 'pony', prop: (h, r, p) => {
+    const [x, y] = p.nearHand;
+    shape(h, r, [[x - 7, y - 4], [x + 9, y - 5], [x + 10, y + 6], [x - 6, y + 7]], 'blue', .7, .6);
+    oval(h, r, x + 2, y + 1, 3, 3, 'paper', 1);
+  }}, 0, 1.17));
   const [x, y] = H.p(.8, 9.55, 1.93);
   shape(H, R, [[x - 2, y], [x + 3, y + 1], [x + Math.sin(t * .8) * 3 + 3, y + 22], [x + Math.sin(t * .8) * 3 - 2, y + 20]], 'paper', 1, .5);
 });
 
 room.over = (H, R) => {
-  roof(H, R, 4.06, 4.45, 4.3, 3.9, 3.2, .37, true);
-  line(H, R, [H.p(4.25, 8.1, .22), H.p(4.25, 8.1, 3.22)], 3.5, 'blue', .8);
+  roof(H, R, 4.06, 4.45, 4.3, 3.9, 3.78, .37, true);
+  line(H, R, [H.p(4.25, 8.1, .22), H.p(4.25, 8.1, 3.8)], 3.5, 'blue', .8);
 };
 
 export default room;

@@ -1,4 +1,4 @@
-import { world, box, table, shape, oval, stroke, wallRect, wallPt, lamp, cycle } from '../../worlds/common.js';
+import { world, box, table, shape, oval, stroke, wallRect, wallPt, lamp, cycle, actor, bench, rug, plant } from '../../worlds/common.js';
 import { FIGURES, arcPts } from '../../drawings.js';
 
 const colors = ['coral', 'blue', 'paper', 'sun', 'teal'];
@@ -37,6 +37,73 @@ function repairDesk(H, R) {
   shape(H, R, [[tx - 5, ty], [tx + 5, ty], [tx + 6, ty - 10], [tx - 6, ty - 10]], 'paper', 1);
   oval(H, R, tx, ty - 10, 6, 2, 'coral', .3);
   H.line(R, arcPts(tx + 6, ty - 6, 3, 3, -Math.PI / 2, Math.PI / 2, 9), 'blue', 1);
+}
+
+function openBook(H, R, x, y, s = 1, turn = 0) {
+  shape(H, R, [[x - 20 * s, y - 7 * s], [x, y - 3 * s], [x + 19 * s, y - 8 * s], [x + 19 * s, y + 10 * s], [x, y + 14 * s], [x - 20 * s, y + 9 * s]], 'coral', .6, .65);
+  for (const side of [-1, 1]) {
+    shape(H, R, [[x, y - 4 * s], [x + side * 17 * s, y - 8 * s], [x + side * 17 * s, y + 8 * s], [x, y + 12 * s]], 'paper', 1, .55);
+    for (let k = 0; k < 5; k++) H.line(R, [[x + side * 3 * s, y + k * 2 * s], [x + side * 14 * s, y - 3 * s + k * 2 * s]], 'blue', .5, { tone: .35 });
+  }
+  if (turn > .01) shape(H, R, [[x, y - 4 * s], [x + Math.cos(turn * Math.PI) * 17 * s, y - 8 * s - Math.sin(turn * Math.PI) * 13 * s], [x + Math.cos(turn * Math.PI) * 17 * s, y + 8 * s - Math.sin(turn * Math.PI) * 13 * s], [x, y + 12 * s]], 'paper', 1, .55);
+}
+
+function bookshopStock(H, R) {
+  for (const [i, j, z, n] of [[1.32, 1.8, 0, 8], [2.3, 1.55, 0, 5], [7.1, 1.3, 0, 7], [8.05, 1.35, 0, 4], [11.05, 7.85, 0, 7]]) stack(H, R, i, j, z, n, j < 2);
+  for (let k = 0; k < 4; k++) {
+    const i = 1.4 + k * 1.35;
+    box(H, R, i, 1.48, 1.18, .22, .62, .9 + k % 2 * .2, colors[k], .45);
+    const p = H.faceI(i + .08, 1.72, 1.02, .7, 1.42 + k % 2 * .2);
+    shape(H, R, p, 'paper', 1, .6);
+    H.clip(p, () => {
+      shape(H, R, H.faceI(i + .16, 1.73, .85, .78, 1.1), 'teal', .38, .4);
+      H.line(R, [H.p(i + .2, 1.74, .95), H.p(i + .53, 1.74, 1.35), H.p(i + 1, 1.74, 1)], 'coral', 2);
+    });
+  }
+  box(H, R, 10.72, 4.4, .8, 2.15, 0, 1.85, 'teal', .45);
+  for (const z of [.25, .88, 1.5]) {
+    box(H, R, 10.67, 4.38, .96, 2.2, z, .07, 'sun', .55);
+    for (let k = 0; k < 8; k++) box(H, R, 10.83, 4.53 + k * .24, .62, .17, z + .08, .42 + k % 3 * .04, colors[k % 5], .58);
+  }
+  const map = wallRect(H, 'nw', 5.25, 7.65, 2.86, 4.02);
+  shape(H, R, map, 'paper', 1);
+  H.clip(map, () => {
+    stroke(H, R, [wallPt(H, 'nw', 5.35, 3.72), wallPt(H, 'nw', 6.1, 3.5), wallPt(H, 'nw', 6.5, 3.85), wallPt(H, 'nw', 7.5, 3.16)], 'teal', 3);
+    for (let k = 0; k < 6; k++) H.line(R, [wallPt(H, 'nw', 5.4, 2.98 + k * .16), wallPt(H, 'nw', 7.5, 3.14 + k * .1)], 'coral', .65);
+  });
+  for (const j of [5.25, 7.65]) H.dot(...wallPt(H, 'nw', j, 4.02), 2, 'sun', .9);
+  box(H, R, 5.28, 5.45, 1.1, 1.2, 0, .44, 'sun', .42);
+  for (let k = 0; k < 6; k++) {
+    const i = 5.4 + k * .12;
+    shape(H, R, [H.p(i, 5.6, .5), H.p(i + .09, 5.6, .98), H.p(i + .09, 6.52, .98), H.p(i, 6.52, .5)], colors[k % 5], .55, .65);
+  }
+  rug(H, R, .85, 9.1, 4.35, 2.4, 'teal', .32, { border: 'sun' });
+  bench(H, R, 1.15, 9.18, 3.3, 'coral');
+  for (const i of [1.35, 2.48, 3.58]) box(H, R, i, 9.38, .79, .48, .69, .12, 'sun', .65);
+  table(H, R, 1.23, 10.55, 1.3, .9, .52, 'sun');
+  stack(H, R, 1.37, 10.67, .65, 3);
+  openBook(H, R, ...H.p(3.32, 10.28, .02), .64);
+  plant(H, R, ...H.p(.65, 11.25, 0), .76);
+  const [lx, ly] = H.p(.67, 8.3);
+  lamp(H, R, lx, ly, 86, { ink: 'sun' });
+  table(H, R, 8.42, 9.17, 3.1, 1.78, .99, 'teal');
+  shape(H, R, H.tile(8.57, 9.37, 2.78, 1.39, 1.12), 'sun', .27);
+  stack(H, R, 8.68, 9.61, 1.13, 3, true);
+  stack(H, R, 10.51, 9.52, 1.13, 4);
+  const [tx, ty] = H.p(10.05, 10.58, 1.14);
+  oval(H, R, tx, ty, 10, 5, 'coral', .75);
+  oval(H, R, tx, ty, 5, 2.5, 'paper', 1);
+  H.line(R, [[tx + 10, ty], [tx + 20, ty + 5]], 'coral', 3);
+  for (let k = 0; k < 3; k++) box(H, R, 8.68 + k * .83, 9.58, .67, .8, .1, .42 + k % 2 * .1, 'sun', .4);
+  const [qx, qy] = H.p(9.65, 9.54, 1.14);
+  oval(H, R, qx, qy, 7, 3, 'sun', .7);
+  for (let k = 0; k < 5; k++) H.line(R, [[qx - 6, qy - k * 2], [qx + 6, qy - k * 2]], 'paper', .7);
+  H.line(R, [[qx, qy - 8], [qx + 12, qy - 3], [qx + 16, qy + 5]], 'paper', 1);
+  box(H, R, 5.18, 10.07, 1.75, 1.18, 0, .5, 'sun', .5);
+  for (let k = 0; k < 7; k++) volume(H, R, 5.32 + k * .21, 10.3, .53, .15, .43 + k % 3 * .12, colors[k % 5]);
+  const [ux, uy] = H.p(.7, 8.58, .1);
+  H.line(R, [[ux, uy], [ux + 7, uy - 48]], 'blue', 1.4);
+  shape(H, R, [[ux - 5, uy - 5], [ux + 4, uy - 3], [ux + 8, uy - 36], [ux + 2, uy - 37]], 'coral', .65);
 }
 
 const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secondhand bookshop', { floor: 'sun', tone: .24, wall: 'paper', wallTone: 1, height: 4.4, head: 20, pattern: 'boards' }, (H, R) => {
@@ -93,6 +160,7 @@ const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secon
   shape(H, R, [[bx - 12, by], [bx + 12, by], [bx + 10, by - 25], [bx - 10, by - 25]], 'blue', .7);
   H.line(R, arcPts(bx, by - 25, 7, 10, Math.PI, Math.PI * 2, 10), 'blue', 2);
   H.line(R, [[bx - 6, by - 9], [bx + 6, by - 11]], 'paper', .8);
+  bookshopStock(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 15), lift = Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .15) / .65)));
   H.at(3.35, 4.8, 0, HH => {
@@ -119,6 +187,26 @@ const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secon
       const a = HH.p(.03, 8.45 + k * .94, 3.15), b = HH.p(.03, 9.32 + k * .94, 3.15);
       shape(HH, R, [a, b, [b[0] + sway, b[1] + 20], [a[0] + sway, a[1] + 20]], 'coral', .55, .65);
     }
+  });
+  H.at(2.82, 9.92, .05, HH => {
+    const [x, y] = HH.p(2.82, 9.92, .05);
+    FIGURES.draw(HH, R, { who: 'elder', x, y, t, clip: 'read', phase: t / 7, scale: 1.35, face: 'se', opts: { shirt: ['blue', .55], glasses: true, prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand;
+      openBook(A, B, hx - 3, hy - 4, .65, Math.max(0, Math.sin(t * Math.PI / 9)));
+    } } });
+  });
+  H.at(7.9, 10.15, 0, HH => {
+    const [x, y] = HH.p(7.9, 10.15);
+    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: 'hold', phase: t / 5, scale: 1.3, face: 'se', opts: { shirt: ['sun', .7], apron: ['blue', .55], prop: (A, B, p) => {
+      const [hx, hy] = p.nearHand, pull = Math.max(0, Math.sin(t * .5)) * 12;
+      shape(A, B, [[hx - 13, hy - 10], [hx + 10, hy - 5], [hx + 9, hy + 5], [hx - 14, hy]], 'sun', .5, .7);
+      A.line(B, [[hx - 7, hy - 9], [hx + 3, hy + 3], [hx + 10 + pull, hy + 4 - pull * .2]], 'paper', 1.6);
+    } } });
+  });
+  H.at(9.1, 2.55, 0, HH => {
+    actor(HH, R, 9.1, 2.55, t * .3, 'reach', { shirt: ['coral', .65], face: 'nw' }, 0, 1.35);
+    const [x, y] = HH.p(8.75, 1.39 + .2 * Math.max(0, Math.sin(t * .38)), 1.72);
+    shape(HH, R, [[x - 6, y], [x + 6, y + 3], [x + 6, y - 19], [x - 6, y - 22]], 'teal', .75);
   });
 });
 

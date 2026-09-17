@@ -57,7 +57,79 @@ function guitar(H, R, x, y, ink, bass = false, s = 1) {
   H.dot(x + 11 * s, y + 7 * s, 1.9 * s, 'sun');
 }
 
+function rehearsalEquipment(H, R) {
+  shape(H, R, H.tile(2.52, 2.38, 6.83, 6.12, .019), 'coral', .23);
+  for (let q = 0; q < 12; q++) H.line(R, [H.p(2.58 + q * .56, 2.47, .025), H.p(2.58 + q * .56, 8.42, .025)], 'sun', .7, { tone: .42 });
+  for (let q = 0; q < 3; q++) {
+    const i = 8.16 + q * 1.07;
+    box(H, R, i, 8.77, .92, .94, 0, .54 + q % 2 * .21, colorsForCase(q), .63);
+    for (const z of [.08, .45 + q % 2 * .21]) H.line(R, [H.p(i, 9.73, z), H.p(i + .92, 9.73, z)], 'paper', 1.6);
+    H.line(R, [H.p(i + .27, 9.75, .3), H.p(i + .67, 9.75, .3)], 'blue', 2.2);
+    for (const side of [.06, .81]) H.line(R, [H.p(i + side, 9.76, .19), H.p(i + side, 9.76, .39)], 'sun', 2);
+  }
+  box(H, R, 10.08, 9.99, 1.33, 1.21, .14, 1.12, 'blue', .77);
+  box(H, R, 10.08, 9.99, 1.33, 1.21, 1.28, .43, 'coral', .57);
+  for (const i of [10.18, 11.31]) for (const j of [10.11, 11.09]) oval(H, R, ...H.p(i, j, .08), 4, 5, 'blue');
+  for (const z of [.24, .69, 1.19, 1.61]) H.line(R, [H.p(10.08, 11.23, z), H.p(11.41, 11.23, z)], 'paper', 1.6);
+  for (const i of [10.2, 11.27]) H.line(R, [H.p(i, 11.24, .23), H.p(i, 11.24, 1.63)], 'paper', 1.5);
+  H.line(R, [H.p(10.62, 11.25, .89), H.p(10.96, 11.25, .89)], 'sun', 2.5);
+  for (const [i, j] of [[1.02, 2.31], [3.45, 2.31]]) {
+    H.line(R, [H.p(i, j, .02), H.p(i + .45, j + .76, 1.0)], 'blue', 2);
+    H.line(R, [H.p(i + .45, j + .76, .02), H.p(i, j, 1.0)], 'blue', 2);
+  }
+  box(H, R, .86, 2.18, 3.17, 1.02, 1.01, .21, 'teal', .63);
+  shape(H, R, H.tile(.99, 2.59, 2.91, .47, 1.24), 'paper', 1);
+  for (let q = 0; q < 22; q++) {
+    H.line(R, [H.p(1.01 + q * .131, 2.6, 1.25), H.p(1.01 + q * .131, 3.04, 1.25)], 'blue', .65);
+    if (![2, 6].includes(q % 7)) shape(H, R, H.tile(1.08 + q * .131, 2.6, .071, .26, 1.27), 'blue', .87, .3);
+  }
+  for (let q = 0; q < 6; q++) H.dot(...H.p(1.08 + q * .31, 2.37, 1.25), 2.1, q % 2 ? 'sun' : 'paper');
+  shape(H, R, H.tile(3.17, 2.27, .6, .23, 1.24), 'blue', .86);
+  box(H, R, 1.92, 3.69, .91, .65, 0, .57, 'coral', .58);
+  const [sx, sy] = H.p(2.76, 1.97, 1.77);
+  shape(H, R, [[sx - 25, sy - 12], [sx + 17, sy - 1], [sx + 17, sy + 29], [sx - 25, sy + 18]], 'paper', 1);
+  for (let q = 0; q < 4; q++) H.line(R, [[sx - 20, sy - 3 + q * 6], [sx + 11, sy + 5 + q * 6]], 'blue', .6);
+  H.line(R, [[sx - 3, sy + 22], [sx - 3, sy + 43]], 'blue', 1.4);
+  stroke(H, R, [H.p(3.62, 3.03, 1.11), H.p(4.2, 3.44, .04), H.p(3.31, 4.77, .04), H.p(1.13, 5.98, .04)], 'blue', 1.25);
+  for (let q = 0; q < 3; q++) {
+    const [x, y] = H.p(7.17 + q * .49, 9.43, .06);
+    for (let n = 0; n < 3; n++) H.outline(R, Array.from({ length: 24 }, (_, k) => [x + Math.cos(k * TAU / 24) * (12 + n * 2), y + Math.sin(k * TAU / 24) * (5 + n)]), q % 2 ? 'coral' : 'blue', .9);
+    H.line(R, [[x + 11, y], [x + 18, y + 12]], 'blue', 2);
+  }
+  box(H, R, 7.25, 10.39, 1.21, 1.09, 0, 1.08, 'blue', .78);
+  for (let q = 0; q < 4; q++) {
+    shape(H, R, H.faceI(7.35, 11.51, 1.01, .15 + q * .23, .33 + q * .23), 'paper', .75);
+    for (let n = 0; n < 4; n++) H.dot(...H.p(7.47 + n * .23, 11.54, .24 + q * .23), 1.8, n ? 'blue' : 'sun');
+  }
+  box(H, R, .37, 10.53, 1.27, 1.05, 0, .58, 'teal', .67);
+  for (let q = 0; q < 6; q++) {
+    const j = 10.63 + q * .13;
+    shape(H, R, H.faceI(.51, j, 1.0, .38, 1.19 + q % 2 * .07), q % 2 ? 'sun' : 'coral', .5);
+    oval(H, R, ...H.p(1.01, j + .02, .79), 12, 13, 'blue', .6);
+    H.dot(...H.p(1.01, j + .03, .79), 3, 'paper', 1, { knock: true });
+  }
+  box(H, R, 8.0, .5, .62, 1.33, 0, .77, 'blue', .64);
+  for (let q = 0; q < 3; q++) H.line(R, [H.p(8.66, .63 + q * .4, .15), H.p(8.66, .63 + q * .4, .65)], 'paper', 1.6);
+  const [px, py] = H.p(6.59, 8.78, 1.64);
+  H.line(R, [[px, py], H.p(6.59, 8.78, .04)], 'blue', 1.8);
+  H.line(R, [[px, py], [px - 16, py - 10]], 'blue', 1.8);
+  H.line(R, [[px - 17, py - 10], [px - 28, py - 13]], 'blue', 4);
+  for (const [a, b] of [[-.4, 0], [.3, .25], [0, -.3]]) H.line(R, [H.p(6.59, 8.78, .08), H.p(6.59 + a, 8.78 + b, .04)], 'blue', 1.2);
+  stroke(H, R, [H.p(6.59, 8.78, .05), H.p(5.75, 9.12, .04), H.p(6.7, 9.7, .04), H.p(6.73, 10.4, .07)], 'coral', 1.1);
+  for (let q = 0; q < 4; q++) {
+    const [x, y] = H.p(9.43 + q * .14, 7.69, .08);
+    H.line(R, [[x - 4, y + 3], [x + 4, y - 17]], 'sun', 1.6);
+  }
+  shape(H, R, H.tile(3.04, 9.19, .68, .92, .035), 'paper', 1);
+  for (let q = 0; q < 5; q++) H.line(R, [H.p(3.13, 9.32 + q * .13, .05), H.p(3.61, 9.32 + q * .13, .05)], 'blue', .6);
+}
+
+function colorsForCase(q) {
+  return ['teal', 'coral', 'blue'][q % 3];
+}
+
 function furnishings(H, R) {
+  rehearsalEquipment(H, R);
   for (let row = 0; row < 2; row++) for (let col = 0; col < 4; col++) {
     const panel = H.faceI(.35 + col * 1.76, .06, 1.58, .9 + row * 1.07, 1.83 + row * 1.07);
     shape(H, R, panel, 'coral', .37 + col % 2 * .12);
@@ -141,8 +213,8 @@ function furnishings(H, R) {
     const [x, y] = H.p(10.49 + q % 2 * .46, 8.68 + Math.floor(q / 2) * .54, .03);
     shape(H, R, [[x - 4, y], [x + 4, y], [x + 4, y - 16], [x + 2, y - 22], [x - 2, y - 22], [x - 4, y - 16]], q % 2 ? 'paper' : 'teal', .66, .6);
   }
-  shape(H, R, H.tile(7.44, 10.55, .43, .51, .04), 'paper', 1);
-  oval(H, R, ...H.p(7.59, 10.79, .08), 2, 3, 'coral'); oval(H, R, ...H.p(7.78, 10.81, .08), 2, 3, 'coral');
+  shape(H, R, H.tile(6.43, 10.53, .43, .51, 1.13), 'paper', 1);
+  oval(H, R, ...H.p(6.58, 10.77, 1.16), 2, 3, 'coral'); oval(H, R, ...H.p(6.77, 10.79, 1.16), 2, 3, 'coral');
   for (let q = 0; q < 3; q++) {
     shape(H, R, H.faceJ(.1, 9.13 + q * .68, .56, 1.18, 1.97), 'paper', 1);
     const [x, y] = H.p(.12, 9.42 + q * .68, 1.6);
@@ -171,4 +243,13 @@ export default world('tokyo-shimokitazawa-rehearsal', 'Shimokitazawa · One more
     guitar(HH, RR, x + 1, y + 24, 'teal', true, .94);
   } }, 0, 1.25);
   for (let q = 0; q < 8; q++) H.dot(...H.p(4.31 + q * .28, 10.33, 1.13), 1.5, playing && Math.sin(t * 9 + q * 1.9) > -.2 ? 'sun' : 'blue', 1);
+  actor(H, R, 2.37, 4.04, playing ? t : 0, 'type', { shirt: ['coral', .65], hairStyle: 'bun', face: 'nw' }, .07, 1.22);
+  actor(H, R, 6.47, 8.17, playing ? t * .8 : 0, 'talk', { shirt: ['paper', 1], hairStyle: 'curly', face: 'se', prop(HH, RR, points) {
+    const [x, y] = points.nearHand;
+    HH.line(RR, [[x, y], [x - 5, y - 10]], 'blue', 3.4);
+    HH.dot(x - 6, y - 13, 4, 'teal', .8, { knock: true });
+    stroke(HH, RR, [[x + 1, y + 3], [x + 15, y + 21], [x + 6, y + 42]], 'blue', .8);
+  } }, 0, 1.28);
+  actor(H, R, 5.02, 11.57, t * .34, 'kneel', { shirt: ['sun', .65], hairStyle: 'short', face: 'nw' }, 0, 1.15);
+  for (let q = 0; q < 4; q++) H.dot(...H.p(7.47, 11.55, .24 + q * .23), 1.9, playing && Math.sin(t * 7 + q) > 0 ? 'sun' : 'teal');
 });
