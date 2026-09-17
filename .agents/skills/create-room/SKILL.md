@@ -1,11 +1,13 @@
 ---
 name: create-room
-description: Research a city and design 25 detailed, distinct animated isometric rooms for 25rooms. Use when given a city to create a room collection or a comprehensive city room plan; continue into implementation when explicitly requested.
+description: Research a city and design 25 richly furnished, distinct animated isometric rooms for 25rooms, with layered detail and close-up discoveries. Use when given a city to create a room collection or a comprehensive city room plan; continue into implementation when explicitly requested.
 ---
 
 # Create room
 
 Turn a city into exactly 25 new miniature scenes, with enough researched detail for each room to be drawn and animated. Follow the depth of the Tokyo collection while letting the new city's geography, people, materials, and daily rhythms determine its subjects.
+
+Make every room feel complete, inhabited, and worth exploring. The first glance should reveal a striking composition; a longer look should keep revealing objects, relationships, and small stories. Carry this richness through both the brief and the rendered artwork.
 
 ## Input and scope
 
@@ -44,21 +46,35 @@ Follow these 25rooms composition conventions unless the current project or user 
 - Keep artwork free of lettering. Put names in captions; use shapes and original abstract designs for signs, packaging, and covers instead of invented local-language text.
 - Leave circulation space and clear sightlines to hands and actions. Detailed rooms still need quiet areas and a hierarchy of objects.
 
+## Build richness into every room
+
+Design detail at three viewing scales: a memorable silhouette in the collection, several readable clusters at normal zoom, and small discoveries up close. Give every room one standout feature whose construction, contents, or operation rewards attention, such as an elaborate workbench or a layered courtyard stair.
+
+- Arrange four to six purposeful clusters around the main activity. A work area, storage wall, personal corner, threshold, and window ledge can each tell a different part of the story. Specify their positions and relationships so the room reads as a connected place.
+- Aim for 30–45 distinct, drawable details per room, spanning architecture, furniture, equipment, supplies, personal belongings, and traces of use. Count repeated bottles, tiles, books, or identical containers as a group. Extra drawing primitives and repeated patterns do not establish richness by themselves.
+- Distribute interest across foreground, middle, and rear, with detail at floor, furniture, and wall heights. Use shelves, recesses, hanging tools, exposed fittings, windows, and under-counter storage where the setting supports them. Avoid concentrating everything on one table while the rest of the room stays bare.
+- Develop the main fixtures beyond plain blocks. Describe visible construction and contents: a bench can have joined legs, a worn edge, an open tool tray, a cloth caught under a clamp, and offcuts below. Choose details specific to the room's activity and materials.
+- Show relationships between objects: a lid beside its vessel, a drying rack above a drip tray, repaired fabric beside matching thread. Include evidence of preparation, work in progress, and personal habits that makes sense even when nobody moves.
+- Place three to five small discoveries in different parts of the room. Vary their character across craft, wear, personal possessions, and quiet humor. Make them large and visible enough to find at the supported close view.
+- Reserve open areas for circulation, the main gesture, and visual rest. Give each substantial open area a compositional purpose. If the room feels empty, revise its layout and add useful secondary activity or furnishing. If it feels crowded, regroup details and strengthen the focal hierarchy.
+
+A quiet or unoccupied scene still needs a complete environment. Express richness through joinery, fabric folds, storage, weather, maintenance, and traces of daily life appropriate to that setting. Let the subject determine the details; avoid repeating the same plants, cups, crates, and rugs across the collection.
+
 ## Write every room in full
 
-Give all 25 rooms comparable attention. Aim for roughly 200–350 words per room for the comprehensive default. Use concrete spatial descriptions and named objects; do not substitute a list of themes for the finished brief.
+Give all 25 rooms comparable attention. Aim for roughly 450–650 words per room for the comprehensive default, expanding when the layout or process needs explanation. Use concrete spatial descriptions and named objects. Meet the richness criteria above; word count alone does not make a complete brief.
 
 For each numbered room, include:
 
 1. **Title and ID.** An evocative title, a plain setting, and a unique `<city-slug>-<scene-slug>` ID suitable for a later JavaScript module.
 2. **Local grounding.** The neighborhood or setting, what connects it to this city, the time and season where relevant, and a source link supporting that connection. Identify fictional premises and composite layouts.
-3. **Architecture and layout.** Floor and wall materials, openings, levels, built-in features, and the positions of the main furniture or equipment. Describe the dominant shape, foreground, rear edges, and clear route through the scene.
-4. **Objects and materials.** Usually 12–20 specific props or architectural details, grouped by location or use. Explain which define the scene and which reward a closer look. Choose plausible tools and personal possessions instead of filling every surface.
+3. **Architecture and layout.** Floor and wall materials, openings, levels, built-in features, and the positions of the main furniture or equipment. Describe the dominant shape, detail across all three depth layers, vertical features, and clear route through the scene. Locate the four to six clusters and deliberate open areas.
+4. **Objects and materials.** Describe the 30–45 details by cluster, with placement, material, and a visible distinguishing feature for the key objects. Separate the main fixtures, supporting objects, and close-up details through their size and placement. Explain how tools, supplies, and possessions relate to the activity. Avoid vague phrases such as “shelves full of things.”
 5. **People and activity.** Who occupies the room, where they stand or sit, what they are doing, and how their posture or interaction tells a small story. A solitary or temporarily empty scene can be appropriate if intentional.
-6. **Animation.** One main action with an ordered sequence, an approximate loop duration, and a few restrained secondary movements. State how the scene returns to its starting state. Use pauses, occlusion, or entrances for transitions rather than visible teleporting or objects resetting in place.
+6. **Animation.** One main action with an ordered sequence, an approximate loop duration, and two to four restrained secondary movements tied to the room. Vary their timing and include pauses so everything does not move together. State how the scene returns to its starting state. Use pauses, occlusion, or entrances for transitions rather than visible teleporting or objects resetting in place.
 7. **Still pose.** A reduced-motion composition that preserves the room's identity and human story without relying on a running animation.
 8. **Light and color.** The source and direction of light, warm and cool areas, and the palette's use for local materials and focal points.
-9. **Small discovery.** A personal, imperfect, or gently humorous detail that belongs to this room. Make it visible through the artwork rather than explanatory text.
+9. **Small discoveries.** Identify three to five personal, imperfect, intricate, or gently humorous details, with their exact locations. Describe what viewers can notice and how those discoveries reveal the occupants or activity. Make them visible through the artwork rather than explanatory text.
 10. **Distinctive role.** Why this scene earns a place among the 25. If it shares a category with another room, distinguish their activity, composition, and emotional tone.
 
 These details may form connected paragraphs rather than ten repeated subheadings. Attach citations to the factual claims they support. A broad neighborhood page does not validate an exact machine, ritual, or interior arrangement; cite a focused reference or describe that element as a design proposal.
@@ -73,6 +89,8 @@ Before delivery, verify:
 
 - There are exactly 25 fully developed rooms with unique IDs, and none silently repeats an existing room.
 - Each room has credible local grounding and a specific composition, activity, object set, and animation.
+- Every room meets the richness criteria: purposeful clusters, details across depth and height, developed fixtures, and several visible discoveries. Repeated filler does not satisfy the detail target.
+- Mentally tour each room from its front edge to its rear wall. Resolve bare zones, vague inventories, hidden discoveries, and objects with no plausible purpose before delivery.
 - The collection represents this city rather than a generic national collage. Traditions, materials, seasons, and tools are consistent with the stated context.
 - Loops have coherent beginnings and endings. Doors, vehicles, people, machines, and handled objects move in a sensible sequence.
 - Still poses remain legible, and foreground objects, smoke, reflections, or landmarks do not obscure the main activity.
@@ -84,6 +102,10 @@ Link the saved brief and briefly describe the collection in the final reply. Do 
 
 Read the current drawing helpers, painter, layout, collection registry, and a representative room before coding. In 25rooms, use one complete JavaScript module per room under `dist/artwork/cities/<city-slug>/`, with an explicit collection index in tour order. Use a separate collection directory for an additional set for the same city. Keep unique details with their room and share only reusable forms. Follow repository instructions and preserve existing collections and navigation behavior.
 
+Translate each room's clusters and discoveries into visible artwork. Build the architecture and main fixtures, add the supporting contents, then add material detail and traces of use. Keep a per-room checklist from the brief while implementing so later rooms retain the same depth. Shared helpers must allow the construction, contents, and arrangement that make each room distinct.
+
 If the user requests subagents, divide the rooms into bounded groups with explicit file ownership. Give each worker the shared palette, scale, brief, and module contract. One coordinating agent integrates the collection and checks consistency across all 25 rooms.
 
 Validate the new collection's count, IDs, drawing coordinates, and animation states with the project's existing checks, updating hardcoded collection assumptions where needed. Review representative transitions and loop boundaries, and follow the session's rules for browser testing. Do not report implemented rooms on the strength of the design brief alone.
+
+Visually inspect every implemented room at collection scale, normal viewing size, and the supported close view. Check that the silhouette and main action read clearly, the room feels furnished throughout, and the small discoveries are visible. Review still poses as well as animation. Fix sparse areas, indistinguishable objects, repeated filler, and occlusion before declaring the collection complete. If visual inspection is unavailable, report that validation gap explicitly.
