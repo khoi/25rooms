@@ -1,6 +1,6 @@
 **Tokyo, room by room**
 
-A proposed collection of 25 animated isometric scenes for A small light, somewhere else. The collection follows Tokyo from early work to late nights, with visits to homes, workshops, shops, places of worship, and shared public spaces.
+A proposed collection of 25 animated isometric scenes for 25rooms. The collection follows Tokyo from early work to late nights, with visits to homes, workshops, shops, places of worship, and shared public spaces.
 
 The rooms are fictional compositions informed by real neighborhoods. Their layouts, occupants, possessions, and small stories are original design proposals. Named places establish the setting without implying an exact architectural reconstruction. Spring blossoms and summer river outings belong to separate moments across the year. The sequence follows the changing light, rather than a literal itinerary on one day.
 
