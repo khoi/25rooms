@@ -88,6 +88,7 @@ export class RoomPainter {
 
   paint(time, frame) {
     if (!this.active) return false;
+    const started = performance.now();
     const { ratio, scope, layers } = this.active;
     const { definition, bounds, local, ox, oy } = this.room;
     const context = this.context;
@@ -120,6 +121,8 @@ export class RoomPainter {
     context.drawImage(layers[1].canvas, local.x0, local.y0, local.x1 - local.x0, local.y1 - local.y0);
     context.restore();
     this.lastPaint = performance.now();
+    this.animationTime = time;
+    this.paintMs = this.lastPaint - started;
     this.outputRevision = this.revision;
     return true;
   }

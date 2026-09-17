@@ -41,7 +41,7 @@ const velocity = { x: 0, y: 0 };
 let drag = null, pinch = null, tween = null, lastFrame = 0;
 let tour = !reduceMotion && !query.has('nowander') && !query.has('fit');
 let tourIndex = -1, tourNext = Infinity, idleSince = 0;
-let loaded = false, started = performance.now(), lastStatus = '';
+let loaded = false, started = performance.now(), lastStatus = null;
 let controlsTimer;
 const minimumZoom = .06, maximumZoom = 5;
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
@@ -70,8 +70,9 @@ const shadow = plane({ x0: layout.sheet.x0 + 18, y0: layout.sheet.y0 + 24, x1: l
 shadow.material.color.set('#080604');
 shadow.material.opacity = .35;
 const paper = plane(layout.sheet, 1, textureFrom(paintSheet(layout.sheet)));
-const entries = layout.drawOrder.map((room, index) => {
-  const painter = new RoomPainter(room, layout);
+const inspectionRoom = query.has('solo') ? layout.rooms.find(room => room.id === initialId) : null;
+const entries = layout.drawOrder.filter(room => !inspectionRoom || room === inspectionRoom).map((room, index) => {
+  const painter = new RoomPainter(room, inspectionRoom ? { ...layout, drawOrder: [room] } : layout);
   const mesh = plane(room.bounds, index + 2);
   mesh.visible = false;
   return { room, painter, mesh, texture: null, textureWidth: 0, textureHeight: 0, failed: false, painted: false, ratio: .5 };
@@ -348,5 +349,5 @@ globalThis.PRINT = {
   view,
   focus: id => { const index = layout.rooms.findIndex(room => room.id === id); if (index >= 0) { setTour(false); focusRoom(index); } },
   fit: viewAll,
-  inspect: () => ({ renderer: 'Three.js', collection, rooms: entries.length, ready: entries.filter(entry => entry.painted).length, textures: renderer.info.memory.textures, calls: renderer.info.render.calls, errors: errors.slice(), view: { ...view } }),
+  inspect: () => ({ renderer: 'Three.js', collection, rooms: entries.length, ready: entries.filter(entry => entry.painted).length, pending: entries.filter(entry => entry.painter.pending).length, textures: renderer.info.memory.textures, calls: renderer.info.render.calls, errors: errors.slice(), view: { ...view }, roomDetails: entries.map(entry => ({ id: entry.room.id, ready: entry.painted, ratio: entry.painter.active?.ratio || 0, pending: Boolean(entry.painter.pending), time: entry.painter.animationTime ?? null, paintMs: entry.painter.paintMs || 0 })) }),
 };
