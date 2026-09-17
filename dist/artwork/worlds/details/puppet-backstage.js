@@ -1,4 +1,4 @@
-import { shape, oval, stroke, label, plaque, box, table, actor, creature, rug, ell, starPts } from '../common.js';
+import { shape, oval, stroke, box, table, actor, creature, rug, ell, starPts } from '../common.js';
 import { slab, backWalls } from '../../drawings.js';
 
 const colors = ['coral', 'teal', 'sun', 'paper'];
@@ -103,31 +103,30 @@ export default function enrich(room) {
       backWalls(H, R, this, 3.8, { ink: 'blue', tone: .57 });
       for (let z = .4; z < 3.8; z += .7) H.line(R, [H.p(.05, 0, z), H.p(.05, 11.7, z)], 'paper', .6, { tone: .3 });
       shape(H, R, [H.p(5.2, .08, 2.97), H.p(10.7, .08, 2.97), H.p(10.7, .08, 3.52), H.p(5.2, .08, 3.52)], 'sun', .8);
-      label(H, 'PULL YOUR OWN STRINGS', ...H.p(7.95, .1, 3.23), 8, '#344a80', Math.atan(.5));
+
       box(H, R, .65, 1, .16, 5.7, 0, 2.55, 'teal', .6);
       H.line(R, [H.p(.85, 1.05, 2.75), H.p(.85, 6.6, 2.75)], 'sun', 3);
       for (let k = 0; k < 5; k++) costume(H, R, ...H.p(.92, 1.45 + k * 1.08, 2.62), k);
       for (let k = 0; k < 4; k++) {
         box(H, R, .8, 1.3 + k * 1.23, .68, .9, .08, .32, colors[k], .6);
-        label(H, ['RUFFS', 'CAPES', 'TUTUS', 'SOCKS'][k], ...H.p(1.15, 2.22 + k * 1.23, .25), 5.2);
       }
       const rack = H.p(.87, 5.95, 3.2);
-      label(H, 'COSTUME RAIL', rack[0], rack[1], 7, '#f3ebdd', -.46);
+
       for (const z of [.65, 1.9]) {
         box(H, R, 4.9, .4, 6.1, .65, z, .12, 'coral', .65);
         for (let k = 0; k < 6; k++) wig(H, R, ...H.p(5.3 + k * 1.01, .9, z + .13), k + (z > 1 ? 0 : 1), .8);
       }
       for (const i of [4.95, 10.85]) box(H, R, i, .5, .1, .5, 0, 2.1, 'sun', .6);
-      plaque(H, R, 10.2, .4, 2.92, 'WIGS / EGOS', 'paper', 75);
+
       shape(H, R, [H.p(2.2, .06, 1.3), H.p(3.9, .06, 1.3), H.p(3.9, .06, 2.9), H.p(2.2, .06, 2.9)], 'sun', .65);
       for (let n = 0; n < 3; n++) {
         const [x, y] = H.p(2.65 + n * .5, .1, 2.25);
         face(H, R, x, y, .58, n % 2);
         H.line(R, [[x - 5, y + 13], [x + 6, y + 17]], 'blue', .65);
       }
-      label(H, 'TONIGHT', ...H.p(3.08, .1, 2.65), 7);
+
       const [qx, qy] = H.p(3.07, .1, 1.55);
-      label(H, 'A SMALL DRAMA', qx, qy, 5.5);
+
       table(H, R, 2.7, 3.05, 2.65, 1.6, 1.02, 'sun');
       table(H, R, 3.65, 4.85, .6, .6, .46, 'coral');
       const [sx, sy] = H.p(3.65, 3.72, 1.15);
@@ -141,7 +140,7 @@ export default function enrich(room) {
         H.dot(pinx - 9 + n * 4, piny - 8, 1.5, 'sun');
       }
       box(H, R, 3.02, 3.6, 1, .65, .03, .32, 'teal', .6);
-      label(H, 'OFFCUTS', ...H.p(3.5, 4.26, .2), 5.5);
+
       for (const [i, j, ink] of [[3.2, 3.8, 'coral'], [3.7, 3.9, 'sun'], [3.4, 4, 'paper']]) shape(H, R, [H.p(i, j, .35), H.p(i + .4, j, .35), H.p(i + .3, j + .4, .28), H.p(i - .1, j + .2, .3)], ink, .7);
       table(H, R, 7.9, 2.95, 2.9, 1.7, 1.03, 'teal');
       table(H, R, 7.85, 4.82, .62, .62, .46, 'sun');
@@ -164,7 +163,7 @@ export default function enrich(room) {
         H.line(R, [[bx - 4 + k * 2, by - 4], [bx - 9 + k * 4, by - 30 + k % 2 * 5]], 'blue', 1);
         H.dot(bx - 9 + k * 4, by - 30 + k % 2 * 5, 2, colors[k % 3]);
       }
-      label(H, 'FACE DEPARTMENT', ...H.p(9.3, 4.69, .86), 6.5);
+
       box(H, R, 10.43, 5.3, .95, 1.1, 0, .57, 'coral', .5);
       for (let n = 0; n < 3; n++) face(H, R, ...H.p(10.65 + n % 2 * .45, 5.55 + Math.floor(n / 2) * .46, .68), .55, n % 2);
       const [mx, my] = H.p(.9, 8.6, 2.2);
@@ -185,7 +184,7 @@ export default function enrich(room) {
       const [combX, combY] = H.p(1.7, 9.4, 1.03);
       H.line(R, [[combX - 10, combY], [combX + 10, combY]], 'blue', 2);
       for (let k = 0; k < 8; k++) H.line(R, [[combX - 9 + k * 2.5, combY], [combX - 9 + k * 2.5, combY + 5]], 'blue', .7);
-      label(H, 'STAR No. 4', mx, my + 52, 6.5);
+
       table(H, R, 3.65, 8.1, 2.65, 1.8, .98, 'sun');
       const [rx, ry] = H.p(4.62, 8.9, 1.12);
       shape(H, R, [[rx - 17, ry - 13], [rx + 8, ry - 18], [rx + 19, ry + 1], [rx - 7, ry + 9]], 'coral', .75);
@@ -203,10 +202,9 @@ export default function enrich(room) {
       const [hx, hy] = H.p(5.8, 9.43, 1.12);
       H.line(R, [[hx - 9, hy + 3], [hx + 4, hy - 14]], 'coral', 3);
       H.line(R, [[hx - 2, hy - 18], [hx + 11, hy - 11]], 'blue', 6);
-      label(H, 'JOINT SURGERY', ...H.p(4.95, 9.95, .77), 6.5);
+
       for (let k = 0; k < 3; k++) {
         box(H, R, 3.85 + k * .7, 8.7, .58, .7, .05, .3, colors[k], .6);
-        label(H, ['PINS', 'KNEES', 'ELBOWS'][k], ...H.p(4.14 + k * .7, 9.43, .22), 4.5);
       }
       for (const i of [6.6, 9.45]) box(H, R, i, 5.65, .12, .14, 0, 3.25, 'coral', .75);
       box(H, R, 6.6, 5.65, 2.96, .18, 3.25, .13, 'sun', .8);
@@ -216,7 +214,7 @@ export default function enrich(room) {
         H.dot(x, y, 1.5, 'blue');
         stroke(H, R, [[x - 3, y + 3], [x - 7, y + 34], [x + 6, y + 57], [x + 9, y + 76]], 'sun', .75);
       }
-      plaque(H, R, 7.9, 5.69, 3.55, 'STRING TEST', 'paper', 76);
+
       rug(H, R, 7.2, 7.3, 3.9, 2.55, 'teal', .5, { border: 'sun' });
       for (let k = 0; k < 7; k++) H.line(R, [H.p(7.35 + k * .52, 7.45, .02), H.p(7.35 + k * .52, 9.68, .02)], 'paper', .6, { tone: .4 });
       for (let k = 0; k < 4; k++) {
@@ -226,7 +224,7 @@ export default function enrich(room) {
       }
       box(H, R, 9.45, 10.25, 1.75, 1.05, .05, .75, 'teal', .72);
       shape(H, R, [H.p(9.45, 10.28, .85), H.p(11.2, 10.28, .85), H.p(11.2, 10.03, 1.6), H.p(9.45, 10.03, 1.6)], 'coral', .7);
-      label(H, 'PROPS', ...H.p(10.32, 11.32, .53), 7);
+
       for (const i of [9.72, 10.8]) {
         H.line(R, [H.p(i, 10.28, .8), H.p(i, 11.29, .8), H.p(i, 11.29, .17)], 'sun', 2);
       }
@@ -249,7 +247,7 @@ export default function enrich(room) {
       H.line(R, [[tx - 10, ty - 11], [tx + 11, ty - 11]], 'coral', 4);
       const [nx, ny] = H.p(7.2, 4, .06);
       shape(H, R, [[nx - 19, ny - 8], [nx + 16, ny - 2], [nx + 12, ny + 15], [nx - 23, ny + 9]], 'paper', 1);
-      label(H, 'ACT II', nx - 3, ny + 2, 6, '#344a80', .16);
+
       for (let k = 0; k < 3; k++) H.line(R, [[nx - 15, ny + 5 + k * 2], [nx + 7, ny + 8 + k * 2]], 'blue', .45);
     },
     live(H, R, t) {

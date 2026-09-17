@@ -1,4 +1,4 @@
-import { world, box, table, bench, shape, oval, stroke, label, plaque, ell, arcPts, actor, cycle } from '../common.js';
+import { world, box, table, bench, shape, oval, stroke, ell, arcPts, actor, cycle } from '../common.js';
 
 function village(H, R, x, y, s = 1, variant = 0) {
   oval(H, R, x, y, 16 * s, 4 * s, 'paper', 1);
@@ -63,13 +63,11 @@ function jar(H, R, i, j, z, ink, text) {
   shape(H, R, [[x - 7, y], [x + 7, y], [x + 7, y - 17], [x - 7, y - 17]], 'paper', 1, .8);
   shape(H, R, [[x - 5, y - 2], [x + 5, y - 2], [x + 5, y - 12], [x - 5, y - 12]], ink, .5, .4);
   H.line(R, [[x - 8, y - 18], [x + 8, y - 18]], ink, 3);
-  label(H, text, x, y - 7, 4.3);
 }
 
 function tag(H, R, i, j, z, text, ink = 'paper') {
   const [x, y] = H.p(i, j, z);
   shape(H, R, [[x - 10, y - 6], [x + 10, y - 6], [x + 10, y + 5], [x - 10, y + 5]], ink, 1, .6);
-  label(H, text, x, y, 5.4);
 }
 
 function stool(H, R, i, j) {
@@ -96,8 +94,7 @@ export default function enrich(room) {
         tag(H, R, 1 + k * 1.36, 1.42, z + .08, String(11 + k + Math.floor(z) * 8));
       }
     }
-    plaque(H, R, 5.4, .08, 3.95, 'SMALL WORLD REPAIRS', 'paper', 148);
-    plaque(H, R, 9.65, .1, 3.35, 'READY TO GO', 'sun', 62);
+
     const peg = [H.p(.04, 2.25, 1.5), H.p(.04, 5.15, 1.5), H.p(.04, 5.15, 3.4), H.p(.04, 2.25, 3.4)];
     shape(H, R, peg, 'sun', .55);
     for (let j = 2.4; j < 5; j += .38) for (let z = 1.7; z < 3.3; z += .32) H.dot(...H.p(.05, j, z), .6, 'blue', .5);
@@ -114,7 +111,7 @@ export default function enrich(room) {
     tray(H, R, .7, 5.15, 1.35, .8, 1.14, 'teal');
     for (let k = 0; k < 3; k++) village(H, R, ...H.p(.92 + k * .38, 5.5, 1.26), .45, k);
     box(H, R, .7, 6.05, 1.25, .33, 1.16, .2, 'sun', .6);
-    label(H, 'SPARES', ...H.p(1.3, 6.4, 1.27), 6);
+
     for (let k = 0; k < 3; k++) {
       box(H, R, .52, 3.2 + k, 1.65, .74, .2, .47, k % 2 ? 'teal' : 'sun', .5);
       tag(H, R, 1.32, 3.96 + k, .45, ['TREES', 'HOMES', 'BASES'][k]);
@@ -126,7 +123,7 @@ export default function enrich(room) {
     shape(H, R, [[fx - 22, fy - 36], [fx + 22, fy - 36], [fx + 17, fy - 13], [fx + 5, fy], [fx - 5, fy], [fx - 17, fy - 13]], 'paper', .85);
     for (let k = 0; k < 30; k++) H.dot(fx + Math.sin(k * 9.7) * 16, fy - 14 - (k % 5) * 4, 1.1, 'sun', .8);
     oval(H, R, fx, fy - 36, 22, 6, 'sun', .7);
-    label(H, 'SNOW', fx, fy - 23, 6);
+
     stroke(H, R, [[fx, fy + 6], [fx - 1, fy + 12], [fx - 33, fy + 12], [fx - 33, fy + 18]], 'blue', 4);
     globe(H, R, 9, 3.77, 1.18, 19, 2, 0);
     const [gx, gy] = H.p(10.55, 3.84, 1.83);
@@ -140,7 +137,7 @@ export default function enrich(room) {
     const [bx, by] = H.p(4.3, 5.85, 1.24);
     H.outline(R, ell(bx, by - 10, 18, 20), 'blue', .7);
     H.line(R, [[bx - 15, by + 11], [bx + 15, by + 11]], 'blue', 2);
-    label(H, '47', bx + 24, by + 4, 6);
+
     const [sx, sy] = H.p(4.86, 5.15, 1.24);
     oval(H, R, sx, sy, 14, 6, 'sun', .7);
     for (let k = 0; k < 4; k++) shape(H, R, [[sx - 10 + k * 6, sy + 1], [sx - 7 + k * 6, sy - 5], [sx - 4 + k * 6, sy + 2]], 'paper', 1, .6);
@@ -165,7 +162,7 @@ export default function enrich(room) {
     globe(H, R, 10.56, 6.75, 1.21, 15, 4);
     shape(H, R, H.tile(9.35, 7.05, .65, .34, 1.21), 'paper', 1, .6);
     jar(H, R, 10.6, 7.3, 1.21, 'sun', 'WAX');
-    label(H, 'BUFF & SHINE', ...H.p(10, 7.62, 1.07), 6);
+
     box(H, R, 9.35, 6.4, 1.2, .65, .1, .65, 'coral', .5);
     for (let k = 0; k < 4; k++) H.line(R, [H.p(9.4, 6.5 + k * .14, .54), H.p(10.45, 6.5 + k * .14, .54)], 'paper', 2);
     bench(H, R, .75, 9.25, 2.9, 'sun');
@@ -173,7 +170,7 @@ export default function enrich(room) {
     tag(H, R, 1.38, 9.94, .69, '18');
     box(H, R, .88, 8.25, .75, .58, 0, .5, 'teal', .65);
     shell(H, R, 1.25, 8.57, .53, 13);
-    plaque(H, R, .35, 7.8, 1.7, 'EVERY WORLD MATTERS', 'paper', 118);
+
     table(H, R, 7.85, 9.45, 3.1, 1.48, .9, 'coral');
     for (let k = 0; k < 3; k++) {
       box(H, R, 8.03 + k * .86, 9.72, .68, .62, 1.04, .42, 'sun', .65);
@@ -193,7 +190,6 @@ export default function enrich(room) {
     const [wx, wy] = H.p(6.53, 10.55, .67);
     oval(H, R, wx, wy, 18, 8, 'paper', .8);
     for (let k = 0; k < 8; k++) stroke(H, R, [[wx - 12 + k * 3.5, wy], [wx - 15 + k * 3.5, wy - 8 - k % 3 * 3], [wx - 9 + k * 3, wy - 10]], 'sun', 1.5);
-    label(H, 'PACKING', ...H.p(9.4, 10.95, .75), 7);
   }, (H, R, t) => {
     H.at(5.3, 6.08, 1.25, HH => globe(HH, R, 5.3, 6.08, 1.25, 29, 1, t, true));
     H.at(4.2, 7.55, .1, HH => {

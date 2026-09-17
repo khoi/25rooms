@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, actor, creature, bottle, windowOn, ell, starPts, cycle } from '../common.js';
+import { world, shape, oval, stroke, box, table, actor, creature, bottle, windowOn, ell, starPts, cycle } from '../common.js';
 
 function passport(H, R, i, j, z, ink = 'coral', open = false) {
   const w = open ? .52 : .29;
@@ -26,7 +26,7 @@ function terminal(H, R, i, j, z, n) {
   box(H, R, i + .19, j + .2, .28, .23, z, .1, 'blue');
   box(H, R, i, j, .69, .16, z + .1, .48, 'paper', 1);
   shape(H, R, H.faceI(i + .07, j + .17, .55, z + .17, z + .51), 'blue', .9, .55);
-  label(H, n, ...H.p(i + .34, j + .18, z + .36), 6, '#ffd428');
+
   for (let k = 0; k < 3; k++) H.line(R, [H.p(i + .14, j + .19, z + .2 + k * .06), H.p(i + .44, j + .19, z + .2 + k * .06)], 'teal', .6);
   box(H, R, i + .1, j + .42, .56, .24, z, .04, 'blue');
   for (let k = 0; k < 5; k++) H.line(R, [H.p(i + .16 + k * .08, j + .44, z + .05), H.p(i + .16 + k * .08, j + .61, z + .05)], 'paper', .5);
@@ -46,7 +46,6 @@ function jar(H, R, i, j, z, ink, n) {
   oval(H, R, x, y - 6, 3.4, 3.2, ink, .7);
   H.line(R, [[x - 5, y - 17], [x + 5, y - 17]], 'coral', 2.4);
   H.line(R, [[x - 3, y - 14], [x - 3, y - 7]], 'teal', .65);
-  label(H, n, x, y - 2, 3.7);
 }
 
 const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', tone: 1, wall: 'blue', wallTone: .95, height: 3.4, pattern: 'tiles' }, (H, R) => {
@@ -57,15 +56,14 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     shape(H, R, [[x - 15, y - 10], [x - 5, y - 16], [x + 1, y - 8], [x - 4, y], [x - 11, y + 4]], 'sun', .65, .5);
     H.line(R, [[x - 18, y + 8], [x + 13, y + 8]], 'paper', 1);
   } });
-  plaque(H, R, 3.9, .18, 2.67, 'MOON · ARRIVALS', 'sun', 115);
-  plaque(H, R, 3.9, .18, 2.17, 'DECLARE YOUR GRAVITY', 'paper', 120);
+
   shape(H, R, H.faceJ(.09, 1.1, 3.65, 1.65, 2.95), 'paper', 1);
   for (let k = 0; k < 4; k++) {
     const [x, y] = H.p(.13, 1.5 + k * .8, 2.46 - k * .07);
-    label(H, ['EARTH  08:40', 'IO     09:10', 'TITAN  09:25', 'HOME   SOON'][k], x, y, 5.5);
+
     H.dot(x + 26, y, 1.8, k === 3 ? 'coral' : 'teal');
   }
-  label(H, 'GATE 02', ...H.p(.14, 3, 2.93), 7, '#344a80');
+
   box(H, R, .3, 1.35, 1.2, 3.4, 0, .8, 'coral', .55);
   for (const z of [.88, 1.6]) {
     box(H, R, .3, 1.35, 1.2, 3.4, z, .09, 'sun', .72);
@@ -79,7 +77,6 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
         H.dot(x, y - 8, 2, 'sun');
       } else if (k % 3 === 1) {
         bottle(H, R, x, y, 'blue', .28);
-        label(H, 'DUST', x, y - 3, 3.3);
       } else {
         H.line(R, [[x, y], [x, y - 16]], 'blue', 1);
         shape(H, R, [[x, y - 16], [x + 9, y - 13], [x, y - 10]], 'coral', .8, .6);
@@ -87,7 +84,7 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
       }
     }
   }
-  plaque(H, R, 1.1, 4.77, 1.4, 'LUNAR GIFTS', 'sun', 72);
+
   for (let k = 0; k < 5; k++) passport(H, R, .4 + k * .18, 4.18, .9, k % 2 ? 'teal' : 'coral');
   for (const i of [2.7, 5.7]) {
     box(H, R, i, 2.9, 2.7, 1.35, 0, .99, 'teal', .5);
@@ -101,7 +98,6 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     oval(H, R, x, y, 4.3, 2.2, 'paper');
     stroke(H, R, [[x + 4, y], [x + 8, y + 1], [x + 6, y + 6], [x + 3, y + 5]], 'blue', .7);
     H.line(R, [H.p(i + .3, 4.26, .62), H.p(i + 2.4, 4.26, .62)], 'paper', 1.3);
-    label(H, i < 3 ? '01  PASSPORTS' : '02  VISAS', ...H.p(i + 1.35, 4.28, .75), 6);
   }
   box(H, R, 2.7, .45, 2.5, .63, 0, 1.2, 'teal', .55);
   for (let k = 0; k < 7; k++) {
@@ -115,7 +111,7 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   }
   table(H, R, 9.3, 3.65, 2.1, 1, .86, 'paper');
   for (let k = 0; k < 5; k++) jar(H, R, 9.5 + k * .33, 4.08, .99, k % 2 ? 'teal' : 'coral', String(k + 5));
-  plaque(H, R, 10.2, .22, .88, 'QUARANTINE', 'coral', 86);
+
   box(H, R, 10.58, 4.38, .43, .32, .99, .17, 'blue');
   box(H, R, 10.72, 4.47, .16, .13, 1.16, .32, 'paper');
   const [mx, my] = H.p(10.8, 4.48, 1.5);
@@ -138,11 +134,11 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   shape(H, R, H.faceI(1.19, 7.61, 1.5, .72, 1.57), 'blue', .95, .7);
   for (let k = 0; k < 7; k++) H.line(R, [H.p(1.27 + k * .2, 7.62, .73), H.p(1.27 + k * .2, 7.62, 1.51)], 'teal', 1.1);
   for (let k = 0; k < 5; k++) box(H, R, 1.13 + k * .33, 6.32, .2, .3, 1.85, .05, k % 2 ? 'coral' : 'blue');
-  label(H, 'BAG SCAN', ...H.p(1.91, 7.63, 1.74), 6.5);
+
   terminal(H, R, 2.92, 6.85, .78, 'X-RAY');
   box(H, R, 3.05, 7.04, .15, .15, 0, .78, 'blue');
   for (let k = 0; k < 3; k++) box(H, R, .4, 8.6 + k * .4, .6, .32, .02 + k * .09, .14, 'paper', 1);
-  plaque(H, R, 1.6, 7.75, 2.21, 'NO LOOSE STARS', 'paper', 94);
+
   table(H, R, 8.45, 6.72, 2.65, 1.85, .79, 'coral');
   shape(H, R, H.tile(8.7, 7.08, 1.53, 1.1, .95), 'sun', .85, 1);
   shape(H, R, H.tile(8.83, 7.21, 1.28, .83, .96), 'blue', .82, .7);
@@ -154,7 +150,7 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   }
   passport(H, R, 10.39, 7.66, .93, 'coral', true);
   bottle(H, R, ...H.p(10.54, 7.12, .92), 'teal', .36);
-  label(H, 'SECONDARY', ...H.p(9.73, 8.59, .5), 6);
+
   table(H, R, 8.8, 10.06, 2.3, 1.15, .56, 'teal');
   for (let k = 0; k < 4; k++) {
     const [x, y] = H.p(9.02 + k * .52, 10.64, .69);
@@ -162,10 +158,10 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     if (k % 2) bottle(H, R, x, y, 'sun', .26);
     else shape(H, R, starPts(x, y - 8, 6, 2.5, 5), k ? 'coral' : 'sun', .8, .6);
   }
-  label(H, 'CONFISCATED', ...H.p(9.95, 11.24, .4), 5.6);
+
   table(H, R, 2.78, 10.3, 4.8, .94, .35, 'teal');
   for (let k = 0; k < 19; k++) H.line(R, [H.p(2.85 + k * .24, 10.37, .51), H.p(2.85 + k * .24, 11.16, .51)], 'blue', .8);
-  label(H, 'RECLAIM  01', ...H.p(5.15, 11.26, .29), 6);
+
   box(H, R, .6, 10.34, 1.35, 1.05, 0, .23, 'coral');
   luggage(H, R, .72, 10.4, .24, 'sun', .87);
   luggage(H, R, .92, 10.42, .73, 'teal', .72);
@@ -185,7 +181,6 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     box(HH, R, i + .03, 3.87, .11, .1, 1.23 + lift, .21, 'blue');
     const a = HH.p(i + .02, 3.17, 1.6), b = HH.p(i + .1, 3.9, 1.45 + lift);
     stroke(HH, R, [a, [(a[0] + b[0]) / 2 - 6, (a[1] + b[1]) / 2], b], 'coral', 4);
-    label(HH, phase ? '02  VISAS' : '01  PASSPORTS', ...HH.p(i + .17, 4.28, .72), 6);
   });
   for (const [i, j, ink, phase] of [[4.08, 4.95, 'sun', 0], [5.63, 6.15, 'paper', 1.4], [6.03, 8.15, 'teal', 2.8]]) H.at(i, j, 0, HH => {
     helmeted(HH, R, i, j, t + phase, ink, phase ? 'idle' : 'wave', .86, .025 + Math.sin(t + phase) * .025);
@@ -220,7 +215,6 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   });
   H.at(3.39, 8.17, 0, HH => {
     creature(HH, R, ...HH.p(3.39, 8.17), 'robot', t * .42, .58, 'teal');
-    label(HH, '07', ...HH.p(3.39, 8.17, .59), 4);
   });
   H.at(8.03, 7.34, 0, HH => helmeted(HH, R, 8.03, 7.34, t + 3, 'paper', 'wave', .88));
   H.at(10.86, 9.27, 0, HH => {

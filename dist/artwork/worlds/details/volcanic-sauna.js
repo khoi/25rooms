@@ -1,4 +1,4 @@
-import { shape, oval, stroke, label, plaque, box, table, bench, bottle, pool, ripple, steam, cycle, ell, arcPts } from '../common.js';
+import { shape, oval, stroke, box, table, bench, bottle, pool, ripple, steam, cycle, ell, arcPts } from '../common.js';
 import { slab, backWalls } from '../../drawings.js';
 
 function pipe(H, R, points, color = 'coral', width = 8) {
@@ -93,7 +93,6 @@ function gauge(H, R, i, j, z, text) {
     H.line(R, [[x + Math.cos(a) * 6, y + Math.sin(a) * 6], [x + Math.cos(a) * 8, y + Math.sin(a) * 8]], 'blue', .7);
   }
   H.line(R, [[x, y], [x + 5, y - 5]], 'coral', 1.4);
-  label(H, text, x, y + 5, 4);
 }
 
 export default function enrich(room) {
@@ -104,7 +103,7 @@ export default function enrich(room) {
       backWalls(H, R, this, 3.2, { ink: 'blue', tone: .86, style: 'brick' });
       for (let i = 0; i < 12; i++) for (let j = 0; j < 12; j++) H.outline(R, H.tile(i, j, 1, 1, .01), 'blue', .6, { tone: .4, amp: .12 });
       for (let k = 0; k < 14; k++) box(H, R, .8 + k * .75, 10.95, .65, .68, .04, .08, 'coral', .46);
-      plaque(H, R, 5.2, .08, 3.02, 'PLEASE DO NOT ERUPT', 'sun', 143);
+
       pipe(H, R, [[1.25, 1.15, 2.35], [1.25, 1.15, 2.92], [5.85, 1.15, 2.92], [5.85, 2.55, 2.92], [5.85, 2.55, 1.23]], 'coral', 9);
       pipe(H, R, [[.35, 1.0, 1.0], [.35, 5.75, 1.0], [2.5, 5.75, 1.0], [2.5, 5.75, .25]], 'teal', 5);
       box(H, R, .7, 1.15, 2.4, 1.6, 0, 1.9, 'blue', .38);
@@ -126,7 +125,7 @@ export default function enrich(room) {
       for (let n = 0; n < 5; n++) {
         const i = 7.6 + n * .75;
         box(H, R, i, .5, .68, .78, .05, 2.1, n % 2 ? 'coral' : 'teal', .52);
-        label(H, String(n + 1).padStart(2, '0'), ...H.p(i + .34, 1.3, 1.78), 6, '#f3ebdd');
+
         H.dot(...H.p(i + .54, 1.3, 1.02), 1.7, 'sun');
         for (let q = 0; q < 3; q++) H.line(R, [H.p(i + .16, 1.3, 1.5 - q * .08), H.p(i + .48, 1.3, 1.5 - q * .08)], 'blue', .8);
         if (n === 3) for (let q = 0; q < 3; q++) towel(H, R, i + .08, .68, 2.15 + q * .11, q === 1 ? 'coral' : 'paper', .52, .48);
@@ -138,7 +137,7 @@ export default function enrich(room) {
         shape(H, R, [[x - 3, y], [x + 3, y], [x + 4, y - 8], [x - 4, y - 8]], 'paper', .8);
         oval(H, R, x, y - 8, 4, 2, 'sun');
       }
-      label(H, 'MINERAL BAR', ...H.p(10.2, 3.42, .59), 6, '#f3ebdd');
+
       box(H, R, 3.45, 3.2, 4.6, 3.8, .0, .35, 'blue', .44);
       pool(H, R, 3.7, 3.4, 4.1, 3.25, 'coral');
       H.tint(H.tile(3.87, 3.57, 3.78, 2.92, .12), 'sun', .38);
@@ -167,7 +166,7 @@ export default function enrich(room) {
       }
       for (const i of [8.9, 9.7]) pipe(H, R, [[i, 7.45, .2], [i, 7.45, .9], [i, 8.25, .9], [i, 8.25, .15]], 'paper', 2);
       for (const j of [7.85, 8.07, 8.25]) H.line(R, [H.p(8.9, j, .2), H.p(9.7, j, .2)], 'paper', 2);
-      plaque(H, R, 10.5, 7.18, .68, 'COOL DOWN', 'paper', 70);
+
       bench(H, R, 7.25, 10.88, 3.5, 'coral');
       for (let n = 0; n < 3; n++) towel(H, R, 7.5 + n * 1.06, 11.04, .71, n === 2 ? 'sun' : 'paper');
       for (const [i, j] of [[7.55, 10.48], [8.03, 10.63], [10.66, 6.65], [11.0, 6.76]]) {

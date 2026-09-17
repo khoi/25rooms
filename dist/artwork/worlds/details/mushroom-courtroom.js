@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, creature, mushroom, lantern, ell, loop, cycle } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, creature, mushroom, lantern, ell, loop, cycle } from '../common.js';
 
 const palette = ['coral', 'teal', 'sun', 'blue'];
 
@@ -44,7 +44,6 @@ function jar(H, R, i, j, z, n) {
   } else for (let a = 0; a < 5; a++) H.dot(x + Math.sin(a * 3) * 5, y - 5 - a * 2.5, 1.8, 'coral');
   shape(H, R, [[x - 10, y - 23], [x + 10, y - 23], [x + 10, y - 19], [x - 10, y - 19]], 'coral', .7, .6);
   shape(H, R, [[x + 5, y - 11], [x + 14, y - 9], [x + 12, y - 1], [x + 4, y - 3]], 'sun', .8, .5);
-  label(H, String(n + 1), x + 9, y - 6, 5);
 }
 
 function quill(H, R, x, y, tilt = 0) {
@@ -91,7 +90,6 @@ function rail(H, R, i, j, w, z = 0, ink = 'coral') {
 
 function sealStand(H, R, i, j, text) {
   box(H, R, i, j, .08, .08, 0, .8, 'blue', .8);
-  plaque(H, R, i + .04, j + .04, .9, text, 'paper', 55);
 }
 
 function scales(H, R, i, j, z, t) {
@@ -125,10 +123,10 @@ export default function enrich(room) {
     mushroom(H, R, ...H.p(6.2, 2, .35), 3.05, 'coral');
     const [mx, my] = H.p(6.2, 2, .35);
     for (let k = 0; k < 12; k++) stroke(H, R, [[mx - 53 + k * 9, my - 67], [mx - 37 + k * 6, my - 57]], 'blue', .7, .6);
-    plaque(H, R, 6.2, 2.1, 3.8, 'THE WOODLAND COURT', 'paper', 122);
+
     box(H, R, 5.05, 2.85, 2.95, .9, .35, 1, 'blue', .72);
     box(H, R, 4.94, 2.78, 3.17, 1.06, 1.35, .13, 'sun', .8);
-    plaque(H, R, 6.45, 3.78, .98, 'SPORE COURT', 'sun', 79);
+
     for (const i of [5.28, 7.67]) {
       const [x, y] = H.p(i, 3.77, .9);
       oval(H, R, x, y, 6, 8, 'coral', .8);
@@ -143,7 +141,7 @@ export default function enrich(room) {
     for (const i of [.68, 3.3]) box(H, R, i, 1.05, .1, .12, .88, 1.1, 'blue', .6);
     box(H, R, .6, 1.06, 2.98, .72, 1.75, .12, 'sun', .6);
     for (let k = 0; k < 6; k++) jar(H, R, .94 + k % 3 * .9, k < 3 ? 1.78 : 1.49, k < 3 ? 1.01 : 1.88, k);
-    plaque(H, R, 2, 1.05, 2.43, 'EXHIBITS A–F', 'paper', 80);
+
     table(H, R, .8, 2.6, 2.5, 1.05, .65, 'sun');
     sheet(H, R, 1, 2.72, .79, .8, .64, true);
     jar(H, R, 2.84, 2.9, .78, 6);
@@ -154,13 +152,13 @@ export default function enrich(room) {
       for (let k = 0; k < 5; k++) scroll(H, R, ...H.p(9.48 + k * .32, 1.16, z + .2), .52);
     }
     for (const i of [9.25, 11.1]) box(H, R, i, .68, .13, .18, .55, 1.85, 'blue', .7);
-    plaque(H, R, 10.2, .85, 2.8, 'ROOT LAW', 'sun', 62);
+
     for (let k = 0; k < 5; k++) book(H, R, 10.45, 2.15, k * .13, palette[k % 4], .6, .82);
     box(H, R, 1.05, 4.3, 1.85, 1.6, 0, .25, 'sun', .5);
     rail(H, R, 1.05, 5.78, 1.85, .25);
     box(H, R, 1.05, 4.3, .13, 1.6, .25, .68, 'coral', .6);
     book(H, R, 1.13, 5.15, .98, 'blue', .46, .43);
-    plaque(H, R, 2.05, 5.85, .73, 'WITNESS', 'paper', 52);
+
     table(H, R, 4.05, 4.85, 1.85, 1.08, .67, 'sun');
     box(H, R, 4.45, 5.18, 1.02, .6, .8, .2, 'blue', .9);
     box(H, R, 4.53, 5.03, .85, .16, 1, .2, 'teal', .8);
@@ -169,21 +167,20 @@ export default function enrich(room) {
     shape(H, R, paper, 'paper', 1, .6);
     for (let k = 0; k < 6; k++) H.line(R, [H.p(4.74, 5.02, 1.16 + k * .1), H.p(5.11, 5.02, 1.16 + k * .1)], 'blue', .45);
     scroll(H, R, ...H.p(5.63, 5.4, .81), .55);
-    plaque(H, R, 5, 5.96, .5, 'RECORD', 'paper', 43);
+
     table(H, R, 7.15, 4.8, 2.05, 1.22, .85, 'coral');
     sheet(H, R, 7.32, 5.1, .99, .64, .7, true);
     for (let k = 0; k < 3; k++) book(H, R, 8.35, 5.17, .98 + k * .12, palette[k], .55, .7);
     scroll(H, R, ...H.p(8.15, 4.98, 1.02), .72, true);
     quill(H, R, ...H.p(7.42, 4.91, 1.03));
     table(H, R, 10.05, 3.45, 1.25, 1.3, .65, 'sun');
-    plaque(H, R, 10.72, 4.75, .58, 'ONE ACORN?', 'paper', 66);
+
     for (const j of [7.45, 9.4]) {
       bench(H, R, 1.1, j, 3.3, 'coral');
       rail(H, R, 1, j + 1.05, 3.5, 0, 'teal');
       for (let k = 0; k < 3; k++) {
         const [x, y] = H.p(1.62 + k, j + .14, .7);
         oval(H, R, x, y, 9, 4, palette[k], .65);
-        label(H, String(k + (j > 8 ? 4 : 1)), ...H.p(1.55 + k, j + 1.16, .4), 5);
       }
     }
     sealStand(H, R, .8, 6.83, 'THE JURY');
@@ -199,7 +196,7 @@ export default function enrich(room) {
     box(H, R, 4.2, 6.5, .1, .1, 0, 1.55, 'blue', .7);
     const [ex, ey] = H.p(4.25, 6.55, 1.7);
     shape(H, R, [[ex - 22, ey - 21], [ex + 22, ey - 21], [ex + 22, ey + 14], [ex - 22, ey + 14]], 'paper', 1);
-    label(H, 'THE MISSING NUT', ex, ey - 15, 5);
+
     stroke(H, R, [[ex - 17, ey + 6], [ex - 7, ey - 3], [ex + 5, ey + 5], [ex + 15, ey - 4]], 'teal', 1.2);
     acorn(H, R, ex + 12, ey + 10, .65);
     for (const [dx, dy] of [[-13,3],[-5,-2],[3,3]]) { H.dot(ex + dx, ey + dy, 1.4, 'coral'); H.dot(ex + dx + 2, ey + dy + 2, 1, 'coral'); }
@@ -252,7 +249,7 @@ export default function enrich(room) {
     hedgehog(H,R,...H.p(9.34,10.62,.7),.72);
     const [rx,ry] = H.p(8.25,10.57,.7);
     rabbit(H,R,rx,ry,t,.6,'teal');
-    for (let k = 0; k < 2; k++) label(H,'z',rx - 9 - k * 5,ry - 37 - k * 8 - Math.sin(t + k) * 2,5 + k,'#344a80');
+
     const [nx,ny] = H.p(5.22 + Math.sin(t * .65) * .13,10.9,.04);
     stroke(H,R,[[nx - 11,ny],[nx + 14,ny],[nx + 19,ny - 9]],'teal',5);
     oval(H,R,nx - 1,ny - 9,10,10,'coral',.8);

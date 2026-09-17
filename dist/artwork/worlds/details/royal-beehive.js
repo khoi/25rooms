@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, creature, cycle, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, creature, cycle, TAU } from '../common.js';
 
 function hexagon(H, i, j, z, radius) {
   return Array.from({ length: 6 }, (_, n) => H.p(i + Math.cos(n * TAU / 6) * radius, j + Math.sin(n * TAU / 6) * radius, z));
@@ -86,7 +86,7 @@ function hiveUnder(H, R) {
       H.line(R, [[x - 4, y - 3], [x + 5, y - 3]], 'paper', 1.4);
     }
   }
-  plaque(H, R, 5.7, .06, 4.24, 'HER HONEYNESS', 'paper', 110);
+
   for (const [i, j, r, z, ink] of [[5.8, 3.1, 1.85, .7, 'coral'], [2.1, 3.1, 1.45, .4, 'teal'], [9.4, 2, 1.4, .45, 'sun'], [2.4, 7.5, 1.9, .2, 'sun'], [8.7, 6.35, 1.8, .28, 'sun'], [8.7, 9.7, 1.65, .2, 'teal']]) platform(H, R, i, j, r, z, ink);
   for (const [i, j, w, d, z] of [[3.05, 2.8, 1.5, .6, .42], [6.9, 2.15, 1.35, .6, .45], [5.1, 4.2, .65, 3.1, .22], [3.2, 6.95, 4.6, .65, .2]]) {
     box(H, R, i, j, w, d, z, .12, 'paper', 1);
@@ -111,7 +111,7 @@ function hiveUnder(H, R) {
     stroke(H, R, [[x - 3, y - 3], [x + 2, y - 4], [x, y - 7]], 'coral', 1.5);
     H.dot(x - 3, y - 6, .7, 'blue', 1);
   }
-  plaque(H, R, 1.9, .08, 2.05, 'NURSERY', 'paper', 67);
+
   for (let n = 0; n < 3; n++) jar(H, R, .6, 3.2 + n * .48, .4, 'paper', .75);
   const [mx, my] = H.p(2.1, 1.75, 2.25);
   H.line(R, [[mx, my], [mx, my + 18], [mx - 20, my + 22], [mx + 20, my + 22]], 'blue', .8);
@@ -123,7 +123,7 @@ function hiveUnder(H, R) {
     box(H, R, 8.1, .5, 3.15, .8, z, .1, 'coral', .65);
     for (let n = 0; n < 7; n++) jar(H, R, 8.3 + n * .43, .9, z + .11, 'sun', .82);
   }
-  plaque(H, R, 9.6, .05, 2.42, 'ROYAL RESERVES', 'paper', 98);
+
   for (let n = 0; n < 3; n++) basket(H, R, 8.65 + n * .8, 2.5, .48, 'coral', true);
   table(H, R, 1.05, 6.85, 3.15, .85, .72, 'teal');
   for (let n = 0; n < 11; n++) {
@@ -137,14 +137,14 @@ function hiveUnder(H, R) {
   oval(H, R, vx, vy - 40, 15, 4, 'sun', .8);
   for (const dy of [-30, -8]) H.line(R, [[vx - 21, vy + dy], [vx + 21, vy + dy]], 'coral', 2);
   stroke(H, R, [[vx + 17, vy - 20], [vx + 39, vy - 20], [vx + 39, vy + 6]], 'blue', 3.2);
-  label(H, 'NECTAR', vx, vy - 19, 6.5);
+
   for (let n = 0; n < 5; n++) jar(H, R, 1.1 + n * .52, 8.6, .22, 'sun', .9);
   for (let n = 0; n < 3; n++) {
     box(H, R, .6 + n * .85, 9.2, .7, .7, .01, .45, 'coral', .5);
     for (let k = 0; k < 3; k++) jar(H, R, .7 + n * .85 + (k % 2) * .27, 9.35 + Math.floor(k / 2) * .25, .46, 'sun', .62);
-    const [x, y] = H.p(.95 + n * .85, 9.93, .23); label(H, 'H', x, y, 6);
+    const [x, y] = H.p(.95 + n * .85, 9.93, .23);
   }
-  plaque(H, R, 2.6, 6.48, 1.85, 'BOTTLING', 'paper', 69);
+
   table(H, R, 8, 5.05, 2.6, .95, .7, 'coral');
   for (let n = 0; n < 3; n++) waxFrame(H, R, 8.3 + n * .82, 5.38, .82, .55);
   for (let n = 0; n < 5; n++) box(H, R, 8.25 + (n % 3) * .52, 6.85 + Math.floor(n / 3) * .5, .42, .35, .3, .16, 'paper', 1);
@@ -153,7 +153,7 @@ function hiveUnder(H, R) {
   for (const i of [8.4, 9.5, 10.4]) waxFrame(H, R, i, 4.1, 1.7, .6);
   for (let n = 0; n < 7; n++) H.line(R, [H.p(10.6, 4.65 + n * .14, 1.57 - n * .21), H.p(11, 4.65 + n * .14, 1.57 - n * .21)], 'coral', 2);
   for (const i of [10.6, 11]) H.line(R, [H.p(i, 4.65, 1.65), H.p(i, 5.7, 0)], 'blue', 1.4);
-  plaque(H, R, 9.3, 3.8, 2.58, 'WAX WORKS', 'paper', 77);
+
   table(H, R, 4.2, 9.1, 2.05, .95, .56, 'sun');
   basket(H, R, 4.6, 9.5, .7, 'teal', true);
   basket(H, R, 5.6, 9.5, .7, 'coral', true);
@@ -163,7 +163,7 @@ function hiveUnder(H, R) {
     H.line(R, [[sx + dx, sy - 25], [sx + dx, sy - 12]], 'blue', .6);
     oval(H, R, sx + dx, sy - 11, 7, 3, 'coral', .6);
   }
-  plaque(H, R, 5.2, 9.92, .47, 'POLLEN POST', 'paper', 80);
+
   for (let n = 0; n < 3; n++) basket(H, R, 3.6 + n * .67, 10.78, .05, 'sun', true);
   table(H, R, 7.4, 9.2, 3, 1, .57, 'teal');
   for (let n = 0; n < 7; n++) {
@@ -175,11 +175,11 @@ function hiveUnder(H, R) {
     basket(H, R, 9.75 + n * .5, 10.8, .02, 'coral');
     flower(H, R, 9.75 + n * .5, 10.8, .2, n % 2 ? 'sun' : 'coral', 25);
   }
-  plaque(H, R, 8.9, 10.28, .49, 'FLOWER EXCHANGE', 'paper', 101);
+
   const [qx, qy] = H.p(7.1, 10.35, .05);
   shape(H, R, [[qx - 12, qy], [qx + 12, qy], [qx + 12, qy - 23], [qx - 12, qy - 23]], 'coral', .7, .8);
   H.line(R, [[qx - 8, qy - 16], [qx + 8, qy - 16]], 'blue', 2);
-  label(H, 'MAIL', qx, qy - 7, 5);
+
   for (const [i, j] of [[10.95, 7.7], [6.9, 11]]) {
     box(H, R, i, j, .15, .15, 0, 1.3, 'teal', .8);
     const [x, y] = H.p(i, j, 1.3);

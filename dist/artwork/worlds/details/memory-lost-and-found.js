@@ -1,4 +1,4 @@
-import { world, box, table, bench, shape, oval, stroke, label, plaque, actor, creature, bottle, ell, starPts, wallRect, wallPt, rug } from '../common.js';
+import { world, box, table, bench, shape, oval, stroke, actor, creature, bottle, ell, starPts, wallRect, wallPt, rug } from '../common.js';
 
 const ink = ['teal', 'coral', 'sun', 'paper'];
 
@@ -7,14 +7,13 @@ function card(H, R, i, j, z, color = 'paper', number = '') {
   shape(H, R, p, color, color === 'paper' ? 1 : .48, .55);
   H.line(R, [H.p(i + .07, j + .1, z), H.p(i + .39, j + .1, z)], 'blue', .6, { tone: .7 });
   H.line(R, [H.p(i + .07, j + .19, z), H.p(i + .29, j + .19, z)], 'blue', .5, { tone: .6 });
-  if (number) label(H, number, ...H.p(i + .27, j + .28, z), 3.8);
+  if (number) {}
 }
 
 function tag(H, R, x, y, text, color = 'paper', size = 1) {
   H.line(R, [[x, y - 8 * size], [x + 3 * size, y]], 'blue', .65, { amp: 0 });
   shape(H, R, [[x - 5 * size, y], [x + 5 * size, y], [x + 5 * size, y + 9 * size], [x - 3 * size, y + 9 * size], [x - 5 * size, y + 6 * size]], color, .85, .55);
   H.dot(x, y + 2 * size, .65, 'blue');
-  label(H, text, x, y + 6 * size, 3.4 * size);
 }
 
 function folder(H, R, i, j, z, color = 'sun') {
@@ -56,7 +55,6 @@ function birthday(H, R, x, y, t, scale = 1) {
     oval(H, R, ...p(side * 29, yy), 6 * scale, 9 * scale, side < 0 ? 'teal' : 'coral', .7);
     stroke(H, R, [p(side * 29, yy + 9), p(side * 26, -20), p(side * 29, 0)], 'blue', .6);
   }
-  label(H, '7', ...p(0, -7), 9 * scale);
 }
 
 function archive(H, R) {
@@ -70,12 +68,11 @@ function archive(H, R) {
       shape(H, R, H.faceJ(1.13 + pulled, j + .055, .76, z, z + .41), row % 3 === 1 ? 'teal' : 'sun', .5, .65);
       const p = H.p(1.15 + pulled, j + .43, z + .22);
       shape(H, R, [[p[0] - 7, p[1] - 3], [p[0] + 7, p[1] - 3], [p[0] + 7, p[1] + 3], [p[0] - 7, p[1] + 3]], 'paper', 1, .45);
-      label(H, `${column + 1}${row + 1}`, p[0], p[1], 3.8);
+
       H.line(R, [[p[0] - 3, p[1] + 5], [p[0] + 3, p[1] + 5]], 'blue', 1, { amp: 0 });
       if (pulled) for (let k = 0; k < 4; k++) folder(H, R, 1.17, j + .18 + k * .13, z + .41, ink[k]);
     }
     const [x, y] = H.p(.67, j + .37, 2.95);
-    label(H, ['FIRSTS', 'NAMES', 'SUMMERS', 'GOODBYES', 'DREAMS'][column], x, y, 5.5, '#f4ebcf', -.46);
   }
   for (let row = 0; row < 3; row++) {
     const z = .57 + row * .89;
@@ -87,8 +84,7 @@ function archive(H, R) {
       tag(H, R, x + 5, y - 12, `${row + 1}${k + 1}`, 'paper', .66);
     }
   }
-  plaque(H, R, 7.3, .02, 3.43, 'LOST MOMENTS', 'sun', 122);
-  plaque(H, R, .1, 2.4, 3.38, 'THE UNFORGOTTEN', 'paper', 123);
+
   const board = wallRect(H, 'nw', 6, 10.9, 1.03, 3.18, .07);
   shape(H, R, board, 'sun', .48, 2);
   for (let n = 0; n < 12; n++) {
@@ -107,7 +103,6 @@ function archive(H, R) {
   }
   stroke(H, R, [wallPt(H, 'nw', 6.6, 2.7, .15), wallPt(H, 'nw', 8.9, 1.5, .15), wallPt(H, 'nw', 9.8, 2.6, .15), wallPt(H, 'nw', 7.6, 2.1, .15)], 'coral', 1.1);
   const [bx, by] = wallPt(H, 'nw', 8.4, 3.4, .1);
-  label(H, 'DO YOU REMEMBER?', bx, by, 7, '#f4ebcf', -.46);
 }
 
 function furniture(H, R) {
@@ -115,7 +110,7 @@ function furniture(H, R) {
   rug(H, R, 8.1, 7.7, 3.25, 3.5, 'sun', .2, { border: 'coral' });
   table(H, R, 1.7, 7.0, 3.6, 1.45, 1.03, 'sun');
   box(H, R, 1.77, 8.35, 3.45, .14, .25, .76, 'coral', .45);
-  plaque(H, R, 3.5, 8.55, .68, 'CLAIM A MEMORY', 'paper', 105);
+
   for (let k = 0; k < 6; k++) card(H, R, 1.91 + k % 3 * .63, 7.25 + Math.floor(k / 3) * .43, 1.16, 'paper', `${k + 41}`);
   box(H, R, 4.05, 7.13, .92, .55, 1.15, .13, 'teal', .6);
   for (let k = 0; k < 5; k++) folder(H, R, 4.2, 7.2 + k * .065, 1.3, ink[k % 4]);
@@ -134,7 +129,7 @@ function furniture(H, R) {
   const [ux, uy] = H.p(5.2, 10.7, .63);
   tag(H, R, ux, uy, '41');
   table(H, R, 6.05, 4.4, 3.2, 1.45, 1.06, 'teal');
-  plaque(H, R, 7.6, 5.95, .75, 'MEMORY REPAIR', 'paper', 103);
+
   for (let k = 0; k < 5; k++) card(H, R, 6.25 + k * .49, 5.12, 1.2, k === 2 ? 'coral' : 'paper');
   deskLamp(H, R, 6.26, 4.64, 1.21, 1);
   for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(8.51 + k * .22, 4.69, 1.2), ink[k], .23);
@@ -162,13 +157,13 @@ function furniture(H, R) {
   shape(H, R, H.faceJ(11.37, 2.15, 2.4, 1.21, 2.98), 'sun', .16, .6);
   const [vx, vy] = H.p(11.39, 3.4, 1.65);
   birthday(H, R, vx, vy, 0, .79);
-  label(H, 'JUNE  •  AGE 7', vx, vy + 13, 5.5);
+
   bench(H, R, 8.55, 8.4, 1.6, 'teal');
   box(H, R, 8.0, 10.24, 1.42, .92, .04, .35, 'coral', .65);
   shape(H, R, H.faceI(8, 10.24, 1.42, .4, 1.13), 'sun', .58, 1.1);
   shape(H, R, H.faceI(8.12, 10.23, 1.18, .49, 1.03), 'teal', .32, .7);
   const [cx, cy] = H.p(8.69, 10.22, .8);
-  label(H, 'UNCLAIMED', cx, cy, 6);
+
   shape(H, R, H.tile(8.1, 10.3, 1.22, .72, .41), 'teal', .5, .8);
   for (let k = 0; k < 3; k++) tag(H, R, ...H.p(8.23 + k * .39, 11.18, .29), ['Z', 'Z', '?'][k], 'paper', .8);
   box(H, R, 10.22, 10.32, .72, .63, 0, .38, 'sun', .7);

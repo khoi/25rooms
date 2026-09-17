@@ -1,4 +1,4 @@
-import { actor, box, cycle, label, oval, shape, steam, stroke, table, TAU } from '../common.js';
+import { actor, box, cycle, oval, shape, steam, stroke, table, TAU } from '../common.js';
 import { slab } from '../../drawings.js';
 
 const palette = ['coral', 'teal', 'sun', 'blue'];
@@ -18,7 +18,7 @@ function pole(H, R, i, j, z, number, ink = 'coral') {
   const [x, y] = H.p(i, j, z);
   H.line(R, [[x, y], [x, y - 29]], 'blue', 1.2);
   shape(H, R, [[x, y - 29], [x + 14, y - 28], [x + 12, y - 18], [x, y - 19]], ink, .8);
-  if (number) label(H, number, x + 6, y - 23, 6);
+  if (number) {}
 }
 
 function skiPair(H, R, x, y, ink, lean = 0) {
@@ -45,7 +45,6 @@ function sign(H, R, i, j, z, text, ink = 'sun', width = 62) {
   const [x, y] = H.p(i, j, z);
   H.line(R, [[x, y + 9], [x, y - 24]], 'blue', 2);
   shape(H, R, [[x - width / 2, y - 24], [x + width / 2, y - 24], [x + width / 2 + 6, y - 17], [x + width / 2, y - 10], [x - width / 2, y - 10]], ink, .75);
-  label(H, text, x, y - 17, 7);
 }
 
 function sled(H, R, i, j, ink = 'coral') {
@@ -94,7 +93,7 @@ function station(H, R, i, j, z, top = false) {
   box(H, R, i - width / 2 - .13, j - .6, width + .26, 1.2, z + 1.05, .16, 'coral');
   shape(H, R, H.tile(i - width / 2 - .13, j - .6, width + .26, 1.2, z + 1.23), 'paper', 1);
   const [x, y] = H.p(i, j + .6, z + 1.08);
-  label(H, top ? 'SUMMIT' : 'CHAIR LIFT', x, y + 4, 7);
+
   oval(H, R, ...H.p(i, j, z + 1.18), 16, 5, 'blue', .6);
 }
 
@@ -121,7 +120,7 @@ function lodge(H, R) {
   shape(H, R, H.tile(i + 1.5, j + .25, .44, .44, 2.94), 'paper', 1);
   const [x, y] = H.p(i + w / 2, j + d + .23, 1.69);
   shape(H, R, [[x - 34, y - 6], [x + 34, y - 6], [x + 34, y + 7], [x - 34, y + 7]], 'sun', .9);
-  label(H, 'COCOA LODGE', x, y + 1, 7);
+
   for (let n = 0; n < 8; n++) {
     const p = H.p(i + n * .32, j + d + .25, 1.66);
     H.line(R, [p, [p[0], p[1] + 7 + n % 3 * 2]], 'paper', 1.5);

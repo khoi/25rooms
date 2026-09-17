@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, rug, windowOn, wallRect, wallPt, lamp, ell, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, rug, windowOn, wallRect, wallPt, lamp, ell, TAU } from '../common.js';
 
 const palette = ['coral', 'teal', 'sun', 'blue'];
 
@@ -74,7 +74,6 @@ function cards(H, R, x, y, count = 3, angle = 0) {
   for (let k = 0; k < count; k++) {
     const dx = (k - (count - 1) / 2) * 7;
     shape(H, R, [[x + dx - 4, y - 10 - k], [x + dx + 5, y - 9 + angle], [x + dx + 4, y + 3], [x + dx - 5, y + 2]], 'paper', 1, .55);
-    label(H, k % 2 ? '♥' : '♠', x + dx, y - 3, 6, k % 2 ? '#ee6852' : '#344a80');
   }
 }
 
@@ -98,11 +97,10 @@ function details(H, R) {
   }
   windowOn(H, R, 'ne', 9.1, 1.55, 4.2, 1.35, { sky: 'sun', skyTone: .25 });
   for (const i of [6.9, 11.35]) shape(H, R, wallRect(H, 'ne', i, i + .45, 1.45, 3.05), 'coral', .45);
-  plaque(H, R, 3.4, .05, 3.05, 'NO MORE CHECKMATES', 'sun', 138);
+
   shape(H, R, wallRect(H, 'nw', 4.25, 6.4, 1.65, 2.85), 'sun', .6);
   shape(H, R, wallRect(H, 'nw', 4.4, 6.25, 1.8, 2.7), 'paper', 1);
-  label(H, 'DAILY MOVES', ...H.p(.01, 5.32, 2.48), 7);
-  for (const [n, text] of ['TEA 10', 'CARDS 11', 'STRETCH 2'].entries()) label(H, text, ...H.p(.01, 5.32, 2.23 - n * .17), 5.3);
+
   const [cx, cy] = H.p(.02, 7.45, 2.35);
   oval(H, R, cx, cy, 19, 19, 'sun', .75);
   oval(H, R, cx, cy, 15, 15, 'paper', 1);
@@ -124,7 +122,6 @@ function details(H, R) {
   H.line(R, [[tx - 10, ty - 17], [tx - 16, ty - 17], [tx - 16, ty - 7], [tx - 10, ty - 6]], 'blue', 1.6);
   for (const [i, ink, name] of [[2, 'coral', 'TEA'], [2.7, 'teal', 'DECAF'], [3.4, 'sun', 'BISCUITS']]) {
     box(H, R, i, .84, .5, .45, 1.2, .48, ink, .7);
-    label(H, name, ...H.p(i + .25, 1.3, 1.42), 4.4);
   }
   for (let k = 0; k < 4; k++) cup(H, R, 1.8 + k * .57, 1.61, 1.19, 'paper', .65);
   box(H, R, 4.65, .65, 2.05, .9, 0, 1.15, 'coral', .55);
@@ -141,16 +138,15 @@ function details(H, R) {
   }
   shape(H, R, wallRect(H, 'ne', 4.8, 6.15, 1.88, 2.65), 'blue', .8);
   shape(H, R, wallRect(H, 'ne', 4.91, 6.04, 1.98, 2.54), 'paper', 1);
-  label(H, 'CLASS OF 64', ...H.p(5.48, 0, 2.18), 5.3);
+
   for (let k = 0; k < 4; k++) { const [x, y] = H.p(5.05 + k * .25, 0, 2.32); oval(H, R, x, y, 3, 4, k % 2 ? 'blue' : 'coral'); }
   table(H, R, 8, .75, 3.3, 1.12, 1, 'teal');
   for (let k = 0; k < 5; k++) pot(H, R, 8.2 + k * .68, 1.15, 1.15, k, k > 2);
   for (let k = 0; k < 3; k++) {
     box(H, R, 8.14 + k * .65, 1.55, .46, .3, 1.13, .05, 'paper');
-    label(H, ['PEAS', 'SAGE', 'MINT'][k], ...H.p(8.37 + k * .65, 1.76, 1.2), 4.6);
   }
   box(H, R, 10.4, .95, .6, .55, .05, .35, 'sun', .6);
-  label(H, 'SEEDS', ...H.p(10.7, 1.53, .27), 5);
+
   for (const j of [1.2, 1.65]) pot(H, R, 8.35, j, .08, 2);
   table(H, R, .3, 2.3, .82, 1.6, 1.15, 'coral');
   for (const z of [.25, 1.24, 2.15]) {
@@ -179,13 +175,12 @@ function details(H, R) {
   shape(H, R, H.tile(4.62, 4.44, 2.21, 1.86, 1.09), 'teal', .62);
   for (const [i, j, suit] of [[4.9, 4.85, '♠'], [5.5, 5.14, '♥'], [6.05, 5, '♦'], [5.85, 5.7, '♣']]) {
     shape(H, R, H.tile(i, j, .35, .52, 1.12), 'paper', 1, .5);
-    label(H, suit, ...H.p(i + .16, j + .25, 1.14), 7, suit === '♥' || suit === '♦' ? '#ee6852' : '#344a80');
   }
   box(H, R, 6.3, 5.7, .35, .5, 1.11, .08, 'paper', 1);
   for (let k = 0; k < 5; k++) oval(H, R, ...H.p(4.9 + k * .17, 6.13, 1.15), 2.3, 1.3, k % 2 ? 'sun' : 'blue');
   cup(H, R, 4.8, 4.45, 1.12, 'paper', .7); cup(H, R, 6.62, 5.3, 1.12, 'sun', .7);
   shape(H, R, H.tile(6.0, 4.44, .6, .35, 1.12), 'paper', 1);
-  label(H, '7 : 7', ...H.p(6.3, 4.62, 1.15), 5.5);
+
   table(H, R, 3.55, 2.48, 1.38, .9, .84, 'sun');
   box(H, R, 3.55, 2.48, 1.38, .9, .25, .07, 'teal', .6);
   for (const i of [3.65, 4.72]) for (const j of [2.62, 3.25]) oval(H, R, ...H.p(i, j, .11), 3.5, 4, 'blue');
@@ -204,7 +199,7 @@ function details(H, R) {
     shape(H, R, [[x - 3, y - 18], [x + 6, y - 18], [x + 5, y], [x - 4, y]], 'paper', 1, .5);
     H.line(R, [[x - 1, y - 13], [x + 4, y - 13]], 'blue', .7);
   }
-  label(H, 'THE DAILY ROOK', ...H.p(.91, 11.2, .26), 5.2);
+
   lamp(H, R, ...H.p(.63, 8.6), 66, { ink: 'sun' });
   const [wx, wy] = H.p(2.75, 8.55);
   stroke(H, R, [[wx, wy], [wx, wy - 35], [wx + 5, wy - 40], [wx + 10, wy - 35]], 'coral', 2.2);
@@ -229,7 +224,7 @@ function details(H, R) {
   oval(H, R, ...H.p(10.65, 9.8, .18), 13, 12, 'sun');
   H.line(R, [H.p(10.55, 9.65, .52), H.p(10.6, 9.88, .18), H.p(10.85, 10.08, .12)], 'coral', 1.4);
   box(H, R, 10.4, 7.8, .9, .68, .05, .4, 'paper', 1);
-  label(H, 'GENTLE MOVES', ...H.p(10.85, 8.5, .32), 5);
+
   for (const [i, j, ink] of [[10.48, 8, 'coral'], [10.77, 8, 'teal'], [11.02, 8, 'sun']]) yarn(H, R, ...H.p(i, j, .53), ink, .7);
   walker(H, R, 10.25, 10.55);
   pot(H, R, 11.1, 4.6, .06, 1, true);
@@ -293,7 +288,7 @@ function life(H, R, t) {
     const page = Math.sin(t * .7) * 2;
     shape(HH, R, [[x - 24, y - 29], [x, y - 24], [x + 24, y - 31 + page], [x + 23, y - 5], [x, y + 1], [x - 22, y - 4]], 'paper', 1);
     HH.line(R, [[x, y - 23], [x, y]], 'blue', .8);
-    label(HH, 'ROOK POST', x, y - 22, 6);
+
     for (let k = 0; k < 5; k++) for (const side of [-1, 1]) HH.line(R, [[x + side * 3, y - 17 + k * 3], [x + side * 19, y - 19 + k * 3]], 'blue', .45);
   });
   H.at(4.5, 10.1, .58, HH => {

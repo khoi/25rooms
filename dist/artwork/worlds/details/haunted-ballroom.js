@@ -1,4 +1,4 @@
-import { shape, oval, stroke, label, box, table, bench, bottle, ell, loop, wallPt, wallRect, TAU } from '../common.js';
+import { shape, oval, stroke, box, table, bench, bottle, ell, loop, wallPt, wallRect, TAU } from '../common.js';
 
 function ghost(H, R, i, j, t, size = 1, costume = 'coral') {
   const [x, ground] = H.p(i, j, .25), y = ground + Math.sin(t * 1.5) * 3;
@@ -71,7 +71,6 @@ function portrait(H, R, side, pos, z, type) {
   });
   for (const p of outer) H.dot(...p, 2, 'sun', 1, { knock: true });
   const [tx, ty] = wallPt(H, side, pos, z - .1, .08);
-  label(H, ['1821', '1814', '1798', '1846'][type], tx, ty, 5, '#f3ebdd');
 }
 
 function cobweb(H, R, side, pos, z, sign = 1) {
@@ -108,7 +107,6 @@ function piano(H, R) {
   H.line(R, [[x - 2, y + 2], [x - 3, y - 18]], 'blue', .6);
   for (let n = 0; n < 5; n++) H.line(R, [[x - 13, y - 15 + n * 3], [x + 11, y - 12 + n * 3]], 'blue', .4);
   const [lx, ly] = H.p(10.5, 3.38, .6);
-  label(H, 'NO PIANIST', lx, ly, 5, '#f3ebdd');
 }
 
 function buffet(H, R) {
@@ -136,7 +134,6 @@ function buffet(H, R) {
     }
   }
   const [x, y] = H.p(1.52, 10.57, .86);
-  label(H, 'SUPPER / 1891', x, y, 6, '#f3ebdd');
 }
 
 export default function enrich(room) {
@@ -180,7 +177,7 @@ export default function enrich(room) {
       const [sx, sy] = H.p(4.25, 1.9, .3);
       oval(H, R, sx, sy - 17, 17, 19, 'sun', .65);
       oval(H, R, sx, sy - 17, 13, 15, 'paper', 1);
-      label(H, '1891', sx, sy - 17, 6);
+
       for (const d of [-1, 1]) H.line(R, [[sx + d * 10, sy - 3], [sx + d * 16, sy + 4]], 'blue', 1.2);
       buffet(H, R);
       table(H, R, 7.2, 10.1, 2.9, 1.1, .78, 'coral');

@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, actor, bottle, ell, cycle } from '../common.js';
+import { world, shape, oval, stroke, box, table, actor, bottle, ell, cycle } from '../common.js';
 
 function bone(H, R, x, y, length = 18, angle = -.35, width = 3) {
   const dx = Math.cos(angle) * length * .5, dy = Math.sin(angle) * length * .5;
@@ -10,7 +10,6 @@ function bone(H, R, x, y, length = 18, angle = -.35, width = 3) {
 function tag(H, R, i, j, number, z = .22) {
   const [x, y] = H.p(i, j, z);
   shape(H, R, [[x - 7, y], [x + 8, y + 1], [x + 6, y - 11], [x - 5, y - 12]], 'sun', .85);
-  label(H, number, x + 1, y - 5, 6);
 }
 
 function tray(H, R, i, j, number, z = 1.12, ink = 'coral') {
@@ -27,7 +26,6 @@ function tray(H, R, i, j, number, z = 1.12, ink = 'coral') {
     H.line(R, [[x - 6, y + 3], [x + 6, y - 3]], 'teal', 1);
     for (let n = 0; n < 4; n++) stroke(H, R, [[x - 5 + n * 3, y - n], [x - 4 + n * 3, y + 2 - n], [x - 1 + n * 3, y + 3 - n]], 'teal', .7);
   }
-  label(H, number, ...H.p(i + .5, j + .58, z + .17), 5);
 }
 
 function brush(H, R, x, y, angle = -.5, size = 1) {
@@ -61,9 +59,9 @@ function tent(H, R) {
     H.line(R, [H.p(i, j, 1), H.p(x, y, .08)], 'blue', .7);
     H.line(R, [H.p(x, y, 0), H.p(x, y, .22)], 'coral', 2);
   }
-  label(H, 'FIELD LAB', ...H.p(10.45, 2.71, .5), 6);
+
   box(H, R, 10.1, 3, .75, .55, 0, .5, 'teal');
-  label(H, '+', ...H.p(10.45, 3.56, .27), 12, '#f1ead7');
+
   bottle(H, R, ...H.p(11.35, 3.6, .06), 'teal', .42);
 }
 
@@ -94,15 +92,12 @@ function skeleton(H, R) {
 
 export default function enrich(room) {
   const detailed = world(room.id, room.title, { floor: 'sun', tone: .3, wall: 'coral', wallTone: .24, wallStyle: 'brick', height: 1.1 }, (H, R) => {
-    plaque(H, R, 4.9, .16, 1.5, 'SITE 027 · DO NOT WAKE', 'paper', 151);
+
     box(H, R, 2.15, 3.1, 6.7, 5.6, 0, .12, 'coral', .4);
     shape(H, R, H.tile(2.4, 3.35, 6.2, 5.1, .125), 'sun', .42);
     for (let i = 2.4; i < 8.7; i += 1.04) H.line(R, [H.p(i, 3.35, .14), H.p(i, 8.45, .14)], 'paper', .6, { tone: .9 });
     for (let j = 3.35; j < 8.5; j += 1.02) H.line(R, [H.p(2.4, j, .14), H.p(8.6, j, .14)], 'paper', .6, { tone: .9 });
-    for (let n = 0; n < 6; n++) {
-      label(H, String(n + 1), ...H.p(2.9 + n * 1.04, 3.1, .15), 6);
-      label(H, String.fromCharCode(65 + n), ...H.p(2.1, 3.7 + n * .88, .15), 6);
-    }
+
     for (const [i, j, number] of [[3.25, 4.8, '01'], [4.45, 4.65, '02'], [6.8, 4.95, '03'], [8.1, 5.8, '04'], [4.5, 7.7, '05'], [7.15, 8, '06'], [6.3, 3.2, '07']]) tag(H, R, i, j, number);
     skeleton(H, R);
     for (const i of [2.15, 8.85]) for (const j of [3.1, 8.7]) {
@@ -118,11 +113,11 @@ export default function enrich(room) {
     for (let n = 0; n < 4; n++) bottle(H, R, ...H.p(.85 + n * .45, 1.7, 1), ['teal', 'sun', 'coral', 'teal'][n], .28);
     notebook(H, R, 2.7, 1.35, .99, .9, .4);
     for (let n = 0; n < 3; n++) brush(H, R, ...H.p(3.15 + n * .15, 1.7, 1), -.45, .48);
-    plaque(H, R, 1.7, .15, 1.45, 'WASH · SORT', 'sun', 71);
+
     box(H, R, .75, 2.3, .75, .65, 0, .55, 'coral', .55);
     box(H, R, .8, 2.34, .65, .54, .55, .08, 'paper', 1);
     bone(H, R, ...H.p(1.13, 2.6, .67), 17, .4, 3);
-    label(H, 'FRAGILE', ...H.p(1.14, 2.96, .26), 5);
+
     tent(H, R);
     const map = H.tile(4.9, .55, 2.15, 1.35, .25);
     shape(H, R, map, 'paper', .95);
@@ -131,7 +126,7 @@ export default function enrich(room) {
     oval(H, R, ...H.p(5.95, 1.25, .27), 17, 7, 'coral', .3);
     for (const [i, j] of [[4.92, .57], [6.98, .62], [5, 1.85], [6.98, 1.8]]) oval(H, R, ...H.p(i, j, .3), 3.5, 2, 'blue', .5);
     box(H, R, 6.55, 2.05, .55, .4, 0, .32, 'coral');
-    label(H, 'FILM', ...H.p(6.8, 2.46, .2), 5);
+
     bucket(H, R, .65, 4.7, 'coral');
     bucket(H, R, 1.45, 5.3, 'teal');
     for (let n = 0; n < 3; n++) {
@@ -151,7 +146,7 @@ export default function enrich(room) {
     const [mx, my] = H.p(3.6, 10.65, 1.15);
     H.outline(R, ell(mx, my, 6, 4.5), 'blue', 1.6);
     H.line(R, [[mx - 5, my + 4], [mx - 12, my + 10]], 'coral', 2.8);
-    label(H, 'CATALOGUE', ...H.p(3.7, 11.12, .76), 7);
+
     for (let n = 0; n < 4; n++) box(H, R, 2.1 + n * .77, 10, .66, .74, 0, .4, n % 2 ? 'sun' : 'coral', .45);
     box(H, R, 5.5, 9.55, .55, .65, 0, .45, 'sun');
     for (const [i, j, z] of [[9.3, 4.25, 0], [11.25, 4.25, 0], [10.3, 6.4, 0]]) H.line(R, [H.p(i, j, z), H.p(10.2, 4.95, 2.9)], 'blue', 4, { tone: .85 });
@@ -159,14 +154,13 @@ export default function enrich(room) {
     oval(H, R, hx, hy, 7, 7, 'sun', .9);
     oval(H, R, hx, hy, 3, 3, 'blue', .8);
     box(H, R, 10.35, 6.7, .85, .7, 0, .37, 'coral');
-    label(H, 'JACKET 12', ...H.p(10.75, 7.41, .18), 5);
+
     for (let n = 0; n < 3; n++) oval(H, R, ...H.p(11.15, 7.8 + n * .24, .06), 8, 4, 'paper', .9);
     box(H, R, 9.1, 9.5, 1.8, 1.05, .35, .18, 'teal');
     for (const i of [9.25, 10.65]) for (const j of [9.6, 10.5]) oval(H, R, ...H.p(i, j, .17), 6, 7, 'blue', .8);
     for (const i of [9.1, 10.8]) H.line(R, [H.p(i, 10.6, .55), H.p(i, 11.35, .95)], 'blue', 2);
     for (let n = 0; n < 3; n++) {
       box(H, R, 9.2 + n * .53, 9.65, .47, .7, .53, .45, n % 2 ? 'sun' : 'coral', .5);
-      label(H, String(12 + n), ...H.p(9.44 + n * .53, 10.36, .77), 6);
     }
     const [sx, sy] = H.p(7.8, 10.55, 1.25);
     for (const [i, j] of [[7.35, 10.4], [8.1, 10.3], [7.8, 11.1]]) H.line(R, [H.p(i, j), [sx, sy]], 'blue', 1.7);
@@ -208,7 +202,6 @@ export default function enrich(room) {
     shape(H, R, [[px - 21, py - 3], [px - 14, py - 14], [px + 8, py - 15], [px + 23, py - 4], [px + 13, py + 10], [px - 13, py + 8]], 'paper', 1);
     for (const dx of [-12, 10]) stroke(H, R, [[px + dx, py + 9], [px + dx - 2, py - 10], [px, py - 20]], 'teal', 1.6);
     for (let n = 0; n < 4; n++) H.line(R, [[px - 14 + n * 8, py - 8], [px - 12 + n * 8, py + 5]], 'blue', .45, { tone: .4 });
-    label(H, '12', px + 1, py - 1, 7);
   });
   return { ...room, under: detailed.under, live: detailed.live };
 }

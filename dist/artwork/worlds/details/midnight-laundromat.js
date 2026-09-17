@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, steam, bottle, inks, ell, TAU, windowOn, plant, rug } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, steam, bottle, inks, ell, TAU, windowOn, plant, rug } from '../common.js';
 
 function towel(H, R, i, j, z, ink, w = .7, d = .6) {
   box(H, R, i, j, w, d, z, .075, ink, .62);
@@ -46,22 +46,20 @@ function washer(H, R, i, k) {
   oval(H, R, x, y, 16.8, 20, 'teal', .4);
   oval(H, R, x + 15, y + 1, 2.5, 5, 'sun', .8);
   H.line(R, [H.p(i + .12, 2.07, 1.62), H.p(i + 1.47, 2.07, 1.62)], 'blue', .8);
-  label(H, String(k + 1).padStart(2, '0'), ...H.p(i + .28, 2.08, 1.77), 7);
+
   const [cx, cy] = H.p(i + 1.16, 2.08, 1.76);
   oval(H, R, cx, cy, 3.2, 3.2, 'coral');
   H.line(R, [[cx, cy - 2], [cx + 1.8, cy + 1]], 'paper', .7);
   H.line(R, [H.p(i + .74, 2.09, 1.72), H.p(i + .74, 2.09, 1.82)], 'blue', 2);
   for (let q = 0; q < 5; q++) H.line(R, [H.p(i + .15 + q * .25, 2.08, .16), H.p(i + .28 + q * .25, 2.08, .16)], 'blue', .65);
   box(H, R, i + .15, .87, .7, .55, 1.94, .12, k % 2 ? 'teal' : 'coral', .44);
-  label(H, '2.00', ...H.p(i + .8, 2.09, .38), 5);
 }
 
 function furnishings(H, R) {
   windowOn(H, R, 'nw', 8.6, 1.35, 3.25, 1.7, { skyTone: .98, frameInk: 'teal', inside() {
     for (let q = 0; q < 9; q++) H.dot(...H.p(-.04, 7.1 + q * .34, 1.6 + q % 3 * .39), .9, 'sun', .8);
   } });
-  plaque(H, R, 5.6, .08, 2.8, 'OPEN ALL NIGHT', 'coral', 118);
-  plaque(H, R, .08, 4.85, 2.72, 'SOAP • SUDS • SOCKS', 'sun', 100);
+
   for (let k = 0; k < 5; k++) washer(H, R, .5 + k * 1.78, k);
   const [cx, cy] = H.p(9.85, .05, 2.83);
   oval(H, R, cx, cy, 13, 13, 'paper', 1);
@@ -70,12 +68,12 @@ function furnishings(H, R) {
   box(H, R, 10.1, .55, 1.25, 1.1, 0, 2.32, 'coral', .68);
   const front = H.faceI(10.23, 1.66, 1.0, .45, 1.98);
   shape(H, R, front, 'sun', .75);
-  label(H, 'CHANGE', ...H.p(10.75, 1.67, 1.84), 7);
+
   shape(H, R, H.faceI(10.42, 1.68, .63, 1.22, 1.59), 'blue', .9);
-  label(H, '25¢', ...H.p(10.73, 1.7, 1.4), 8, '#f3ebdd');
+
   for (let q = 0; q < 3; q++) H.line(R, [H.p(10.45 + q * .19, 1.7, .96), H.p(10.57 + q * .19, 1.7, .96)], 'blue', 1.4);
   shape(H, R, H.faceI(10.4, 1.69, .7, .57, .77), 'blue', .87);
-  label(H, 'COINS ONLY', ...H.p(10.73, 1.7, .31), 5);
+
   for (let q = 0; q < 3; q++) oval(H, R, ...H.p(10.65 + q * .17, 1.9, .03), 2.4, 1.3, 'sun');
   table(H, R, .22, 2.85, 1.1, 2.75, 1.05, 'teal');
   for (const z of [1.17, 1.86, 2.5]) {
@@ -92,8 +90,7 @@ function furnishings(H, R) {
   }
   for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(1.02, 3.1 + k * .7, 1.17), inks[k], .42);
   shape(H, R, H.faceJ(.13, 5.75, 1, 1.7, 2.4), 'paper', 1);
-  label(H, 'LOST', ...H.p(.15, 6.24, 2.21), 6);
-  label(H, 'SOCKS', ...H.p(.15, 6.24, 2.04), 6);
+
   for (let k = 0; k < 3; k++) {
     const [x, y] = H.p(.18, 5.9 + k * .25, 1.92);
     shape(H, R, [[x - 2, y], [x + 3, y], [x + 3, y + 11], [x + 8, y + 12], [x + 7, y + 16], [x - 2, y + 14]], inks[k], .7, .6);
@@ -104,8 +101,7 @@ function furnishings(H, R) {
   H.line(R, [H.p(5.87, 5.17, 1.17), H.p(5.87, 6.27, 1.17)], 'coral', .7);
   box(H, R, 3.64, 5.3, 1.1, .85, .15, .47, 'teal', .35);
   box(H, R, 5.0, 5.3, .98, .85, .15, .47, 'coral', .35);
-  label(H, 'CLEAN', ...H.p(4.19, 6.17, .39), 6);
-  label(H, 'MENDING', ...H.p(5.47, 6.17, .39), 5);
+
   table(H, R, .82, 6.35, 1.8, 1.38, 1.04, 'coral');
   box(H, R, 1.05, 6.56, .93, .62, 1.16, .1, 'blue', .78);
   const [sx, sy] = H.p(1.56, 6.95, 1.3);
@@ -152,7 +148,6 @@ function furnishings(H, R) {
   rug(H, R, 6.7, 10.08, 1.4, 1.08, 'coral', .26, { border: 'teal' });
   for (let k = 0; k < 3; k++) {
     box(H, R, .76 + k * .13, 10.8 + k * .05, .55, .7, .04 + k * .03, .04, inks[k], .6);
-    label(H, k === 2 ? 'NIGHT' : 'ZINE', ...H.p(1.03 + k * .13, 11.15 + k * .05, .12 + k * .03), 5);
   }
   mug(H, R, 2.85, 10.64, .06);
   plant(H, R, ...H.p(.54, 11.24), .72);
@@ -170,7 +165,6 @@ function furnishings(H, R) {
   H.line(R, [H.p(11.27, 3.73, .2), H.p(11.42, 3.5, 2.15)], 'sun', 2);
   for (let k = 0; k < 6; k++) H.line(R, [H.p(11.13 + k * .045, 3.74, .2), H.p(11.08 + k * .067, 3.75, .04)], 'paper', 1.4);
   shape(H, R, [H.p(9.84, 3.09), H.p(10.35, 3.09), H.p(10.11, 3.09, .67)], 'sun', .8);
-  label(H, '!', ...H.p(10.11, 3.1, .3), 10);
 }
 
 export default function enrich(room) {

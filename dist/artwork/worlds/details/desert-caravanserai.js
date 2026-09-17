@@ -1,4 +1,4 @@
-import { actor, bottle, box, creature, ell, label, lantern, oval, rug, shape, steam, stroke, table } from '../common.js';
+import { actor, bottle, box, creature, ell, lantern, oval, rug, shape, steam, stroke, table } from '../common.js';
 
 const colors = ['coral', 'sun', 'teal', 'blue'];
 
@@ -117,7 +117,6 @@ export default function enrich(room) {
         bowl(H, R, 1.96 + n * .48, 4.05, .86, colors[n % 4], 7.2, true);
         const [x, y] = H.p(2.02 + n * .48, 4.58, .74);
         shape(H, R, [[x - 6, y], [x + 6, y], [x + 6, y + 7], [x - 6, y + 7]], 'paper', .95, .45);
-        label(H, ['7', '12', '4', '9', '6', '3'][n], x, y + 3.5, 4.8);
       }
       for (let n = 0; n < 5; n++) sack(H, R, 1.8 + n * .63, 4.98, colors[n % 3], .8, n === 3 ? 'dates' : 'grain');
       box(H, R, 4.9, 1.1, 1.2, .55, 0, 1.5, 'teal', .45);
@@ -163,7 +162,6 @@ export default function enrich(room) {
         H.line(R, [H.p(i + .3, 9.47, .72), H.p(i + .3, 10.6, .72), H.p(i + .3, 10.6, .12)], 'paper', 1.6);
         const [x, y] = H.p(i + .32, 10.63, .43);
         shape(H, R, [[x - 5, y - 4], [x + 5, y - 4], [x + 5, y + 4], [x - 5, y + 4]], 'sun', .83, .6);
-        label(H, ['A', 'B', 'C'][n], x, y, 5);
       }
       bedroll(H, R, 8.55, 9.8, 'teal', 1.5);
       const [tx, ty] = H.p(2.9, 8.85, .58);

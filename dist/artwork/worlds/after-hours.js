@@ -1,8 +1,8 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug } from './common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug } from './common.js';
 
 const laundry = world('midnight-laundromat', 'Midnight laundromat', { floor: 'teal', tone: .2, wall: 'blue', wallTone: .8, pattern: 'tiles', height: 3.4 }, (H, R) => {
   windowOn(H, R, 'nw', 7, 1.1, 4, 1.8, { skyTone: .95, frameInk: 'teal' });
-  plaque(H, R, 6, .2, 3, 'OPEN ALL NIGHT', 'coral', 120);
+
   for (let k = 0; k < 5; k++) {
     const i = .7 + k * 2.05;
     box(H, R, i, .65, 1.8, 1.7, 0, 2.1, 'paper', 1);
@@ -10,7 +10,6 @@ const laundry = world('midnight-laundromat', 'Midnight laundromat', { floor: 'te
     oval(H, R, x, y, 23, 27, 'blue', .9); oval(H, R, x, y, 19, 23, 'teal', .45);
     H.line(R, [H.p(i + .15, 2.4, 1.82), H.p(i + 1.65, 2.4, 1.82)], 'blue', 1);
     const [cx, cy] = H.p(i + 1.5, 2.41, 1.94); H.dot(cx, cy, 3, 'coral');
-    label(H, String(k + 1).padStart(2, '0'), ...H.p(i + .4, 2.42, 1.94), 7);
   }
   table(H, R, 3, 5, 4, 2, .95, 'sun');
   for (let k = 0; k < 9; k++) box(H, R, 3.2 + k % 3 * 1.15, 5.2, .85, 1.4, 1.08 + Math.floor(k / 3) * .1, .08, inks[k % 3], .4);
@@ -38,11 +37,10 @@ const laundry = world('midnight-laundromat', 'Midnight laundromat', { floor: 'te
 
 const bathhouse = world('dragon-bathhouse', 'Dragon bathhouse', { floor: 'sun', tone: .25, wall: 'coral', wallStyle: 'tile', pattern: 'tiles', height: 3.5 }, (H, R) => {
   pool(H, R, 2, 3, 6.7, 5.3); pool(H, R, 8.7, 1.2, 2.6, 3.4);
-  plaque(H, R, 5, .2, 3, 'NO FIRE IN THE POOL', 'paper', 146);
+
   for (let k = 0; k < 5; k++) {
     box(H, R, .25, .7 + k * 1.3, 1.1, 1.1, 0, 2.3, 'teal', .4);
     const [x, y] = H.p(1.36, 1.2 + k * 1.3, 1.4); H.dot(x, y, 2, 'sun');
-    label(H, String(k + 1), ...H.p(1.37, 1.2 + k * 1.3, 1.9), 7);
   }
   for (const i of [3, 6, 9]) lantern(H, R, i, .4, 3.2, 'sun');
   bench(H, R, 3.5, 10, 5, 'coral');
@@ -61,7 +59,7 @@ const bathhouse = world('dragon-bathhouse', 'Dragon bathhouse', { floor: 'sun', 
 const excavation = world('dinosaur-excavation', 'Dinosaur excavation', { floor: 'sun', tone: .35, wall: 'coral', wallTone: .3, wallStyle: 'brick', height: 1.4 }, (H, R) => {
   box(H, R, 1.5, 2, 8.5, 7, 0, .12, 'coral', .32);
   for (let i = 2; i < 10; i++) for (let j = 2; j < 9; j++) H.outline(R, H.tile(i, j, 1, 1, .13), 'paper', .8, { tone: .9 });
-  plaque(H, R, 5, .5, 1.6, 'SITE 027 · DO NOT WAKE', 'paper', 150);
+
   for (const i of [1, 10.5]) for (const j of [1.8, 9.5]) box(H, R, i, j, .14, .14, 0, 1, 'blue');
   H.line(R, [H.p(1, 9.5, .9), H.p(10.5, 9.5, .9)], 'coral', 1.4);
   for (let k = 0; k < 8; k++) {
@@ -89,7 +87,7 @@ const courtroom = world('mushroom-courtroom', 'Mushroom courtroom', { floor: 'te
   box(H, R, 3.3, 1.3, 5.1, 2.5, 0, .45, 'coral');
   mushroom(H, R, ...H.p(5.8, 2.3, .5), 3.2, 'coral');
   box(H, R, 4.2, 3, 3.2, 1, .45, 1.15, 'blue', .7);
-  plaque(H, R, 5.8, 4.04, 1.1, 'SPORE COURT', 'sun', 80);
+
   for (const j of [6.6, 8.5]) for (const i of [1.3, 7.2]) bench(H, R, i, j, 3.4, 'coral');
   table(H, R, 4.8, 6, 2, 1.3, .9, 'sun');
   const [x, y] = H.p(5.7, 5.5, 0); H.outline(R, ell(x, y, 35, 16), 'sun', 2);
@@ -118,13 +116,11 @@ const opera = world('miniature-opera', 'Miniature opera house', { floor: 'blue',
   }
   for (let j = 6.5; j < 11; j += 1.5) for (let i = 1.3; i < 11; i += 1.6) bench(H, R, i, j, 1, 'coral');
   for (let k = 0; k < 9; k++) { const [x, y] = H.p(2 + k, 5.35, .65); H.glow(x, y, 16, 10, 'sun', .5); H.dot(x, y, 3, 'sun'); }
-  plaque(H, R, 6, .6, 4.25, 'THE VERY SMALL OPERA', 'paper', 160);
 }, (H, R, t) => {
   creature(H, R, ...H.p(5.6 + Math.sin(t * .3) * .3, 3.8, .65), 'mouse', t, 1.8, 'coral');
   actor(H, R, 8, 3, t, 'wave', { shirt: ['teal', .7] }, .65, 1.1);
   for (let j = 6.9; j < 11; j += 1.5) for (let i = 1.7; i < 11; i += 1.6) creature(H, R, ...H.p(i, j, .7), 'mouse', t + i, .5, inks[Math.floor(i + j) % 4]);
   const [x, y] = H.p(5.8, 3.8, 2.7);
-  for (let k = 0; k < 3; k++) { const u = cycle(t + k, 3); label(H, '♪', x + u * 30, y - u * 42, 16, '#ffd428'); }
 });
 
 export default [laundry, bathhouse, excavation, courtroom, opera];

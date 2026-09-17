@@ -1,5 +1,5 @@
 import { slab, backWalls } from '../../drawings.js';
-import { actor, arcPts, box, cycle, ell, label, lantern, oval, plaque, shape, stroke, table, wallPt, wallRect } from '../common.js';
+import { actor, arcPts, box, cycle, ell, lantern, oval, shape, stroke, table, wallPt, wallRect } from '../common.js';
 
 const palette = ['coral', 'teal', 'sun', 'paper'];
 const line = (H, R, points, width = .7, ink = 'blue') => H.line(R, points, ink, width, { tone: .8, amp: .1 });
@@ -63,7 +63,7 @@ function banner(H, R, side, pos, ink, word) {
   shape(H,R,points,'paper',1,.75);
   shape(H,R,wallRect(H,side,pos+.08,pos+.62,1.75,2.45,.04),ink,.78,.6);
   const [x,y]=wallPt(H,side,pos+.35,1.17,.05);
-  label(H,word,x,y,7);
+
   const [cx,cy]=wallPt(H,side,pos+.35,2.1,.05);
   fan(H,R,cx,cy+5,ink,.65);
   line(H,R,[wallPt(H,side,pos-.06,2.63,.04),wallPt(H,side,pos+.76,2.63,.04)],1.8);
@@ -79,13 +79,12 @@ export default function enrich(room) {
       for(let i=.5;i<12;i+=2) for(let j=(i%2)*.3;j<12;j+=1.2) line(H,R,[H.p(i,j,.01),H.p(i,j+.6,.01)],.4);
       backWalls(H,R,this,2.8,{ink:'teal',tone:.23});
       for(const [side,positions] of [['nw',[1.1,3.2,5.3,9.9]],['ne',[2,4.2,10.3]]]) for(let n=0;n<positions.length;n++) banner(H,R,side,positions[n],palette[n%3],['FOLD','PRESS','BOW','GO!'][n%4]);
-      plaque(H,R,6.25,.15,2.55,'THE PAPER CUP', 'paper',142);
+
       const board = H.p(8.65,.15,1.88);
       shape(H,R,[[board[0]-49,board[1]-23],[board[0]+49,board[1]-23],[board[0]+49,board[1]+25],[board[0]-49,board[1]+25]],'blue',.82,.9);
-      label(H,'FINAL • ROUND 03',board[0],board[1]-14,7,'#f4ecd5');
+
       for(const [dx,ink,number] of [[-23,'coral','02'],[23,'teal','01']]) {
         shape(H,R,[[board[0]+dx-16,board[1]-6],[board[0]+dx+16,board[1]-6],[board[0]+dx+16,board[1]+18],[board[0]+dx-16,board[1]+18]],ink,.8,.6);
-        label(H,number,board[0]+dx,board[1]+7,16,'#f4ecd5');
       }
       for(const [i,j,ink] of [[.45,4.6,'coral'],[11.4,.5,'sun']]) lantern(H,R,i,j,2.45,ink);
       mat(H,R,.5,.65,3.25,2.05);
@@ -95,11 +94,11 @@ export default function enrich(room) {
       const [rx,ry]=H.p(2.87,1.71,1.04);
       line(H,R,[[rx-11,ry+5],[rx+12,ry-7]],2,'sun');
       for(let k=0;k<6;k++) line(H,R,[[rx-9+k*4,ry+3-k*2],[rx-8+k*4,ry+6-k*2]],.55);
-      plaque(H,R,1.95,.78,1.58,'FOLDING DOJO','sun',80);
+
       box(H,R,.45,3.1,.65,1.3,0,.85,'coral',.6);
       for(let k=0;k<4;k++) {
         sheet(H,R,.5,3.18+k*.3,.89,palette[k],.46);
-        const [x,y]=H.p(.46,3.25+k*.3,.55);label(H,String(k+1),x,y,5);
+        const [x,y]=H.p(.46,3.25+k*.3,.55);
       }
       table(H,R,.65,5.15,1.85,1.6,.7,'paper');
       sheet(H,R,.8,5.3,.84,'teal',.65,true);
@@ -113,7 +112,7 @@ export default function enrich(room) {
       const [sx,sy]=H.p(.99,6.32,.86);
       oval(H,R,sx-4,sy,3,2,'coral',.8);oval(H,R,sx+4,sy,3,2,'coral',.8);
       line(H,R,[[sx-2,sy],[sx+7,sy-11]],.9);line(H,R,[[sx+2,sy],[sx-6,sy-11]],.9);
-      plaque(H,R,1.55,5.03,1.45,'CREASE CLINIC','paper',85);
+
       box(H,R,.65,7.04,.66,.65,0,.55,'teal',.55);
       for(let k=0;k<6;k++) crumple(H,R,.75+(k%2)*.25,7.15+Math.floor(k/2)*.17,.6,'paper',4);
       crumple(H,R,1.65,7.12,.06,'coral',6);
@@ -172,7 +171,7 @@ export default function enrich(room) {
       oval(H,R,kx,ky-7,10,9,'teal',.6);oval(H,R,kx,ky-15,5,2,'paper',1);
       stroke(H,R,[[kx+8,ky-9],[kx+15,ky-15],[kx+16,ky-9]],'blue',1.2);
       stroke(H,R,[[kx-8,ky-10],[kx-15,ky-17],[kx-16,ky-9]],'teal',3);
-      plaque(H,R,10.9,4.1,1.48,'TEA + RICE','paper',75);
+
       box(H,R,10.5,7.96,.84,.75,0,.54,'teal',.5);
       for(let k=0;k<5;k++) {
         const [x,y]=H.p(10.58+(k%3)*.22,8.14+Math.floor(k/3)*.23,.57);
@@ -189,7 +188,6 @@ export default function enrich(room) {
         shape(H,R,[[x-9,y-3],[x+9,y-3],[x+7,y+5],[x-7,y+5]],'sun',.65,.55);
         for(let k=0;k<3;k++) oval(H,R,x-5+k*5,y-3,3,2,'paper',1);
       }
-      plaque(H,R,7.45,11.71,.34,'PAPER CUP • FINAL','paper',112);
     },
     live(H, R, t) {
       const collision=Math.sin(cycle(t,7)*Math.PI)**4;

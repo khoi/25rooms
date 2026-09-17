@@ -47,19 +47,7 @@ export function oval(H, R, x, y, rx, ry, ink = 'teal', tone = .75) {
 export function stroke(H, R, points, ink = 'blue', width = 1.1, tone = .85) {
   H.line(R, curve(points, 2), ink, width, { tone, amp: .15 });
 }
-export function label(H, text, x, y, size = 10, color = '#344a80', angle = 0) {
-  H.op(c => {
-    c.save(); c.translate(x, y); c.rotate(angle); c.fillStyle = color;
-    c.font = `bold ${size}px monospace`; c.textAlign = 'center'; c.textBaseline = 'middle';
-    c.fillText(text, 0, 0); c.restore();
-  });
-}
-export function plaque(H, R, i, j, z, text, color = 'sun', width = 90) {
-  const [x, y] = H.p(i, j, z);
-  shape(H, R, [[x - width / 2, y - 11], [x + width / 2, y - 11], [x + width / 2, y + 11], [x - width / 2, y + 11]], color, .7);
-  label(H, text, x, y, 9);
-  for (const dx of [-width / 2 + 4, width / 2 - 4]) H.dot(x + dx, y, 1, 'blue');
-}
+
 export function box(H, R, i, j, w, d, z, h, color = 'coral', tone = .65) {
   return boxAt(H, R, i, j, w, d, z, h, [color, tone], { lw: .85 });
 }
@@ -106,7 +94,7 @@ export function parcels(H, R, i, j, count = 5) {
     const x = i + (k % 3) * .65, y = j + Math.floor(k / 3) * .65, h = .3 + R() * .4;
     box(H, R, x, y, .55, .55, 0, h, inks[k % 3], .5);
     H.line(R, [H.p(x + .27, y, h), H.p(x + .27, y + .55, h)], 'paper', 2);
-    const [px, py] = H.p(x + .4, y + .56, h * .55); label(H, String(k + 1).padStart(2, '0'), px, py, 5);
+    const [px, py] = H.p(x + .4, y + .56, h * .55);
   }
 }
 export function strings(H, R, points, t = 0) {

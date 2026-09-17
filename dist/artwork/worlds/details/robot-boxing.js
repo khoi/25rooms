@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, bottle, ell, wallRect, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, bottle, ell, wallRect, TAU } from '../common.js';
 
 function towel(H, R, i, j, z, ink = 'paper') {
   const points = [H.p(i, j, z), H.p(i + .62, j, z), H.p(i + .62, j + .25, z), H.p(i + .62, j + .28, z - .36), H.p(i, j + .28, z - .36), H.p(i, j + .25, z)];
@@ -59,7 +59,7 @@ function robot(H, R, i, j, t, ink, pose = 'skip', z = 0) {
 const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', tone: .48, wall: 'coral', wallTone: .56, wallStyle: 'brick', height: 3.2, pattern: 'boards' }, (H, R) => {
   shape(H, R, wallRect(H, 'nw', .35, 11.65, .08, .45), 'blue', .78);
   shape(H, R, wallRect(H, 'ne', .35, 11.65, .08, .45), 'blue', .78);
-  plaque(H, R, 5.8, .15, 2.65, 'NO HARD FEELINGS', 'sun', 122);
+
   for (const [i, j] of [[3.1, .1], [7.6, .1], [.1, 7.6]]) {
     const [x, y] = H.p(i, j, 3.08);
     H.line(R, [[x, y - 12], [x, y + 1]], 'blue', 1);
@@ -73,18 +73,15 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
     shape(H, R, face, k % 2 ? 'teal' : 'paper', .72);
     for (let z = 1.64; z < 1.92; z += .09) H.line(R, [H.p(i + .17, .88, z), H.p(i + .54, .88, z)], 'blue', .8);
     H.dot(...H.p(i + .55, .89, 1), 1.5, 'sun');
-    label(H, String(11 + k), ...H.p(i + .34, .9, 1.45), 6);
   }
   towel(H, R, 1.27, .35, 2.12);
   const score = H.p(10.12, .09, 2.05);
   shape(H, R, [[score[0] - 48, score[1] - 28], [score[0] + 48, score[1] - 28], [score[0] + 48, score[1] + 25], [score[0] - 48, score[1] + 25]], 'blue', .95);
-  label(H, 'ROUND 08', score[0], score[1] - 17, 9, '#f3ebdd');
-  label(H, 'BOLT   NUT', score[0], score[1] - 3, 7, '#ffd428');
-  label(H, '12 : 09', score[0], score[1] + 12, 13, '#f3ebdd');
+
   for (const [j, text] of [[2.2, 'KEEP IT CLEAN'], [6, 'TRAIN / REPEAT'], [10.2, 'IRON LEAGUE']]) {
     const [x, y] = H.p(.03, j, 2.07);
     shape(H, R, [[x - 22, y - 27], [x + 22, y - 27], [x + 22, y + 19], [x - 22, y + 19]], 'paper', .95);
-    label(H, text, x, y - 16, 5.5);
+
     glove(H, R, x - 7, y + 2, 'coral', .68);
     glove(H, R, x + 8, y - 1, 'teal', .68);
     H.line(R, [[x - 16, y + 13], [x + 16, y + 13]], 'blue', .7);
@@ -122,7 +119,7 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
   shape(H, R, H.tile(4, 3.7, 5, 5.1, .51), 'teal', .35);
   const [cx, cy] = H.p(6.5, 6.25, .53);
   H.outline(R, ell(cx, cy, 42, 19), 'paper', 2.5);
-  label(H, 'IRON / 08', cx, cy, 8, '#f3ebdd');
+
   for (const i of [3.85, 9.12]) for (const j of [3.55, 8.92]) {
     box(H, R, i, j, .17, .17, .5, 1.68, i === 3.85 ? 'coral' : 'sun');
     for (const z of [.9, 1.4, 1.9]) H.dot(...H.p(i + .08, j + .08, z), 2.3, 'paper');
@@ -152,7 +149,7 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
   }
   bottle(H, R, ...H.p(11.02, 7.8, .91), 'teal', .42);
   const [ticketX, ticketY] = H.p(11.34, 6.9, .42);
-  label(H, 'BETS', ticketX, ticketY, 7);
+
   bench(H, R, 4.2, 10.35, 5.15, 'coral');
   for (const [i, j] of [[4.4, 11.23], [6.3, 11.24], [8.8, 11.16], [2.65, 8.4]]) bottle(H, R, ...H.p(i, j, .02), 'teal', .4);
   towel(H, R, 8.4, 10.51, .73);
@@ -195,7 +192,6 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
     actor(HH, R, 11.14, 8.66, t, 'talk', { shirt: ['sun', .9], face: 'sw' }, 0, .96);
     const [x, y] = HH.p(11.14, 8.66);
     shape(HH, R, [[x - 18, y - 29], [x - 5, y - 32], [x - 4, y - 24], [x - 17, y - 21]], 'paper', 1);
-    label(HH, '08', x - 11, y - 26, 5);
   });
   H.at(9.24, 9.04, 0, HH => {
     for (const z of [.9, 1.4, 1.9]) {

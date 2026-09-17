@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, actor, bottle, ell, arcPts, cycle, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, actor, bottle, ell, arcPts, cycle, TAU } from '../common.js';
 
 function crystal(H, R, i, j, z, h, w, ink = 'teal', pulse = 0) {
   const [x, y] = H.p(i, j, z);
@@ -21,7 +21,6 @@ function crate(H, R, i, j, z = 0, ink = 'coral') {
   for (const n of [.15, .4]) H.line(R, [H.p(i, j + .73, z + n), H.p(i + .85, j + .73, z + n)], 'blue', .8);
   H.line(R, [H.p(i + .05, j + .74, z + .04), H.p(i + .78, j + .74, z + .49)], 'sun', 2.4);
   const [x, y] = H.p(i + .55, j + .73, z + .3);
-  label(H, 'ORE', x, y, 5);
 }
 
 function rail(H, R, i, j, w, d, z, h = .7) {
@@ -87,7 +86,7 @@ export default function enrich(room) {
     for (const i of [8.25, 11.03]) box(H, R, i, .13, .24, .26, 0, 2.75, 'coral', .7);
     box(H, R, 8.23, .1, 3.08, .29, 2.66, .24, 'sun', .65);
     for (const i of [8.4, 10.9]) H.line(R, [H.p(i, .12, 2.45), H.p(i + (i < 9 ? .5 : -.5), .12, 2.9)], 'coral', 4);
-    plaque(H, R, 9.7, .06, 3.25, 'SEAM 04', 'sun', 65);
+
     for (let k = 0; k < 4; k++) crystal(H, R, 8.9 + k * .43, .4, 0, 23 + k % 2 * 14, 6, 'teal');
     box(H, R, 1.4, 1.15, 4.1, 1.05, 1.12, .16, 'coral', .5);
     for (let i = 1.45; i < 5.45; i += .38) H.line(R, [H.p(i, 1.2, 1.29), H.p(i, 2.18, 1.29)], 'blue', .8);
@@ -107,7 +106,7 @@ export default function enrich(room) {
     oval(H, R, wx, wy, 15, 10, 'coral', .7);
     for (let k = 0; k < 6; k++) H.line(R, [[wx - 9 + k * 3, wy - 7], [wx - 9 + k * 3, wy + 7]], 'blue', .8);
     stroke(H, R, [pulley, [wx - 7, wy - 13], [wx, wy]], 'sun', 1.4);
-    plaque(H, R, 2.5, 2.6, 3.72, 'KEEP SINGING', 'paper', 86);
+
     for (const [i, j, h, w, ink] of [[.6, .8, 77, 13, 'teal'], [.6, 1.7, 55, 12, 'coral'], [.7, 3.9, 72, 13, 'sun'], [.45, 5.1, 93, 17, 'teal'], [1, 4.9, 47, 11, 'coral'], [.65, 6.3, 43, 11, 'sun'], [5.7, .65, 85, 14, 'teal'], [6.4, .7, 52, 12, 'coral'], [7.1, .65, 77, 13, 'sun'], [7.6, 1, 43, 10, 'teal'], [.6, 10.6, 51, 12, 'teal'], [1.1, 10.9, 35, 10, 'coral'], [11.3, 2.1, 54, 10, 'sun'], [11.4, 3.1, 33, 9, 'coral']]) crystal(H, R, i, j, 0, h, w, ink);
     const rift = [[4.5, 4.3], [5, 5.7], [4.6, 7], [5.5, 8.8], [5.2, 11.8], [6.4, 11.8], [6.6, 8.6], [5.8, 6.9], [6.2, 5.2], [5.6, 4]].map(p => H.p(...p, .015));
     shape(H, R, rift, 'blue', .98);
@@ -129,9 +128,8 @@ export default function enrich(room) {
       H.tint(H.tile(i + .04, j + .04, .56, .28, 1.1), 'blue', .15);
       for (let n = 0; n < 3; n++) crystal(H, R, i + .14 + n * .18, j + .19, 1.1, 8 + n * 3, 2.7, ['teal', 'coral', 'sun'][k % 3]);
       const [x, y] = H.p(i + .3, j + .37, 1.05);
-      label(H, String(101 + k), x, y + 2, 4.7);
     }
-    plaque(H, R, 3.4, 9.04, .85, 'SORT BY SONG', 'paper', 89);
+
     crate(H, R, 1.55, 9.5);
     crate(H, R, 2.45, 9.6, 0, 'teal');
     crate(H, R, 1.63, 9.53, .57, 'sun');
@@ -148,12 +146,12 @@ export default function enrich(room) {
     oval(H, R, bx, by - 7, 12, 8, 'coral', .75);
     oval(H, R, bx, by - 13, 12, 5, 'teal', .5);
     H.line(R, arcPts(bx, by - 14, 10, 10, Math.PI, TAU, 16), 'paper', 1.1);
-    plaque(H, R, 2.4, 5.28, 2.2, 'POLISH + RINSE', 'paper', 88);
+
     table(H, R, 7.2, 3.55, 3.14, 1.23, .95, 'coral');
     box(H, R, 7.4, 3.68, .75, .62, 1.08, .43, 'teal', .76);
     const [mx, my] = H.p(7.79, 4.31, 1.4);
     dial(H, R, mx, my, 11, .42);
-    label(H, 'Hz', mx, my + 16, 5.5);
+
     for (let k = 0; k < 3; k++) fork(H, R, ...H.p(8.5 + k * .43, 3.98, 1.1), .7 + k * .17);
     box(H, R, 8.36, 3.81, 1.25, .43, 1.08, .09, 'sun', .65);
     crystal(H, R, 9.93, 4.04, 1.08, 25, 7, 'coral');
@@ -161,7 +159,7 @@ export default function enrich(room) {
     shape(H, R, page, 'paper', 1, .5);
     for (let n = 0; n < 4; n++) H.line(R, [H.p(8.73, 4.34 + n * .075, 1.11), H.p(9.24, 4.34 + n * .075, 1.11)], 'blue', .55);
     stroke(H, R, [H.p(7.5, 4.1, 1.1), H.p(6.75, 4.85, .12), H.p(6.45, 5.2, .45)], 'sun', 1.25);
-    plaque(H, R, 8.65, 3.52, 2.7, 'RESONANCE LAB', 'paper', 100);
+
     for (let k = 0; k < 6; k++) {
       const i = 6.8 + k * .53;
       H.line(R, [H.p(i, .6, 3.35), H.p(i, .6, 2.48 - k % 2 * .22)], 'sun', .8);
@@ -189,12 +187,11 @@ export default function enrich(room) {
     crate(H, R, 10.95, 7.2, 0, 'sun');
     crate(H, R, 10.91, 8.2, 0, 'coral');
     crate(H, R, 10.92, 8.2, .56, 'teal');
-    plaque(H, R, 11.45, 7.5, 1.75, 'FRAGILE', 'paper', 53);
+
     for (const [i, j, n] of [[.85, 8.7, 'A'], [6.9, 10.8, 'B'], [6.8, 2.1, 'C']]) {
       H.line(R, [H.p(i, j, 0), H.p(i, j, .55)], 'sun', 1.1);
       const [x, y] = H.p(i, j, .63);
       shape(H, R, [[x - 8, y - 5], [x + 8, y - 5], [x + 8, y + 5], [x - 8, y + 5]], 'paper', 1, .6);
-      label(H, n, x, y, 6);
     }
   }, (H, R, t) => {
     const pulse = .5 + Math.sin(t * 1.5) * .5;

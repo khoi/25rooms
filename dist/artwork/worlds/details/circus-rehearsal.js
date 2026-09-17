@@ -1,4 +1,4 @@
-import { actor, box, table, shape, oval, stroke, label, plaque, ell, starPts, TAU, inks } from '../common.js';
+import { actor, box, table, shape, oval, stroke, ell, starPts, TAU, inks } from '../common.js';
 import { slab } from '../../drawings.js';
 
 function line(H, R, a, b, ink = 'blue', width = 1) {
@@ -25,7 +25,7 @@ function trunk(H, R, i, j, w, ink, text) {
   }
   const [x, y] = H.p(i + w / 2, j + .82, .43);
   shape(H, R, [[x - 8, y - 5], [x + 8, y - 5], [x + 8, y + 4], [x - 8, y + 4]], 'paper', .9);
-  label(H, text, x, y, 4.5);
+
   line(H, R, [x - 3, y + 7], [x + 3, y + 7], 'blue', 2);
 }
 
@@ -71,7 +71,7 @@ function popcorn(H, R) {
   }
   box(H, R, i, j, 1.55, 1.35, .25, .9, 'coral', .7);
   const [cx, cy] = H.p(i + .75, j + 1.36, .75);
-  label(H, 'POP!', cx, cy, 10);
+
   for (const [a, b] of [[i, j], [i + 1.55, j], [i, j + 1.35], [i + 1.55, j + 1.35]]) line(H, R, H.p(a, b, 1.15), H.p(a, b, 2.65), 'blue', 1.4);
   box(H, R, i - .1, j - .1, 1.75, 1.55, 2.65, .13, 'sun', .9);
   for (let k = 0; k < 7; k++) shape(H, R, H.faceI(i - .1 + k * .25, j + 1.45, .25, 2.46, 2.65), k % 2 ? 'paper' : 'coral', .8);
@@ -102,7 +102,7 @@ export default function enrich(room) {
         line(H, R, H.p(i, .8, 3.8), H.p(i, 3, 0), 'blue', 1);
         box(H, R, i - .08, 2.85, .28, .3, 0, .15, 'coral');
       }
-      plaque(H, R, 5.8, .1, 4.6, 'PRACTICE MAKES MAGIC', 'sun', 148);
+
       const points = [[.5, 1.1, 3.65], [3.4, 1.1, 3.1], [7.7, 1.1, 3.1], [11.6, 1.1, 3.65]].map(p => H.p(...p));
       stroke(H, R, points, 'blue', 1);
       for (let k = 0; k < 18; k++) {
@@ -203,10 +203,9 @@ export default function enrich(room) {
       box(H, R, 7.9, 5.05, .9, .75, .01, .55, 'sun', .7);
       const [bx, by] = H.p(8.35, 5.45, .58);
       oval(H, R, bx, by - 3, 9, 4, 'paper');
-      label(H, 'CHALK', bx, by + 10, 5);
+
       const [px, py] = H.p(3, 10.9, .03);
       shape(H, R, [[px - 13, py - 4], [px + 11, py - 7], [px + 14, py + 8], [px - 10, py + 10]], 'paper');
-      label(H, 'RUN 03', px, py, 5);
     },
     live(H, R, t) {
       const swing = Math.sin(t * .72) * .48;

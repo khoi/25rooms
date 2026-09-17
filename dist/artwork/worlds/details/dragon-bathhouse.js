@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, cycle, pool, ripple, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, cycle, pool, ripple, TAU } from '../common.js';
 
 function pipe(H, R, points, width = 5) {
   const p = points.map(([i, j, z]) => H.p(i, j, z));
@@ -81,9 +81,7 @@ export default function enrich(room) {
     pool(H, R, 9.1, 2.5, 2.3, 2.5);
     pool(H, R, 5.7, .8, 2, 1.9);
     shape(H, R, H.faceI(3.6, .1, 4.5, 2.85, 3.45), 'paper', 1);
-    label(H, 'NO FIRE IN THE POOL', ...H.p(5.85, .1, 3.15), 8, '#344a80', Math.atan(.5));
-    plaque(H, R, .12, 7.2, 2.9, 'SCALE & POLISH', 'sun', 86);
-    plaque(H, R, 10.1, .15, 2.65, 'LITTLE WINGS', 'paper', 83);
+
     for (const i of [3.4, 8.15]) lantern(H, R, i, .35, 3.15, 'sun');
     pipe(H, R, [[1.6, 1.1, 2.4], [1.6, .45, 2.55], [5.2, .45, 2.55], [5.2, .45, .45], [5.2, 3.5, .45], [5.2, 3.5, .2]]);
     pipe(H, R, [[5.2, .45, 2.55], [8.4, .45, 2.55], [8.4, 1.8, 2.55], [9.25, 2.55, 2.55], [9.25, 2.55, .5]], 3.5);
@@ -105,7 +103,7 @@ export default function enrich(room) {
     }
     shape(H, R, [[bx - 16, by - 32], [bx + 13, by - 32], [bx + 13, by - 9], [bx - 16, by - 9]], 'blue', .85);
     for (let k = -1; k <= 1; k++) H.line(R, [[bx + k * 8, by - 32], [bx + k * 8, by - 9]], 'sun', 1.4);
-    label(H, 'STEAM 07', bx, by - 46, 6);
+
     wheel(H, R, 2.8, 1.6, 1.15, 8);
     bucket(H, R, 3.15, 1.05, 0, 'blue', .75);
     for (let k = 0; k < 6; k++) {
@@ -128,7 +126,7 @@ export default function enrich(room) {
       box(H, R, .2, j, 1, .94, 0, 2.0, 'teal', .43);
       const door = H.faceJ(1.21, j + .08, .77, .17, 1.83);
       H.outline(R, door, 'blue', .75, { tone: .8 });
-      label(H, String(k + 4).padStart(2, '0'), ...H.p(1.23, j + .5, 1.63), 6);
+
       H.dot(...H.p(1.24, j + .72, .96), 1.9, 'sun');
       for (let n = 0; n < 3; n++) H.line(R, [H.p(1.23, j + .18, 1.36 - n * .12), H.p(1.23, j + .65, 1.36 - n * .12)], 'blue', .65);
     }
@@ -176,7 +174,7 @@ export default function enrich(room) {
       shape(H, R, [[x - 3, y - 7], [x + 3, y - 7], [x + 2, y], [x - 2, y]], 'paper', 1);
       oval(H, R, x, y - 7, 3, 1.2, 'coral', .7);
     }
-    plaque(H, R, 11.1, 7.92, .8, 'BUNS + TEA', 'sun', 62);
+
     bench(H, R, 9.05, 9.9, 2.0, 'sun');
     towel(H, R, 10.4, 10.15, .69, 'paper', .6, .4);
     box(H, R, 10.2, .6, .9, .7, 0, .6, 'teal', .5);

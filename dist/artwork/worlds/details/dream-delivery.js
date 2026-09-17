@@ -1,11 +1,10 @@
-import { world, box, table, shape, oval, stroke, label, actor, bottle, cycle, starPts, ell } from '../common.js';
+import { world, box, table, shape, oval, stroke, actor, bottle, cycle, starPts, ell } from '../common.js';
 
 const colors = ['coral', 'sun', 'teal'];
 
 function ticket(H, R, i, j, z, text, ink = 'paper', w = 24) {
   const [x, y] = H.p(i, j, z);
   shape(H, R, [[x - w / 2, y - 5], [x + w / 2, y - 5], [x + w / 2, y + 5], [x - w / 2, y + 5]], ink, .95, .6);
-  label(H, text, x, y, 5.2);
 }
 
 function parcel(H, R, i, j, z, w = .65, d = .65, h = .48, ink = 'coral', number = 'REM') {
@@ -91,18 +90,17 @@ function depotUnder(H, R) {
   for (const [i, ink, title] of [[1.3, 'coral', 'FLYING'], [3.6, 'sun', 'REUNIONS'], [5.9, 'teal', 'OCEANS']]) chute(H, R, i, ink, title);
   const [bx, by] = H.p(.12, 4.9, 2.4);
   shape(H, R, [[bx - 58, by - 54], [bx + 58, by - 54], [bx + 58, by + 37], [bx - 58, by + 37]], 'blue', .8);
-  label(H, 'NIGHT DISPATCH', bx, by - 40, 8, '#fff5dc');
+
   for (let row = 0; row < 4; row++) {
     const y = by - 20 + row * 13;
     H.line(R, [[bx - 51, y + 7], [bx + 51, y + 7]], 'teal', .65);
-    label(H, ['02:10  FLYING   07', '02:20  OCEANS   12', '02:40  HOME     03', '03:00  MOON     09'][row], bx, y, 6.2, '#fff5dc');
+
     H.dot(bx - 48, y, 2, row === 2 ? 'coral' : 'sun', 1);
   }
   for (let n = 0; n < 3; n++) {
     const [x, y] = H.p(.1, 7.7 + n * 1.25, 3);
     oval(H, R, x, y, 12, 12, 'paper', 1);
     H.line(R, [[x, y - 8], [x, y], [x + 6 - n * 3, y + 3]], 'blue', 1);
-    label(H, ['DUSK', 'REM', 'DAWN'][n], x, y + 20, 5.6);
   }
   ticket(H, R, 6.1, .22, 3.42, 'HANDLE WITH WONDER', 'paper', 136);
   box(H, R, 8.75, .4, 2.5, 1.12, 0, .78, 'teal', .55);
@@ -135,7 +133,7 @@ function depotUnder(H, R) {
     const a = Math.PI + n * Math.PI / 6;
     H.line(R, [[sx + Math.cos(a) * 8, sy + Math.sin(a) * 8], [sx + Math.cos(a) * 10.5, sy + Math.sin(a) * 10.5]], 'blue', .6);
   }
-  label(H, 'g', sx, sy + 7, 5);
+
   oval(H, R, ...H.p(1.25, 6.12, 1.1), 19, 7, 'sun', .65);
   for (let n = 0; n < 3; n++) box(H, R, .8 + n * .31, 6.52, .21, .22, .86, .16 + n * .09, 'blue', .7);
   ticket(H, R, 1.25, 6.95, .86, 'FEATHERWEIGHT', 'paper', 73);
@@ -235,10 +233,6 @@ function depotLive(H, R, t) {
   H.at(10.26, 3.1, 0, HH => {
     actor(HH, R, 10.26, 3.1, t * .4, 'write', { shirt: ['coral', .65], face: 'nw', eyesClosed: true }, .36, .84);
     const [x, y] = HH.p(10.28, 3.1, 1.82);
-    for (let n = 0; n < 3; n++) {
-      const u = cycle(t + n * 1.8, 5.4);
-      HH.opacity(Math.sin(u * Math.PI), () => label(HH, 'z', x + u * 16, y - u * 23, 6 + u * 5));
-    }
   });
   H.at(7.38, 9.02, 1.7, HH => dream(HH, R, 7.38, 9.02, 1.65 + Math.sin(t * 1.3) * .09, 0, 19));
   H.at(8.64, 8.89, 0, HH => {

@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, bottle, steam, loop, wallRect, starPts } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, bottle, steam, loop, wallRect, starPts } from '../common.js';
 
 const toothOutline = [[-15, -34], [-6, -39], [0, -34], [9, -39], [18, -32], [16, -19], [11, -2], [5, 0], [2, -17], [-3, -20], [-7, -2], [-13, 0], [-16, -19]];
 
@@ -29,7 +29,7 @@ function magazine(H, R, x, y, text, ink = 'coral', tilt = 0) {
   shape(H, R, [[x - 13, y - 8 + tilt], [x, y - 5], [x + 13, y - 10 - tilt], [x + 13, y + 8 - tilt], [x, y + 12], [x - 13, y + 8 + tilt]], 'paper', 1);
   shape(H, R, [[x - 11, y - 5 + tilt], [x - 2, y - 3], [x - 2, y + 7], [x - 11, y + 5 + tilt]], ink, .65);
   H.line(R, [[x, y - 4], [x, y + 10]], 'blue', .8);
-  label(H, text, x + 6, y - 3, 4);
+
   for (let k = 0; k < 3; k++) H.line(R, [[x + 3, y + k * 3], [x + 10, y - 2 + k * 3]], 'blue', .55);
 }
 
@@ -52,18 +52,17 @@ function xray(H, R, j, z, w, h, number, twin = false) {
     H.outline(R, [[cx - 5, cy - 4], [cx + 5, cy - 4], [cx + 5, cy + 4], [cx - 5, cy + 4]], 'sun', .7);
   }
   const [x, y] = H.p(.05, j + w * .5, z + h - .15);
-  label(H, `ROOT ${number}`, x, y, 5, '#f3ebdd', -.46);
 }
 
 function clinicUnder(H, R) {
   xray(H, R, 1, 1.25, 2.4, 2.12, '01');
   xray(H, R, 3.65, 1.25, 2.7, 2.12, '02', true);
-  plaque(H, R, .08, 8.5, 2.75, 'FANGS WELCOME', 'sun', 108);
+
   const [clockX, clockY] = H.p(.05, 10.75, 2.7);
   oval(H, R, clockX, clockY, 16, 16, 'paper', 1);
   for (let n = 0; n < 12; n++) H.dot(clockX + Math.sin(n * Math.PI / 6) * 12, clockY + Math.cos(n * Math.PI / 6) * 12, 1, 'teal');
   H.line(R, [[clockX - 7, clockY + 4], [clockX, clockY], [clockX, clockY - 9]], 'blue', 1);
-  plaque(H, R, 6.6, .08, 3.33, 'EVERY TOOTH COUNTS', 'coral', 148);
+
   for (let k = 0; k < 6; k++) {
     const i = .65 + k * 1.7;
     box(H, R, i, .55, 1.55, 1.22, 0, 1.23, 'teal', .38);
@@ -86,12 +85,11 @@ function clinicUnder(H, R) {
   for (const dx of [-10, -3, 4, 11]) H.line(R, [[sterX + dx, sterY - 5], [sterX + dx, sterY + 6]], 'paper', 1);
   H.dot(sterX + 23, sterY - 7, 2, 'coral');
   H.dot(sterX + 23, sterY + 1, 2, 'sun');
-  label(H, 'STERILE', sterX, sterY - 22, 5);
+
   tray(H, R, 4.4, .72, 1.1, .76, 1.36, 5);
   for (let k = 0; k < 6; k++) {
     const [x, y] = H.p(6.1 + k * .38, .82 + k % 2 * .3, 1.35);
     bottle(H, R, x, y, ['coral', 'teal', 'sun'][k % 3], .35);
-    label(H, String(k + 1), x, y - 6, 3.5);
   }
   for (let k = 0; k < 3; k++) {
     box(H, R, 8.65 + k * .62, .77, .52, .65, 1.35, .1, 'sun', .6);
@@ -106,7 +104,7 @@ function clinicUnder(H, R) {
   }
   table(H, R, 1.05, 5.65, 2.1, 1.25, 1.1, 'sun');
   box(H, R, 1.05, 6.78, 2.1, .13, .15, 1.06, 'coral', .55);
-  label(H, 'CHECK IN', ...H.p(2.11, 6.94, .81), 7);
+
   box(H, R, 1.27, 5.78, .67, .12, 1.25, .63, 'blue', .75);
   shape(H, R, H.faceI(1.33, 5.91, .54, 1.35, 1.79), 'teal', .35);
   for (let k = 0; k < 3; k++) H.line(R, [H.p(1.39, 5.93, 1.43 + k * .1), H.p(1.8, 5.93, 1.43 + k * .1)], 'paper', .8);
@@ -165,17 +163,17 @@ function clinicUnder(H, R) {
   tooth(H, R, ...H.p(10.25, 7.8, 1.32), .76);
   tray(H, R, 9.48, 7.12, .63, .79, 1.08, 3);
   bottle(H, R, ...H.p(10.96, 7.38, 1.08), 'coral', .34);
-  label(H, 'POLISH', ...H.p(10.39, 8.4, .73), 5);
+
   box(H, R, 10.45, 5.3, .71, .75, .05, .72, 'paper', 1);
   oval(H, R, ...H.p(10.82, 5.68, .8), 12, 6, 'coral', .7);
-  label(H, '+', ...H.p(10.82, 6.07, .42), 10, '#ee6852');
+
   bench(H, R, 1.32, 9.45, 3.75, 'teal');
   for (let k = 0; k < 3; k++) box(H, R, 1.43 + k * 1.22, 9.62, 1.05, .56, .7, .06, ['sun', 'paper', 'coral'][k], .55);
   table(H, R, 5.55, 9.36, 1.4, 1.35, .54, 'coral');
   for (let k = 0; k < 4; k++) {
     box(H, R, 5.79 + k * .045, 9.65 + k * .02, .75, .54, .68 + k * .028, .027, ['paper', 'teal', 'sun', 'paper'][k], .7);
   }
-  label(H, 'FANG', ...H.p(6.2, 9.91, .85), 5);
+
   cup(H, R, ...H.p(5.82, 10.44, .7), 'teal', .6);
   box(H, R, 1.1, 8.06, .67, .73, 0, 1.2, 'paper', 1);
   bottle(H, R, ...H.p(1.44, 8.42, 1.24), 'teal', .7);
@@ -186,11 +184,10 @@ function clinicUnder(H, R) {
     const [x, y] = H.p(7.4 + k % 4 * .23, 10.9 + Math.floor(k / 4) * .22, .45);
     shape(H, R, starPts(x, y, 4.6, 2.3, 5), ['coral', 'sun', 'paper'][k % 3], .8);
   }
-  label(H, 'BRAVE', ...H.p(7.81, 11.43, .22), 5);
+
   const [modelX, modelY] = H.p(3.1, 3.1, .36);
   box(H, R, 2.75, 2.74, .7, .7, 0, .36, 'sun', .6);
   tooth(H, R, modelX, modelY, 1.02);
-  label(H, 'BRUSH TWICE', modelX, modelY + 10, 4.5);
 }
 
 function clinicLive(H, R, t) {
@@ -239,11 +236,11 @@ function clinicLive(H, R, t) {
   magazine(H, R, vx, vy - 6, 'FANG', 'sun', -Math.sin(t * 1.1));
   stroke(H, R, [[vx + 18, vy - 22], [vx + 30, vy - 30], [vx + 31, vy - 36]], 'coral', 3);
   shape(H, R, [[vx + 24, vy - 39], [vx + 39, vy - 39], [vx + 37, vy - 29], [vx + 26, vy - 29]], 'paper', 1);
-  label(H, '03', vx + 31, vy - 34, 5);
+
   creature(H, R, ...H.p(8.3, 10.12, .66), 'monster', t, .68, 'coral');
   const [cx, cy] = H.p(8.3, 10.12, .66);
   shape(H, R, starPts(cx + 2, cy - 7, 9, 4.2, 5), 'sun', .9);
-  label(H, '1', cx + 2, cy - 6, 6);
+
   stroke(H, R, [[cx + 17, cy - 12], [cx + 29, cy - 20 + Math.sin(t * 2) * 2]], 'coral', 4);
   H.line(R, [[cx + 29, cy - 19 + Math.sin(t * 2) * 2], [cx + 31, cy - 29 + Math.sin(t * 2) * 2]], 'teal', 2);
   H.line(R, [[cx + 28, cy - 30 + Math.sin(t * 2) * 2], [cx + 34, cy - 30 + Math.sin(t * 2) * 2]], 'paper', 4);

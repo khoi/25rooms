@@ -1,13 +1,13 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
 
 const hotel = world('insect-hotel', 'Giant insect hotel', { floor: 'sun', tone: .25, wall: 'teal', wallTone: .5, wallStyle: 'stripe', height: 4.2, head: 50 }, (H, R) => {
   for (let row = 0; row < 3; row++) for (let col = 0; col < 5; col++) {
     const i = 1 + col * 2.1, z = .3 + row * 1.2;
     const P = [H.p(i, .1, z), H.p(i + 1.3, .1, z), H.p(i + 1.3, .1, z + .9), H.p(i, .1, z + .9)];
-    shape(H, R, P, 'blue', .85); label(H, `${row + 1}${col + 1}`, ...H.p(i + .65, .12, z + .65), 7, '#ffd428');
+    shape(H, R, P, 'blue', .85);
     H.dot(...H.p(i + 1.1, .13, z + .4), 2, 'sun');
   }
-  box(H, R, 1, 4, 4, 1.6, 0, 1.3, 'coral', .7); plaque(H, R, 3, 5.65, .8, 'THE SIX LEGS', 'sun', 90);
+  box(H, R, 1, 4, 4, 1.6, 0, 1.3, 'coral', .7);
   table(H, R, 1, 3, 3.5, .5, 2.2, 'blue');
   for (let k = 0; k < 12; k++) H.dot(...H.p(1.3 + k * .25, 3.2, 2.4), 1.4, 'sun');
   rug(H, R, 3.5, 7, 5, 3, 'coral', .65, { border: 'sun' }); parcels(H, R, 9.2, 7.8, 8);
@@ -34,7 +34,7 @@ const sauna = world('volcanic-sauna', 'Volcanic sauna', { floor: 'blue', tone: .
   }
   for (let k = 0; k < 20; k++) box(H, R, .6 + k * .53, 9, .5, 2, .25, .1, 'coral', .4);
   bench(H, R, 1, .7, 9.5, 'coral');
-  plaque(H, R, 5.7, .15, 2.8, 'PLEASE DO NOT ERUPT', 'sun', 143);
+
   for (let k = 0; k < 5; k++) oval(H, R, ...H.p(1 + k * 2.3, .8, 1), 8, 4, 'paper');
 }, (H, R, t) => {
   for (const [i, j, s] of [[3, 4.4, 1.3], [6.5, 6, 1.1], [8, 3.4, .8]]) {
@@ -55,8 +55,8 @@ const customs = world('moon-customs', 'Moon customs office', { floor: 'paper', t
     for (let k = 0; k < 40; k++) H.dot(...H.p(4 + R() * 6, .015, 1 + R() * 1.8), .7, 'paper');
   } });
   box(H, R, 2, 3, 7.5, 1.5, 0, 1.2, 'teal', .5);
-  for (const i of [3, 6, 9]) { box(H, R, i, 3.5, .8, .6, 1.2, .7, 'blue'); label(H, '✓', ...H.p(i + .4, 4.12, 1.65), 10, '#ffd428'); }
-  plaque(H, R, 4, .2, 3, 'MOON · ARRIVALS', 'sun', 128);
+  for (const i of [3, 6, 9]) { box(H, R, i, 3.5, .8, .6, 1.2, .7, 'blue');  }
+
   for (let j = 6; j < 11; j += 2) for (const i of [2, 8]) box(H, R, i, j, .1, .1, 0, .9, 'coral');
   for (const i of [2, 8]) stroke(H, R, [H.p(i, 6, .8), H.p(i, 8, .65), H.p(i, 10, .8)], 'coral', 2);
   table(H, R, 9.8, 8, 1.2, 2, .7, 'sun');
@@ -82,7 +82,7 @@ const puppets = world('puppet-backstage', 'Puppet backstage', { floor: 'coral', 
   table(H, R, 1.2, 7.5, 3, 2, 1, 'teal');
   const [mx, my] = H.p(2.6, 7.6, 2.1); oval(H, R, mx, my, 29, 37, 'paper', .6);
   for (let k = 0; k < 12; k++) H.dot(mx + Math.cos(k / 12 * TAU) * 32, my + Math.sin(k / 12 * TAU) * 40, 2.5, 'sun');
-  parcels(H, R, 9, 8.5, 5); plaque(H, R, 6, .2, 3.2, 'PULL YOUR OWN STRINGS', 'paper', 160);
+  parcels(H, R, 9, 8.5, 5);
 }, (H, R, t) => {
   for (const [i, j, phase] of [[5.5, 5.5, 0], [8, 6.5, 1.5]]) {
     actor(H, R, i, j, t + phase, 'wave', { shirt: ['coral', .7] }, .4 + Math.sin(t + phase) * .1, 1.05);
@@ -106,7 +106,6 @@ const ski = world('tiny-ski-resort', 'Tiny ski resort', { floor: 'paper', tone: 
   }
   for (const [i, j, z] of [[2.5, 9, 2.5], [5.6, 1, 6]]) { box(H, R, i, j, .13, .13, 0, z, 'blue'); H.line(R, [H.p(i - .5, j, z), H.p(i + .5, j, z)], 'coral', 3); }
   H.line(R, [H.p(2.5, 9, 2.5), H.p(5.6, 1, 6)], 'blue', 1);
-  plaque(H, R, 8, 10, 1, 'ONE MORE RUN', 'coral', 98);
 }, (H, R, t) => {
   for (let k = 0; k < 4; k++) {
     const u = cycle(t + k * 4, 16), i = 2.5 + u * 3.1, j = 9 - u * 8, z = 2.5 + u * 3.5;

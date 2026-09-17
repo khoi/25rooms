@@ -1,9 +1,9 @@
-import { shape, oval, stroke, label, plaque, box, table, bench, creature, bottle, ell, loop, cycle, inks } from '../common.js';
+import { shape, oval, stroke, box, table, bench, creature, bottle, ell, loop, cycle, inks } from '../common.js';
 import { slab, backWalls } from '../../drawings.js';
 
 const paper = (H, R, x, y, title, w = 21, h = 27) => {
   shape(H, R, [[x - w / 2, y], [x + w / 2, y], [x + w / 2, y - h], [x - w / 2, y - h]], 'paper', 1, .6);
-  label(H, title, x, y - h + 5, 4.5);
+
   H.line(R, [[x - w / 2 + 3, y - h + 9], [x + w / 2 - 3, y - h + 9]], 'coral', 1.2);
   for (let n = 0; n < 4; n++) for (const s of [-1, 1]) H.line(R, [[x + s * 2, y - h + 13 + n * 3], [x + s * (w / 2 - 3), y - h + 13 + n * 3]], 'blue', .45);
 };
@@ -61,10 +61,9 @@ function train(H, R) {
   for (let n = 0; n < 5; n++) H.line(R, [H.p(6.75 + n * .26, 4.03, .36), H.p(6.75 + n * .26, 4.53, .36)], 'blue', .5);
   const [dx, dy] = H.p(10.86, 2.57, 1.7);
   shape(H, R, H.faceJ(10.87, 1.68, 1.87, 1.03, 1.81), 'blue', .72);
-  label(H, '03', dx + 2, dy + 3, 8, '#f3ebdd');
+
   for (const j of [1.65, 3.5]) H.dot(...H.p(10.88, j, .73), 3.3, 'sun', 1, { knock: true });
   const [nx, ny] = H.p(4.77, 3.95, .64);
-  label(H, 'A B Y S S A L   0 3', nx, ny + 5, 5.5);
 }
 
 function kiosk(H, R) {
@@ -73,7 +72,7 @@ function kiosk(H, R) {
   for (const i of [.66, 2.05]) box(H, R, i, 7.07, .08, .08, 1.38, 1.18, 'blue', .7);
   box(H, R, .4, 6.82, 1.95, 1.93, 2.54, .12, 'paper', .8);
   for (let i = .42; i < 2.3; i += .3) shape(H, R, H.tile(i, 6.83, .15, 1.91, 2.67), 'coral', .6);
-  plaque(H, R, 1.4, 8.76, 2.39, 'THE DAILY TIDE', 'sun', 87);
+
   for (let n = 0; n < 3; n++) {
     const [x, y] = H.p(.9 + n * .44, 8.33, 1.4);
     paper(H, R, x, y, ['TIDE', 'INK', 'REEF'][n], 15, 21);
@@ -98,7 +97,7 @@ function vending(H, R) {
   }
   for (let n = 0; n < 3; n++) H.dot(...H.p(11.18, 8.32, 1.65 - n * .15), 1.8, n === 1 ? 'sun' : 'paper', 1, { knock: true });
   shape(H, R, H.faceI(10.48, 8.32, .43, .59, .77), 'blue', .75);
-  label(H, 'KELP POP', ...H.p(10.8, 8.32, 2.16), 5.5);
+
   box(H, R, 11.45, 8.55, .38, .42, .35, .66, 'teal', .7);
   H.line(R, [H.p(11.5, 8.8, 1.02), H.p(11.76, 8.8, 1.02)], 'blue', 2);
 }
@@ -113,16 +112,16 @@ function station(H, R, room) {
   for (let i = .4; i < 11.7; i += .21) for (const j of [4.76, 4.92]) H.dot(...H.p(i, j, .37), .85, 'blue', .65);
   H.line(R, [H.p(.3, 5.07, .36), H.p(11.7, 5.07, .36)], 'blue', 1);
   shape(H, R, H.faceI(3.3, .15, 6.2, 2.64, 3.3), 'paper', .9);
-  label(H, 'ABYSSAL LINE · PLATFORM 3', ...H.p(6.4, .16, 2.97), 8.2, '#344a80', Math.atan(.5));
+
   for (let i = 1.3; i < 10.8; i += 1.5) {
     H.dot(...H.p(i, .13, 2.5), 3, 'sun', 1, { knock: true });
     if (i < 10) H.line(R, [H.p(i, .13, 2.5), H.p(i + 1.5, .13, 2.5)], 'sun', 1.4);
   }
   const [tx, ty] = H.p(.14, 3.2, 2.2);
   shape(H, R, [[tx - 45, ty - 27], [tx + 45, ty - 27], [tx + 45, ty + 28], [tx - 45, ty + 28]], 'blue', .8);
-  label(H, 'DEPARTURES', tx, ty - 19, 6.5, '#f3ebdd');
+
   for (const [n, text] of ['REEF END    02', 'MIDNIGHT    06', 'THE TRENCH  12'].entries()) {
-    label(H, text, tx, ty - 6 + n * 11, 5.3, '#eab952');
+
     H.line(R, [[tx - 37, ty + n * 11], [tx + 37, ty + n * 11]], 'teal', .5);
   }
   const [cx, cy] = H.p(.12, 5.2, 2.87);
@@ -156,7 +155,7 @@ function station(H, R, room) {
     oval(H, R, x, y, 4, 2, 'blue', .7);
     H.line(R, [H.p(i + .38, 10.65, 1.01), H.p(i + .95, 10.65, 1.01)], 'coral', 2.4);
   }
-  label(H, 'TAP / FLOAT', ...H.p(9.4, 11.4, .38), 7);
+
   box(H, R, 7.2, 10.34, .48, .46, .35, .65, 'sun', .7);
   suitcase(H, R, 7.1, 10.29, 1.0, 'coral', .7);
   const [mx, my] = H.p(3.65, 10.02, .36);

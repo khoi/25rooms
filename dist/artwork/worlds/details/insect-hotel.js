@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, creature, bottle, steam, rug, ell, TAU } from '../common.js';
+import { world, shape, oval, stroke, box, table, bench, creature, bottle, steam, rug, ell, TAU } from '../common.js';
 
 function key(H, R, x, y, ink = 'sun', scale = 1) {
   H.outline(R, ell(x, y, 2.6 * scale, 2.6 * scale), ink, 1.4 * scale, { tone: 1 });
@@ -94,7 +94,7 @@ function lobby(H, R) {
   shape(H, R, [H.p(.09, .55, .08), H.p(.09, 2.55, .08), H.p(.09, 2.55, 3.6), H.p(.09, .55, 3.6)], 'blue', .9);
   for (const j of [.48, 2.64]) box(H, R, .1, j, .17, .13, 0, 3.6, 'sun', .8);
   box(H, R, .09, .48, .28, 2.3, 3.6, .16, 'coral', .8);
-  plaque(H, R, .1, 1.5, 3.95, 'LIFT', 'sun', 40);
+
   const [cx, cy] = H.p(.15, 3.03, 3.05);
   oval(H, R, cx, cy, 11, 11, 'paper', .95);
   for (let k = 0; k < 12; k++) H.dot(cx + Math.sin(k / 12 * TAU) * 8, cy + Math.cos(k / 12 * TAU) * 8, .8, 'blue');
@@ -108,31 +108,28 @@ function lobby(H, R) {
       shape(H, R, [[x - 4, y], [x + 4, y], [x + 4, y + 5], [x - 4, y + 5]], 'paper', 1, .4);
       H.line(R, [[x - 4, y], [x, y + 3], [x + 4, y]], 'blue', .4);
     }
-    label(H, `${row + 1}${col + 1}`, ...H.p(.15, j + .24, z + .1), 4.5);
   }
-  plaque(H, R, .12, 5.1, 3.95, 'KEYS & POST', 'paper', 73);
+
   for (let k = 0; k < 4; k++) {
     const i = 4.05 + k * 1.88;
     shape(H, R, [H.p(i, .08, .04), H.p(i + 1.42, .08, .04), H.p(i + 1.42, .08, 2.75), H.p(i, .08, 2.75)], k % 2 ? 'coral' : 'blue', .8);
     shape(H, R, [H.p(i + .14, .12, .28), H.p(i + 1.28, .12, .28), H.p(i + 1.28, .12, 2.55), H.p(i + .14, .12, 2.55)], k % 2 ? 'coral' : 'teal', .7, .7);
     H.line(R, [H.p(i + .24, .13, 1.4), H.p(i + 1.18, .13, 1.4)], 'sun', .8);
-    label(H, String(11 + k), ...H.p(i + .72, .14, 2.18), 9, '#ffed99');
+
     H.dot(...H.p(i + 1.12, .17, 1.18), 2.2, 'sun');
     rug(H, R, i + .12, .22, 1.22, .64, 'coral', .45, { border: 'sun' });
     for (let r = 0; r < 3; r++) H.line(R, [H.p(i + .37, .14, .62 + r * .14), H.p(i + 1, .14, .62 + r * .14)], 'blue', .6);
     if (k === 1 || k === 3) {
       const [x, y] = H.p(i + 1.12, .19, 1.02);
       shape(H, R, [[x - 3, y - 2], [x + 4, y - 2], [x + 4, y + 9], [x - 3, y + 9]], 'paper', 1, .6);
-      label(H, 'Z', x, y + 4, 5);
     }
   }
   shape(H, R, [H.p(5.35, .12, 3.02), H.p(9.45, .12, 3.02), H.p(9.45, .12, 3.66), H.p(5.35, .12, 3.66)], 'sun', .9, .85);
-  label(H, 'THE SIX LEGS', ...H.p(7.4, .14, 3.34), 9, '#344a80', Math.atan(.5));
-  plaque(H, R, 2.1, .1, 2.9, 'LEAF SUITES', 'paper', 72);
+
   table(H, R, 1.15, .8, 2.35, .6, .7, 'teal');
   for (let n = 0; n < 5; n++) envelope(H, R, 1.24 + n * .42, .88, .84 + n % 2 * .025, n % 2 ? 'sun' : 'paper');
   for (let n = 0; n < 3; n++) box(H, R, 1.3 + n * .73, .87, .61, .39, .85, .12, 'coral', .45);
-  label(H, 'OUTGOING', ...H.p(2.28, 1.43, .73), 5.5);
+
   rug(H, R, 4.3, 5.65, 3.6, 4.7, 'coral', .58, { border: 'sun' });
   for (let n = 0; n < 5; n++) {
     const [x, y] = H.p(6.1, 6.12 + n * .82, .02);
@@ -143,7 +140,7 @@ function lobby(H, R) {
   for (let n = 0; n < 3; n++) {
     shape(H, R, [H.p(1.47 + n * 1.04, 5.36, .22), H.p(2.22 + n * 1.04, 5.36, .22), H.p(2.22 + n * 1.04, 5.36, .88), H.p(1.47 + n * 1.04, 5.36, .88)], 'coral', .8, .65);
   }
-  plaque(H, R, 2.85, 5.46, .57, 'CHECK IN', 'paper', 69);
+
   shape(H, R, H.tile(2.2, 4.37, 1.03, .7, 1.22), 'paper', 1, .6);
   H.line(R, [H.p(2.71, 4.37, 1.23), H.p(2.71, 5.07, 1.23)], 'blue', .7);
   for (let n = 0; n < 4; n++) for (const i of [2.28, 2.79]) H.line(R, [H.p(i, 4.47 + n * .13, 1.24), H.p(i + .3, 4.47 + n * .13, 1.24)], 'blue', .55);
@@ -184,11 +181,10 @@ function lobby(H, R) {
     box(H, R, i - .17, j - .17, .34, .34, 0, .46, 'sun', .75);
     oval(H, R, ...H.p(i, j, .48), 10, 5, 'coral', .9);
   }
-  plaque(H, R, .08, 8.5, 2.9, 'NECTAR AT NINE', 'sun', 95);
+
   for (let n = 0; n < 4; n++) {
     const [x, y] = H.p(.14, 7.3 + n * .72, 1.8);
     shape(H, R, [[x - 4, y], [x + 4, y], [x + 4, y - 10], [x - 4, y - 10]], n % 2 ? 'paper' : 'sun', .9, .6);
-    label(H, ['TEA', 'SAP', 'DEW', 'JAM'][n], x, y - 5, 3.8);
   }
   box(H, R, 9.26, 3.75, 1.85, .96, .25, .12, 'blue', .8);
   box(H, R, 9.26, 3.75, 1.85, .96, 1.06, .1, 'coral', .8);
@@ -265,7 +261,7 @@ function guests(H, R, t) {
   const [nx, ny] = bug(H, R, 7.99, 10.7, t, 'teal', '', .52, .63);
   shape(H, R, [[nx - 16, ny - 14], [nx - 1, ny - 10], [nx + 13, ny - 14], [nx + 13, ny - 31], [nx - 1, ny - 27], [nx - 16, ny - 31]], 'paper', 1, .7);
   H.line(R, [[nx - 1, ny - 10], [nx - 1, ny - 27]], 'blue', .6);
-  label(H, 'DAILY', nx - 1, ny - 23, 4.5);
+
   for (let k = 0; k < 3; k++) H.line(R, [[nx - 12, ny - 19 + k * 3], [nx - 4, ny - 17 + k * 3]], 'blue', .5);
 }
 

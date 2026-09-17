@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
 
 function chessPiece(H, R, x, y, kind, ink, tilt = 0) {
   oval(H, R, x, y, 17, 6, ink, .8);
@@ -16,7 +16,7 @@ function chessPiece(H, R, x, y, kind, ink, tilt = 0) {
 }
 const retirement = world('chess-retirement', 'Chess retirement home', { floor: 'paper', tone: 1, wall: 'teal', wallTone: .35, height: 3.2, pattern: 'tiles', accent: 'blue' }, (H, R) => {
   windowOn(H, R, 'ne', 7, 1, 4, 1.8, { sky: 'sun', skyTone: .35 });
-  plaque(H, R, 3, .1, 2.8, 'NO MORE CHECKMATES', 'sun', 137);
+
   table(H, R, 4, 4.4, 3.4, 2.7, 1, 'coral');
   for (let k = 0; k < 8; k++) box(H, R, 4.4 + k % 4 * .65, 4.8 + Math.floor(k / 4), .45, .65, 1.15, .02, 'paper', 1);
   for (const [i, j] of [[3.2, 4.7], [7.5, 4.7], [4.7, 7.2], [1.5, 9.7]]) bench(H, R, i, j, 1.4, 'teal');
@@ -28,12 +28,12 @@ const retirement = world('chess-retirement', 'Chess retirement home', { floor: '
   for (const [i, j, kind, ink] of [[3.7, 5.2, 'king', 'paper'], [8, 5.4, 'queen', 'blue'], [5.3, 7.8, 'rook', 'paper']]) chessPiece(H, R, ...H.p(i, j, .65), kind, ink, Math.sin(t * .5 + i));
   const step = Math.floor(cycle(t, 12) * 4);
   chessPiece(H, R, ...H.p(2 + step, 10, .1), 'pawn', 'blue');
-  const [x, y] = H.p(5, 5.5, 1.25); label(H, ['♠', '♥', '♦', '♣'][Math.floor(t / 3) % 4], x, y, 12, '#ee6852');
+  const [x, y] = H.p(5, 5.5, 1.25);
 });
 
 const dentist = world('monster-dentist', 'Monster dentist', { floor: 'teal', tone: .25, wall: 'paper', wallTone: .8, wallStyle: 'tile', height: 3.5, pattern: 'tiles' }, (H, R) => {
   for (let i = .6; i < 11; i += 1.8) { box(H, R, i, .5, 1.65, 1.3, 0, 1.5, 'teal', .4); H.line(R, [H.p(i + .65, 1.82, .7), H.p(i + 1.05, 1.82, .7)], 'sun', 2); }
-  plaque(H, R, 6, .1, 3, 'EVERY TOOTH COUNTS', 'coral', 145);
+
   box(H, R, 4, 4.5, 3.8, 3.5, .7, .5, 'coral');
   box(H, R, 4, 4.5, 3.8, .45, 1.2, 1.6, 'coral');
   box(H, R, 5.4, 5.4, 1, 1, 0, .7, 'blue');
@@ -47,20 +47,17 @@ const dentist = world('monster-dentist', 'Monster dentist', { floor: 'teal', ton
   actor(H, R, 3.3, 6.9, t, 'reach', { shirt: ['paper', 1] }, 1.3, 1);
   const [x, y] = H.p(5.8, 6.5, 1.8); H.line(R, [[x - 45, y - 6], [x - 9 + Math.sin(t * 4) * 3, y]], 'sun', 3);
   creature(H, R, ...H.p(10, 10), 'monster', t, .65, 'coral');
-  label(H, '…', ...H.p(10, 10, 1.5), 20);
 });
 
 const dreams = world('dream-delivery', 'Dream delivery depot', { floor: 'blue', tone: .72, wall: 'teal', wallTone: .6, height: 3.7, pattern: 'tiles' }, (H, R) => {
   for (let row = 0; row < 3; row++) for (let col = 0; col < 8; col++) {
     box(H, R, .7 + col * 1.3, .7, 1.2, 1.2, row * .9, .82, (row + col) % 3 ? 'coral' : 'sun', .4);
-    label(H, String(101 + row * 8 + col), ...H.p(1.3 + col * 1.3, 1.92, row * .9 + .45), 6);
   }
   table(H, R, 1.2, 5, 9.5, 2, .9, 'blue');
   for (let i = 1.3; i < 10.7; i += .25) H.line(R, [H.p(i, 5.1, 1.04), H.p(i, 6.9, 1.04)], 'teal', 1.2);
   for (const i of [1.2, 10.7]) { box(H, R, i, 5, .2, .2, 1, 2.1, 'sun'); box(H, R, i, 6.8, .2, .2, 1, 2.1, 'sun'); H.line(R, [H.p(i, 5, 3.1), H.p(i, 7, 3.1)], 'sun', 3); }
-  plaque(H, R, 5.9, .2, 3.5, 'HANDLE WITH WONDER', 'paper', 144);
+
   parcels(H, R, 1, 9, 8); table(H, R, 8, 9, 2.6, 1.7, .8, 'coral');
-  label(H, 'SWEET DREAMS →', ...H.p(6, 7.4, .5), 10, '#ffd428');
 }, (H, R, t) => {
   for (let k = 0; k < 5; k++) {
     const u = cycle(t + k * 2, 10), i = 1.7 + u * 8;
@@ -70,7 +67,7 @@ const dreams = world('dream-delivery', 'Dream delivery depot', { floor: 'blue', 
   actor(H, R, 6.3, 7.8, t, 'point', { shirt: ['sun', .7] });
   for (let k = 0; k < 4; k++) {
     const u = cycle(t + k * 2, 8), [x, y] = H.p(9.5, 8.7, .8 + u * 3);
-    H.opacity(Math.sin(u * Math.PI), () => { oval(H, R, x + Math.sin(u * 6 + k) * 22, y, 20, 23, 'paper', .4); label(H, ['☾', 'Z', '★', '♥'][k], x + Math.sin(u * 6 + k) * 22, y, 14, '#ee6852'); });
+    H.opacity(Math.sin(u * Math.PI), () => { oval(H, R, x + Math.sin(u * 6 + k) * 22, y, 20, 23, 'paper', .4);  });
   }
 });
 
@@ -93,7 +90,7 @@ const sumo = world('origami-sumo', 'Origami sumo arena', { floor: 'sun', tone: .
     shape(H, R, [[x - 14, y], [x, y - 23], [x + 14, y], [x, y + 7]], inks[k % 3], .7);
     H.line(R, [[x, y - 23], [x, y + 7]], 'blue', .6);
   }
-  plaque(H, R, 6, .2, 2.5, 'FOLD · FIGHT · UNFOLD', 'paper', 162);
+
   strings(H, R, [[.5, 2, 3.3], [6, 1.5, 2.7], [11.5, 2, 3.3]]);
 }, (H, R, t) => {
   const u = cycle(t, 7), collide = Math.sin(u * Math.PI) ** 4;
@@ -117,7 +114,7 @@ const gravity = world('gravity-flea-market', 'Gravity flea market', { floor: 'pa
       shape(H, R, [[x - 8, y], [x, y - 17], [x + 8, y], [x, y + 4]], inks[k % 3]);
     }
   }
-  plaque(H, R, 6.7, .1, 4.35, 'EVERYTHING MUST FLOAT', 'sun', 161);
+
   strings(H, R, [[.5, 10, 4], [6, 7, 3.8], [11, 1, 4.2]]);
   parcels(H, R, 8.5, 9.5, 4);
 }, (H, R, t) => {

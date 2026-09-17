@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
 
 const memories = world('memory-lost-and-found', 'Memory lost-and-found', { floor: 'coral', tone: .3, wall: 'blue', wallTone: .8, pattern: 'boards', height: 3.8 }, (H, R) => {
   for (const z of [.7, 1.6, 2.5]) {
@@ -6,24 +6,22 @@ const memories = world('memory-lost-and-found', 'Memory lost-and-found', { floor
     for (let i = 1; i < 11; i += .7) {
       const [x, y] = H.p(i, 1, z + .1);
       bottle(H, R, x, y, inks[Math.floor(i * 2 + z) % 3], .65);
-      label(H, ['HOME', 'JUNE', 'MUM', 'SEA'][Math.floor(i) % 4], x, y - 7, 3.5);
     }
   }
   box(H, R, 2.5, 4.3, 6.4, 1.7, 0, 1.3, 'coral');
-  plaque(H, R, 5.7, 6.03, .85, 'WHAT HAVE YOU LOST?', 'paper', 151);
+
   for (let k = 0; k < 16; k++) {
     const i = 3 + k % 8 * .7, z = .3 + Math.floor(k / 8) * .5;
     H.outline(R, [H.p(i, 6.02, z), H.p(i + .55, 6.02, z), H.p(i + .55, 6.02, z + .35), H.p(i, 6.02, z + .35)], 'blue', .6);
     H.dot(...H.p(i + .27, 6.04, z + .16), 1.2, 'sun');
   }
   bench(H, R, 1.2, 9.7, 4, 'teal'); parcels(H, R, 9.2, 8, 6);
-  plaque(H, R, 6, .1, 3.5, 'LOST MOMENTS', 'sun', 112);
 }, (H, R, t) => {
   actor(H, R, 5.8, 4, t, 'write', { shirt: ['teal', .7] }, .3);
   actor(H, R, 5.5, 7.5, t, 'think', {}, 0, 1.35, 'elder');
   for (let k = 0; k < 5; k++) {
     const [x, y] = H.p(4.4 + k * .6, 5, 2 + Math.sin(t + k) * .3);
-    H.opacity(.6, () => { oval(H, R, x, y, 13, 13, 'paper', .6); label(H, ['★', '♥', '7', '♪', '☀'][k], x, y, 12, k % 2 ? '#ee6852' : '#008c8a'); });
+    H.opacity(.6, () => { oval(H, R, x, y, 13, 13, 'paper', .6);  });
   }
 });
 
@@ -32,7 +30,7 @@ const noodles = world('rainy-noodle-alley', 'Rainy noodle alley', { floor: 'blue
     box(H, R, i, 1.5, 4.5, 1.8, 0, 1.15, ink);
     box(H, R, i, 1.3, .1, 2.2, 1.15, 1.4, 'blue'); box(H, R, i + 4.3, 1.3, .1, 2.2, 1.15, 1.4, 'blue');
     for (let k = 0; k < 9; k++) shape(H, R, [H.p(i + k * .5, .8, 2.7), H.p(i + (k + 1) * .5, .8, 2.7), H.p(i + (k + 1) * .5, 4, 2.3), H.p(i + k * .5, 4, 2.3)], k % 2 ? 'paper' : ink, .8);
-    plaque(H, R, i + 2.2, .3, 3.3, i < 2 ? 'HOT NOODLES' : 'SOUP UNTIL LATE', ink, 103);
+
     for (let k = 0; k < 3; k++) { const [x, y] = H.p(i + 1 + k, 3, 1.25); oval(H, R, x, y, 10, 5, 'paper'); stroke(H, R, [[x - 7, y], [x, y + 8], [x + 7, y]], ink, 4); }
   }
   for (const i of [1.5, 4, 7, 9.7]) lantern(H, R, i, 3.6, 2.8, i < 6 ? 'coral' : 'sun');
@@ -66,7 +64,6 @@ const hive = world('royal-beehive', 'Royal beehive', { floor: 'sun', tone: .65, 
   rug(H, R, 4.4, 6, 3.5, 4.8, 'coral', .7, { border: 'sun' });
   for (let k = 0; k < 8; k++) bottle(H, R, ...H.p(1.2 + k % 4 * 1.1, 8 + Math.floor(k / 4) * 1.3), 'sun', .8);
   for (const i of [2, 10]) box(H, R, i, 5, .1, .1, 0, 4, 'blue');
-  plaque(H, R, 6, .1, 4.4, 'HER HONEYNESS', 'paper', 120);
 }, (H, R, t) => {
   const [x, y] = H.p(6, 4, 1.3);
   creature(H, R, x, y, 'bee', t * .1, 1.7);
@@ -83,7 +80,7 @@ const circus = world('circus-rehearsal', 'Circus rehearsal tent', { floor: 'sun'
   const [x, y] = H.p(6, 7, .05); oval(H, R, x, y, 175, 81, 'coral', .45); H.outline(R, ell(x, y, 158, 71), 'sun', 3);
   box(H, R, 8.5, 8, 2, 1.8, 0, .7, 'teal');
   for (let k = 0; k < 7; k++) shape(H, R, starPts(...H.p(1.7 + k * 1.35, 2.1, 1.1 + k % 2 * .3), 8, 3, 5), 'sun');
-  plaque(H, R, 6, .1, 4.7, 'PRACTICE MAKES MAGIC', 'sun', 152);
+
   for (let k = 0; k < 4; k++) oval(H, R, ...H.p(1 + k * .7, 10.5), 9, 9, inks[k]);
 }, (H, R, t) => {
   actor(H, R, 4, 6, t, 'wave', { shirt: ['coral', .8] }, 0, 1.35);
@@ -115,7 +112,6 @@ const cavern = world('crystal-cavern', 'Crystal cavern', { floor: 'blue', tone: 
   for (const i of [8.8, 10.2]) H.line(R, [H.p(i, 4), H.p(i, 12)], 'paper', 1.6);
   box(H, R, 8.7, 8, 1.8, 1.4, .2, .7, 'teal');
   for (let n = 0; n < 6; n++) crystal(H, R, ...H.p(8.8 + R() * 1.5, 8.2 + R(), 1), 15 + R() * 12, 5, 'coral');
-  plaque(H, R, 7, .2, 3.4, 'LISTEN TO THE STONE', 'paper', 142);
 }, (H, R, t) => {
   const pulse = .5 + Math.sin(t * 2) * .5;
   const [x, y] = H.p(5.8, 5.5);

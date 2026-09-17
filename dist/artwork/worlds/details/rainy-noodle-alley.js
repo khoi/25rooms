@@ -1,4 +1,4 @@
-import { actor, box, table, oval, shape, stroke, label, plaque, bottle, steam, lantern, curve, cycle, ripple, wallRect, windowOn } from '../common.js';
+import { actor, box, table, oval, shape, stroke, bottle, steam, lantern, curve, cycle, ripple, wallRect, windowOn } from '../common.js';
 
 function bowl(H, R, i, j, z = 1.1, ink = 'coral', size = 1) {
   const [x, y] = H.p(i, j, z);
@@ -54,7 +54,6 @@ function bicycle(H, R, i, j, ink, bag = false) {
   if (bag) {
     shape(H, R, [[x - 35, y - 21], [x - 13, y - 21], [x - 13, y - 43], [x - 35, y - 43]], 'sun', .9);
     H.line(R, [[x - 34, y - 37], [x - 14, y - 37]], 'coral', 1.5);
-    label(H, 'SOUP', x - 24, y - 29, 5);
   }
 }
 
@@ -113,7 +112,7 @@ export default function enrich(room) {
       const menu = wallRect(H, 'nw', 6.6, 7.65, 1.1, 2.7);
       shape(H, R, menu, 'paper', .95);
       const [mx, my] = H.p(.02, 7.14, 2.4);
-      label(H, 'MENU', mx, my, 8, '#ee6852', -.46);
+
       for (let n = 0; n < 5; n++) H.line(R, [H.p(.02, 6.8, 2.12 - n * .18), H.p(.02, 7.4, 2.12 - n * .18)], 'blue', .7);
       stroke(H, R, [H.p(.15, 4.6, 3.65), H.p(.3, 7.2, 3.25), H.p(.1, 10.8, 3.55)], 'blue', 1);
       for (let n = 0; n < 5; n++) {
@@ -161,9 +160,9 @@ export default function enrich(room) {
       const [rx, ry] = H.p(6.25, 5.1, 1.1);
       H.line(R, [[rx - 10, ry - 6], [rx + 10, ry + 5]], 'coral', 4);
       plates(H, R, 6.55, 5.7, 1.05, 4);
-      plaque(H, R, 5.7, 6, .57, 'HAND PULLED', 'paper', 72);
+
       box(H, R, 4.8, 5.1, .7, .6, 0, .48, 'paper', .9);
-      label(H, 'FLOUR', ...H.p(5.15, 5.72, .25), 6);
+
       box(H, R, 10, 4.4, 1.4, 2.0, 0, .88, 'teal', .65);
       shape(H, R, H.tile(10.17, 4.7, .96, 1.08, .9), 'blue', .7);
       shape(H, R, H.tile(10.27, 4.8, .76, .88, .91), 'paper', .65);

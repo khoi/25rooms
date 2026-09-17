@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, actor, bottle, plant, ell, loop, inks } from '../common.js';
+import { world, shape, oval, stroke, box, table, actor, bottle, plant, ell, loop, inks } from '../common.js';
 
 function antique(H, R, x, y, kind, ink = 'coral', s = 1, angle = 0) {
   const p = (a, b) => [x + (a * Math.cos(angle) - b * Math.sin(angle)) * s, y + (a * Math.sin(angle) + b * Math.cos(angle)) * s];
@@ -91,7 +91,6 @@ function antique(H, R, x, y, kind, ink = 'coral', s = 1, angle = 0) {
 function tag(H, R, x, y, value) {
   stroke(H, R, [[x, y - 8], [x + 3, y - 1]], 'blue', .6);
   shape(H, R, [[x - 5, y], [x + 7, y], [x + 7, y + 8], [x - 5, y + 8]], 'paper', 1, .6);
-  label(H, value, x + 1, y + 4, 5);
 }
 
 function canopy(H, R, i, j, w, d, z, ink) {
@@ -118,11 +117,10 @@ export default function enrich(room) {
   const bazaar = world(room.id, room.title, { floor: 'paper', tone: 1, wall: 'blue', wallTone: .38, height: 4.8, pattern: 'tiles', head: room.head }, (H, R) => {
     shape(H, R, H.tile(4.3, 4.6, 3.3, 4.3, .02), 'coral', .19);
     for (let k = 0; k < 8; k++) H.line(R, [H.p(4.3, 4.7 + k * .55, .025), H.p(7.6, 4.7 + k * .55, .025)], 'sun', 1.2, { tone: .7 });
-    plaque(H, R, 4.8, .1, 4.38, 'EVERYTHING MUST FLOAT', 'sun', 165);
+
     for (const [j, name] of [[2.7, 'LOST HOURS'], [8.5, 'SECOND HAND SOUND']]) {
       const [x, y] = H.p(.18, j, 4.4);
       shape(H, R, [H.p(.18, j - 1.6, 4.19), H.p(.18, j + 1.6, 4.19), H.p(.18, j + 1.6, 4.61), H.p(.18, j - 1.6, 4.61)], 'paper', 1);
-      label(H, name, x, y, 7, '#344a80', -Math.atan(.5));
     }
     for (const z of [1.25, 2.4, 3.5]) {
       box(H, R, .04, .7, .48, 4.2, z, .08, 'coral', .6);
@@ -142,7 +140,7 @@ export default function enrich(room) {
       antique(H, R, x, y + 4, ['cup', 'vase', 'tea', 'lamp', 'case', 'chair'][k], inks[k % 4], .57, Math.PI);
       stroke(H, R, [[x, y], [x - 3, y + 32]], 'paper', .7);
     }
-    plaque(H, R, 9, .3, 4.42, 'CEILING CLEARANCE', 'paper', 113);
+
     box(H, R, 1.25, 3.65, 2.8, 1.6, 0, .18, 'blue', .15);
     table(H, R, 1.3, 3.7, 2.65, 1.45, .86, 'coral');
     for (let k = 0; k < 3; k++) antique(H, R, ...H.p(1.6 + k * .78, 4.38, 1), ['clock', 'sewing', 'radio'][k], 'teal', .62);
@@ -151,7 +149,7 @@ export default function enrich(room) {
       oval(H, R, x, y, 3.3, 2.1, k % 2 ? 'sun' : 'blue', .75);
       H.line(R, [[x - 3, y - 2], [x + 4, y + 2]], 'paper', .7);
     }
-    const [rx, ry] = H.p(2.6, 5.2, .7); label(H, 'REPAIRS WHILE YOU ORBIT', rx, ry, 6);
+    const [rx, ry] = H.p(2.6, 5.2, .7);
     box(H, R, 1.1, 5.5, .75, .7, 0, .5, 'sun');
     for (let k = 0; k < 4; k++) {
       const [x, y] = H.p(1.3 + k * .11, 5.7, .52);
@@ -161,7 +159,7 @@ export default function enrich(room) {
     table(H, R, 7.7, 1.9, 3.4, 1.6, .85, 'teal');
     for (let k = 0; k < 5; k++) bottle(H, R, ...H.p(8.02 + k * .6, 2.12, .99), inks[k % 3], .44);
     for (let k = 0; k < 4; k++) antique(H, R, ...H.p(8.1 + k * .67, 3.05, .99), k === 3 ? 'tea' : 'cup', inks[k % 3], .7);
-    plaque(H, R, 9.5, 1.25, 2.42, 'SIDEWAYS TEA · 2¢', 'paper', 115);
+
     box(H, R, 10.5, 3.75, .8, .85, 0, .55, 'coral');
     antique(H, R, ...H.p(10.85, 4.2, .56), 'books', 'sun', .7);
     plant(H, R, ...H.p(11.1, 1.15, .1), .8);
@@ -171,7 +169,7 @@ export default function enrich(room) {
     antique(H, R, ...H.p(6.65, 6.25, .98), 'vase', 'coral', .65);
     for (let k = 0; k < 4; k++) oval(H, R, ...H.p(5.05 + k * .31, 6.35, .99), 3, 1.7, 'sun');
     for (const [i, j, kind] of [[4.45, 7.05, 'case'], [6.45, 7.02, 'books'], [7.28, 5.9, 'lamp']]) antique(H, R, ...H.p(i, j, .05), kind, 'coral', .85);
-    const [hx, hy] = H.p(5.7, 6.73, .56); label(H, 'OFFERS CONSIDERED', hx, hy, 6);
+    const [hx, hy] = H.p(5.7, 6.73, .56);
     table(H, R, 1.35, 8.4, 2.8, 1.2, .7, 'coral');
     antique(H, R, ...H.p(1.7, 8.65, .85), 'horn', 'sun', .75);
     antique(H, R, ...H.p(2.75, 8.75, .85), 'radio', 'teal', .7);
@@ -191,15 +189,13 @@ export default function enrich(room) {
     box(H, R, 9.2, 6.25, 1.25, .75, .05, .6, 'coral');
     box(H, R, 9.23, 6.3, 1.18, .12, .67, .7, 'coral');
     for (let k = 0; k < 2; k++) box(H, R, 9.3 + k * .55, 6.49, .5, .4, .7, .15, 'sun');
-    const [fx, fy] = H.p(10, 8, .1); label(H, 'FLOAT TESTS FREE', fx, fy, 7);
+    const [fx, fy] = H.p(10, 8, .1);
     for (const [i, j] of [[7.7, 8], [8.5, 11], [10.8, 7.1]]) {
       const [x, y] = H.p(i, j, .1);
       oval(H, R, x, y, 9, 4, 'blue'); oval(H, R, x, y - 3, 7, 5, 'coral');
       for (let k = -2; k <= 2; k++) stroke(H, R, [[x - 5, y - 3 + k], [x + 5, y - 3 + k]], 'sun', .6);
     }
-    for (const [i, j, text] of [[4, 9.4, 'MUSIC'], [7.45, 3.8, 'UP'], [7.7, 10.5, 'DOWN?']]) {
-      const [x, y] = H.p(i, j, .04); label(H, text, x, y, 7, '#008c8a', -.45);
-    }
+
     for (const [i, j, kind] of [[5.8, .5, 'books'], [10.75, 5.3, 'case'], [3.3, 7.7, 'vase']]) antique(H, R, ...H.p(i, j, .1), kind, 'sun', .58);
   }, (H, R, t) => {
     actor(H, R, 2.05, 3.45, t, 'kneel', { shirt: ['teal', .8], glasses: true }, .62, .85);

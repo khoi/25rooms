@@ -1,4 +1,4 @@
-import { world, box, table, shape, oval, stroke, label, plaque, creature, cycle, loop, starPts } from '../common.js';
+import { world, box, table, shape, oval, stroke, creature, cycle, loop, starPts } from '../common.js';
 
 function sheet(H, R, i, j, z, title = '', spread = false) {
   const [x, y] = H.p(i, j, z);
@@ -6,7 +6,7 @@ function sheet(H, R, i, j, z, title = '', spread = false) {
   shape(H, R, [[x - w / 2, y - 10], [x + w / 2, y - 8], [x + w / 2 - 1, y + 3], [x - w / 2 - 1, y + 1]], 'paper', 1, .6);
   for (let n = 0; n < 4; n++) H.line(R, [[x - w / 2 + 3, y - 6 + n * 2], [x + w / 2 - 3, y - 5 + n * 2]], 'blue', .5, { tone: .7 });
   if (spread) H.line(R, [[x, y - 9], [x - 1, y + 2]], 'coral', .6);
-  if (title) label(H, title, x, y - 7, 3.8);
+  if (title) {}
 }
 
 function seat(H, R, i, j, z = 0, ink = 'coral') {
@@ -112,7 +112,6 @@ function architecture(H, R) {
     oval(H, R, x, y, 10, 15, 'paper', .99);
     for (const dx of [-4, 4]) H.dot(x + dx, y - 3, 1.8, 'blue', .95);
     stroke(H, R, [[x - 5, y + 4], [x, y + (j < 9 ? 10 : 1)], [x + 5, y + 4]], 'coral', 1.3);
-    label(H, text, ...H.p(.08, j, 1.72), 6.5, '#344a80', -.45);
   }
   balcony(H, R, .1, 4.2, 3.35, 1.75);
   balcony(H, R, 10.4, .8, 3.75, 2.1);
@@ -148,7 +147,7 @@ function furnishings(H, R) {
   for (const [i, j] of [[2.7, 8.5], [4.05, 9.96], [6.9, 11.4], [8.3, 8.5]]) sheet(H, R, i, j, .63, 'ACT II');
   table(H, R, 10.15, 9.3, 1.4, 1.45, .75, 'teal');
   for (let n = 0; n < 4; n++) sheet(H, R, 10.45 + n * .22, 9.68, .91 + n * .025, 'OPERA');
-  plaque(H, R, 10.9, 10.76, .75, 'PROGRAMS', 'paper', 56);
+
   for (const j of [9.32, 10.44]) {
     const [x, y] = H.p(11.35, j, .93);
     oval(H, R, x, y, 5, 3, 'paper', 1); H.line(R, [[x - 3, y], [x - 2, y - 7], [x + 3, y - 7], [x + 4, y]], 'coral', .8);
@@ -173,7 +172,6 @@ function furnishings(H, R) {
   H.line(R, [[tx, ty], [tx, ty - 43]], 'coral', 4);
   for (const [dx, dy, r] of [[-15, -38, 14], [5, -49, 18], [20, -34, 14]]) oval(H, R, tx + dx, ty + dy, r, r * .8, 'teal', .77);
   box(H, R, 8.5, 2, .95, .9, .56, .55, 'sun', .55);
-  plaque(H, R, 8.95, 2.92, 1.05, 'MOON', 'paper', 31);
 }
 
 function performers(H, R, t) {
@@ -186,7 +184,6 @@ function performers(H, R, t) {
     shape(H, R, [[x - 4, y - 46 + b], [x - 7, y - 57 + b], [x, y - 52 + b], [x + 5, y - 60 + b], [x + 10, y - 51 + b], [x + 15, y - 55 + b], [x + 12, y - 43 + b]], 'sun', .9);
     stroke(H, R, [[x - 9, y - 23], [x - 27, y - 30 - b], [x - 36, y - 41 - b]], 'paper', 3);
     stroke(H, R, [[x + 10, y - 23], [x + 27, y - 31 + b], [x + 33, y - 43 + b]], 'paper', 3);
-    for (let n = 0; n < 3; n++) { const p = cycle(t + n, 3); H.opacity(1 - p, () => label(H, n % 2 ? '♫' : '♪', x + 32 + p * 25, y - 55 - p * 37, 12, '#ffd428')); }
   });
   H.at(7.25, 2.55, .6, () => {
     const [x, y] = H.p(7.25, 2.55, .6);
@@ -275,7 +272,6 @@ export default function enrich(room) {
   const detailed = world(room.id, room.title, { floor: 'blue', tone: .38, wall: 'blue', wallTone: .5, height: 4.2, pattern: 'boards', head: 60 }, (H, R) => {
     architecture(H, R);
     furnishings(H, R);
-    plaque(H, R, 5.9, 4.34, 4.4, 'THE VERY SMALL OPERA', 'paper', 147);
   }, live);
   return { ...room, under: detailed.under, live: detailed.live };
 }

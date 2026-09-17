@@ -1,4 +1,4 @@
-import { world, shape, oval, stroke, label, plaque, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, creature, steam, lantern, bottle, parcels, strings, ell, curve, cycle, inks, TAU, pool, ripple, mushroom, windowOn, plant, rug, starPts } from './common.js';
 
 const caravan = world('desert-caravanserai', 'Desert caravanserai', { floor: 'sun', tone: .4, wall: 'coral', wallTone: .45, wallStyle: 'brick', height: 3.4 }, (H, R) => {
   for (const i of [2.3, 6, 9.7]) {
@@ -13,7 +13,6 @@ const caravan = world('desert-caravanserai', 'Desert caravanserai', { floor: 'su
   for (let n = 0; n < 3; n++) { box(H, R, 8.5 + n * .75, 9.5, .6, 1.1, 0, .7, inks[n]); bottle(H, R, ...H.p(1.3, 2 + n, 0), 'coral', 1.2); }
   table(H, R, 2, 8.2, 2.2, 1.4, .4, 'teal');
   for (const i of [2.4, 3.2]) bottle(H, R, ...H.p(i, 8.6, .55), 'sun', .45);
-  plaque(H, R, .4, 6, 2.8, 'REST UNTIL DAWN', 'sun', 116);
 }, (H, R, t) => {
   creature(H, R, ...H.p(8.3, 5.2), 'camel', t, 1.35, 'sun');
   creature(H, R, ...H.p(9.7, 7.5), 'camel', t + 2, 1, 'coral');
@@ -37,7 +36,6 @@ const ballroom = world('haunted-ballroom', 'Haunted ballroom', { floor: 'blue', 
     H.dot(px, py - 14, 3, 'paper'); H.glow(px, py - 14, 16, 12, 'sun', .4);
     shape(H, R, [[px, py + 4], [px + 3, py + 10], [px, py + 17], [px - 3, py + 10]], 'teal', .3);
   }
-  plaque(H, R, 6, .1, 4, 'THE LAST WALTZ', 'paper', 110);
 }, (H, R, t) => {
   for (let k = 0; k < 3; k++) {
     const a = t * .35 + k * 2, i = 5.8 + Math.cos(a) * 2.8, j = 7 + Math.sin(a) * 2.4;
@@ -48,7 +46,7 @@ const ballroom = world('haunted-ballroom', 'Haunted ballroom', { floor: 'blue', 
 
 const boxing = world('robot-boxing', 'Underground boxing club', { floor: 'blue', tone: .7, wall: 'coral', wallTone: .65, wallStyle: 'brick', height: 3.2, pattern: 'boards' }, (H, R) => {
   box(H, R, 2, 3, 7.5, 6.5, 0, .6, 'teal', .6);
-  const [x, y] = H.p(5.8, 6.2, .62); H.outline(R, ell(x, y, 55, 23), 'paper', 3); label(H, 'ROUND 08', x, y, 11, '#f3ebdd');
+  const [x, y] = H.p(5.8, 6.2, .62); H.outline(R, ell(x, y, 55, 23), 'paper', 3);
   for (const i of [2, 9.5]) for (const j of [3, 9.5]) {
     box(H, R, i, j, .2, .2, .6, 2, 'coral');
     for (const z of [1.1, 1.7, 2.3]) H.dot(...H.p(i + .1, j + .1, z), 3, 'sun');
@@ -57,7 +55,7 @@ const boxing = world('robot-boxing', 'Underground boxing club', { floor: 'blue',
     for (const i of [2.1, 9.6]) H.line(R, [H.p(i, 3.1, z), H.p(i, 9.6, z)], 'paper', 1.6);
     H.line(R, [H.p(2.1, 3.1, z), H.p(9.6, 3.1, z)], 'paper', 1.6);
   }
-  plaque(H, R, 6, .2, 2.7, 'NO HARD FEELINGS', 'sun', 132);
+
   for (const i of [2, 5, 8]) lantern(H, R, i, .5, 3, 'paper');
   bench(H, R, 1, 10.4, 3, 'coral'); table(H, R, 10, 6, 1.4, 2, .8);
 }, (H, R, t) => {
@@ -75,13 +73,12 @@ const subway = world('jellyfish-subway', 'Jellyfish subway', { floor: 'blue', to
   H.line(R, [H.p(.8, 5.5, .36), H.p(11.2, 5.5, .36)], 'sun', 5);
   for (let i = 1; i < 11; i += .45) H.line(R, [H.p(i, 5.7, .36), H.p(i, 5.9, .36)], 'blue', 1);
   bench(H, R, 2, 9.8, 4, 'coral');
-  plaque(H, R, 6, .2, 3.25, 'ABYSSAL LINE · PLATFORM 3', 'paper', 188);
+
   for (let i = 1; i < 12; i += 2) {
     const [x, y] = H.p(i, .02, 2.3); H.dot(x, y, 3, 'sun');
     if (i < 10) H.line(R, [H.p(i, .02, 2.3), H.p(i + 2, .02, 2.3)], 'sun', 1.6);
   }
   box(H, R, 9.6, 9, 1, 1, .35, 2, 'coral');
-  label(H, 'TICKETS', ...H.p(10.1, 10.01, 1.85), 6);
 }, (H, R, t) => {
   const offset = Math.sin(t * .2) * 1.1;
   box(H, R, 1.2 + offset, 1.7, 8.4, 1.8, .15, 1.7, 'teal', .5);
@@ -109,7 +106,6 @@ const globes = world('snow-globe-repair', 'Snow-globe repair shop', { floor: 'co
   table(H, R, 3, 5, 5, 2.4, 1.1, 'teal');
   for (let n = 0; n < 7; n++) { const [x, y] = H.p(3.3 + n * .65, 6.8, 1.24); H.line(R, [[x - 8, y], [x + 8, y]], n % 2 ? 'blue' : 'coral', 2); }
   parcels(H, R, 9, 8.6, 7); bench(H, R, 1, 9, 3, 'sun');
-  plaque(H, R, 5.5, .1, 3.55, 'SMALL WORLD REPAIRS', 'paper', 145);
 }, (H, R, t) => {
   const [x, y] = H.p(5.5, 5.9, 1.4);
   oval(H, R, x, y - 38, 41, 47, 'paper', .6);
