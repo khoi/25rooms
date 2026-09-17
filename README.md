@@ -2,6 +2,8 @@
 
 Fifty animated isometric rooms across two collections, with a Three.js viewer. Drag to explore, zoom into a room, or follow the automatic tour.
 
+[Explore the live site](https://khoi.github.io/a-small-light-somewhere-else/).
+
 This adaptation by [khoi](https://github.com/khoi) builds on [a small light, room by room](https://a-small-light-three.vercel.app/). Full credit for the original artwork, procedural drawing code, characters, print textures, and original room animations belongs to its creator. The original page does not identify an author by name. See [CREDITS.md](CREDITS.md) for source attribution and dependency notices.
 
 ## Collections
