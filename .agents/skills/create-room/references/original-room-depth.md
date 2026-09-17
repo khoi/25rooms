@@ -32,10 +32,6 @@ Borrow construction principles, not the original room's object list or layout. C
 
 In this repository, `wallPt` and `wallRect` use a positive offset for the outside of a wall. Use a negative offset when projecting a shelf, rail, or frame into the room. Check the actual helper definition before treating an offset as interior depth. A finite coordinate check cannot detect a hanging fixture drawn on the wrong side of the wall.
 
-## Drawing coordinates
-
-In this repository, `wallPt` and `wallRect` use a positive offset for the outside of a wall. Use a negative offset when projecting a shelf, rail, or frame into the room. Check the actual helper definition before treating an offset as interior depth. A finite coordinate check cannot detect a hanging fixture drawn on the wrong side of the wall.
-
 ## Review the actual result
 
 For the first completed room, capture an original reference and the new room at the same displayed width. Compare them without reading the brief. If the original has several layers of fitted activity while the new room reads as a few boxes surrounded by floor, redesign the room before producing the rest.
