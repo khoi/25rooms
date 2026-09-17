@@ -1,0 +1,117 @@
+import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell, wallPt, wallRect } from '../../worlds/common.js';
+import { FIGURES } from '../../drawings.js';
+
+const rest = FIGURES.clips.idle.keys[0][1];
+const repair = { ...rest, lean: -8, head: 15, al: 25, el: 40, ar: 74, er: 13 };
+FIGURES.clips.newYorkWheelTrue = { dur: 16, keys: [[0, repair], [.09, repair], [.16, { ...repair, ar: 93, er: 5 }], [.23, { ...repair, ar: 37, er: 57 }], [.4, { ...repair, ar: 37, er: 57, head: 25 }], [.48, repair], [.57, { ...repair, ar: 65, er: 23, al: 50, el: 33 }], [.66, { ...repair, ar: 68, er: 27, al: 50, el: 33 }], [.74, { ...repair, ar: 65, er: 23, al: 50, el: 33 }], [.87, repair], [1, repair]] };
+
+function wheel(H, R, x, y, radius = 28, turn = 0, ink = 'blue') {
+  H.outline(R, ell(x, y, radius * .82, radius), ink, 3.4, { tone: .85, amp: .12 });
+  H.outline(R, ell(x, y, radius * .73, radius * .91), 'paper', 1.4, { tone: 1, amp: .08 });
+  for (let n = 0; n < 16; n++) {
+    const a = turn + n * TAU / 16;
+    H.line(R, [[x, y], [x + Math.cos(a) * radius * .75, y + Math.sin(a) * radius * .94]], 'blue', .65, { tone: .55, amp: .05 });
+  }
+  const a = turn + .5;
+  H.line(R, [[x + Math.cos(a) * radius * .44, y + Math.sin(a) * radius * .53], [x + Math.cos(a) * radius * .63, y + Math.sin(a) * radius * .78]], 'coral', 3, { tone: .9 });
+  oval(H, R, x, y, 3, 4, 'sun', .8);
+}
+
+function bike(H, R, i, j, z = 0, scale = 1, ink = 'coral') {
+  const [x, y] = H.p(i, j, z);
+  const p = (a, b) => [x + a * scale, y + b * scale];
+  wheel(H, R, ...p(-34, -28), 25 * scale);
+  wheel(H, R, ...p(41, -28), 25 * scale);
+  for (const points of [[[-34, -28], [-6, -64], [8, -29], [-34, -28]], [[-6, -64], [31, -65], [8, -29]], [[31, -65], [41, -28]], [[8, -29], [26, -60]]]) H.line(R, points.map(([a, b]) => p(a, b)), ink, 3.8 * scale, { tone: .78, amp: .12 });
+  H.line(R, [p(-8, -68), p(-12, -79), p(-23, -79), p(1, -79)], 'blue', 3 * scale);
+  stroke(H, R, [p(30, -65), p(26, -84), p(37, -88), p(48, -84), p(46, -74)], 'blue', 2 * scale);
+  oval(H, R, ...p(8, -29), 7 * scale, 7 * scale, 'blue', .6);
+  H.line(R, [p(8, -29), p(18, -20), p(24, -21)], 'paper', 2 * scale);
+  stroke(H, R, [p(-38, -29), p(8, -24), p(10, -33), p(-34, -34), p(-38, -29)], 'blue', .75);
+  H.line(R, [p(-35, -64), p(-15, -65), p(-28, -31)], 'blue', 1.2 * scale);
+}
+
+function wrench(H, R, x, y, size = 1, ink = 'blue') {
+  H.line(R, [[x, y], [x + 2 * size, y - 20 * size]], ink, 3 * size);
+  stroke(H, R, [[x - 2 * size, y - 25 * size], [x - 3 * size, y - 20 * size], [x + 2 * size, y - 16 * size], [x + 6 * size, y - 21 * size], [x + 5 * size, y - 25 * size]], ink, 2 * size);
+  oval(H, R, x, y + 1 * size, 3.5 * size, 3.5 * size, ink, .72);
+  oval(H, R, x, y + 1 * size, 1.8 * size, 1.8 * size, 'paper', 1);
+}
+
+const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { floor: 'blue', tone: .17, wall: 'paper', wallTone: .9, height: 3.7, head: 20 }, (H, R) => {
+  for (const side of ['nw', 'ne']) {
+    for (let z = .3; z < 3.65; z += .35) {
+      H.line(R, [wallPt(H, side, .03, z, .025), wallPt(H, side, 11.95, z, .025)], 'coral', .5, { tone: .34 });
+      for (let p = ((z * 10) % 2) * .5; p < 12; p += 1) H.line(R, [wallPt(H, side, p, z, .025), wallPt(H, side, p, Math.min(3.67, z + .35), .025)], 'coral', .45, { tone: .3 });
+    }
+  }
+  shape(H, R, wallRect(H, 'ne', 6.5, 11.1, 1.83, 3.48, .07), 'blue', .7, 1);
+  shape(H, R, wallRect(H, 'ne', 6.65, 10.95, 1.98, 3.34, .1), 'teal', .24, .65);
+  for (const i of [7.7, 8.8, 9.9]) H.line(R, [wallPt(H, 'ne', i, 1.98, .13), wallPt(H, 'ne', i, 3.34, .13)], 'paper', 2.1);
+  H.line(R, [wallPt(H, 'ne', 6.65, 2.63, .13), wallPt(H, 'ne', 10.95, 2.63, .13)], 'paper', 2.1);
+  shape(H, R, wallRect(H, 'nw', 1.1, 6.98, 1.36, 3.2, .07), 'sun', .4, .85);
+  for (let p = 1.3; p < 6.9; p += .32) for (let z = 1.56; z < 3.1; z += .3) H.dot(...wallPt(H, 'nw', p, z, .09), .55, 'blue', .65);
+  for (let n = 0; n < 6; n++) wrench(H, R, ...wallPt(H, 'nw', 1.63 + n * .72, 2.21, .16), .6 + n * .05, n % 2 ? 'blue' : 'teal');
+  const [tx, ty] = wallPt(H, 'nw', 6.17, 2.48, .17);
+  stroke(H, R, [[tx - 11, ty - 9], [tx, ty + 8], [tx + 11, ty - 10]], 'coral', 2.4);
+  H.line(R, [[tx - 8, ty + 15], [tx + 9, ty - 12]], 'blue', 2.4);
+  table(H, R, .4, 1.27, 1.35, 5.88, 1.06, 'teal');
+  for (let n = 0; n < 6; n++) {
+    box(H, R, .56, 1.53 + n * .89, .99, .67, 1.2, .3, n % 2 ? 'paper' : 'coral', n % 2 ? 1 : .5);
+    for (let k = 0; k < 4; k++) H.dot(...H.p(.76 + k % 2 * .39, 1.69 + n * .89 + Math.floor(k / 2) * .29, 1.52), 2.3, k % 2 ? 'blue' : 'sun', .9);
+  }
+  box(H, R, .45, 7.64, 1.51, 2.67, .17, 1.08, 'coral', .7);
+  for (let n = 0; n < 4; n++) {
+    H.line(R, [H.p(1.98, 7.78, .33 + n * .23), H.p(1.98, 10.15, .33 + n * .23)], 'blue', .7);
+    H.line(R, [H.p(2, 8.43, .44 + n * .23), H.p(2, 9.46, .44 + n * .23)], 'paper', 2.3);
+  }
+  for (const i of [.67, 1.68]) for (const j of [7.89, 10.03]) oval(H, R, ...H.p(i, j, .13), 4, 5, 'blue', .9);
+  const [lx, ly] = H.p(1.06, 8.87, 1.33);
+  oval(H, R, lx, ly - 8, 11, 6, 'blue', .6);
+  H.line(R, [[lx - 7, ly - 4], [lx + 7, ly - 14]], 'sun', 2);
+  bike(H, R, 8.13, 2.67, .18, 1.07, 'coral');
+  stroke(H, R, [H.p(8.65, 2.85, .03), H.p(8.65, 2.85, 1.3), H.p(8.02, 2.84, 1.3)], 'blue', 4);
+  for (const [di, dj] of [[-.64, .44], [.64, .44], [0, -.65]]) H.line(R, [H.p(8.65, 2.85, .07), H.p(8.65 + di, 2.85 + dj, .07)], 'blue', 3);
+  table(H, R, 5.67, 5.0, 2.2, 1.39, .63, 'paper');
+  const [wx, wy] = H.p(6.55, 5.58, 1.77);
+  for (const dx of [-13, 13]) stroke(H, R, [[wx + dx * 1.55, wy + 38], [wx + dx, wy + 30], [wx + dx, wy + 2], [wx, wy]], 'teal', 3.2);
+  H.line(R, [[wx - 21, wy + 38], [wx + 21, wy + 38]], 'blue', 4);
+  H.line(R, [[wx - 13, wy + 27], [wx + 13, wy + 27]], 'coral', 1.6);
+  shape(H, R, H.tile(7.11, 5.38, .52, .7, .78), 'sun', .6, .55);
+  wrench(H, R, ...H.p(7.5, 5.81, .8), .56);
+  for (const j of [8.3, 9.2, 10.1]) {
+    const [x, y] = H.p(10.4, j, .55);
+    H.outline(R, ell(x, y - 17, 15, 21), 'blue', 4, { tone: .76, amp: .14 });
+    H.outline(R, ell(x, y - 17, 10.5, 16), 'teal', 1.1, { tone: .65 });
+  }
+  box(H, R, 9.76, 7.7, 1.29, 3.41, .03, .16, 'sun', .5);
+  const [px, py] = H.p(8.95, 8.82, .05);
+  oval(H, R, px, py, 11, 4, 'blue', .6);
+  H.line(R, [[px, py], [px, py - 44]], 'teal', 5);
+  H.line(R, [[px - 11, py - 45], [px + 11, py - 45]], 'blue', 3);
+  stroke(H, R, [[px + 2, py - 6], [px + 19, py - 18], [px + 26, py + 1], [px + 15, py + 8]], 'blue', 1.2);
+  box(H, R, 3.3, 9.34, 1.28, .93, .03, .61, 'sun', .48);
+  shape(H, R, H.tile(3.42, 9.45, 1.04, .69, .66), 'blue', .5, .5);
+  for (let n = 0; n < 5; n++) oval(H, R, ...H.p(3.63 + n * .15, 9.83, .7), 4, 4.9, 'paper', 1);
+  const [hx, hy] = H.p(4.62, 1.02, 2.7);
+  shape(H, R, [[hx - 15, hy], [hx - 12, hy - 13], [hx, hy - 19], [hx + 14, hy - 10], [hx + 16, hy]], 'coral', .7, .8);
+  for (const dx of [-7, 0, 7]) H.line(R, [[hx + dx, hy - 4], [hx + dx - 1, hy - 12]], 'paper', 2);
+  stroke(H, R, [[hx - 12, hy], [hx - 7, hy + 19], [hx + 10, hy]], 'blue', 1);
+  shape(H, R, H.tile(5.15, 9.8, .67, .83, .03), 'paper', 1, .5);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(5.24, 10 + n * .16, .05), H.p(5.7, 10 + n * .16, .05)], 'teal', .6);
+}, (H, R, t) => {
+  const u = cycle(t, 16), spin = Math.min(1, Math.max(0, (u - .1) / .34));
+  const angle = TAU * 5 * (1 - (1 - spin) ** 3);
+  wheel(H, R, ...H.p(6.55, 5.58, 1.77), 31, angle);
+  actor(H, R, 5.65, 6.51, u * 16, 'newYorkWheelTrue', { shirt: ['sun', .64], apron: ['teal', .68], face: 'se', hairStyle: 'curly', prop(h, r, points) {
+    const [x, y] = points.farHand;
+    oval(h, r, x + 3, y - 3, 3, 3, 'blue', .7);
+    h.line(r, [[x + 3, y - 1], [x + 8, y + 6]], 'blue', 2);
+  } }, .02, 1.4);
+  actor(H, R, 3.27, 3.6, 0, 'hold', { shirt: ['coral', .6], face: 'sw', hairStyle: 'short', prop(h, r, points) {
+    const [x, y] = points.nearHand;
+    wrench(h, r, x, y, .5);
+  } }, .02, 1.2);
+});
+room.loopSeconds = 16;
+export default room;

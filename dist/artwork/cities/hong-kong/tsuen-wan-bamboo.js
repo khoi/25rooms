@@ -1,0 +1,107 @@
+import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
+import { FIGURES } from '../../drawings.js';
+
+const rest = FIGURES.clips.idle.keys[0][1];
+const test = { ...rest, lean: -10, head: 12, al: 73, ar: 77, el: 26, er: 20 };
+FIGURES.clips.hongKongBambooTension = { dur: 16, keys: [[0, test], [.12, test], [.34, { ...test, lean: 1, al: 42, ar: 48, el: 63, er: 57 }], [.56, { ...test, lean: 1, al: 42, ar: 48, el: 63, er: 57, head: 3 }], [.75, test], [.9, test], [1, test]] };
+const teach = { ...rest, head: 4, ar: 91, er: 10, al: 22, el: 32 };
+FIGURES.clips.hongKongBambooTeacher = { dur: 16, keys: [[0, teach], [.3, { ...teach, ar: 98, er: 4 }], [.55, teach], [.75, { ...teach, ar: 56, er: 48 }], [.9, teach], [1, teach]] };
+
+function pole(H, R, a, b, radius = 4, ink = 'sun') {
+  const p = H.p(...a), q = H.p(...b), dx = q[0] - p[0], dy = q[1] - p[1], length = Math.hypot(dx, dy), nx = -dy / length * radius, ny = dx / length * radius;
+  shape(H, R, [[p[0] + nx, p[1] + ny], [q[0] + nx, q[1] + ny], [q[0] - nx, q[1] - ny], [p[0] - nx, p[1] - ny]], ink, .56, .9);
+  H.line(R, [[p[0] + nx * .4, p[1] + ny * .4], [q[0] + nx * .4, q[1] + ny * .4]], 'paper', .8);
+  const count = Math.max(2, Math.floor(length / 25));
+  for (let k = 1; k < count; k++) {
+    const x = p[0] + dx * k / count, y = p[1] + dy * k / count;
+    H.line(R, [[x - nx * 1.08, y - ny * 1.08], [x + nx * 1.08, y + ny * 1.08]], 'blue', .8, { tone: .62 });
+    H.line(R, [[x - nx, y - ny - 1.8], [x + nx, y + ny - 1.8]], 'teal', .7, { tone: .5 });
+  }
+  oval(H, R, ...q, radius, radius * .65, 'paper', 1);
+  oval(H, R, ...q, radius * .55, radius * .3, 'blue', .7);
+}
+
+function binding(H, R, i, j, z, ink = 'blue') {
+  const [x, y] = H.p(i, j, z);
+  for (let q = 0; q < 4; q++) H.line(R, [[x - 7 + q * 3, y - 6], [x - 4 + q * 3, y + 6]], ink, 1.4, { tone: .78 });
+  H.line(R, [[x - 6, y + 4], [x + 8, y - 4]], ink, 1.1);
+}
+
+function coil(H, R, i, j, ink = 'blue', size = 1) {
+  const [x, y] = H.p(i, j, .035);
+  for (let q = 0; q < 5; q++) H.outline(R, Array.from({ length: 36 }, (_, n) => [x + Math.cos(n * TAU / 36) * (7 + q * 2) * size, y + Math.sin(n * TAU / 36) * (3 + q) * size]), ink, 1.3, { tone: .7 });
+  stroke(H, R, [[x + 13 * size, y + 3], [x + 29 * size, y + 4], [x + 33 * size, y + 12]], ink, 1.3);
+}
+
+const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', { floor: 'paper', tone: .5, wall: false, head: 20 }, (H, R) => {
+  shape(H, R, [H.p(.08, .08, .02), H.p(.08, 6.13, .02), H.p(.08, 6.13, 2.32), H.p(.08, .08, 2.32)], 'teal', .2, .7);
+  for (const [i, j] of [[.62, .68], [5.37, .68], [10.83, .68], [.62, 5.31], [.62, 10.32]]) {
+    box(H, R, i - .18, j - .18, .38, .38, .01, .19, 'blue', .5);
+    pole(H, R, [i, j, .2], [i, j, 3.76], 4.6);
+  }
+  for (const z of [1.47, 3.15, 3.61]) {
+    pole(H, R, [.3, .72, z], [11.33, .72, z], 4.0);
+    pole(H, R, [.65, .35, z], [.65, 10.91, z], 4.0);
+  }
+  pole(H, R, [.68, .78, .45], [5.31, .78, 3.58], 3.3);
+  pole(H, R, [.7, 5.35, .38], [.7, 10.23, 3.55], 3.3);
+  for (const [i, j] of [[.65, .72], [5.37, .72], [10.83, .72], [.65, 5.31], [.65, 10.32]]) for (const z of [1.47, 3.15]) binding(H, R, i, j, z);
+  shape(H, R, [H.p(.47, .3, 3.81), H.p(4.95, .3, 3.81), H.p(4.95, 1.72, 3.55), H.p(.47, 1.72, 3.55)], 'paper', .82, 1);
+  for (let i = .55; i < 4.96; i += .3) H.line(R, [H.p(i, .3, 3.82), H.p(i, 1.72, 3.56)], 'blue', .85, { tone: .6 });
+  box(H, R, .78, 2.7, 1.42, .36, .02, .3, 'coral', .45);
+  box(H, R, .78, 7.35, 1.42, .36, .02, .3, 'coral', .45);
+  for (let q = 0; q < 6; q++) pole(H, R, [1 + q % 3 * .31, 2.34, .44 + Math.floor(q / 3) * .2], [1 + q % 3 * .31, 8.01, .44 + Math.floor(q / 3) * .2], 4.0);
+  for (const j of [3.0, 7.23]) {
+    for (let q = 0; q < 3; q++) H.line(R, [H.p(.86, j + q * .04, .45), H.p(1.74, j + q * .04, .84)], 'coral', 1.1);
+  }
+  for (const i of [4.25, 7.56]) {
+    for (const j of [4.77, 6.1]) pole(H, R, [i, j, .08], [i, 5.47, 1.0], 3, 'coral');
+    box(H, R, i - .18, 5.11, .36, .77, .99, .13, 'blue', .52);
+  }
+  pole(H, R, [3.79, 5.45, 1.18], [8.15, 5.45, 1.18], 5.0);
+  pole(H, R, [6.04, 4.22, 1.39], [6.04, 6.52, 1.39], 4.6);
+  binding(H, R, 6.04, 5.45, 1.42, 'blue');
+  coil(H, R, 4.78, 7.38, 'blue', 1.12);
+  coil(H, R, 2.54, 9.01, 'coral', .85);
+  table(H, R, 8.74, 1.86, 2.42, 1.36, .64, 'paper');
+  box(H, R, 8.94, 2.05, 1.03, .84, .79, .4, 'teal', .62);
+  box(H, R, 9.23, 2.24, .43, .13, 1.19, .12, 'blue', .7);
+  H.line(R, [H.p(8.95, 2.9, .95), H.p(9.96, 2.9, .95)], 'paper', .8);
+  box(H, R, 10.21, 2.08, .72, .26, .79, .16, 'sun', .65);
+  const [lx, ly] = H.p(10.56, 2.23, .97);
+  oval(H, R, lx, ly, 4.6, 2.1, 'teal', .6);
+  H.line(R, [[lx - 2, ly - 2], [lx - 2, ly + 2]], 'blue', .7);
+  box(H, R, 10.22, 2.53, .66, .34, .79, .045, 'blue', .75);
+  H.line(R, [H.p(10.44, 2.69, .85), H.p(10.96, 2.87, .85)], 'coral', 3);
+  box(H, R, 8.79, 1.99, .2, .19, .8, .54, 'paper', 1);
+  box(H, R, 8.81, 2.01, .16, .15, 1.34, .07, 'coral', .7);
+  const [hx, hy] = H.p(10.85, .81, 2.53);
+  oval(H, R, hx, hy, 16, 6, 'sun', .65);
+  shape(H, R, [[hx - 13, hy], [hx - 10, hy - 12], [hx + 2, hy - 18], [hx + 12, hy - 9], [hx + 13, hy]], 'sun', .7, .8);
+  H.line(R, [[hx, hy - 16], [hx, hy - 3]], 'paper', 1.5);
+  table(H, R, 8.84, 8.54, 2.07, .81, .49, 'coral');
+  for (let q = 0; q < 2; q++) {
+    const [x, y] = H.p(9.06 + q * .58, 8.93, .65);
+    shape(H, R, [[x - 6, y + 3], [x - 6, y - 6], [x - 3, y - 13], [x, y - 11], [x + 4, y - 14], [x + 7, y - 5], [x + 5, y + 5]], 'paper', 1, .5);
+  }
+  box(H, R, 10.14, 10.16, 1.16, 1.02, .02, .66, 'teal', .32);
+  for (let q = 0; q < 5; q++) pole(H, R, [10.29 + q * .18, 10.38, .41], [10.21 + q * .2, 10.52, .98 + q % 2 * .16], 3);
+  pole(H, R, [8.42, 10.33, .07], [8.42, 10.33, 1.8], 2.4, 'coral');
+  for (let q = 0; q < 9; q++) H.line(R, [H.p(8.42, 10.33, .35), H.p(8.13 + q * .08, 10.53, .03)], 'sun', 1.5);
+  pole(H, R, [3.89, 9.82, .13], [6.02, 9.82, .13], 3.7);
+  for (const [i, ink] of [[4.18, 'coral'], [4.85, 'blue'], [5.43, 'teal']]) binding(H, R, i, 9.82, .15, ink);
+}, (H, R, t) => {
+  const u = cycle(t, 16), tight = u < .12 ? 0 : u < .34 ? (1 - Math.cos((u - .12) / .22 * Math.PI)) / 2 : u < .56 ? 1 : u < .75 ? (1 + Math.cos((u - .56) / .19 * Math.PI)) / 2 : 0;
+  actor(H, R, 6.69, 6.15, t, 'hongKongBambooTension', { shirt: ['teal', .58], pants: ['blue', .74], hairStyle: 'short', face: 'nw', prop(HH, RR, points) {
+    const joint = HH.p(6.04, 5.45, 1.45);
+    for (const hand of [points.nearHand, points.farHand]) stroke(HH, RR, [joint, [(joint[0] + hand[0]) / 2, (joint[1] + hand[1]) / 2 + 11 * (1 - tight)], hand], 'blue', 1.6);
+    const [x, y] = points.nearHand;
+    stroke(HH, RR, [[x, y], [x + 6, y + 10], [x + 3, y + 22]], 'blue', 1.2);
+  } }, 0, 1.45);
+  actor(H, R, 9.2, 5.9, t, 'hongKongBambooTeacher', { shirt: ['coral', .57], hairStyle: 'short', face: 'nw' }, 0, 1.3, 'elder');
+  const [x, y] = H.p(.66, 10.36, 1.45);
+  stroke(H, R, [[x, y], [x + 6 + Math.sin(u * TAU) * 2, y + 17], [x + 3, y + 31]], 'blue', 1.1);
+});
+
+room.loopSeconds = 16;
+export default room;
