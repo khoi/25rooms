@@ -10570,3 +10570,5 @@ return {i:G[0],j:G[1],z:T.z+.9+Math.sin(t*1.5)*.06,opacity:B.greet,opts:{mood:'h
 
 
 export { ROOMS, FIGURES, mkHand, streamOf, iso, isoX, isoY, pip, PAPER, rgb, rect, circ };
+
+export { strHash, slab, backWalls, boxAt, wallRect, wallPt, windowOn, shelfOn, plant, tree, lamp, cloud, stars, twinkle, ell, loop, curve, ribbon, blob, arcPts, starPts, polyPts, shadowAt, rug };

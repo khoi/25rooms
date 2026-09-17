@@ -1,7 +1,14 @@
 import { ROOMS, iso, isoX, isoY, pip } from './drawings.js';
+import { NEW_ROOMS } from './worlds/index.js';
 
-export function createLayout(columns = 5) {
-  const definitions = ROOMS.slice().sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+export function collectionForRoom(id) {
+  if (NEW_ROOMS.some(room => room.id === id)) return 'new';
+  if (ROOMS.some(room => room.id === id)) return 'original';
+  return null;
+}
+
+export function createLayout(columns = 5, collection = 'original') {
+  const definitions = (collection === 'new' ? NEW_ROOMS : ROOMS).slice().sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
   const rows = Math.ceil(definitions.length / columns);
   const rooms = definitions.map((definition, index) => {
     const row = rows - 1 - Math.floor(index / columns);

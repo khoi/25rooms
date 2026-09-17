@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createLayout, overlaps } from './artwork/layout.js';
+import { createLayout, collectionForRoom, overlaps } from './artwork/layout.js';
 import { RoomPainter, paintSheet } from './artwork/painter.js';
 
 const stage = document.querySelector('#stage');
@@ -7,7 +7,14 @@ const status = document.querySelector('#status');
 const tourButton = document.querySelector('#tour');
 const query = new URLSearchParams(location.search);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const layout = createLayout();
+const initialId = query.get('room') || location.hash.slice(1);
+const collection = ['original', 'new'].includes(query.get('collection')) ? query.get('collection') : collectionForRoom(initialId) || 'new';
+const layout = createLayout(5, collection);
+const caption = document.querySelector('#room-caption');
+for (const link of document.querySelectorAll('[data-collection]')) {
+  if (link.dataset.collection === collection) link.setAttribute('aria-current', 'page');
+}
+document.title = collection === 'new' ? 'a small light, somewhere else' : 'a small light, room by room';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#262320');
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 100);
@@ -100,14 +107,23 @@ function focusRoom(index, duration = 1100) {
   tourIndex = (index + layout.rooms.length) % layout.rooms.length;
   const room = layout.rooms[tourIndex];
   moveCamera({ ...room.center, zoom: roomZoom(room) }, duration);
-  history.replaceState(null, '', `#${room.id}`);
+  caption.textContent = `${String(tourIndex + 1).padStart(2, '0')} / ${room.definition.title || room.id.replaceAll('-', ' ')}`;
+  caption.hidden = false;
+  const parameters = new URLSearchParams(location.search);
+  parameters.delete('room');
+  parameters.set('collection', collection);
+  history.replaceState(null, '', `${location.pathname}?${parameters}#${room.id}`);
 }
 
 function viewAll() {
   setTour(false);
   tourIndex = -1;
+  caption.hidden = true;
   moveCamera(fitTarget(), 900);
-  history.replaceState(null, '', location.pathname + location.search);
+  const parameters = new URLSearchParams(location.search);
+  parameters.delete('room');
+  parameters.set('collection', collection);
+  history.replaceState(null, '', `${location.pathname}?${parameters}`);
 }
 
 function interrupt() {
@@ -272,7 +288,7 @@ addEventListener('keydown', event => {
   else if (key === ' ') setTour(!tour);
   else viewAll();
 });
-document.querySelector('#previous').addEventListener('click', () => { setTour(false); focusRoom(tourIndex < 0 ? 24 : tourIndex - 1); });
+document.querySelector('#previous').addEventListener('click', () => { setTour(false); focusRoom(tourIndex < 0 ? layout.rooms.length - 1 : tourIndex - 1); });
 document.querySelector('#next').addEventListener('click', () => { setTour(false); focusRoom(tourIndex + 1); });
 document.querySelector('#reset').addEventListener('click', viewAll);
 tourButton.addEventListener('click', () => setTour(!tour));
@@ -292,7 +308,6 @@ stage.addEventListener('webglcontextrestored', () => {
 });
 resize();
 Object.assign(view, fitTarget());
-const initialId = query.get('room') || location.hash.slice(1);
 const initialRoom = layout.rooms.findIndex(room => room.id === initialId);
 if (initialRoom >= 0) focusRoom(initialRoom, 0);
 setTour(tour);
@@ -333,5 +348,5 @@ globalThis.PRINT = {
   view,
   focus: id => { const index = layout.rooms.findIndex(room => room.id === id); if (index >= 0) { setTour(false); focusRoom(index); } },
   fit: viewAll,
-  inspect: () => ({ renderer: 'Three.js', rooms: entries.length, ready: entries.filter(entry => entry.painted).length, textures: renderer.info.memory.textures, calls: renderer.info.render.calls, errors: errors.slice(), view: { ...view } }),
+  inspect: () => ({ renderer: 'Three.js', collection, rooms: entries.length, ready: entries.filter(entry => entry.painted).length, textures: renderer.info.memory.textures, calls: renderer.info.render.calls, errors: errors.slice(), view: { ...view } }),
 };
