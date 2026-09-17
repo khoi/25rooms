@@ -1,3 +1,4 @@
+import { surface, drape } from '../materials.js';
 import { cornice, recessedFrame, hangingRail } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
@@ -8,42 +9,66 @@ const rinse = { ...rest, al: 22, ar: 74, el: 34, er: 12, lean: -7, head: 7 };
 FIGURES.clips.hongKongKayakRinse = { dur: 16, keys: [[0, rinse], [.12, rinse], [.31, { ...rinse, ar: 97, er: 8, lean: -11, head: 10 }], [.49, { ...rinse, ar: 58, er: 9, lean: -5, head: 14 }], [.66, { ...rinse, ar: 95, er: 8, lean: -9 }], [.79, rinse], [1, rinse]] };
 
 function kayak(H, R, i, j, length, width, z, ink) {
-  const hull = [], under = [];
+  const hull = [],
+    under = [];
   for (let q = 0; q <= 22; q++) {
-    const f = q / 22, bulge = Math.sin(Math.PI * f) ** .72 * width;
-    hull.push(H.p(i + f * length, j - bulge, z + Math.sin(Math.PI * f) * .13));
-    under.push(H.p(i + f * length, j - bulge * .7, z - .19));
+    const f = q / 22,
+      bulge = Math.sin(Math.PI * f) ** 0.72 * width;
+    hull.push(H.p(i + f * length, j - bulge, z + Math.sin(Math.PI * f) * 0.13));
+    under.push(H.p(i + f * length, j - bulge * 0.7, z - 0.19));
   }
   for (let q = 22; q >= 0; q--) {
-    const f = q / 22, bulge = Math.sin(Math.PI * f) ** .72 * width;
-    hull.push(H.p(i + f * length, j + bulge, z + Math.sin(Math.PI * f) * .13));
-    under.push(H.p(i + f * length, j + bulge * .7, z - .19));
+    const f = q / 22,
+      bulge = Math.sin(Math.PI * f) ** 0.72 * width;
+    hull.push(H.p(i + f * length, j + bulge, z + Math.sin(Math.PI * f) * 0.13));
+    under.push(H.p(i + f * length, j + bulge * 0.7, z - 0.19));
   }
-  shape(H, R, under, 'blue', .64, .8);
-  shape(H, R, hull, ink, .68, .9);
-  H.line(R, [H.p(i + .2, j, z + .04), H.p(i + length - .2, j, z + .04)], 'paper', 1.1, { tone: .7 });
+  shape(H, R, under, 'blue', 0.64, 0.8);
+  shape(H, R, hull, ink, 0.68, 0.9);
+  H.line(R, [H.p(i + 0.2, j, z + 0.04), H.p(i + length - 0.2, j, z + 0.04)], 'paper', 1.1, { tone: 0.7 });
   const cockpit = [];
   for (let q = 0; q < 30; q++) {
-    const a = q * TAU / 30;
-    cockpit.push(H.p(i + length * .51 + Math.cos(a) * .91, j + Math.sin(a) * width * .65, z + .18));
+    const a = (q * TAU) / 30;
+    cockpit.push(H.p(i + length * 0.51 + Math.cos(a) * 0.91, j + Math.sin(a) * width * 0.65, z + 0.18));
   }
-  shape(H, R, cockpit, 'blue', .73, .85);
-  H.outline(R, cockpit, 'paper', 2.1, { tone: .85, amp: .1 });
-  box(H, R, i + length * .52, j - width * .43, .38, width * .86, z + .18, .13, 'teal', .65);
-  for (const pos of [.2, .8]) {
+  shape(H, R, cockpit, 'blue', 0.73, 0.85);
+  H.outline(R, cockpit, 'paper', 2.1, { tone: 0.85, amp: 0.1 });
+  box(H, R, i + length * 0.52, j - width * 0.43, 0.38, width * 0.86, z + 0.18, 0.13, 'teal', 0.65);
+  for (const pos of [0.2, 0.8]) {
     const hatch = [];
     for (let q = 0; q < 20; q++) {
-      const a = q * TAU / 20;
-      hatch.push(H.p(i + length * pos + Math.cos(a) * .33, j + Math.sin(a) * .32, z + .16));
+      const a = (q * TAU) / 20;
+      hatch.push(H.p(i + length * pos + Math.cos(a) * 0.33, j + Math.sin(a) * 0.32, z + 0.16));
     }
-    shape(H, R, hatch, 'teal', .64, .65);
+    shape(H, R, hatch, 'teal', 0.64, 0.65);
   }
-  for (const pos of [.14, .7]) for (let q = 0; q < 3; q++) {
-    const a = i + length * pos + q * .3;
-    H.line(R, [H.p(a, j - width * .62, z + .16), H.p(a + .38, j + width * .62, z + .16)], 'blue', .9);
-    H.line(R, [H.p(a, j + width * .62, z + .16), H.p(a + .38, j - width * .62, z + .16)], 'blue', .9);
+  for (const pos of [0.14, 0.7])
+    for (let q = 0; q < 3; q++) {
+      const a = i + length * pos + q * 0.3;
+      H.line(R, [H.p(a, j - width * 0.62, z + 0.16), H.p(a + 0.38, j + width * 0.62, z + 0.16)], 'blue', 0.9);
+      H.line(R, [H.p(a, j + width * 0.62, z + 0.16), H.p(a + 0.38, j - width * 0.62, z + 0.16)], 'blue', 0.9);
+    }
+  for (const a of [i + 0.14, i + length - 0.2]) stroke(H, R, [H.p(a, j - 0.14, z), H.p(a, j, z + 0.16), H.p(a, j + 0.14, z)], 'blue', 1.3);
+  for (const side of [-1, 1]) {
+    const edge = [];
+    for (let n = 1; n < 22; n++) {
+      const f = n / 22;
+      edge.push(H.p(i + f * length, j + side * Math.sin(f * Math.PI) ** 0.72 * width * 0.84, z + Math.sin(f * Math.PI) * 0.13 + 0.025));
+    }
+    H.line(R, edge, 'paper', 1.2);
+    for (const f of [0.17, 0.32, 0.68, 0.83]) {
+      const b = Math.sin(f * Math.PI) ** 0.72 * width * 0.83;
+      surface(H, R, ell(...H.p(i + f * length, j + side * b, z + 0.16), 2.4, 1.6), 'blue', 0.7, 0.4);
+    }
   }
-  for (const a of [i + .14, i + length - .2]) stroke(H, R, [H.p(a, j - .14, z), H.p(a, j, z + .16), H.p(a, j + .14, z)], 'blue', 1.3);
+  drape(H, R, i + length * 0.47, j - width * 0.31, 0.38, width * 0.61, z + 0.34, 0.21, 'coral');
+  for (let n = 0; n < 4; n++)
+    H.line(
+      R,
+      [H.p(i + length * 0.61 + n * 0.08, j - width * 0.21, z + 0.13), H.p(i + length * 0.61 + n * 0.08, j + width * 0.21, z + 0.13)],
+      'paper',
+      0.65
+    );
 }
 
 function vest(H, R, i, z, ink) {

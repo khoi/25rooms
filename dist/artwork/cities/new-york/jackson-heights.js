@@ -1,6 +1,7 @@
+import { bentTube, metal, timber, branchSpray } from '../materials.js';
 import { specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, satchel } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU, ell } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, bench, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -25,10 +26,12 @@ function foldingChair(H, R, i, j, ink) {
 }
 
 function planter(H, R, i, j, w, d) {
-  box(H, R, i, j, w, d, .02, .78, 'teal', .65);
-  shape(H, R, H.tile(i + .1, j + .1, w - .2, d - .2, .82), 'blue', .63, .6);
-  for (let n = 0; n < Math.ceil(w / .7); n++) plant(H, R, ...H.p(i + .4 + n * .62, j + d / 2, .79), .64);
-  for (let n = 0; n < 5; n++) H.line(R, [H.p(i, j + d, .15 + n * .12), H.p(i + w, j + d, .15 + n * .12)], 'paper', .6, { tone: .5 });
+  for (const z of [0.02, 0.27, 0.52]) timber(H, R, i, j, w, d, z, 0.22, 'teal');
+  for (const x of [i + 0.11, i + w - 0.22]) metal(H, R, x, j + d + 0.01, 0.11, 0.045, 0.07, 0.67, 'blue');
+  shape(H, R, H.tile(i + 0.1, j + 0.1, w - 0.2, d - 0.2, 0.82), 'blue', 0.63, 0.6);
+  for (let n = 0; n < Math.ceil(w / 0.4); n++)
+    branchSpray(H, R, ...H.p(i + 0.24 + n * 0.38, j + d / 2, 0.84), 0.55 + (n % 2) * 0.15, 'teal', n % 2 ? 1 : -1);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(i, j + d, 0.15 + n * 0.12), H.p(i + w, j + d, 0.15 + n * 0.12)], 'paper', 0.6, { tone: 0.5 });
 }
 
 function jacksonHeightsDetails(H, R) {
@@ -226,7 +229,12 @@ const room = world('new-york-jackson-heights', 'Jackson Heights · One More Move
   for (let n = 0; n < 6; n++) H.line(R, [H.p(8.3 + n * .43, 3.22, .57), H.p(8.3 + n * .43, 3.89, .57)], 'paper', .7);
   foldingChair(H, R, 5.4, 7.54, 'coral');
   foldingChair(H, R, 5.37, 3.62, 'teal');
-  table(H, R, 4.6, 4.7, 2.9, 2.7, 1.02, 'paper');
+  for(const i of [4.9,7.13]){
+    bentTube(H,R,[[i,4.86,.03],[i,6.05,.98],[i,7.21,.03]],3,'teal');
+    bentTube(H,R,[[i,4.86,.99],[i,6.05,.1],[i,7.21,.99]],3,'teal');
+    H.dot(...H.p(i,6.05,.55),2.5,'sun');
+  }
+  metal(H,R,4.6,4.7,2.9,2.7,1.02,.12,'paper');
   shape(H, R, H.tile(4.89, 4.9, 2.35, 2.35, 1.16), 'sun', .5, .7);
   for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) shape(H, R, H.tile(4.94 + i * .28, 4.95 + j * .28, .28, .28, 1.18), (i + j) % 2 ? 'teal' : 'paper', (i + j) % 2 ? .68 : 1, .2);
   for (const [i, j, ink, knight] of [[0, 0, 'blue'], [2, 0, 'blue'], [5, 1, 'blue'], [6, 2, 'blue', true], [3, 3, 'blue'], [2, 4, 'paper'], [5, 5, 'paper'], [1, 6, 'paper'], [6, 7, 'paper']]) piece(H, R, ...H.p(5.08 + i * .28, 5.09 + j * .28, 1.2), ink, knight, .74);

@@ -1,3 +1,4 @@
+import { surface, benchFrame } from '../materials.js';
 import { cornice, windowBay, cityView, taskLight, caster } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell, wallPt, wallRect } from '../../worlds/common.js';
@@ -24,13 +25,53 @@ function bike(H, R, i, j, z = 0, scale = 1, ink = 'coral') {
   const p = (a, b) => [x + a * scale, y + b * scale];
   wheel(H, R, ...p(-34, -28), 25 * scale);
   wheel(H, R, ...p(41, -28), 25 * scale);
-  for (const points of [[[-34, -28], [-6, -64], [8, -29], [-34, -28]], [[-6, -64], [31, -65], [8, -29]], [[31, -65], [41, -28]], [[8, -29], [26, -60]]]) H.line(R, points.map(([a, b]) => p(a, b)), ink, 3.8 * scale, { tone: .78, amp: .12 });
+  for (const points of [
+    [
+      [-34, -28],
+      [-6, -64],
+      [8, -29],
+      [-34, -28]
+    ],
+    [
+      [-6, -64],
+      [31, -65],
+      [8, -29]
+    ],
+    [
+      [31, -65],
+      [41, -28]
+    ],
+    [
+      [8, -29],
+      [26, -60]
+    ]
+  ])
+    H.line(
+      R,
+      points.map(([a, b]) => p(a, b)),
+      ink,
+      3.8 * scale,
+      { tone: 0.78, amp: 0.12 }
+    );
   H.line(R, [p(-8, -68), p(-12, -79), p(-23, -79), p(1, -79)], 'blue', 3 * scale);
   stroke(H, R, [p(30, -65), p(26, -84), p(37, -88), p(48, -84), p(46, -74)], 'blue', 2 * scale);
-  oval(H, R, ...p(8, -29), 7 * scale, 7 * scale, 'blue', .6);
+  oval(H, R, ...p(8, -29), 7 * scale, 7 * scale, 'blue', 0.6);
   H.line(R, [p(8, -29), p(18, -20), p(24, -21)], 'paper', 2 * scale);
-  stroke(H, R, [p(-38, -29), p(8, -24), p(10, -33), p(-34, -34), p(-38, -29)], 'blue', .75);
+  stroke(H, R, [p(-38, -29), p(8, -24), p(10, -33), p(-34, -34), p(-38, -29)], 'blue', 0.75);
   H.line(R, [p(-35, -64), p(-15, -65), p(-28, -31)], 'blue', 1.2 * scale);
+  for (const [a, b, c, d] of [
+    [-6, -64, 31, -65],
+    [-34, -28, 8, -29]
+  ])
+    H.line(R, [p(a, b - 1), p(c, d - 1)], 'paper', 0.8);
+  stroke(H, R, [p(46, -77), p(25, -56), p(-4, -58), p(-26, -39)], 'blue', 0.7);
+  stroke(H, R, [p(40, -80), p(47, -65), p(44, -45)], 'blue', 0.65);
+  for (let n = 0; n < 14; n++) {
+    const a = (n * TAU) / 14;
+    H.dot(...p(8 + Math.cos(a) * 8, -29 + Math.sin(a) * 8), 0.85, 'sun');
+  }
+  H.line(R, [p(25, -47), p(30, -52)], 'coral', 2.3);
+  surface(H, R, [p(-4, -50), p(0, -54), p(7, -45), p(3, -41)], 'paper', 1, 0.5);
 }
 
 function wrench(H, R, x, y, size = 1, ink = 'blue') {
@@ -229,7 +270,7 @@ const room = world('new-york-mott-haven-cycles', 'Mott Haven · Wheel True', { f
   bike(H, R, 8.13, 2.67, .18, 1.07, 'coral');
   stroke(H, R, [H.p(8.65, 2.85, .03), H.p(8.65, 2.85, 1.3), H.p(8.02, 2.84, 1.3)], 'blue', 4);
   for (const [di, dj] of [[-.64, .44], [.64, .44], [0, -.65]]) H.line(R, [H.p(8.65, 2.85, .07), H.p(8.65 + di, 2.85 + dj, .07)], 'blue', 3);
-  table(H, R, 5.67, 5.0, 2.2, 1.39, .63, 'paper');
+  benchFrame(H,R,5.67,5,2.2,1.39,.75,'teal');
   const [wx, wy] = H.p(6.55, 5.58, 1.77);
   for (const dx of [-13, 13]) stroke(H, R, [[wx + dx * 1.55, wy + 38], [wx + dx, wy + 30], [wx + dx, wy + 2], [wx, wy]], 'teal', 3.2);
   H.line(R, [[wx - 21, wy + 38], [wx + 21, wy + 38]], 'blue', 4);

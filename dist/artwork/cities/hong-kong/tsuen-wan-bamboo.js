@@ -1,3 +1,4 @@
+import { timber } from '../materials.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -24,8 +25,52 @@ function pole(H, R, a, b, radius = 4, ink = 'sun') {
 
 function binding(H, R, i, j, z, ink = 'blue') {
   const [x, y] = H.p(i, j, z);
-  for (let q = 0; q < 4; q++) H.line(R, [[x - 7 + q * 3, y - 6], [x - 4 + q * 3, y + 6]], ink, 1.4, { tone: .78 });
-  H.line(R, [[x - 6, y + 4], [x + 8, y - 4]], ink, 1.1);
+  for (let q = 0; q < 4; q++)
+    H.line(
+      R,
+      [
+        [x - 7 + q * 3, y - 6],
+        [x - 4 + q * 3, y + 6]
+      ],
+      ink,
+      1.4,
+      { tone: 0.78 }
+    );
+  H.line(
+    R,
+    [
+      [x - 6, y + 4],
+      [x + 8, y - 4]
+    ],
+    ink,
+    1.1
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 8, y - 7],
+      [x - 11, y - 2],
+      [x - 3, y + 8],
+      [x + 9, y + 4]
+    ],
+    'sun',
+    0.65
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x + 5, y + 3],
+      [x + 12, y + 8],
+      [x + 15, y + 4],
+      [x + 11, y + 2],
+      [x + 7, y + 9],
+      [x + 8, y + 17]
+    ],
+    ink,
+    1.1
+  );
 }
 
 function coil(H, R, i, j, ink = 'blue', size = 1) {
@@ -205,6 +250,16 @@ const room = world('hong-kong-tsuen-wan-bamboo', 'Tsuen Wan · The knot holds', 
   for (const [i, j] of [[.65, .72], [5.37, .72], [10.83, .72], [.65, 5.31], [.65, 10.32]]) for (const z of [1.47, 3.15]) binding(H, R, i, j, z);
   shape(H, R, [H.p(.47, .3, 3.81), H.p(4.95, .3, 3.81), H.p(4.95, 1.72, 3.55), H.p(.47, 1.72, 3.55)], 'paper', .82, 1);
   for (let i = .55; i < 4.96; i += .3) H.line(R, [H.p(i, .3, 3.82), H.p(i, 1.72, 3.56)], 'blue', .85, { tone: .6 });
+  for(const j of [1.05,1.62,2.19])pole(H,R,[.65,j,2.49],[5.37,j,2.49],3.6,'sun');
+  for(let n=0;n<8;n++){
+    const i=.76+n*.59;
+    timber(H,R,i,.87,.54,1.57,2.54,.11,n===5?'teal':'sun');
+    for(const j of [1.05,2.19])binding(H,R,i+.27,j,2.67);
+  }
+  for(const i of [.65,5.37]){
+    pole(H,R,[i,.72,1.47],[i,2.28,2.51],3.1,'sun');
+    binding(H,R,i,.72,1.47);binding(H,R,i,2.19,2.51);
+  }
   box(H, R, .78, 2.7, 1.42, .36, .02, .3, 'coral', .45);
   box(H, R, .78, 7.35, 1.42, .36, .02, .3, 'coral', .45);
   for (let q = 0; q < 6; q++) pole(H, R, [1 + q % 3 * .31, 2.34, .44 + Math.floor(q / 3) * .2], [1 + q % 3 * .31, 8.01, .44 + Math.floor(q / 3) * .2], 4.0);

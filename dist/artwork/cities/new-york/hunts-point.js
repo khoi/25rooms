@@ -1,3 +1,4 @@
+import { surface, bentTube } from '../materials.js';
 import { cornice, panelFront, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, boundBook, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
@@ -39,20 +40,57 @@ function pallet(H, R, i, j, w = 2.1, d = 2.6, z = 0) {
 }
 
 function rollerBench(H, R) {
-  for (const i of [3.1, 5.45, 7.8]) for (const j of [4.8, 6.4]) {
-    const height = 1.13 - (i - 3.1) * .038;
-    box(H, R, i, j, .13, .13, 0, height, 'blue', .68);
-    H.line(R, [H.p(i, j, .1), H.p(i + .7, j, height - .12)], 'teal', 1.7);
+  for (const i of [3.1, 5.45, 7.8])
+    for (const j of [4.8, 6.4]) {
+      const height = 1.13 - (i - 3.1) * 0.038;
+      box(H, R, i, j, 0.13, 0.13, 0, height, 'blue', 0.68);
+      H.line(R, [H.p(i, j, 0.1), H.p(i + 0.7, j, height - 0.12)], 'teal', 1.7);
+    }
+  const top = [
+    [3, 4.8, 1.16],
+    [8.15, 4.8, 0.96],
+    [8.15, 6.6, 0.96],
+    [3, 6.6, 1.16]
+  ].map((p) => H.p(...p));
+  for (const j of [4.8, 6.5])
+    bentTube(
+      H,
+      R,
+      [
+        [3, j, 1.16],
+        [8.15, j, 0.96]
+      ],
+      4,
+      'teal'
+    );
+  for (let n = 0; n < 18; n++) {
+    const i = 3.08 + n * 0.28,
+      z = 1.16 - (i - 3) * 0.038;
+    const a = H.p(i, 4.93, z),
+      b = H.p(i, 6.47, z);
+    surface(
+      H,
+      R,
+      [
+        [a[0] - 2, a[1]],
+        [a[0] + 2, a[1] - 2],
+        [b[0] + 2, b[1] - 2],
+        [b[0] - 2, b[1]]
+      ],
+      'paper',
+      1,
+      0.55
+    );
+    oval(H, R, ...b, 2.8, 2.3, 'teal', 0.75);
+    H.dot(...b, 0.9, 'sun');
   }
-  const top = [[3, 4.8, 1.16], [8.15, 4.8, .96], [8.15, 6.6, .96], [3, 6.6, 1.16]].map(p => H.p(...p));
-  shape(H, R, top, 'teal', .49);
-  for (let i = 3.08; i < 8.09; i += .28) {
-    const z = 1.16 - (i - 3) * .038;
-    H.line(R, [H.p(i, 4.92, z + .02), H.p(i, 6.46, z + .02)], 'paper', 4, { tone: 1, amp: .03 });
-    H.line(R, [H.p(i + .05, 4.92, z + .015), H.p(i + .05, 6.46, z + .015)], 'blue', .75, { tone: .6 });
+  for (let i = 3.08; i < 8.09; i += 0.28) {
+    const z = 1.16 - (i - 3) * 0.038;
+    H.line(R, [H.p(i, 4.92, z + 0.02), H.p(i, 6.46, z + 0.02)], 'paper', 4, { tone: 1, amp: 0.03 });
+    H.line(R, [H.p(i + 0.05, 4.92, z + 0.015), H.p(i + 0.05, 6.46, z + 0.015)], 'blue', 0.75, { tone: 0.6 });
   }
   for (const j of [4.77, 6.6]) H.line(R, [H.p(2.98, j, 1.2), H.p(8.2, j, 1)], 'blue', 3);
-  box(H, R, 8.12, 4.73, .13, 1.94, .97, .23, 'coral', .85);
+  box(H, R, 8.12, 4.73, 0.13, 1.94, 0.97, 0.23, 'coral', 0.85);
   crate(H, R, 3.34, 5.03, 1.15, 'pear', 'paper');
 }
 

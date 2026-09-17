@@ -1,3 +1,4 @@
+import { caneChair, benchFrame, timber } from '../materials.js';
 import { wallCourse, cornice, recessedFrame, wallRack, hangingRail, radiator } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, windowOn, plant, cycle, TAU } from '../../worlds/common.js';
@@ -21,11 +22,9 @@ function domino(H, R, i, j, a, b, turned = false) {
 }
 
 function chair(H, R, i, j, ink) {
-  box(H, R, i, j, 1.0, .98, .57, .12, ink, .63);
-  box(H, R, i, j, 1.0, .12, .7, .86, ink, .6);
-  for (const a of [.06, .86]) for (const b of [.11, .83]) H.line(R, [H.p(i + a, j + b, .03), H.p(i + a, j + b, .6)], 'blue', 2);
-  for (let k = 0; k < 4; k++) H.line(R, [H.p(i + .15 + k * .23, j + .14, .77), H.p(i + .15 + k * .23, j + .14, 1.47)], 'paper', .75);
+  caneChair(H, R, i, j, ink);
 }
+
 
 function glass(H, R, i, j, z, ink = 'coral') {
   const [x, y] = H.p(i, j, z);
@@ -36,21 +35,32 @@ function glass(H, R, i, j, z, ink = 'coral') {
 }
 
 function gameTable(H, R) {
-  table(H, R, 4.51, 4.25, 3.24, 3.24, .96, 'teal');
-  shape(H, R, H.tile(4.65, 4.39, 2.97, 2.97, 1.1), 'paper', .82, .65);
-  for (const [i, j, a, b, turned] of [[4.94, 5.54, 3, 5, false], [5.55, 5.54, 5, 2, false], [6.16, 5.54, 2, 6, false], [6.77, 5.54, 6, 1, true], [6.77, 6.14, 1, 4, true], [6.16, 6.46, 4, 2, false], [5.55, 6.46, 2, 3, false]]) domino(H, R, i, j, a, b, turned);
+  benchFrame(H, R, 4.51, 4.25, 3.24, 3.24, 1.08, 'sun');
+  for (const i of [4.56, 7.58]) timber(H, R, i, 4.3, 0.12, 3.13, 1.09, 0.045, 'teal');
+  for (const j of [4.3, 7.36]) timber(H, R, 4.58, j, 3.06, 0.12, 1.09, 0.045, 'teal');
+  shape(H, R, H.tile(4.65, 4.39, 2.97, 2.97, 1.1), 'paper', 0.82, 0.65);
+  for (const [i, j, a, b, turned] of [
+    [4.94, 5.54, 3, 5, false],
+    [5.55, 5.54, 5, 2, false],
+    [6.16, 5.54, 2, 6, false],
+    [6.77, 5.54, 6, 1, true],
+    [6.77, 6.14, 1, 4, true],
+    [6.16, 6.46, 4, 2, false],
+    [5.55, 6.46, 2, 3, false]
+  ])
+    domino(H, R, i, j, a, b, turned);
   for (let k = 0; k < 4; k++) {
-    box(H, R, 4.84 + k * .38, 4.67, .28, .12, 1.11, .34, 'paper', 1);
-    H.dot(...H.p(4.98 + k * .38, 4.8, 1.29), 1.1, 'blue', .8);
-    box(H, R, 4.96 + k * .38, 7.0, .28, .12, 1.11, .34, 'paper', 1);
-    H.line(R, [H.p(4.96 + k * .38, 7.13, 1.28), H.p(5.24 + k * .38, 7.13, 1.28)], 'blue', .4);
+    box(H, R, 4.84 + k * 0.38, 4.67, 0.28, 0.12, 1.11, 0.34, 'paper', 1);
+    H.dot(...H.p(4.98 + k * 0.38, 4.8, 1.29), 1.1, 'blue', 0.8);
+    box(H, R, 4.96 + k * 0.38, 7.0, 0.28, 0.12, 1.11, 0.34, 'paper', 1);
+    H.line(R, [H.p(4.96 + k * 0.38, 7.13, 1.28), H.p(5.24 + k * 0.38, 7.13, 1.28)], 'blue', 0.4);
   }
-  for (const j of [4.71, 5.1, 5.49]) box(H, R, 7.24, j, .12, .28, 1.11, .32, 'paper', 1);
+  for (const j of [4.71, 5.1, 5.49]) box(H, R, 7.24, j, 0.12, 0.28, 1.11, 0.32, 'paper', 1);
   glass(H, R, 7.34, 6.95, 1.12, 'sun');
   glass(H, R, 4.79, 4.9, 1.12, 'coral');
   const [x, y] = H.p(7.06, 4.54, 1.14);
-  oval(H, R, x, y, 10, 5, 'coral', .6);
-  for (let k = 0; k < 3; k++) H.dot(x - 5 + k * 5, y - k % 2 * 2, 2.1, 'sun', .8);
+  oval(H, R, x, y, 10, 5, 'coral', 0.6);
+  for (let k = 0; k < 3; k++) H.dot(x - 5 + k * 5, y - (k % 2) * 2, 2.1, 'sun', 0.8);
 }
 
 function eastHarlemDominoesDetails(H, R) {

@@ -1,3 +1,4 @@
+import { surface, metal, benchFrame, vessel, drape, bentTube } from '../materials.js';
 import { cornice, recessedFrame, windowBay, cityView, panelFront, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, windowOn, steam, ell, TAU } from '../../worlds/common.js';
@@ -35,70 +36,187 @@ function pot(H, R, x, y, direction, filter, tea, tilt = 0) {
 }
 
 function wetCounter(H, R) {
-  box(H, R, .48, .45, 10.96, 1.9, 0, 1.13, 'teal', .42);
-  box(H, R, .45, .43, 11.02, 1.96, 1.13, .13, 'paper', .95);
-  box(H, R, .46, 2.37, 1.71, 5.95, 0, 1.12, 'teal', .42);
-  box(H, R, .43, 2.34, 1.77, 6.0, 1.12, .14, 'paper', .95);
+  benchFrame(H, R, 0.48, 0.45, 10.96, 1.9, 1.13, 'teal');
+  metal(H, R, 0.45, 0.43, 11.02, 1.96, 1.13, 0.13, 'paper');
+  box(H, R, 0.46, 2.37, 1.71, 5.95, 0, 1.12, 'teal', 0.42);
+  box(H, R, 0.43, 2.34, 1.77, 6.0, 1.12, 0.14, 'paper', 0.95);
   for (const i of [1.1, 3.9, 7.1, 9.95]) {
-    H.line(R, [H.p(i, 2.41, .22), H.p(i, 2.41, .94)], 'blue', .7);
-    H.line(R, [H.p(i + .2, 2.43, .91), H.p(i + .64, 2.43, .91)], 'blue', 1.6);
+    H.line(R, [H.p(i, 2.41, 0.22), H.p(i, 2.41, 0.94)], 'blue', 0.7);
+    H.line(R, [H.p(i + 0.2, 2.43, 0.91), H.p(i + 0.64, 2.43, 0.91)], 'blue', 1.6);
   }
   for (const j of [3.05, 4.97, 6.9]) {
-    H.line(R, [H.p(2.23, j, .15), H.p(2.23, j, .99)], 'blue', .7);
-    H.line(R, [H.p(2.25, j + .2, .91), H.p(2.25, j + .6, .91)], 'blue', 1.7);
+    H.line(R, [H.p(2.23, j, 0.15), H.p(2.23, j, 0.99)], 'blue', 0.7);
+    H.line(R, [H.p(2.25, j + 0.2, 0.91), H.p(2.25, j + 0.6, 0.91)], 'blue', 1.7);
   }
-  shape(H, R, H.tile(.72, 2.9, 1.17, 1.65, 1.29), 'blue', .58);
-  shape(H, R, H.tile(.87, 3.08, .9, 1.29, 1.31), 'teal', .37);
+  shape(H, R, H.tile(0.72, 2.9, 1.17, 1.65, 1.29), 'blue', 0.58);
+  shape(H, R, H.tile(0.87, 3.08, 0.9, 1.29, 1.31), 'teal', 0.37);
   const [sx, sy] = H.p(1.26, 3.74, 1.34);
-  oval(H, R, sx, sy, 5, 2.4, 'blue', .8);
-  stroke(H, R, [H.p(.79, 3.1, 1.31), H.p(.79, 3.1, 1.99), H.p(1.15, 3.42, 1.99), H.p(1.15, 3.42, 1.8)], 'blue', 2.5);
-  H.line(R, [H.p(.64, 3.01, 1.48), H.p(.96, 3.01, 1.48)], 'coral', 2);
-  box(H, R, .67, 5.12, 1.23, 1.45, 1.29, .09, 'teal', .5);
-  for (let j = 5.24; j < 6.52; j += .16) H.line(R, [H.p(.73, j, 1.4), H.p(1.81, j, 1.4)], 'blue', 1);
+  oval(H, R, sx, sy, 5, 2.4, 'blue', 0.8);
+  stroke(H, R, [H.p(0.79, 3.1, 1.31), H.p(0.79, 3.1, 1.99), H.p(1.15, 3.42, 1.99), H.p(1.15, 3.42, 1.8)], 'blue', 2.5);
+  H.line(R, [H.p(0.64, 3.01, 1.48), H.p(0.96, 3.01, 1.48)], 'coral', 2);
+  box(H, R, 0.67, 5.12, 1.23, 1.45, 1.29, 0.09, 'teal', 0.5);
+  for (let j = 5.24; j < 6.52; j += 0.16) H.line(R, [H.p(0.73, j, 1.4), H.p(1.81, j, 1.4)], 'blue', 1);
   for (let k = 0; k < 5; k++) {
-    const [x, y] = H.p(1.15, 5.35 + k * .23, 1.49);
-    oval(H, R, x, y, 9, 11, 'paper', .96);
-    oval(H, R, x, y, 5.6, 7, 'teal', .23);
+    const [x, y] = H.p(1.15, 5.35 + k * 0.23, 1.49);
+    oval(H, R, x, y, 9, 11, 'paper', 0.96);
+    oval(H, R, x, y, 5.6, 7, 'teal', 0.23);
   }
-  box(H, R, 3.24, 1.05, 3.33, 1.09, 1.28, .1, 'blue', .55);
-  for (let i = 3.35; i < 6.51; i += .19) H.line(R, [H.p(i, 1.14, 1.41), H.p(i, 2.08, 1.41)], 'paper', .7);
+  box(H, R, 3.24, 1.05, 3.33, 1.09, 1.28, 0.1, 'blue', 0.55);
+  for (let i = 3.35; i < 6.51; i += 0.19) H.line(R, [H.p(i, 1.14, 1.41), H.p(i, 2.08, 1.41)], 'paper', 0.7);
   for (const i of [3.81, 5.51]) {
     const [x, y] = H.p(i, 1.48, 1.45);
-    oval(H, R, x, y, 14, 6, 'blue', .8);
-    oval(H, R, x, y, 9, 3.5, 'coral', .63);
+    oval(H, R, x, y, 14, 6, 'blue', 0.8);
+    oval(H, R, x, y, 9, 3.5, 'coral', 0.63);
   }
   const [kx, ky] = H.p(2.51, 1.12, 1.29);
-  oval(H, R, kx, ky - 11, 15, 16, 'paper', .9);
-  oval(H, R, kx, ky - 24, 10, 4, 'teal', .57);
+  oval(H, R, kx, ky - 11, 15, 16, 'paper', 0.9);
+  oval(H, R, kx, ky - 24, 10, 4, 'teal', 0.57);
   H.dot(kx, ky - 28, 3, 'blue');
-  stroke(H, R, [[kx - 10, ky - 21], [kx - 16, ky - 39], [kx + 12, ky - 39], [kx + 13, ky - 22]], 'blue', 2.1);
-  shape(H, R, [[kx + 12, ky - 15], [kx + 25, ky - 27], [kx + 24, ky - 17], [kx + 12, ky - 6]], 'paper', .9);
-  for (const [i, j, ink] of [[7.07, .76, 'sun'], [7.96, .76, 'coral'], [8.85, .76, 'teal']]) {
-    box(H, R, i, j, .65, .61, 1.29, .74, ink, .53);
-    box(H, R, i - .03, j - .03, .71, .67, 2.03, .08, 'paper', .92);
-    shape(H, R, H.faceI(i + .14, j + .63, .36, 1.54, 1.78), 'paper', .82);
+  stroke(
+    H,
+    R,
+    [
+      [kx - 10, ky - 21],
+      [kx - 16, ky - 39],
+      [kx + 12, ky - 39],
+      [kx + 13, ky - 22]
+    ],
+    'blue',
+    2.1
+  );
+  shape(
+    H,
+    R,
+    [
+      [kx + 12, ky - 15],
+      [kx + 25, ky - 27],
+      [kx + 24, ky - 17],
+      [kx + 12, ky - 6]
+    ],
+    'paper',
+    0.9
+  );
+  for (const [i, j, ink] of [
+    [7.07, 0.76, 'sun'],
+    [7.96, 0.76, 'coral'],
+    [8.85, 0.76, 'teal']
+  ]) {
+    box(H, R, i, j, 0.65, 0.61, 1.29, 0.74, ink, 0.53);
+    box(H, R, i - 0.03, j - 0.03, 0.71, 0.67, 2.03, 0.08, 'paper', 0.92);
+    shape(H, R, H.faceI(i + 0.14, j + 0.63, 0.36, 1.54, 1.78), 'paper', 0.82);
   }
-  for (let k = 0; k < 3; k++) cup(H, R, ...H.p(9.72 + k * .53, 1.44, 1.3), k === 1 ? 'sun' : 'paper', .88);
+  for (let k = 0; k < 3; k++) cup(H, R, ...H.p(9.72 + k * 0.53, 1.44, 1.3), k === 1 ? 'sun' : 'paper', 0.88);
   for (let k = 0; k < 4; k++) {
-    const [x, y] = H.p(10.28, .86, 1.34 + k * .14);
+    const [x, y] = H.p(10.28, 0.86, 1.34 + k * 0.14);
     oval(H, R, x, y, 12, 4.5, 'paper', 1);
-    H.line(R, [[x - 10, y - 1], [x + 10, y - 1]], 'teal', .5);
+    H.line(
+      R,
+      [
+        [x - 10, y - 1],
+        [x + 10, y - 1]
+      ],
+      'teal',
+      0.5
+    );
   }
   const [mx, my] = H.p(8.21, 1.83, 1.29);
-  shape(H, R, [[mx - 8, my], [mx + 8, my], [mx + 8, my - 23], [mx + 3, my - 27], [mx - 7, my - 26]], 'paper', .97);
-  oval(H, R, mx, my - 24, 7, 2.5, 'blue', .2);
-  stroke(H, R, [[mx + 8, my - 20], [mx + 17, my - 20], [mx + 17, my - 6], [mx + 9, my - 4]], 'blue', 1.4);
+  shape(
+    H,
+    R,
+    [
+      [mx - 8, my],
+      [mx + 8, my],
+      [mx + 8, my - 23],
+      [mx + 3, my - 27],
+      [mx - 7, my - 26]
+    ],
+    'paper',
+    0.97
+  );
+  oval(H, R, mx, my - 24, 7, 2.5, 'blue', 0.2);
+  stroke(
+    H,
+    R,
+    [
+      [mx + 8, my - 20],
+      [mx + 17, my - 20],
+      [mx + 17, my - 6],
+      [mx + 9, my - 4]
+    ],
+    'blue',
+    1.4
+  );
   for (let k = 0; k < 4; k++) {
-    const [x, y] = H.p(9.35, 1.9 + k * .09, 1.3);
-    H.line(R, [[x, y], [x + 20, y - 8]], 'blue', 1.2);
-    oval(H, R, x + 21, y - 9, 3.5, 2, 'paper', .8);
+    const [x, y] = H.p(9.35, 1.9 + k * 0.09, 1.3);
+    H.line(
+      R,
+      [
+        [x, y],
+        [x + 20, y - 8]
+      ],
+      'blue',
+      1.2
+    );
+    oval(H, R, x + 21, y - 9, 3.5, 2, 'paper', 0.8);
   }
-  box(H, R, .65, 7.25, 1.2, .72, 1.29, .11, 'sun', .43);
-  for (let j = 7.31; j < 7.92; j += .1) H.line(R, [H.p(.68, j, 1.42), H.p(1.81, j, 1.42)], 'paper', .8);
-  const [tx, ty] = H.p(7.08, .39, 2.55);
+  box(H, R, 0.65, 7.25, 1.2, 0.72, 1.29, 0.11, 'sun', 0.43);
+  for (let j = 7.31; j < 7.92; j += 0.1) H.line(R, [H.p(0.68, j, 1.42), H.p(1.81, j, 1.42)], 'paper', 0.8);
+  const [tx, ty] = H.p(7.08, 0.39, 2.55);
   oval(H, R, tx, ty, 12, 12, 'paper', 1);
-  for (let k = 0; k < 8; k++) H.dot(tx + Math.cos(k * TAU / 8) * 9, ty + Math.sin(k * TAU / 8) * 9, .8, 'blue');
-  H.line(R, [[tx - 5, ty + 1], [tx, ty], [tx + 1, ty - 7]], 'blue', 1.2);
+  for (let k = 0; k < 8; k++) H.dot(tx + Math.cos((k * TAU) / 8) * 9, ty + Math.sin((k * TAU) / 8) * 9, 0.8, 'blue');
+  H.line(
+    R,
+    [
+      [tx - 5, ty + 1],
+      [tx, ty],
+      [tx + 1, ty - 7]
+    ],
+    'blue',
+    1.2
+  );
+  metal(H, R, 3.18, 1.02, 3.48, 1.16, 1.28, 0.18, 'teal');
+  for (const i of [3.81, 5.51]) {
+    const [x, y] = H.p(i, 1.58, 1.48);
+    surface(H, R, ell(x, y, 17, 8), 'blue', 0.8);
+    surface(H, R, ell(x, y, 12, 5.5), 'coral', 0.7);
+    for (let n = 0; n < 8; n++) {
+      const a = (n * TAU) / 8;
+      H.line(
+        R,
+        [
+          [x + Math.cos(a) * 10, y + Math.sin(a) * 4],
+          [x + Math.cos(a) * 17, y + Math.sin(a) * 7]
+        ],
+        'paper',
+        1.3
+      );
+    }
+    vessel(H, R, i, 1.5, 1.54, 14, 23, 'paper', true);
+    const knob = H.p(i, 2.2, 1.36);
+    surface(H, R, ell(...knob, 4, 3), 'blue', 0.8);
+    H.line(
+      R,
+      [
+        [knob[0], knob[1] - 2],
+        [knob[0] + 2, knob[1] + 1]
+      ],
+      'sun',
+      1.1
+    );
+  }
+  bentTube(
+    H,
+    R,
+    [
+      [3.61, 1.19, 1.29],
+      [3.61, 0.8, 0.43],
+      [6.05, 0.8, 0.43],
+      [6.05, 0.4, 0.43]
+    ],
+    2.5,
+    'teal'
+  );
+  drape(H, R, 0.65, 7.21, 0.53, 0.77, 1.43, 0.69, 'paper');
 }
 
 function sheungWanMilkTeaDetails(H, R) {

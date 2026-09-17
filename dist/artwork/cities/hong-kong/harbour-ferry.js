@@ -1,3 +1,4 @@
+import { slattedSeat, metal } from '../materials.js';
 import { windowBay, cityView } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, ell, TAU, glow } from '../../worlds/common.js';
@@ -10,16 +11,10 @@ const seated = { ...rest, drop: .47, ll: 84, lr: 80, kl: -84, kr: -80, al: 28, a
 FIGURES.clips.hongKongFerrySit = { dur: 16, keys: [[0, seated], [.3, { ...seated, head: -12 }], [.62, { ...seated, head: -12, al: 33 }], [.84, seated], [1, seated]] };
 
 function seat(H, R, i, j, width = 4.9) {
-  for (const a of [i + .35, i + width - .45]) {
-    H.line(R, [H.p(a, j + .12, .05), H.p(a, j + .12, .76), H.p(a, j + .85, .76), H.p(a, j + .85, .05)], 'blue', 2.8);
-    H.line(R, [H.p(a, j + .18, .78), H.p(a, j + .18, 1.39)], 'blue', 2.2);
-  }
-  for (let q = 0; q < 4; q++) box(H, R, i, j + .04 + q * .2, width, .16, .62, .1, 'sun', .48);
-  for (const z of [.95, 1.16, 1.37]) box(H, R, i, j + .12, width, .13, z, .14, 'sun', .5);
-  for (const a of [i + .06, i + width - .08]) for (const z of [1.01, 1.22, 1.43]) H.dot(...H.p(a, j + .26, z), 1, 'blue', .8);
-  H.line(R, [H.p(i + .3, j + .82, .83), H.p(i + .3, j + .82, 1.05), H.p(i + .3, j + .15, 1.05)], 'blue', 2.1);
-  H.line(R, [H.p(i + width - .3, j + .82, .83), H.p(i + width - .3, j + .82, 1.05), H.p(i + width - .3, j + .15, 1.05)], 'blue', 2.1);
+  slattedSeat(H, R, i, j, width, 0, 'sun', 0.81);
+  for (let n = 0; n < 3; n++) metal(H, R, i + 0.42 + (n * (width - 0.84)) / 2, j + 0.17, 0.1, 0.1, 0.73, 0.68, 'teal');
 }
+
 
 function lifering(H, R, i, j, z) {
   const [x, y] = H.p(i, j, z);

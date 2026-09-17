@@ -1,3 +1,4 @@
+import { surface, benchFrame, drape } from '../materials.js';
 import { cornice, panelFront, wallRack, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
@@ -8,19 +9,78 @@ const arrange = { ...rest, lean: -8, head: 12, al: 58, ar: 64, el: 48, er: 42 };
 FIGURES.clips.hongKongFlowerArrange = { dur: 14, keys: [[0, arrange], [.15, arrange], [.32, { ...arrange, al: 77, el: 22, ar: 62, head: 18 }], [.46, { ...arrange, al: 64, el: 53, ar: 78, er: 29 }], [.6, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }], [.77, { ...arrange, al: 48, el: 85, ar: 52, er: 76, head: -4 }], [.94, arrange], [1, arrange]] };
 
 function stem(H, R, x, y, length, ink, lean = 0, kind = 0) {
-  stroke(H, R, [[x, y], [x + lean * .4, y - length * .55], [x + lean, y - length]], 'teal', 1.2);
-  for (let q = 0; q < 2; q++) {
-    const yy = y - length * (.3 + q * .24), side = q % 2 ? 1 : -1;
-    shape(H, R, [[x + lean * .4, yy], [x + lean * .4 + side * 8, yy - 8], [x + lean * .4 + side * 6, yy - 1]], 'teal', .65, .4);
+  stroke(
+    H,
+    R,
+    [
+      [x, y],
+      [x + lean * 0.27, y - length * 0.48],
+      [x + lean, y - length]
+    ],
+    'teal',
+    1.2
+  );
+  for (let n = 0; n < 3; n++) {
+    const side = n % 2 ? 1 : -1,
+      xx = x + lean * (0.25 + n * 0.2),
+      yy = y - length * (0.22 + n * 0.2);
+    const leaf = [
+      [xx, yy],
+      [xx + side * 3, yy - 8],
+      [xx + side * 12, yy - 12],
+      [xx + side * 10, yy - 3]
+    ];
+    surface(H, R, leaf, 'teal', 0.6, 0.4);
+    H.line(
+      R,
+      [
+        [xx, yy],
+        [xx + side * 10, yy - 10]
+      ],
+      'paper',
+      0.45
+    );
   }
-  const xx = x + lean, yy = y - length;
-  if (kind === 1) {
-    for (let q = 0; q < 5; q++) oval(H, R, xx + Math.sin(q * 2) * 3, yy + q * 4, 3.5, 5, ink, .7);
+  const xx = x + lean,
+    yy = y - length;
+  if (kind) {
+    for (let n = 0; n < 5; n++) {
+      const a = (n * TAU) / 5;
+      surface(
+        H,
+        R,
+        [
+          [xx, yy],
+          [xx + Math.cos(a - 0.4) * 7, yy + Math.sin(a - 0.4) * 7],
+          [xx + Math.cos(a) * 12, yy + Math.sin(a) * 12],
+          [xx + Math.cos(a + 0.3) * 6, yy + Math.sin(a + 0.3) * 6]
+        ],
+        ink,
+        0.72,
+        0.4
+      );
+      H.line(
+        R,
+        [
+          [xx, yy],
+          [xx + Math.cos(a) * 8, yy + Math.sin(a) * 8]
+        ],
+        'paper',
+        0.6
+      );
+    }
   } else {
-    for (let q = 0; q < 5; q++) oval(H, R, xx + Math.cos(q * TAU / 5) * 4, yy + Math.sin(q * TAU / 5) * 4, 4, 3.5, ink, .75);
-    H.dot(xx, yy, 2.1, 'sun', 1);
+    for (let row = 0; row < 3; row++)
+      for (let n = 0; n < 7; n++) {
+        const a = ((n + row * 0.45) * TAU) / 7,
+          rad = 7 - row * 2;
+        const p = [xx + Math.cos(a) * rad, yy + Math.sin(a) * rad * 0.8];
+        oval(H, R, ...p, 3.6 - row * 0.5, 3.1 - row * 0.4, ink, 0.5 + row * 0.13);
+      }
   }
+  H.dot(xx, yy, 1.8, 'sun', 1, { knock: true });
 }
+
 
 function bucket(H, R, i, j, z, ink, count = 6, tall = false) {
   const [x, y] = H.p(i, j, z);
@@ -259,7 +319,8 @@ const room = world('hong-kong-mong-kok-flowers', 'Mong Kok · Water between stem
   table(H, R, 1.1, 1.2, 1.25, 6.15, .42, 'teal');
   for (let q = 0; q < 5; q++) bucket(H, R, 1.72, 1.72 + q * 1.12, .59, ['coral', 'paper', 'sun', 'coral', 'paper'][q], 6, q % 2 === 0);
   for (let q = 0; q < 5; q++) bucket(H, R, 3.3 + q * 1.42, 2.25 + Math.sin(q * .68) * .9, .03, ['sun', 'coral', 'paper', 'coral', 'sun'][q], 7, q === 3);
-  table(H, R, 4.0, 5.15, 3.85, 1.4, 1.0, 'paper');
+  benchFrame(H,R,4,5.15,3.85,1.4,1.12,'sun');
+  drape(H,R,4.02,5.23,.87,1.27,1.14,.56,'paper');
   shape(H, R, H.tile(4.14, 5.31, 1.52, 1.03, 1.14), 'teal', .22, .5);
   for (let q = 0; q < 4; q++) {
     const [x, y] = H.p(4.45 + q * .2, 5.8, 1.16);

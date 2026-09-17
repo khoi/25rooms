@@ -1,6 +1,7 @@
+import { surface, timber, metal } from '../materials.js';
 import { cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -11,27 +12,65 @@ function shell(H, R, i, j, length, z, ink) {
   const hull = [];
   for (let q = 0; q <= 16; q++) {
     const f = q / 16;
-    hull.push(H.p(i + Math.sin(f * Math.PI) * .48, j + f * length, z));
+    hull.push(H.p(i + Math.sin(f * Math.PI) * 0.48, j + f * length, z));
   }
   for (let q = 16; q >= 0; q--) {
     const f = q / 16;
-    hull.push(H.p(i - Math.sin(f * Math.PI) * .48, j + f * length, z));
+    hull.push(H.p(i - Math.sin(f * Math.PI) * 0.48, j + f * length, z));
   }
   const lower = hull.map(([x, y]) => [x, y + 5]);
-  shape(H, R, lower, 'blue', .43, .8);
-  shape(H, R, hull, ink, .68, .8);
-  H.line(R, [H.p(i, j + .18, z + .01), H.p(i, j + length - .18, z + .01)], 'paper', 1.2, { tone: .8 });
-  for (const q of [.28, .49, .7]) {
+  shape(H, R, lower, 'blue', 0.43, 0.8);
+  shape(H, R, hull, ink, 0.68, 0.8);
+  H.line(R, [H.p(i, j + 0.18, z + 0.01), H.p(i, j + length - 0.18, z + 0.01)], 'paper', 1.2, { tone: 0.8 });
+  for (const q of [0.28, 0.49, 0.7]) {
     const opening = [];
     for (let k = 0; k < 24; k++) {
-      const a = k * TAU / 24;
-      opening.push(H.p(i + Math.cos(a) * .22, j + q * length + Math.sin(a) * .49, z + .03));
+      const a = (k * TAU) / 24;
+      opening.push(H.p(i + Math.cos(a) * 0.22, j + q * length + Math.sin(a) * 0.49, z + 0.03));
     }
-    shape(H, R, opening, 'blue', .67, .6);
-    box(H, R, i - .17, j + q * length -.15, .34, .28, z + .06, .04, 'paper', .85);
+    shape(H, R, opening, 'blue', 0.67, 0.6);
+    box(H, R, i - 0.17, j + q * length - 0.15, 0.34, 0.28, z + 0.06, 0.04, 'paper', 0.85);
     for (const sign of [-1, 1]) {
-      H.line(R, [H.p(i + sign * .31, j + q * length, z), H.p(i + sign * .82, j + q * length - .25, z + .09), H.p(i + sign * .32, j + q * length - .36, z)], 'blue', .9);
-      oval(H, R, ...H.p(i + sign * .82, j + q * length - .25, z + .13), 2.6, 2, 'sun', .9);
+      H.line(
+        R,
+        [
+          H.p(i + sign * 0.31, j + q * length, z),
+          H.p(i + sign * 0.82, j + q * length - 0.25, z + 0.09),
+          H.p(i + sign * 0.32, j + q * length - 0.36, z)
+        ],
+        'blue',
+        0.9
+      );
+      oval(H, R, ...H.p(i + sign * 0.82, j + q * length - 0.25, z + 0.13), 2.6, 2, 'sun', 0.9);
+    }
+  }
+  for (const q of [0.28, 0.49, 0.7]) {
+    for (const a of [-0.14, 0.14]) metal(H, R, i + a, j + q * length - 0.48, 0.045, 0.93, z + 0.075, 0.035, 'teal');
+    timber(H, R, i - 0.19, j + q * length + 0.2, 0.38, 0.14, z + 0.09, 0.08, 'sun');
+    for (const a of [-0.11, 0.11]) {
+      const p = H.p(i + a, j + q * length - 0.28, z + 0.13);
+      surface(
+        H,
+        R,
+        [
+          [p[0] - 3, p[1] + 2],
+          [p[0] + 3, p[1] + 2],
+          [p[0] + 4, p[1] - 7],
+          [p[0] - 2, p[1] - 9]
+        ],
+        'coral',
+        0.6,
+        0.5
+      );
+      H.line(
+        R,
+        [
+          [p[0] - 3, p[1] - 3],
+          [p[0] + 3, p[1] - 3]
+        ],
+        'paper',
+        1
+      );
     }
   }
 }

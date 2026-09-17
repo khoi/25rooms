@@ -1,3 +1,4 @@
+import { timber, metal, surface, cushion, benchFrame, drape } from '../materials.js';
 import { cornice, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
@@ -26,28 +27,103 @@ function mirror(H, R, side, pos, width) {
 }
 
 function stool(H, R, i, j, ink = 'coral') {
-  for (const [a, b] of [[.09, .09], [.69, .09], [.09, .69], [.69, .69]]) H.line(R, [H.p(i + a, j + b, .04), H.p(i + a * .78 + .09, j + b * .78 + .09, .63)], 'blue', 2.2);
-  box(H, R, i, j, .82, .82, .62, .13, ink, .68);
-  for (const [a, b] of [[.16, .16], [.63, .16], [.16, .63], [.63, .63]]) H.dot(...H.p(i + a, j + b, .76), 1, 'blue', .7);
+  for (const [a, b] of [
+    [0.09, 0.09],
+    [0.69, 0.09],
+    [0.09, 0.69],
+    [0.69, 0.69]
+  ])
+    H.line(R, [H.p(i + a, j + b, 0.04), H.p(i + a * 0.78 + 0.09, j + b * 0.78 + 0.09, 0.63)], 'blue', 2.2);
+  cushion(H, R, i, j, 0.82, 0.82, 0.62, 0.15, ink);
+  for (const [a, b] of [
+    [0.16, 0.16],
+    [0.63, 0.16],
+    [0.16, 0.63],
+    [0.63, 0.63]
+  ])
+    H.dot(...H.p(i + a, j + b, 0.76), 1, 'blue', 0.7);
 }
 
 function wardrobe(H, R) {
-  box(H, R, 9.0, .45, 2.45, 1.8, .04, 2.93, 'teal', .6);
-  const door = [H.p(9.13, 2.27, .16), H.p(11.31, 2.27, .16), H.p(11.31, 2.27, 2.42), H.p(11.05, 2.27, 2.83), H.p(10.24, 2.27, 3.17), H.p(9.43, 2.27, 2.83), H.p(9.13, 2.27, 2.42)];
-  shape(H, R, door, 'blue', .8, 1.1);
+  timber(H, R, 9, 0.45, 2.45, 1.8, 0.04, 0.18, 'sun');
+  surface(H, R, H.faceI(9.06, 0.53, 2.31, 0.21, 2.96), 'blue', 0.73);
+  for (const i of [9, 11.28]) timber(H, R, i, 0.45, 0.17, 1.8, 0.2, 2.76, 'teal');
+  timber(H, R, 9, 0.45, 2.45, 1.8, 2.96, 0.16, 'sun');
+  for (const i of [9.19, 10.95]) metal(H, R, i, 2.3, 0.17, 0.06, 0.2, 0.48, 'sun');
+  const door = [
+    H.p(9.13, 2.27, 0.16),
+    H.p(11.31, 2.27, 0.16),
+    H.p(11.31, 2.27, 2.42),
+    H.p(11.05, 2.27, 2.83),
+    H.p(10.24, 2.27, 3.17),
+    H.p(9.43, 2.27, 2.83),
+    H.p(9.13, 2.27, 2.42)
+  ];
+  shape(H, R, door, 'blue', 0.8, 1.1);
   H.clip(door, () => {
     H.line(R, [H.p(9.24, 2.31, 2.43), H.p(11.19, 2.31, 2.43)], 'sun', 2);
-    for (const [i, ink, len] of [[9.57, 'paper', 1.16], [10.2, 'coral', 1.37], [10.79, 'sun', 1.02]]) {
+    for (const [i, ink, len] of [
+      [9.57, 'paper', 1.16],
+      [10.2, 'coral', 1.37],
+      [10.79, 'sun', 1.02]
+    ]) {
       const [x, y] = H.p(i, 2.32, 2.4);
-      stroke(H, R, [[x, y + 3], [x - 3, y - 2], [x + 2, y - 6], [x + 5, y - 3]], 'blue', .7);
-      H.line(R, [[x, y + 2], [x - 12, y + 10], [x + 12, y + 10], [x, y + 2]], 'paper', .9);
-      shape(H, R, [[x - 9, y + 8], [x + 9, y + 8], [x + 18, y + 23], [x + 12, y + 29], [x + 10, y + 21], [x + 13, y + len * 39], [x - 14, y + len * 39], [x - 11, y + 21], [x - 16, y + 28], [x - 21, y + 22]], ink, ink === 'paper' ? 1 : .72, .8);
-      H.line(R, [[x, y + 10], [x, y + len * 37]], 'blue', .7);
-      for (let k = 0; k < 4; k++) H.dot(x + 2, y + 16 + k * 6, 1, 'blue', .7);
+      stroke(
+        H,
+        R,
+        [
+          [x, y + 3],
+          [x - 3, y - 2],
+          [x + 2, y - 6],
+          [x + 5, y - 3]
+        ],
+        'blue',
+        0.7
+      );
+      H.line(
+        R,
+        [
+          [x, y + 2],
+          [x - 12, y + 10],
+          [x + 12, y + 10],
+          [x, y + 2]
+        ],
+        'paper',
+        0.9
+      );
+      shape(
+        H,
+        R,
+        [
+          [x - 9, y + 8],
+          [x + 9, y + 8],
+          [x + 18, y + 23],
+          [x + 12, y + 29],
+          [x + 10, y + 21],
+          [x + 13, y + len * 39],
+          [x - 14, y + len * 39],
+          [x - 11, y + 21],
+          [x - 16, y + 28],
+          [x - 21, y + 22]
+        ],
+        ink,
+        ink === 'paper' ? 1 : 0.72,
+        0.8
+      );
+      H.line(
+        R,
+        [
+          [x, y + 10],
+          [x, y + len * 37]
+        ],
+        'blue',
+        0.7
+      );
+      for (let k = 0; k < 4; k++) H.dot(x + 2, y + 16 + k * 6, 1, 'blue', 0.7);
     }
   });
-  box(H, R, 9.06, 2.32, 2.34, .15, .04, .14, 'sun', .52);
-  shape(H, R, [H.p(11.45, 2.23, .12), H.p(11.85, 3.13, .12), H.p(11.85, 3.13, 2.81), H.p(11.45, 2.23, 2.9)], 'teal', .54, 1);
+  box(H, R, 9.06, 2.32, 2.34, 0.15, 0.04, 0.14, 'sun', 0.52);
+  shape(H, R, [H.p(11.45, 2.23, 0.12), H.p(11.85, 3.13, 0.12), H.p(11.85, 3.13, 2.81), H.p(11.45, 2.23, 2.9)], 'teal', 0.54, 1);
   H.line(R, [H.p(11.74, 2.89, 1.32), H.p(11.74, 2.89, 1.59)], 'sun', 2.1);
 }
 
@@ -284,7 +360,8 @@ const room = world('new-york-st-george-stage', 'St. George · Five Minutes', { f
   }
   mirror(H, R, 'ne', .55, 7.31);
   mirror(H, R, 'nw', .62, 4.9);
-  table(H, R, .44, .44, 7.61, 1.29, 1.0, 'paper');
+  benchFrame(H,R,.44,.44,7.61,1.29,1.12,'sun');
+  drape(H,R,6.69,.6,.69,1.18,1.14,.66,'coral');
   table(H, R, .44, 1.67, 1.29, 3.94, 1.0, 'paper');
   for (const i of [1.15, 3.22, 5.29]) {
     box(H, R, i, .65, 1.52, .78, .25, .7, 'teal', .44);

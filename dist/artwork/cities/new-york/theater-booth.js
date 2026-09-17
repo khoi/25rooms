@@ -1,3 +1,4 @@
+import { surface, metal, bentTube, floorLight } from '../materials.js';
 import { cornice, wallRack, taskLight, caster } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
@@ -31,24 +32,68 @@ function stage(H, R, intensity = 0) {
 }
 
 function consoleDesk(H, R) {
-  for (const i of [3.0, 8.25]) box(H, R, i, 3.5, .37, 2.6, .06, 1.05, 'blue', .72);
-  const top = [H.p(2.9, 3.3, 1.5), H.p(8.8, 3.3, 1.5), H.p(8.8, 6.25, .91), H.p(2.9, 6.25, .91)];
-  shape(H, R, top, 'teal', .72);
-  shape(H, R, [H.p(2.9, 6.25, .91), H.p(8.8, 6.25, .91), H.p(8.8, 6.25, .65), H.p(2.9, 6.25, .65)], 'blue', .8);
+  for (const i of [3, 8.25]) {
+    bentTube(
+      H,
+      R,
+      [
+        [i, 3.5, 0.05],
+        [i, 3.5, 1.38],
+        [i, 6.04, 0.85],
+        [i, 6.04, 0.05]
+      ],
+      3.8,
+      'teal'
+    );
+    metal(H, R, i - 0.15, 3.35, 0.32, 2.85, 0.05, 0.09, 'blue');
+    bentTube(
+      H,
+      R,
+      [
+        [i, 3.61, 0.18],
+        [i, 5.96, 0.81]
+      ],
+      2,
+      'teal'
+    );
+  }
+  for (let n = 0; n < 6; n++)
+    bentTube(
+      H,
+      R,
+      [
+        [3.52 + n * 0.34, 3.31, 1.25],
+        [3.5 + n * 0.23, 3.09, 0.49],
+        [2.28 + n * 0.06, 3.37, 0.13],
+        [1.21, 3.43 + n * 0.13, 0.13]
+      ],
+      1.4,
+      n % 2 ? 'teal' : 'blue'
+    );
+  const top = [H.p(2.9, 3.3, 1.5), H.p(8.8, 3.3, 1.5), H.p(8.8, 6.25, 0.91), H.p(2.9, 6.25, 0.91)];
+  shape(H, R, top, 'teal', 0.72);
+  shape(H, R, [H.p(2.9, 6.25, 0.91), H.p(8.8, 6.25, 0.91), H.p(8.8, 6.25, 0.65), H.p(2.9, 6.25, 0.65)], 'blue', 0.8);
   for (let n = 0; n < 12; n++) {
-    const i = 3.2 + n * .43;
+    const i = 3.2 + n * 0.43;
     H.line(R, [H.p(i, 4.56, 1.25), H.p(i, 5.8, 1.0)], 'blue', 1.3);
-    for (const j of [4.56, 4.87, 5.18, 5.49]) H.line(R, [H.p(i - .08, j, 1.25 - (j - 4.56) * .2), H.p(i + .08, j, 1.25 - (j - 4.56) * .2)], 'paper', .6);
-    if (n !== 10) box(H, R, i - .11, 4.8 + n % 3 * .23, .22, .17, 1.19 - n % 3 * .046, .045, n % 4 ? 'paper' : 'coral', .8);
-    for (const j of [3.68, 4.06]) oval(H, R, ...H.p(i, j, 1.45 - (j - 3.68) * .2), 2.9, 2, n % 3 ? 'sun' : 'coral', .85);
+    for (const j of [4.56, 4.87, 5.18, 5.49])
+      H.line(R, [H.p(i - 0.08, j, 1.25 - (j - 4.56) * 0.2), H.p(i + 0.08, j, 1.25 - (j - 4.56) * 0.2)], 'paper', 0.6);
+    if (n !== 10) box(H, R, i - 0.11, 4.8 + (n % 3) * 0.23, 0.22, 0.17, 1.19 - (n % 3) * 0.046, 0.045, n % 4 ? 'paper' : 'coral', 0.8);
+    for (const j of [3.68, 4.06]) oval(H, R, ...H.p(i, j, 1.45 - (j - 3.68) * 0.2), 2.9, 2, n % 3 ? 'sun' : 'coral', 0.85);
   }
   for (const i of [3.1, 5.15]) {
-    box(H, R, i, 2.83, 1.65, .2, 1.39, .92, 'blue', .85);
-    shape(H, R, H.faceI(i + .1, 3.06, 1.45, 1.52, 2.18), 'paper', .82, .5);
-    for (let q = 0; q < 6; q++) box(H, R, i + .19 + q * .2, 3.09, .1, .01, 1.59, .15 + q % 3 * .14, q % 2 ? 'teal' : 'coral', .7);
+    box(H, R, i, 2.83, 1.65, 0.2, 1.39, 0.92, 'blue', 0.85);
+    shape(H, R, H.faceI(i + 0.1, 3.06, 1.45, 1.52, 2.18), 'paper', 0.82, 0.5);
+    for (let q = 0; q < 6; q++) box(H, R, i + 0.19 + q * 0.2, 3.09, 0.1, 0.01, 1.59, 0.15 + (q % 3) * 0.14, q % 2 ? 'teal' : 'coral', 0.7);
   }
-  box(H, R, 7.18, 3.26, 1.18, .85, 1.42, .04, 'paper', 1);
-  for (let q = 0; q < 4; q++) H.line(R, [H.p(7.32, 3.4 + q * .15, 1.48), H.p(8.05, 3.4 + q * .15, 1.48)], q === 2 ? 'coral' : 'blue', .6);
+  box(H, R, 7.18, 3.26, 1.18, 0.85, 1.42, 0.04, 'paper', 1);
+  for (let q = 0; q < 4; q++) H.line(R, [H.p(7.32, 3.4 + q * 0.15, 1.48), H.p(8.05, 3.4 + q * 0.15, 1.48)], q === 2 ? 'coral' : 'blue', 0.6);
+  for (let n = 0; n < 12; n++) {
+    const i = 3.2 + n * 0.43;
+    surface(H, R, H.tile(i - 0.11, 5.99, 0.22, 0.13, 0.97), n % 4 ? 'teal' : 'coral', 0.7, 0.35);
+    for (let k = 0; k < 4; k++) H.dot(...H.p(i, 4.28, 1.29 + k * 0.008), 1.25, k === n % 4 ? 'sun' : 'teal', 0.85, { knock: true });
+  }
+  for (const i of [2.91, 8.69]) metal(H, R, i, 4.0, 0.09, 1.9, 1.15, 0.065, 'sun');
 }
 
 function theaterBoothDetails(H, R) {
@@ -251,6 +296,10 @@ function construction(H, R) {
 const room = world('new-york-theater-booth', 'Theater District · Before the Cue', {
   floor: 'blue', tone: .38, wall: 'blue', wallTone: .68, height: 3.8,
 }, (H, R) => {
+  surface(H,R,H.tile(.01,.01,11.98,11.98,.02),'blue',.2);
+  surface(H,R,H.faceJ(.01,0,12,0,3.8),'blue',.46);
+  surface(H,R,H.faceI(0,.01,12,0,3.8),'blue',.32);
+  floorLight(H,6.8,6.7,111,.35);
   stage(H, R);
   for (let j = .6; j < 11.6; j += 1.1) {
     shape(H, R, H.faceJ(.04, j, .81, 1.72, 3.48), 'blue', .74, .5);

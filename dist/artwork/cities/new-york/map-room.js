@@ -1,3 +1,4 @@
+import { benchFrame, timber, metal, surface, bentTube } from '../materials.js';
 import { wallCourse, cornice, recessedFrame, wallRack, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell } from '../../worlds/common.js';
@@ -9,18 +10,45 @@ FIGURES.clips.newYorkMapTrace = { dur: 12, keys: [[0, reading], [.17, reading], 
 FIGURES.clips.newYorkMapLibrarian = { dur: 12, keys: [[0, { ...rest, al: 52, el: 75, ar: 52, er: 75, head: 10 }], [.35, { ...rest, al: 52, el: 75, ar: 69, er: 30, head: 17 }], [.6, { ...rest, al: 52, el: 75, ar: 69, er: 30, head: 17 }], [.8, { ...rest, al: 52, el: 75, ar: 52, er: 75, head: -4 }], [1, { ...rest, al: 52, el: 75, ar: 52, er: 75, head: 10 }]] };
 
 function cabinet(H, R, i, j, w, d, count = 7) {
-  box(H, R, i, j, w, d, .05, 1.42, 'teal', .6);
+  box(H, R, i, j, w, d, 0.05, 1.42, 'teal', 0.6);
   for (let q = 0; q < count; q++) {
-    const z = .15 + q * 1.15 / count;
-    shape(H, R, H.faceI(i + .09, j + d + .02, w - .18, z, z + 1.08 / count), 'paper', .88, .55);
-    for (const x of [i + w * .28, i + w * .72]) {
-      H.line(R, [H.p(x - .16, j + d + .05, z + .08), H.p(x + .16, j + d + .05, z + .08)], 'blue', 1.4);
-      H.dot(...H.p(x - .16, j + d + .05, z + .1), .9, 'sun');
-      H.dot(...H.p(x + .16, j + d + .05, z + .1), .9, 'sun');
+    const z = 0.15 + (q * 1.15) / count;
+    shape(H, R, H.faceI(i + 0.09, j + d + 0.02, w - 0.18, z, z + 1.08 / count), 'paper', 0.88, 0.55);
+    for (const x of [i + w * 0.28, i + w * 0.72]) {
+      H.line(R, [H.p(x - 0.16, j + d + 0.05, z + 0.08), H.p(x + 0.16, j + d + 0.05, z + 0.08)], 'blue', 1.4);
+      H.dot(...H.p(x - 0.16, j + d + 0.05, z + 0.1), 0.9, 'sun');
+      H.dot(...H.p(x + 0.16, j + d + 0.05, z + 0.1), 0.9, 'sun');
     }
-    shape(H, R, H.faceI(i + w / 2 - .12, j + d + .06, .24, z + .025, z + .1), 'sun', .4, .4);
+    shape(H, R, H.faceI(i + w / 2 - 0.12, j + d + 0.06, 0.24, z + 0.025, z + 0.1), 'sun', 0.4, 0.4);
   }
-  box(H, R, i - .04, j - .04, w + .08, d + .08, 1.46, .1, 'sun', .52);
+  box(H, R, i - 0.04, j - 0.04, w + 0.08, d + 0.08, 1.46, 0.1, 'sun', 0.52);
+  const z = 0.15 + (3 * 1.15) / count;
+  metal(H, R, i + 0.12, j + d - 0.06, w - 0.24, 0.57, z, 0.055, 'teal');
+  for (let n = 0; n < 3; n++) {
+    const points = H.tile(i + 0.23 + n * 0.025, j + d + 0.05 + n * 0.018, w - 0.46, 0.39, z + 0.061 + n * 0.018);
+    surface(H, R, points, 'paper', 1, 0.4);
+    for (let k = 0; k < 4; k++)
+      H.line(
+        R,
+        [H.p(i + 0.31 + (k * (w - 0.6)) / 4, j + d + 0.08, z + 0.12), H.p(i + 0.39 + (k * (w - 0.6)) / 4, j + d + 0.36, z + 0.12)],
+        'teal',
+        0.45
+      );
+  }
+  timber(H, R, i + 0.08, j + d + 0.51, w - 0.16, 0.08, z - 0.005, 0.12, 'sun');
+  for (const x of [i + w * 0.3, i + w * 0.7])
+    bentTube(
+      H,
+      R,
+      [
+        [x - 0.1, j + d + 0.61, z + 0.025],
+        [x - 0.1, j + d + 0.63, z + 0.08],
+        [x + 0.1, j + d + 0.63, z + 0.08],
+        [x + 0.1, j + d + 0.61, z + 0.025]
+      ],
+      0.8,
+      'blue'
+    );
 }
 
 function map(H, R) {
@@ -241,7 +269,7 @@ const room = world('new-york-map-room', 'Midtown · Find Our Block', {
   shape(H, R, H.faceI(4.92, .12, 2.27, 2.1, 3.11), 'paper', 1, .5);
   stroke(H, R, [H.p(5.05, .15, 2.37), H.p(5.44, .15, 2.58), H.p(6.15, .15, 2.29), H.p(6.53, .15, 2.73), H.p(7, .15, 2.82)], 'teal', 4.5);
   for (let q = 0; q < 7; q++) H.line(R, [H.p(5.04 + q * .3, .17, 2.14), H.p(5.04 + q * .3, .17, 3.07)], 'coral', .45, { tone: .55 });
-  table(H, R, 3.0, 3.77, 6.06, 4.19, .94, 'sun');
+  benchFrame(H,R,3,3.77,6.06,4.19,1.06,'sun');
   map(H, R);
   readingLamp(H, R, 3.5, 3.92);
   readingLamp(H, R, 8.6, 3.92);

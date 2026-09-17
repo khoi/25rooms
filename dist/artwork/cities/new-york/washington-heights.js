@@ -1,3 +1,4 @@
+import { caneChair, benchFrame, drape } from '../materials.js';
 import { cornice, recessedFrame, panelFront, wallRack, hangingRail, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, wallRect, wallPt } from '../../worlds/common.js';
@@ -17,11 +18,9 @@ function cup(H, R, i, j, z, ink = 'coral', scale = 1) {
 }
 
 function chair(H, R, i, j, ink = 'coral') {
-  for (const x of [i, i + .76]) for (const y of [j, j + .69]) box(H, R, x, y, .09, .09, .02, .46, 'blue', .69);
-  box(H, R, i - .04, j - .04, .92, .85, .47, .09, ink, .66);
-  for (const x of [i, i + .76]) H.line(R, [H.p(x, j + .75, .46), H.p(x, j + .75, 1.24)], 'blue', 2);
-  box(H, R, i - .04, j + .7, .92, .1, .96, .26, ink, .64);
+  caneChair(H, R, i, j, ink, true);
 }
+
 
 function radiator(H, R) {
   for (let k = 0; k < 13; k++) {
@@ -317,7 +316,8 @@ const room = world('new-york-washington-heights', 'Washington Heights · Window 
   radiator(H, R);
   const [px, py] = H.p(5.42, .49, 1.49);
   plant(H, R, px, py, 1.05);
-  table(H, R, 5.73, 3.95, 2.91, 1.69, .85, 'sun');
+  benchFrame(H,R,5.73,3.95,2.91,1.69,.97,'sun');
+  drape(H,R,5.88,4.03,.68,1.58,.99,.51,'paper');
   shape(H, R, H.tile(5.78, 4.0, 2.81, 1.59, .98), 'paper', 1, .7);
   H.line(R, [H.p(6.61, 4.01, .99), H.p(6.61, 5.58, .99)], 'blue', .7);
   H.line(R, [H.p(7.81, 4.01, .99), H.p(7.81, 5.58, .99)], 'blue', .7);

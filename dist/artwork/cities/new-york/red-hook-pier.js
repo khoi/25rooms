@@ -1,3 +1,4 @@
+import { surface } from '../materials.js';
 import { shallowTray, foldedCloth, coiledLine, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -9,15 +10,71 @@ FIGURES.clips.newYorkFloatCheck = { dur: 20, keys: [[0, seated], [.18, seated], 
 const smooth = x => { const v = Math.max(0, Math.min(1, x)); return v * v * (3 - 2 * v); };
 
 function piling(H, R, i, j) {
-  box(H, R, i, j, .43, .48, -.08, .88, 'blue', .67);
-  oval(H, R, ...H.p(i + .21, j + .25, .81), 9, 5, 'paper', .7);
-  oval(H, R, ...H.p(i + .21, j + .25, .82), 5, 3, 'blue', .46);
-  for (let n = 0; n < 6; n++) {
-    const [x, y] = H.p(i + .44, j + .07 + n % 3 * .15, .14 + Math.floor(n / 3) * .16);
-    oval(H, R, x, y, 2, 3, 'paper', .8);
+  const [x, y] = H.p(i + 0.21, j + 0.25, -0.04),
+    [tx, ty] = H.p(i + 0.21, j + 0.25, 0.82);
+  surface(
+    H,
+    R,
+    [
+      [x - 9, y],
+      [x + 9, y],
+      [tx + 9, ty],
+      [tx - 9, ty]
+    ],
+    'sun',
+    0.52
+  );
+  H.tint(
+    [
+      [x, y],
+      [x + 9, y],
+      [tx + 9, ty],
+      [tx, ty]
+    ],
+    'blue',
+    0.27,
+    { fine: true }
+  );
+  for (let n = 0; n < 5; n++)
+    stroke(
+      H,
+      R,
+      [
+        [x - 6 + n * 3, y - 2],
+        [x - 5 + n * 3, y - 11],
+        [tx - 6 + n * 3, ty + 3]
+      ],
+      'coral',
+      0.65
+    );
+  surface(H, R, ell(tx, ty, 9, 4.5), 'paper', 1, 0.65);
+  for (const r of [2, 4.5, 7]) H.outline(R, ell(tx + 1, ty, r, r * 0.45), 'coral', 0.5, { tone: 0.65 });
+  H.line(
+    R,
+    [
+      [tx, ty],
+      [tx + 6, ty - 3]
+    ],
+    'blue',
+    0.65
+  );
+  for (const z of [0.21, 0.65]) {
+    const [a, b] = H.p(i + 0.21, j + 0.25, z);
+    H.line(
+      R,
+      [
+        [a - 9, b],
+        [a, b + 3],
+        [a + 9, b]
+      ],
+      'teal',
+      2.3
+    );
+    H.dot(a + 3, b + 2, 1.3, 'sun');
   }
-  for (const z of [.3, .67]) H.line(R, [H.p(i, j + .49, z), H.p(i + .44, j + .49, z)], 'teal', 2);
+  for (let n = 0; n < 7; n++) surface(H, R, ell(x - 6 + (n % 4) * 4, y - 3 - Math.floor(n / 4) * 4, 1.7, 2.3), 'paper', 1, 0.35);
 }
+
 
 function bollard(H, R, i, j) {
   box(H, R, i, j, .67, .65, .19, .12, 'blue', .75);

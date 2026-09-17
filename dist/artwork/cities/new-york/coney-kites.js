@@ -1,3 +1,4 @@
+import { timber } from '../materials.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -11,21 +12,29 @@ FIGURES.clips.newYorkKiteHold = { dur: 18, keys: [[0, holding], [.22, holding], 
 function boardwalkBench(H, R) {
   for (const i of [2.75, 7.2]) {
     for (const j of [5.77, 6.69]) {
-      box(H, R, i, j, .19, .25, .03, .61, 'blue', .74);
-      oval(H, R, ...H.p(i + .1, j + .13, .02), 6, 3, 'blue', .43);
+      box(H, R, i, j, 0.19, 0.25, 0.03, 0.61, 'blue', 0.74);
+      oval(H, R, ...H.p(i + 0.1, j + 0.13, 0.02), 6, 3, 'blue', 0.43);
     }
-    H.line(R, [H.p(i + .1, 5.8, .13), H.p(i + .1, 6.8, .13)], 'blue', 2.2);
-    H.line(R, [H.p(i + .1, 5.87, .03), H.p(i + .1, 5.74, 1.56)], 'blue', 2.7);
+    H.line(R, [H.p(i + 0.1, 5.8, 0.13), H.p(i + 0.1, 6.8, 0.13)], 'blue', 2.2);
+    H.line(R, [H.p(i + 0.1, 5.87, 0.03), H.p(i + 0.1, 5.74, 1.56)], 'blue', 2.7);
   }
-  for (let j = 5.65; j < 6.96; j += .29) box(H, R, 2.44, j, 5.52, .23, .6, .1, 'sun', .39);
-  for (const z of [.86, 1.13, 1.4]) box(H, R, 2.44, 5.65, 5.52, .16, z, .18, 'sun', .44);
+  for (let j = 5.65; j < 6.96; j += 0.29) timber(H, R, 2.44, j, 5.52, 0.23, 0.6, 0.1, 'sun');
+  for (const z of [0.86, 1.13, 1.4]) timber(H, R, 2.44, 5.65, 5.52, 0.16, z, 0.18, 'sun');
   for (const i of [2.71, 7.25]) {
-    stroke(H, R, [H.p(i, 5.78, .89), H.p(i, 5.83, 1.05), H.p(i, 6.85, 1.02), H.p(i, 6.94, .75)], 'blue', 2.8);
-    for (const z of [.92, 1.19, 1.47]) H.dot(...H.p(i, 5.83, z), 1.4, 'blue', .7);
+    stroke(H, R, [H.p(i, 5.78, 0.89), H.p(i, 5.83, 1.05), H.p(i, 6.85, 1.02), H.p(i, 6.94, 0.75)], 'blue', 2.8);
+    for (const z of [0.92, 1.19, 1.47]) H.dot(...H.p(i, 5.83, z), 1.4, 'blue', 0.7);
   }
   const [x, y] = H.p(3.57, 5.84, 1.19);
-  oval(H, R, x, y, 9, 3, 'paper', .8);
-  H.line(R, [[x - 5, y], [x + 5, y]], 'blue', .6);
+  oval(H, R, x, y, 9, 3, 'paper', 0.8);
+  H.line(
+    R,
+    [
+      [x - 5, y],
+      [x + 5, y]
+    ],
+    'blue',
+    0.6
+  );
 }
 
 function bag(H, R, i, j) {
@@ -47,30 +56,87 @@ function gull(H, R, x, y, turn = 0) {
 }
 
 function kite(H, R, x, y, u, hand, parentHand) {
-  const a = Math.sin(u * TAU) * .035;
+  const a = Math.sin(u * TAU) * 0.035;
   const pt = (dx, dy) => [x + dx * Math.cos(a) - dy * Math.sin(a), y + dx * Math.sin(a) + dy * Math.cos(a)];
-  const top = pt(0, -37), right = pt(28, -3), bottom = pt(0, 39), left = pt(-28, -3), center = pt(0, -3);
+  const top = pt(0, -37),
+    right = pt(28, -3),
+    bottom = pt(0, 39),
+    left = pt(-28, -3),
+    center = pt(0, -3);
   shape(H, R, [top, right, bottom, left], 'paper', 1, 1.05);
-  shape(H, R, [top, center, left], 'coral', .76, .5);
-  shape(H, R, [right, center, bottom], 'teal', .75, .5);
-  shape(H, R, [top, right, center], 'sun', .7, .5);
+  shape(H, R, [top, center, left], 'coral', 0.76, 0.5);
+  shape(H, R, [right, center, bottom], 'teal', 0.75, 0.5);
+  shape(H, R, [top, right, center], 'sun', 0.7, 0.5);
   H.line(R, [top, bottom], 'blue', 1.05);
   stroke(H, R, [left, pt(0, -8), right], 'blue', 1.05);
+  for (const edge of [
+    [top, left],
+    [left, bottom],
+    [bottom, right],
+    [right, top]
+  ]) {
+    const [a, b] = edge;
+    for (let n = 1; n < 9; n++) {
+      const f = n / 9,
+        x0 = a[0] + (b[0] - a[0]) * f,
+        y0 = a[1] + (b[1] - a[1]) * f;
+      H.line(
+        R,
+        [
+          [x0 * 0.96 + center[0] * 0.04, y0 * 0.96 + center[1] * 0.04],
+          [x0 * 0.91 + center[0] * 0.09, y0 * 0.91 + center[1] * 0.09]
+        ],
+        'blue',
+        0.5
+      );
+    }
+  }
+  H.line(R, [pt(-18, -14), pt(-7, -24), pt(-3, -20), pt(-14, -10)], 'paper', 1.1);
   H.dot(...center, 2.2, 'paper', 1);
-  H.line(R, [bottom, hand], 'blue', .7);
+  H.line(R, [bottom, hand], 'blue', 0.7);
   const wave = Math.sin(u * TAU) * 8;
-  const tail = [bottom, pt(16 + wave * .4, 56), pt(4 + wave * .6, 77), pt(26 + wave, 92), pt(22 + wave, 115)];
-  stroke(H, R, tail, 'blue', .85);
-  for (const [dx, dy, ink] of [[15 + wave * .4, 55, 'coral'], [9 + wave * .6, 78, 'sun'], [24 + wave, 102, 'teal']]) {
+  const tail = [bottom, pt(16 + wave * 0.4, 56), pt(4 + wave * 0.6, 77), pt(26 + wave, 92), pt(22 + wave, 115)];
+  stroke(H, R, tail, 'blue', 0.85);
+  for (const [dx, dy, ink] of [
+    [15 + wave * 0.4, 55, 'coral'],
+    [9 + wave * 0.6, 78, 'sun'],
+    [24 + wave, 102, 'teal']
+  ]) {
     const [tx, ty] = pt(dx, dy);
-    shape(H, R, [[tx, ty], [tx - 8, ty - 5], [tx - 7, ty + 5], [tx, ty], [tx + 8, ty - 5], [tx + 7, ty + 5]], ink, .74, .55);
+    shape(
+      H,
+      R,
+      [
+        [tx, ty],
+        [tx - 8, ty - 5],
+        [tx - 7, ty + 5],
+        [tx, ty],
+        [tx + 8, ty - 5],
+        [tx + 7, ty + 5]
+      ],
+      ink,
+      0.74,
+      0.55
+    );
   }
   if (parentHand) {
-    const pull = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .14) / .7))) ** 2;
-    const target = pt(-14, 7), middle = [(target[0] + parentHand[0]) / 2, (target[1] + parentHand[1]) / 2 + 15 - pull * 11];
-    stroke(H, R, [parentHand, middle, target, pt(-2, 12), center], 'blue', .85);
+    const pull = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - 0.14) / 0.7))) ** 2;
+    const target = pt(-14, 7),
+      middle = [(target[0] + parentHand[0]) / 2, (target[1] + parentHand[1]) / 2 + 15 - pull * 11];
+    stroke(H, R, [parentHand, middle, target, pt(-2, 12), center], 'blue', 0.85);
     const [lx, ly] = pt(-8, 11);
-    stroke(H, R, [[lx, ly], [lx - 7, ly + 7 - pull * 4], [lx + 5, ly + 10 - pull * 6], [lx + 1, ly]], 'paper', 1.3);
+    stroke(
+      H,
+      R,
+      [
+        [lx, ly],
+        [lx - 7, ly + 7 - pull * 4],
+        [lx + 5, ly + 10 - pull * 6],
+        [lx + 1, ly]
+      ],
+      'paper',
+      1.3
+    );
   }
 }
 

@@ -1,3 +1,4 @@
+import { surface, benchFrame, drape } from '../materials.js';
 import { cornice, windowBay, cityView, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
@@ -8,14 +9,25 @@ const measure = { ...rest, lean: -11, head: 15, al: 66, ar: 78, el: 30, er: 14 }
 FIGURES.clips.hongKongFabricMeasure = { dur: 16, keys: [[0, measure], [.1, measure], [.28, { ...measure, al: 85, ar: 100, el: 6, er: -5, lean: -17 }], [.48, { ...measure, al: 85, ar: 100, el: 6, er: -5, lean: -17 }], [.63, { ...measure, al: 57, ar: 56, el: 57, er: 60, lean: -4 }], [.8, { ...measure, al: 57, ar: 56, el: 57, er: 60, lean: -4, head: -2 }], [.95, measure], [1, measure]] };
 
 function bolt(H, R, i, j, z, width, height, ink, pattern = 0) {
-  box(H, R, i, j, width, .76, z, height, ink, .48);
-  const face = H.faceI(i + .03, j + .775, width - .06, z + .04, z + height - .04);
+  const edge = Array.from({ length: 13 }, (_, n) => H.p(i + width, j + 0.04 + n * 0.055, z + height - 0.035 + Math.sin(n * 0.9) * 0.025));
+  surface(H, R, [H.p(i, j, z), H.p(i + width, j, z), H.p(i + width, j + 0.76, z), H.p(i, j + 0.76, z)], ink, 0.65);
+  surface(H, R, [H.p(i, j + 0.76, z), H.p(i + width, j + 0.76, z), H.p(i + width, j + 0.76, z + height), H.p(i, j + 0.76, z + height)], ink, 0.49);
+  surface(H, R, H.tile(i, j, width, 0.76, z + height), ink, 0.42);
+  H.line(R, edge, 'paper', 1.2);
+  for (let n = 0; n < 4; n++)
+    H.line(R, [H.p(i + 0.05, j + 0.79, z + 0.08 + n * 0.07), H.p(i + width - 0.05, j + 0.79, z + 0.08 + n * 0.07)], 'paper', 0.6);
+  const face = H.faceI(i + 0.03, j + 0.775, width - 0.06, z + 0.04, z + height - 0.04);
   H.clip(face, () => {
-    if (pattern % 3 === 0) for (let q = 0; q < 7; q++) H.line(R, [H.p(i + .02, j + .79, z + .08 + q * .15), H.p(i + width, j + .79, z + .08 + q * .15)], 'paper', 1.1);
-    else if (pattern % 3 === 1) for (let q = 0; q < 12; q++) H.dot(...H.p(i + .08 + q % 3 * width / 3, j + .79, z + .13 + Math.floor(q / 3) * .19), 1.6, 'paper', 1);
-    else for (let q = 0; q < 4; q++) H.line(R, [H.p(i + .1 + q * width / 4, j + .79, z), H.p(i + .1 + q * width / 4, j + .79, z + height)], 'blue', .6, { tone: .5 });
+    if (pattern % 3 === 0)
+      for (let q = 0; q < 7; q++)
+        H.line(R, [H.p(i + 0.02, j + 0.79, z + 0.08 + q * 0.15), H.p(i + width, j + 0.79, z + 0.08 + q * 0.15)], 'paper', 1.1);
+    else if (pattern % 3 === 1)
+      for (let q = 0; q < 12; q++) H.dot(...H.p(i + 0.08 + ((q % 3) * width) / 3, j + 0.79, z + 0.13 + Math.floor(q / 3) * 0.19), 1.6, 'paper', 1);
+    else
+      for (let q = 0; q < 4; q++)
+        H.line(R, [H.p(i + 0.1 + (q * width) / 4, j + 0.79, z), H.p(i + 0.1 + (q * width) / 4, j + 0.79, z + height)], 'blue', 0.6, { tone: 0.5 });
   });
-  shape(H, R, H.tile(i + width * .3, j + .07, width * .4, .56, z + height + .015), 'paper', .85, .4);
+  shape(H, R, H.tile(i + width * 0.3, j + 0.07, width * 0.4, 0.56, z + height + 0.015), 'paper', 0.85, 0.4);
 }
 
 function roll(H, R, i, j, z, length, ink, stripe = false) {
@@ -259,7 +271,7 @@ const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue
       H.line(R, [[x + 3, y - 5], [x + 3, y - 54]], 'paper', .9);
     }
   }
-  table(H, R, 2.36, 4.1, 7.73, 2.04, 1.02, 'paper');
+  benchFrame(H,R,2.36,4.1,7.73,2.04,1.14,'sun');
   shape(H, R, H.tile(3.1, 4.3, 5.96, 1.53, 1.155), 'blue', .6, .7);
   for (let q = 0; q < 12; q++) H.line(R, [H.p(3.13 + q * .48, 4.34, 1.17), H.p(3.13 + q * .48, 5.8, 1.17)], 'paper', .7, { tone: .6 });
   for (let q = 0; q < 4; q++) H.line(R, [H.p(3.14, 4.43 + q * .38, 1.18), H.p(9.01, 4.43 + q * .38, 1.18)], 'teal', .8);
@@ -273,6 +285,7 @@ const room = world('hong-kong-sham-shui-po-fabric', 'Sham Shui Po · Twelve blue
   H.line(R, [[sx - 2, sy - 1], [sx + 13, sy - 16]], 'blue', 2.1);
   H.line(R, [[sx + 2, sy - 1], [sx - 8, sy - 17]], 'blue', 2.1);
   shape(H, R, H.tile(9.43, 5.3, .22, .2, 1.18), 'paper', 1, .5);
+  drape(H,R,8.82,5.6,.64,.58,1.18,.79,'coral');
   box(H, R, 9.42, 5.61, .37, .28, 1.16, .13, 'coral', .7);
   table(H, R, 8.22, 1.93, 2.85, 1.23, .83, 'teal');
   for (let q = 0; q < 3; q++) roll(H, R, 8.5, 2.2 + q * .3, 1.15 + q * .04, 1.65, ['coral', 'sun', 'paper'][q], q === 0);

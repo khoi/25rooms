@@ -1,3 +1,4 @@
+import { surface, timber } from '../materials.js';
 import { cornice, recessedFrame, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell } from '../../worlds/common.js';
@@ -8,11 +9,11 @@ const hold = { ...rest, lean: -10, head: 13, al: 62, ar: 69, el: 42, er: 34 };
 FIGURES.clips.hongKongDragonSupport = { dur: 14, keys: [[0, hold], [.13, hold], [.3, { ...hold, al: 74, ar: 78, el: 20, er: 20 }], [.48, { ...hold, al: 79, ar: 84, el: 12, er: 15, lean: -14 }], [.61, { ...hold, al: 74, ar: 78, el: 20, er: 20 }], [.8, hold], [1, hold]] };
 
 function trestle(H, R, i, j) {
-  for (const x of [i, i + .8]) {
-    H.line(R, [H.p(x, j, .04), H.p(x, j + .57, 1.04), H.p(x, j + 1.14, .04)], 'blue', 3.4);
-    H.line(R, [H.p(x, j + .15, .37), H.p(x, j + .95, .37)], 'coral', 2);
+  for (const x of [i, i + 0.8]) {
+    H.line(R, [H.p(x, j, 0.04), H.p(x, j + 0.57, 1.04), H.p(x, j + 1.14, 0.04)], 'blue', 3.4);
+    H.line(R, [H.p(x, j + 0.15, 0.37), H.p(x, j + 0.95, 0.37)], 'coral', 2);
   }
-  box(H, R, i - .09, j + .42, .98, .31, 1.02, .12, 'coral', .55);
+  timber(H, R, i - 0.09, j + 0.42, 0.98, 0.31, 1.02, 0.12, 'coral');
 }
 
 function strawSection(H, R, i, j, z, size = 1) {
@@ -27,19 +28,173 @@ function strawSection(H, R, i, j, z, size = 1) {
 
 function dragonHead(H, R, i, j, z) {
   const [x, y] = H.p(i, j, z);
-  shape(H, R, [[x - 32, y + 5], [x - 30, y - 22], [x - 17, y - 36], [x + 8, y - 34], [x + 24, y - 19], [x + 44, y - 8], [x + 43, y + 13], [x + 20, y + 24], [x - 11, y + 24]], 'sun', .65);
-  for (let q = 0; q < 15; q++) H.line(R, [[x - 25 + q * 4.4, y + 5 + Math.sin(q) * 4], [x - 22 + q * 4.4, y + 21]], 'coral', .7, { tone: .7 });
-  shape(H, R, [[x - 18, y - 27], [x - 29, y - 52], [x - 22, y - 57], [x - 8, y - 31]], 'paper', 1, .8);
-  shape(H, R, [[x + 5, y - 30], [x + 7, y - 54], [x + 16, y - 51], [x + 16, y - 26]], 'paper', 1, .8);
+  shape(
+    H,
+    R,
+    [
+      [x - 32, y + 5],
+      [x - 30, y - 22],
+      [x - 17, y - 36],
+      [x + 8, y - 34],
+      [x + 24, y - 19],
+      [x + 44, y - 8],
+      [x + 43, y + 13],
+      [x + 20, y + 24],
+      [x - 11, y + 24]
+    ],
+    'sun',
+    0.65
+  );
+  for (let q = 0; q < 15; q++)
+    H.line(
+      R,
+      [
+        [x - 25 + q * 4.4, y + 5 + Math.sin(q) * 4],
+        [x - 22 + q * 4.4, y + 21]
+      ],
+      'coral',
+      0.7,
+      { tone: 0.7 }
+    );
+  shape(
+    H,
+    R,
+    [
+      [x - 18, y - 27],
+      [x - 29, y - 52],
+      [x - 22, y - 57],
+      [x - 8, y - 31]
+    ],
+    'paper',
+    1,
+    0.8
+  );
+  shape(
+    H,
+    R,
+    [
+      [x + 5, y - 30],
+      [x + 7, y - 54],
+      [x + 16, y - 51],
+      [x + 16, y - 26]
+    ],
+    'paper',
+    1,
+    0.8
+  );
   oval(H, R, x + 8, y - 15, 11, 12, 'paper', 1);
-  oval(H, R, x + 11, y - 14, 5, 6, 'blue', .85);
+  oval(H, R, x + 11, y - 14, 5, 6, 'blue', 0.85);
   H.dot(x + 13, y - 16, 1.6, 'paper', 1);
-  oval(H, R, x + 31, y - 3, 15, 8, 'coral', .63);
+  oval(H, R, x + 31, y - 3, 15, 8, 'coral', 0.63);
   H.dot(x + 35, y - 6, 2, 'blue', 1);
-  stroke(H, R, [[x + 12, y + 8], [x + 25, y + 13], [x + 41, y + 7]], 'blue', 1.5);
-  for (let q = 0; q < 5; q++) shape(H, R, [[x + 13 + q * 5, y + 10], [x + 16 + q * 5, y + 10], [x + 15 + q * 5, y + 16]], 'paper', 1, .4);
-  for (const d of [-1, 1]) stroke(H, R, [[x + 27, y + 1], [x + 43, y + d * 17], [x + 54, y + d * 18], [x + 57, y + d * 12]], 'teal', 1.6);
-  for (let q = 0; q < 8; q++) stroke(H, R, [[x - 13 + q * 5, y + 22], [x - 15 + q * 5, y + 32], [x - 10 + q * 5, y + 39]], q % 2 ? 'coral' : 'sun', 1.3);
+  stroke(
+    H,
+    R,
+    [
+      [x + 12, y + 8],
+      [x + 25, y + 13],
+      [x + 41, y + 7]
+    ],
+    'blue',
+    1.5
+  );
+  for (let q = 0; q < 5; q++)
+    shape(
+      H,
+      R,
+      [
+        [x + 13 + q * 5, y + 10],
+        [x + 16 + q * 5, y + 10],
+        [x + 15 + q * 5, y + 16]
+      ],
+      'paper',
+      1,
+      0.4
+    );
+  for (const d of [-1, 1])
+    stroke(
+      H,
+      R,
+      [
+        [x + 27, y + 1],
+        [x + 43, y + d * 17],
+        [x + 54, y + d * 18],
+        [x + 57, y + d * 12]
+      ],
+      'teal',
+      1.6
+    );
+  for (let q = 0; q < 8; q++)
+    stroke(
+      H,
+      R,
+      [
+        [x - 13 + q * 5, y + 22],
+        [x - 15 + q * 5, y + 32],
+        [x - 10 + q * 5, y + 39]
+      ],
+      q % 2 ? 'coral' : 'sun',
+      1.3
+    );
+  const mouth = [
+    [x + 14, y + 12],
+    [x + 39, y + 8],
+    [x + 37, y + 21],
+    [x + 21, y + 25]
+  ];
+  surface(H, R, mouth, 'blue', 0.85);
+  surface(
+    H,
+    R,
+    [
+      [x + 14, y + 24],
+      [x + 24, y + 27],
+      [x + 41, y + 23],
+      [x + 46, y + 17],
+      [x + 40, y + 15],
+      [x + 34, y + 20],
+      [x + 22, y + 22]
+    ],
+    'coral',
+    0.72
+  );
+  for (let n = 0; n < 4; n++)
+    surface(
+      H,
+      R,
+      [
+        [x + 18 + n * 5, y + 12 - n],
+        [x + 22 + n * 5, y + 11 - n],
+        [x + 21 + n * 5, y + 18 - n]
+      ],
+      'paper',
+      1,
+      0.4
+    );
+  for (let n = 0; n < 14; n++) {
+    const a = (n / 14) * TAU,
+      rx = 14 + Math.sin(n * 2) * 3;
+    H.line(
+      R,
+      [
+        [x - 15 + Math.cos(a) * rx, y - 7 + Math.sin(a) * rx],
+        [x - 15 + Math.cos(a) * (rx + 8), y - 7 + Math.sin(a) * (rx + 8)]
+      ],
+      'sun',
+      1.8
+    );
+  }
+  for (const dx of [-23, 11])
+    for (let n = 0; n < 5; n++)
+      H.line(
+        R,
+        [
+          [x + dx - 3, y - 35 - n * 3],
+          [x + dx + 4, y - 36 - n * 3]
+        ],
+        'teal',
+        0.65
+      );
 }
 
 function taiHangDragonDetails(H, R) {

@@ -1,6 +1,7 @@
+import { benchFrame, surface, metal, bentTube } from '../materials.js';
 import { cornice, floorShadow, windowBay, cityView, hangingRail, wallRack, recessedFrame, taskLight, specimen, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, foldedCloth, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, bottle, steam, cycle, ell, wallPt, wallRect } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, bottle, steam, cycle, wallPt, wallRect } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -21,10 +22,63 @@ function dumpling(H, R, x, y, size = 1) {
 
 function steamer(H, R, i, j, z, size = 1) {
   const [x, y] = H.p(i, j, z);
-  shape(H, R, [[x - 16 * size, y - 10 * size], [x - 16 * size, y + 3 * size], [x + 16 * size, y + 3 * size], [x + 16 * size, y - 10 * size]], 'sun', .45, .6);
-  oval(H, R, x, y + 3 * size, 16 * size, 6 * size, 'sun', .5);
+  shape(
+    H,
+    R,
+    [
+      [x - 16 * size, y - 10 * size],
+      [x - 16 * size, y + 3 * size],
+      [x + 16 * size, y + 3 * size],
+      [x + 16 * size, y - 10 * size]
+    ],
+    'sun',
+    0.45,
+    0.6
+  );
+  oval(H, R, x, y + 3 * size, 16 * size, 6 * size, 'sun', 0.5);
   oval(H, R, x, y - 10 * size, 16 * size, 6 * size, 'paper', 1);
-  for (let n = -2; n <= 2; n++) H.line(R, [[x - 12 * size, y - 10 * size + n * 1.6], [x + 12 * size, y - 10 * size + n * 1.6]], 'teal', .7, { tone: .5 });
+  for (let n = -2; n <= 2; n++)
+    H.line(
+      R,
+      [
+        [x - 12 * size, y - 10 * size + n * 1.6],
+        [x + 12 * size, y - 10 * size + n * 1.6]
+      ],
+      'teal',
+      0.7,
+      { tone: 0.5 }
+    );
+  for (let n = 0; n < 11; n++) {
+    const dx = (-14 + n * 2.8) * size;
+    H.line(
+      R,
+      [
+        [x + dx, y - 8 * size],
+        [x + dx + 1.2 * size, y + 3 * size]
+      ],
+      'coral',
+      0.6
+    );
+  }
+  H.line(
+    R,
+    [
+      [x - 15 * size, y],
+      [x + 15 * size, y]
+    ],
+    'sun',
+    1.2
+  );
+  for (const dx of [-12, 12])
+    H.line(
+      R,
+      [
+        [x + dx * size, y - 6 * size],
+        [x + (dx + 3) * size, y - 6 * size]
+      ],
+      'paper',
+      1
+    );
 }
 
 function chinatownKitchenDetails(H, R) {
@@ -290,7 +344,7 @@ function kitchenConstruction(H, R) {
     );
 }
 
-const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather', { floor: 'paper', tone: .65, wall: 'teal', wallTone: .18, pattern: 'tiles', height: 3.65, head: 20 }, (H, R) => {
+const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather', { floor: 'paper', tone: .65, wall: 'teal', wallTone: .18, pattern: 'tiles', height: 3.95, head: 32 }, (H, R) => {
   kitchenEnvelope(H,R);
   for (const side of ['nw', 'ne']) for (let n = .55; n < 12; n += .55) H.line(R, [wallPt(H, side, n, .1, .03), wallPt(H, side, n, 3.6, .03)], 'blue', .4, { tone: .24 });
   for (const side of ['nw', 'ne']) for (let n = .6; n < 3.6; n += .6) H.line(R, [wallPt(H, side, .05, n, .03), wallPt(H, side, 11.96, n, .03)], 'blue', .4, { tone: .24 });
@@ -304,9 +358,9 @@ const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather',
   stroke(H, R, [H.p(.65, 2.64, 1.11), H.p(.65, 2.64, 1.78), H.p(1.03, 2.81, 1.79), H.p(1.03, 2.81, 1.48)], 'blue', 2.5);
   bottle(H, R, ...H.p(.81, 4.65, 1.06), 'teal', .52);
   shape(H, R, H.tile(.61, 5.12, .65, .37, 1.09), 'coral', .55, .6);
-  table(H, R, 3.25, 3.06, 5.3, 1.24, 1.09, 'paper');
-  table(H, R, 3.25, 4.3, 1.23, 4.1, 1.09, 'paper');
-  table(H, R, 7.32, 4.3, 1.23, 4.1, 1.09, 'paper');
+  benchFrame(H,R,3.25,3.06,5.3,1.24,1.21,'teal');
+  benchFrame(H,R,3.25,4.3,1.23,4.1,1.21,'teal');
+  benchFrame(H,R,7.32,4.3,1.23,4.1,1.21,'teal');
   for (const i of [3.37, 7.44]) for (let n = 0; n < 3; n++) {
     box(H, R, i, 4.72 + n * 1.1, .95, .91, .24, .09, 'teal', .4);
     box(H, R, i + .1, 4.8 + n * 1.1, .75, .64, .35, .36, 'paper', .9);
@@ -330,7 +384,10 @@ const room = world('new-york-chinatown-kitchen', 'Chinatown · Fold and Gather',
     steamer(H, R, i, 1.06, 1.78, 1.15);
     oval(H, R, ...H.p(i, 1.06, 2.12), 18, 7, 'sun', .52);
   }
-  box(H, R, 8.83, .12, 2.87, 1.95, 2.77, .59, 'paper', .84);
+  surface(H,R,[H.p(9.26,.19,3.58),H.p(11.32,.19,3.58),H.p(11.7,2.07,2.96),H.p(8.83,2.07,2.96)],'paper',1);
+  surface(H,R,[H.p(11.32,.19,3.58),H.p(11.7,2.07,2.96),H.p(11.7,2.07,2.77),H.p(11.32,.19,3.21)],'teal',.5);
+  metal(H,R,8.83,1.92,2.87,.15,2.77,.2,'teal');
+  bentTube(H,R,[[10.21,.39,3.52],[10.21,.39,3.93],[11.36,.39,3.93]],6,'paper');
   shape(H, R, H.faceI(8.96, 2.09, 2.56, 2.81, 3.03), 'blue', .5, .6);
   for (let i = 9.1; i < 11.45; i += .22) H.line(R, [H.p(i, 2.11, 2.83), H.p(i, 2.11, 3)], 'paper', .8);
   for (const z of [1.82, 2.76]) {

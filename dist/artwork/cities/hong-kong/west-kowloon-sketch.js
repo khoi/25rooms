@@ -1,6 +1,7 @@
+import { slattedSeat, benchFrame, drape, bentTube, metal } from '../materials.js';
 import { caster, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, bench, actor, plant, cycle, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -12,12 +13,27 @@ function cloud(H, R, x, y, scale = 1) {
 }
 
 function foldingChair(H, R, i, j, ink) {
-  for (const x of [i, i + .82]) {
-    H.line(R, [H.p(x, j, 0), H.p(x, j + .9, .8)], 'blue', 1.8);
-    H.line(R, [H.p(x, j + .95, 0), H.p(x, j, .8)], 'blue', 1.8);
+  for (const x of [i, i + 0.82]) {
+    H.line(R, [H.p(x, j, 0), H.p(x, j + 0.9, 0.8)], 'blue', 1.8);
+    H.line(R, [H.p(x, j + 0.95, 0), H.p(x, j, 0.8)], 'blue', 1.8);
   }
-  shape(H, R, H.tile(i, j + .15, .82, .62, .65), ink, .65);
-  shape(H, R, H.faceI(i, j + .08, .82, .7, 1.35), ink, .65);
+  shape(H, R, H.tile(i, j + 0.15, 0.82, 0.62, 0.65), ink, 0.65);
+  shape(H, R, H.faceI(i, j + 0.08, 0.82, 0.7, 1.35), ink, 0.65);
+  for (const x of [i, i + 0.82]) {
+    bentTube(
+      H,
+      R,
+      [
+        [x, j + 0.9, 0.65],
+        [x, j + 0.92, 0.95],
+        [x, j + 0.02, 1.03]
+      ],
+      1.6,
+      'sun'
+    );
+    metal(H, R, x - 0.03, j + 0.44, 0.065, 0.08, 0.33, 0.09, 'teal');
+  }
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(i + 0.08 + n * 0.16, j + 0.08, 0.77), H.p(i + 0.08 + n * 0.16, j + 0.1, 1.28)], 'sun', 0.6);
 }
 
 function westKowloonSketchDetails(H, R) {
@@ -199,10 +215,11 @@ const room = world('hong-kong-west-kowloon-sketch', 'West Kowloon · Hold that c
     box(H, R, i, 2.1, .18, 6.43, 3.63, .09, q % 3 ? 'paper' : 'sun', .7);
     H.tint(H.tile(i + .3, 2.5, .14, 5.8, .03), 'blue', .13);
   }
-  bench(H, R, 8.1, 1.6, 3.1, 'teal');
+  slattedSeat(H,R,8.1,1.6,3.1,0,'sun',.6);
   for (let q = 0; q < 7; q++) H.line(R, [H.p(8.25 + q * .43, 1.77, .71), H.p(8.25 + q * .43, 2.33, .71)], 'paper', .8);
   foldingChair(H, R, 4.8, 6.35, 'coral');
-  table(H, R, 3.1, 5.45, 2.3, 1.2, .94, 'paper');
+  benchFrame(H,R,3.1,5.45,2.3,1.2,1.06,'sun');
+  drape(H,R,3.15,5.6,.48,1.02,1.09,.36,'paper');
   shape(H, R, H.tile(3.23, 5.57, 1.83, .86, 1.08), 'sun', .45);
   shape(H, R, H.tile(3.37, 5.63, 1.48, .72, 1.1), 'paper', 1);
   const [sx, sy] = H.p(4.09, 5.95, 1.12);

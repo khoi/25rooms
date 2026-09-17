@@ -1,3 +1,4 @@
+import { timber, metal } from '../materials.js';
 import { hangingRail, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
@@ -14,31 +15,60 @@ function leaf(H, R, x, y, size, ink = 'teal') {
 }
 
 function compostBay(H, R, j, filled, open) {
-  const i = .5, w = 2.6, d = 2.52;
-  box(H, R, i, j, w, d, .04, .14, 'blue', .4);
+  const i = 0.5,
+    w = 2.6,
+    d = 2.52;
+  box(H, R, i, j, w, d, 0.04, 0.14, 'blue', 0.4);
   if (filled) {
-    const heap = [H.p(i + .12, j + .18, .35), H.p(i + 1.15, j + .18, .94), H.p(i + 2.42, j + .72, .57), H.p(i + 2.41, j + 2.25, .45), H.p(i + 1.31, j + 2.29, .73), H.p(i + .14, j + 1.87, .49)];
-    shape(H, R, heap, filled === 2 ? 'blue' : 'teal', .68, .75);
+    const heap = [
+      H.p(i + 0.12, j + 0.18, 0.35),
+      H.p(i + 1.15, j + 0.18, 0.94),
+      H.p(i + 2.42, j + 0.72, 0.57),
+      H.p(i + 2.41, j + 2.25, 0.45),
+      H.p(i + 1.31, j + 2.29, 0.73),
+      H.p(i + 0.14, j + 1.87, 0.49)
+    ];
+    shape(H, R, heap, filled === 2 ? 'blue' : 'teal', 0.68, 0.75);
     H.clip(heap, () => {
-      H.speckle(R, heap, 'sun', 190, .6, 1.8, .55);
+      H.speckle(R, heap, 'sun', 190, 0.6, 1.8, 0.55);
       for (let k = 0; k < 19; k++) {
-        const [x, y] = H.p(i + .25 + R() * 2, j + .22 + R() * 1.9, .69);
-        H.line(R, [[x - 4, y - 1], [x + 5, y + 1]], k % 3 ? 'paper' : 'coral', 1.2, { tone: .6 });
+        const [x, y] = H.p(i + 0.25 + R() * 2, j + 0.22 + R() * 1.9, 0.69);
+        H.line(
+          R,
+          [
+            [x - 4, y - 1],
+            [x + 5, y + 1]
+          ],
+          k % 3 ? 'paper' : 'coral',
+          1.2,
+          { tone: 0.6 }
+        );
       }
     });
   }
   for (let n = 0; n < 4; n++) {
-    box(H, R, i, j, .12, d, .17 + n * .22, .13, 'teal', .48);
-    box(H, R, i, j, w, .1, .17 + n * .22, .13, 'teal', .48);
-    box(H, R, i, j + d - .1, w, .1, .17 + n * .22, .13, 'teal', .5);
-    if (!open || n < 2) box(H, R, i + w - .1, j, .1, d, .17 + n * .22, .13, 'sun', .42);
+    timber(H, R, i, j, 0.12, d, 0.17 + n * 0.22, 0.13, 'teal', 0.48);
+    timber(H, R, i, j, w, 0.1, 0.17 + n * 0.22, 0.13, 'teal', 0.48);
+    timber(H, R, i, j + d - 0.1, w, 0.1, 0.17 + n * 0.22, 0.13, 'teal', 0.5);
+    if (!open || n < 2) timber(H, R, i + w - 0.1, j, 0.1, d, 0.17 + n * 0.22, 0.13, 'sun', 0.42);
   }
-  for (const a of [i, i + w - .15]) for (const b of [j, j + d - .15]) box(H, R, a, b, .15, .15, .03, 1.11, 'blue', .65);
+  for (const a of [i, i + w - 0.15]) for (const b of [j, j + d - 0.15]) box(H, R, a, b, 0.15, 0.15, 0.03, 1.11, 'blue', 0.65);
   if (open) {
-    shape(H, R, [H.p(i, j, 1.14), H.p(i + .22, j, 2.17), H.p(i + .22, j + d, 2.17), H.p(i, j + d, 1.14)], 'sun', .35, 1);
-    for (let k = 0; k < 6; k++) H.line(R, [H.p(i + .03, j + k * .42, 1.2), H.p(i + .2, j + k * .42, 2.1)], 'blue', .65);
-    H.line(R, [H.p(i + .16, j + d - .3, 1.87), H.p(i + .93, j + d - .3, .99)], 'blue', 1.5);
-  } else shape(H, R, H.tile(i, j, w, d, 1.17), 'paper', .9, .8);
+    shape(H, R, [H.p(i, j, 1.14), H.p(i + 0.22, j, 2.17), H.p(i + 0.22, j + d, 2.17), H.p(i, j + d, 1.14)], 'sun', 0.35, 1);
+    for (let k = 0; k < 6; k++) H.line(R, [H.p(i + 0.03, j + k * 0.42, 1.2), H.p(i + 0.2, j + k * 0.42, 2.1)], 'blue', 0.65);
+    H.line(R, [H.p(i + 0.16, j + d - 0.3, 1.87), H.p(i + 0.93, j + d - 0.3, 0.99)], 'blue', 1.5);
+  } else shape(H, R, H.tile(i, j, w, d, 1.17), 'paper', 0.9, 0.8);
+  for (const y of [j + 0.18, j + d - 0.34]) {
+    metal(H, R, i - 0.01, y, 0.22, 0.17, 1.08, 0.11, 'teal');
+    H.line(R, [H.p(i - 0.035, y + 0.085, 1.14), H.p(i + 0.245, y + 0.085, 1.14)], 'sun', 1.2);
+  }
+  if (open) {
+    for (let n = 0; n < 5; n++) {
+      const y = j + 0.22 + (n * (d - 0.44)) / 4;
+      H.line(R, [H.p(i + 0.04, y, 1.3), H.p(i + 0.18, y, 1.94)], 'paper', 0.9);
+    }
+    for (let n = 0; n < 4; n++) leaf(H, R, ...H.p(i + 1.14 + n * 0.25, j + d - 0.22, 0.58), 5 + (n % 2) * 2, n % 2 ? 'coral' : 'sun');
+  }
 }
 
 function barrel(H, R, i, j) {

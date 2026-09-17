@@ -1,3 +1,4 @@
+import { surface, timber, metal, cushion } from '../materials.js';
 import { cornice, panelFront, wallRack, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, windowOn, glow, TAU } from '../../worlds/common.js';
@@ -23,40 +24,72 @@ function chair(H, R, i, j, ink = 'teal') {
   box(H, R, i, j + .77, .92, .12, .68, .72, ink, .65);
 }
 
+function pianoAction(H, R) {
+  surface(H, R, H.faceI(3.93, 2.53, 3.94, 1.23, 1.87), 'blue', 0.84);
+  for (let n = 0; n < 24; n++) {
+    const i = 4.02 + n * 0.151;
+    H.line(R, [H.p(i, 2.55, 1.27), H.p(i + 0.07, 2.55, 1.83)], 'sun', 0.7);
+    timber(H, R, i, 2.57, 0.073, 0.075, 1.37, 0.31, 'sun');
+    cushion(H, R, i - 0.016, 2.57, 0.105, 0.085, 1.65, 0.055, n % 4 ? 'paper' : 'coral');
+  }
+  for (const z of [1.29, 1.77]) metal(H, R, 3.99, 2.6, 3.77, 0.045, z, 0.055, 'teal');
+  for (const i of [3.95, 7.81]) timber(H, R, i, 2.51, 0.09, 0.16, 1.2, 0.7, 'teal');
+}
+
 function piano(H, R) {
   for (const i of [3.76, 7.77]) {
-    box(H, R, i, 1.02, .29, 1.76, .19, .24, 'blue', .85);
-    box(H, R, i, 2.66, .24, .25, .2, .78, 'blue', .9);
+    box(H, R, i, 1.02, 0.29, 1.76, 0.19, 0.24, 'blue', 0.85);
+    box(H, R, i, 2.66, 0.24, 0.25, 0.2, 0.78, 'blue', 0.9);
   }
-  box(H, R, 3.71, .99, 4.4, 1.52, .36, 1.62, 'blue', .81);
-  box(H, R, 3.64, .92, 4.55, 1.65, 1.97, .16, 'teal', .78);
-  shape(H, R, H.faceI(3.93, 2.53, 3.94, 1.23, 1.87), 'teal', .58, .8);
-  shape(H, R, H.faceI(4.03, 2.55, 3.74, 1.31, 1.79), 'blue', .77, .6);
-  for (const i of [4.07, 5.87, 7.66]) H.line(R, [H.p(i, 2.57, 1.35), H.p(i, 2.57, 1.76)], 'teal', 1, { tone: .6 });
-  box(H, R, 3.71, 2.47, 4.4, .73, .87, .11, 'blue', .88);
-  shape(H, R, H.tile(3.97, 2.51, 3.9, .61, .99), 'paper', 1, .8);
+  box(H, R, 3.71, 0.99, 4.4, 1.52, 0.36, 1.62, 'blue', 0.81);
+  box(H, R, 3.64, 0.92, 4.55, 1.65, 1.97, 0.16, 'teal', 0.78);
+  pianoAction(H, R);
+  box(H, R, 3.71, 2.47, 4.4, 0.73, 0.87, 0.11, 'blue', 0.88);
+  shape(H, R, H.tile(3.97, 2.51, 3.9, 0.61, 0.99), 'paper', 1, 0.8);
   for (let n = 0; n < 28; n++) {
-    const i = 3.97 + n * .139;
-    H.line(R, [H.p(i, 2.55, 1), H.p(i, 3.1, 1)], 'blue', .65);
-    if (![2, 6].includes(n % 7)) box(H, R, i + .09, 2.52, .065, .34, 1.01, .035, 'blue', .96);
+    const i = 3.97 + n * 0.139;
+    H.line(R, [H.p(i, 2.55, 1), H.p(i, 3.1, 1)], 'blue', 0.65);
+    if (![2, 6].includes(n % 7)) box(H, R, i + 0.09, 2.52, 0.065, 0.34, 1.01, 0.035, 'blue', 0.96);
   }
-  for (const i of [5.47, 5.85, 6.23]) box(H, R, i, 2.57, .17, .52, .24, .08, 'sun', .69);
-  box(H, R, 3.94, 2.54, 3.95, .03, .48, .18, 'teal', .45);
-  shape(H, R, H.faceI(5.02, 1.42, 1.82, 2.15, 2.87), 'blue', .72, .8);
-  shape(H, R, H.faceI(5.11, 1.44, .78, 2.2, 2.8), 'paper', 1, .7);
-  shape(H, R, H.faceI(5.93, 1.44, .78, 2.2, 2.8), 'paper', 1, .7);
-  for (const i of [5.23, 6.05]) for (let n = 0; n < 4; n++) {
-    H.line(R, [H.p(i, 1.45, 2.32 + n * .1), H.p(i + .51, 1.45, 2.32 + n * .1)], 'blue', .45, { tone: .4 });
-    oval(H, R, ...H.p(i + .09 + n % 3 * .12, 1.46, 2.35 + n * .1), 1.5, 1, 'blue', .66);
-  }
-  table(H, R, 5.5, 3.3, 1.72, .81, .69, 'blue');
-  shape(H, R, H.tile(5.57, 3.39, 1.58, .61, .83), 'coral', .65, .6);
-  for (const i of [5.84, 6.5]) H.dot(...H.p(i, 3.68, .84), 1.3, 'blue', .8);
+  for (const i of [5.47, 5.85, 6.23]) box(H, R, i, 2.57, 0.17, 0.52, 0.24, 0.08, 'sun', 0.69);
+  box(H, R, 3.94, 2.54, 3.95, 0.03, 0.48, 0.18, 'teal', 0.45);
+  shape(H, R, H.faceI(5.02, 1.42, 1.82, 2.15, 2.87), 'blue', 0.72, 0.8);
+  shape(H, R, H.faceI(5.11, 1.44, 0.78, 2.2, 2.8), 'paper', 1, 0.7);
+  shape(H, R, H.faceI(5.93, 1.44, 0.78, 2.2, 2.8), 'paper', 1, 0.7);
+  for (const i of [5.23, 6.05])
+    for (let n = 0; n < 4; n++) {
+      H.line(R, [H.p(i, 1.45, 2.32 + n * 0.1), H.p(i + 0.51, 1.45, 2.32 + n * 0.1)], 'blue', 0.45, { tone: 0.4 });
+      oval(H, R, ...H.p(i + 0.09 + (n % 3) * 0.12, 1.46, 2.35 + n * 0.1), 1.5, 1, 'blue', 0.66);
+    }
+  table(H, R, 5.5, 3.3, 1.72, 0.81, 0.69, 'blue');
+  cushion(H, R, 5.57, 3.39, 1.58, 0.61, 0.82, 0.12, 'coral');
+  for (const i of [5.84, 6.5]) H.dot(...H.p(i, 3.68, 0.84), 1.3, 'blue', 0.8);
   const [vx, vy] = H.p(7.64, 1.38, 2.16);
-  oval(H, R, vx, vy - 3, 5, 6, 'coral', .6);
-  stroke(H, R, [[vx, vy - 8], [vx + 2, vy - 26], [vx - 4, vy - 37]], 'teal', 1.1);
-  shape(H, R, [[vx + 2, vy - 20], [vx + 12, vy - 26], [vx + 7, vy - 15]], 'teal', .65, .5);
-  oval(H, R, vx - 5, vy - 38, 7, 5, 'sun', .7);
+  oval(H, R, vx, vy - 3, 5, 6, 'coral', 0.6);
+  stroke(
+    H,
+    R,
+    [
+      [vx, vy - 8],
+      [vx + 2, vy - 26],
+      [vx - 4, vy - 37]
+    ],
+    'teal',
+    1.1
+  );
+  shape(
+    H,
+    R,
+    [
+      [vx + 2, vy - 20],
+      [vx + 12, vy - 26],
+      [vx + 7, vy - 15]
+    ],
+    'teal',
+    0.65,
+    0.5
+  );
+  oval(H, R, vx - 5, vy - 38, 7, 5, 'sun', 0.7);
 }
 
 function harlemPianoDetails(H, R) {
@@ -149,11 +182,6 @@ function harlemPianoDetails(H, R) {
 function construction(H, R) {
   cornice(H, R, 'nw', 0.1, 11.8, 3.6, 'sun');
   cornice(H, R, 'ne', 0.1, 11.8, 3.6, 'sun');
-  for (const i of [3.95, 5.33, 6.7]) {
-    shape(H, R, H.faceI(i, 2.53, 1.16, 1.21, 1.85), 'teal', 0.48, 0.75);
-    shape(H, R, H.faceI(i + 0.11, 2.545, 0.93, 1.31, 1.73), 'blue', 0.65, 0.6);
-    H.line(R, [H.p(i + 0.22, 2.56, 1.35), H.p(i + 0.9, 2.56, 1.35)], 'sun', 0.65);
-  }
   for (let n = 0; n < 4; n++) {
     const [x, y] = H.p(4.23 + n * 0.33, 1.39, 2.16);
     shape(
@@ -353,9 +381,10 @@ const room = world('new-york-harlem-piano', 'Harlem · One Last Chord', {
 }, (H, R, t) => {
   const u = cycle(t, 18), closed = ease((u - .35) / .13) * (1 - ease((u - .62) / .14));
   glow(H, 8.95, 1.8, 2.24, 49, 'sun');
-  const angle = (1 - closed) * Math.PI / 2, frontJ = 2.52 + Math.cos(angle) * .62, frontZ = 1.035 + Math.sin(angle) * .62;
+  const angle = (1 - closed) * Math.PI, frontJ = 2.52 + Math.cos(angle) * .62, frontZ = 1.035 + Math.sin(angle) * .62;
   shape(H, R, [H.p(3.89, 2.52, 1.035), H.p(7.97, 2.52, 1.035), H.p(7.97, frontJ, frontZ), H.p(3.89, frontJ, frontZ)], 'teal', .73, .85);
   H.line(R, [H.p(4.03, frontJ, frontZ), H.p(7.83, frontJ, frontZ)], 'sun', .8, { tone: .62 });
+  if (angle >= Math.PI / 2) pianoAction(H, R);
   actor(H, R, 6.35, 3.67, t, 'newYorkLastChord', { shirt: ['paper', 1], pants: ['blue', .79], hairStyle: 'curly', face: 'ne' }, .24, 1.27);
   actor(H, R, 8.86, 9.48, Math.sin(u * TAU) * .08, 'sit', { shirt: ['teal', .69], pants: ['blue', .68], hairStyle: 'bun', face: 'nw', eyesClosed: u > .13 && u < .29 }, .02, 1.22);
   const [x, y] = H.p(8.92, 8.12, 1.15);

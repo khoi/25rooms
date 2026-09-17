@@ -1,3 +1,4 @@
+import { surface, timber } from '../materials.js';
 import { panelFront, hangingRail, specimen } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, wallRect } from '../../worlds/common.js';
@@ -9,16 +10,60 @@ const check = { ...rest, ar: 52, er: 64, al: 65, el: 60, head: 18, lean: -5 };
 FIGURES.clips.newYorkVestDry = { dur: 18, keys: [[0, hang], [.14, hang], [.3, check], [.43, { ...check, ar: 60, er: 38 }], [.57, check], [.76, hang], [1, hang]] };
 
 function canoe(H, R, i, j, z, ink) {
-  const p = (a, b, h = 0) => H.p(i + a, j + b, z + h);
-  const hull = [p(0, 0), p(.9, -.5), p(5.8, -.48), p(7.5, .02), p(6.2, .58), p(1.2, .62)];
-  shape(H, R, hull, ink, .64, 1.1);
-  shape(H, R, [p(.25, .08, .03), p(1.25, -.24, .03), p(5.7, -.24, .03), p(7.15, .06, .03), p(5.8, .34, .03), p(1.45, .36, .03)], 'blue', .66, .8);
-  for (const a of [1.65, 3.7, 5.7]) {
-    shape(H, R, [p(a, -.25, .05), p(a + .16, -.25, .05), p(a + .16, .38, .05), p(a, .38, .05)], 'paper', .92, .55);
+  const P = (a, b, h = 0) => H.p(i + a, j + b, z + h);
+  const edge = [];
+  for (let n = 0; n <= 24; n++) {
+    const f = n / 24;
+    edge.push([f * 7.5, -(Math.sin(f * Math.PI) ** 0.73) * 0.61]);
   }
-  stroke(H, R, [p(.2, .06, -.04), p(1.3, .6, -.12), p(6.1, .6, -.12), p(7.3, .08, -.04)], 'paper', 1.4, .8);
-  for (const a of [.35, 6.9]) H.outline(R, ell(...p(a, .07, .07), 4, 2), 'sun', 1.1);
+  for (let n = 24; n >= 0; n--) {
+    const f = n / 24;
+    edge.push([f * 7.5, Math.sin(f * Math.PI) ** 0.73 * 0.61]);
+  }
+  surface(
+    H,
+    R,
+    edge.map(([a, b]) => P(a, b, -0.17)),
+    ink,
+    0.8,
+    0.85
+  );
+  surface(
+    H,
+    R,
+    edge.map(([a, b]) => P(a, b, 0.03)),
+    ink,
+    0.55,
+    1
+  );
+  const inner = edge.map(([a, b]) => P(0.28 + a * 0.925, b * 0.72, 0.055));
+  surface(H, R, inner, 'blue', 0.57, 0.6);
+  H.clip(inner, () => {
+    for (let n = 0; n < 15; n++) {
+      const a = 0.45 + n * 0.46,
+        bulge = Math.sin((a / 7.5) * Math.PI) * 0.45;
+      H.line(R, [P(a, -bulge, 0.06), P(a + 0.035, 0, -0.05), P(a, bulge, 0.06)], 'sun', 1.3);
+    }
+    H.line(R, [P(0.6, 0, -0.01), P(6.91, 0, -0.01)], 'paper', 0.75);
+  });
+  for (const a of [1.65, 5.6]) {
+    timber(H, R, i + a, j - 0.3, 0.42, 0.61, z + 0.07, 0.055, 'sun');
+    const weave = H.tile(i + a + 0.07, j - 0.23, 0.28, 0.46, z + 0.13);
+    surface(H, R, weave, 'sun', 0.28, 0.3);
+    for (let n = 0; n < 5; n++) H.line(R, [P(a + 0.08 + n * 0.055, -0.23, 0.14), P(a + 0.08 + n * 0.055, 0.23, 0.14)], 'blue', 0.5);
+    for (let n = 0; n < 5; n++) H.line(R, [P(a + 0.07, -0.2 + n * 0.09, 0.14), P(a + 0.35, -0.2 + n * 0.09, 0.14)], 'paper', 0.5);
+  }
+  timber(H, R, i + 3.57, j - 0.43, 0.16, 0.86, z + 0.09, 0.055, 'sun');
+  H.outline(
+    R,
+    edge.map(([a, b]) => P(a, b, 0.045)),
+    'paper',
+    1.3,
+    { tone: 0.9 }
+  );
+  for (const a of [0.4, 7.1]) H.outline(R, ell(...P(a, 0, 0.08), 4, 2), 'sun', 1.2);
 }
+
 
 function vest(H, R, x, y, ink = 'coral', twist = 0) {
   const p = (a, b) => [x + a + b * twist, y + b];

@@ -1,3 +1,4 @@
+import { timber } from '../materials.js';
 import { cornice, panelFront, wallRack, taskLight, specimen } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, loop, wallPt, wallRect } from '../../worlds/common.js';
@@ -23,13 +24,46 @@ function cone(H, R, x, y, size = 1) {
 }
 
 function roundedTable(H, R) {
-  for (const [i, j] of [[4.02, 5.3], [7.66, 5.3], [4.02, 7.16], [7.66, 7.16]]) box(H, R, i, j, .16, .16, .03, .91, 'teal', .7);
-  const corners = [[3.68, 5.16], [3.96, 4.9], [7.82, 4.9], [8.17, 5.19], [8.17, 7.27], [7.83, 7.59], [3.99, 7.59], [3.68, 7.29]];
+  for (const [i, j] of [
+    [4.02, 5.3],
+    [7.66, 5.3],
+    [4.02, 7.16],
+    [7.66, 7.16]
+  ])
+    timber(H, R, i, j, 0.24, 0.24, 0.03, 0.91, 'sun');
+  for (const j of [5.43, 7.13]) timber(H, R, 4.16, j, 3.57, 0.16, 0.24, 0.15, 'sun');
+  timber(H, R, 5.87, 5.37, 0.18, 1.89, 0.27, 0.14, 'sun');
+  const corners = [
+    [3.68, 5.16],
+    [3.96, 4.9],
+    [7.82, 4.9],
+    [8.17, 5.19],
+    [8.17, 7.27],
+    [7.83, 7.59],
+    [3.99, 7.59],
+    [3.68, 7.29]
+  ];
   const upper = corners.map(([i, j]) => H.p(i, j, 1.06));
-  const lower = corners.map(([i, j]) => H.p(i, j, .93));
-  shape(H, R, loop(lower, 1), 'coral', .46, .7);
-  shape(H, R, loop(upper, 1), 'sun', .42, .85);
-  H.line(R, [H.p(4.16, 5.41, 1.07), H.p(7.67, 5.41, 1.07)], 'coral', .6, { tone: .25 });
+  const lower = corners.map(([i, j]) => H.p(i, j, 0.93));
+  shape(H, R, loop(lower, 1), 'coral', 0.46, 0.7);
+  shape(H, R, loop(upper, 1), 'sun', 0.42, 0.85);
+  H.line(R, [H.p(4.16, 5.41, 1.07), H.p(7.67, 5.41, 1.07)], 'coral', 0.6, { tone: 0.25 });
+  H.clip(loop(upper, 1), () => {
+    for (let n = 0; n < 8; n++)
+      stroke(
+        H,
+        R,
+        [H.p(3.7, 5.08 + n * 0.31, 1.07), H.p(4.7, 5.12 + n * 0.31, 1.07), H.p(6.12, 5.08 + n * 0.31, 1.07), H.p(8.1, 5.13 + n * 0.31, 1.07)],
+        'coral',
+        0.45,
+        0.35
+      );
+  });
+  for (const i of [4.18, 7.81])
+    for (const j of [5.48, 7.15]) {
+      H.dot(...H.p(i, j, 1.08), 1.3, 'sun');
+      H.line(R, [H.p(i - 0.02, j, 1.085), H.p(i + 0.02, j, 1.085)], 'blue', 0.5);
+    }
 }
 
 function greenbeltCenterDetails(H, R) {

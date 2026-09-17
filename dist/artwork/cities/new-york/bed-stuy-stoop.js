@@ -1,6 +1,7 @@
+import { metal, surface } from '../materials.js';
 import { specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, wallRect, wallPt, windowOn, table, ell } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, cycle, TAU, wallPt, windowOn, table, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -32,16 +33,50 @@ function pot(H, R, i, j, z, size = 15, ink = 'coral', herbs = false) {
 function stairRail(H, R, i) {
   const top = [];
   for (let k = 0; k < 8; k++) {
-    const j = 2.95 + k * .78, z = 2.07 - k * .235;
-    H.line(R, [H.p(i, j, z), H.p(i, j, z + .89)], 'blue', 2.1);
-    oval(H, R, ...H.p(i, j, z + .83), 3.4, 3.4, 'blue', .8);
+    const j = 2.95 + k * 0.78,
+      z = 2.07 - k * 0.235;
+    H.line(R, [H.p(i, j, z), H.p(i, j, z + 0.89)], 'blue', 2.1);
+    oval(H, R, ...H.p(i, j, z + 0.83), 3.4, 3.4, 'blue', 0.8);
     if (k % 2 === 0) {
-      const [x, y] = H.p(i, j, z + .43);
-      stroke(H, R, [[x, y - 8], [x - 6, y - 1], [x, y + 7], [x + 5, y]], 'blue', 1.1);
+      const [x, y] = H.p(i, j, z + 0.43);
+      stroke(
+        H,
+        R,
+        [
+          [x, y - 8],
+          [x - 6, y - 1],
+          [x, y + 7],
+          [x + 5, y]
+        ],
+        'blue',
+        1.1
+      );
     }
-    top.push(H.p(i, j, z + .94));
+    top.push(H.p(i, j, z + 0.94));
   }
-  H.line(R, top, 'blue', 3.2, { amp: .07 });
+  H.line(R, top, 'blue', 3.2, { amp: 0.07 });
+  for (let k = 0; k < 7; k++) {
+    const j = 3.32 + k * 0.78,
+      z = 2.4 - k * 0.235,
+      [x, y] = H.p(i, j, z);
+    for (const side of [-1, 1]) {
+      const p = [];
+      for (let n = 0; n < 23; n++) {
+        const a = (n / 22) * Math.PI * 2.2,
+          r = 8 * (1 - n / 27);
+        p.push([x + Math.cos(a) * r * side, y + Math.sin(a) * r * 0.85 + side * 5]);
+      }
+      stroke(H, R, p, 'blue', 1.1);
+    }
+    H.dot(x, y, 1.5, 'sun', 1, { knock: true });
+  }
+  for (const k of [0, 7]) {
+    const j = 2.95 + k * 0.78,
+      z = 2.07 - k * 0.235;
+    metal(H, R, i - 0.1, j - 0.1, 0.2, 0.2, z, 0.19, 'blue');
+    metal(H, R, i - 0.065, j - 0.065, 0.13, 0.13, z + 0.19, 0.75, 'teal');
+    surface(H, R, ell(...H.p(i, j, z + 1.05), 5, 5), 'blue', 0.8, 0.6);
+  }
 }
 
 function bedStuyStoopDetails(H, R) {

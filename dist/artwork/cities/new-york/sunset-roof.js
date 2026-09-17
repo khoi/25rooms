@@ -1,3 +1,4 @@
+import { timber, bentTube, branchSpray } from '../materials.js';
 import { panelFront, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
@@ -15,18 +16,48 @@ function leaf(H, R, x, y, size = 1, tilt = 0, color = 'teal') {
 }
 
 function bed(H, R, i, j, w, d, variant = 0) {
-  box(H, R, i, j, w, d, .03, .5, 'sun', .42);
-  shape(H, R, H.tile(i + .12, j + .12, w - .24, d - .24, .55), 'blue', .6, .5);
-  for (const z of [.16, .36]) {
-    H.line(R, [H.p(i + .04, j + d + .01, z), H.p(i + w - .04, j + d + .01, z)], 'coral', .75);
-    H.line(R, [H.p(i + w + .01, j + .04, z), H.p(i + w + .01, j + d - .04, z)], 'coral', .75);
+  for (const z of [0.03, 0.28]) {
+    timber(H, R, i, j, w, 0.12, z, 0.22, 'sun');
+    timber(H, R, i, j + d - 0.12, w, 0.12, z, 0.22, 'sun');
+    timber(H, R, i, j, 0.12, d, z, 0.22, 'sun');
+    timber(H, R, i + w - 0.12, j, 0.12, d, z, 0.22, 'sun');
   }
-  for (const a of [i + .1, i + w - .1]) for (const b of [j + .1, j + d - .1]) box(H, R, a, b, .07, .07, .03, .57, 'teal', .72);
-  for (let row = 0; row < 2; row++) for (let q = 0; q < Math.floor(w / .65); q++) {
-    const [x, y] = H.p(i + .35 + q * .65, j + .38 + row * (d - .74), .56);
-    for (let n = 0; n < 3; n++) leaf(H, R, x + (n - 1) * 5, y + n % 2 * 2, .45 + (q + row) % 3 * .08, (n - 1) * .23, variant && n === 1 ? 'coral' : 'teal');
+  shape(H, R, H.tile(i + 0.12, j + 0.12, w - 0.24, d - 0.24, 0.55), 'blue', 0.6, 0.5);
+  for (const z of [0.16, 0.36]) {
+    H.line(R, [H.p(i + 0.04, j + d + 0.01, z), H.p(i + w - 0.04, j + d + 0.01, z)], 'coral', 0.75);
+    H.line(R, [H.p(i + w + 0.01, j + 0.04, z), H.p(i + w + 0.01, j + d - 0.04, z)], 'coral', 0.75);
   }
-  for (let q = 0; q < 2; q++) H.line(R, [H.p(i + .2, j + .37 + q * (d - .74), .58), H.p(i + w - .2, j + .37 + q * (d - .74), .58)], 'blue', 1.1);
+  for (const a of [i + 0.1, i + w - 0.1]) for (const b of [j + 0.1, j + d - 0.1]) box(H, R, a, b, 0.07, 0.07, 0.03, 0.57, 'teal', 0.72);
+  for (let row = 0; row < 2; row++)
+    for (let q = 0; q < Math.floor(w / 0.65); q++) {
+      const [x, y] = H.p(i + 0.35 + q * 0.65, j + 0.38 + row * (d - 0.74), 0.56);
+      for (let n = 0; n < 3; n++)
+        leaf(H, R, x + (n - 1) * 5, y + (n % 2) * 2, 0.45 + ((q + row) % 3) * 0.08, (n - 1) * 0.23, variant && n === 1 ? 'coral' : 'teal');
+    }
+  for (let q = 0; q < 2; q++)
+    H.line(R, [H.p(i + 0.2, j + 0.37 + q * (d - 0.74), 0.58), H.p(i + w - 0.2, j + 0.37 + q * (d - 0.74), 0.58)], 'blue', 1.1);
+  if (variant) {
+    for (const x of [i + 0.28, i + w - 0.28])
+      bentTube(
+        H,
+        R,
+        [
+          [x, j + 0.26, 0.55],
+          [x, j + 0.26, 2.02]
+        ],
+        1.4,
+        'sun'
+      );
+    for (const z of [1.06, 1.53, 1.97]) H.line(R, [H.p(i + 0.28, j + 0.26, z), H.p(i + w - 0.28, j + 0.26, z)], 'teal', 0.7);
+    for (let n = 0; n < Math.max(2, Math.floor(w / 0.6)); n++) {
+      const x = i + 0.39 + n * 0.57;
+      branchSpray(H, R, ...H.p(x, j + 0.29, 1.07), 0.72, 'teal', n % 2 ? 1 : -1);
+      if (n % 2 === 0) {
+        const [a, b] = H.p(x, j + 0.32, 1.39);
+        oval(H, R, a, b, 3.4, 4, 'coral', 0.77);
+      }
+    }
+  }
 }
 
 function basket(H, R, i, j) {

@@ -1,3 +1,4 @@
+import { benchFrame, drape, metal, surface } from '../materials.js';
 import { cornice, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
@@ -27,19 +28,20 @@ function bowl(H, R, i, j, z, size = 13, cover = false) {
 }
 
 function breadRack(H, R) {
-  for (const i of [1.06, 2.87]) for (const j of [7.43, 10.85]) {
-    oval(H, R, ...H.p(i, j, .13), 4.5, 6, 'blue', .9);
-    box(H, R, i - .04, j - .04, .09, .09, .25, 2.85, 'blue', .68);
-  }
+  for (const i of [1.06, 2.87])
+    for (const j of [7.43, 10.85]) {
+      oval(H, R, ...H.p(i, j, 0.13), 4.5, 6, 'blue', 0.9);
+      box(H, R, i - 0.04, j - 0.04, 0.09, 0.09, 0.25, 2.85, 'blue', 0.68);
+    }
   for (let row = 0; row < 5; row++) {
-    const z = .45 + row * .51;
-    box(H, R, 1.01, 7.4, 1.92, 3.5, z, .065, 'teal', .53);
-    shape(H, R, H.tile(1.12, 7.51, 1.7, 3.25, z + .075), 'paper', 1, .5);
-    if (row < 4) for (let k = 0; k < 3; k++) loaf(H, R, 1.98, 8.0 + k * 1.02, z + .13, row % 2 ? 17 : 13, row === 2);
+    const z = 0.45 + row * 0.51;
+    metal(H, R, 1.01, 7.4, 1.92, 3.5, z, 0.065, 'teal');
+    shape(H, R, H.tile(1.12, 7.51, 1.7, 3.25, z + 0.075), 'paper', 1, 0.5);
+    if (row < 4) for (let k = 0; k < 3; k++) loaf(H, R, 1.98, 8.0 + k * 1.02, z + 0.13, row % 2 ? 17 : 13, row === 2);
     else {
-      shape(H, R, H.tile(1.16, 7.63, 1.6, 2.07, z + .08), 'paper', 1, .7);
-      for (let q = 0; q < 5; q++) H.line(R, [H.p(1.2, 7.7 + q * .42, z + .09), H.p(2.7, 7.7 + q * .42, z + .09)], 'coral', .8);
-      loaf(H, R, 2.01, 10.28, z + .14, 16, true);
+      shape(H, R, H.tile(1.16, 7.63, 1.6, 2.07, z + 0.08), 'paper', 1, 0.7);
+      for (let q = 0; q < 5; q++) H.line(R, [H.p(1.2, 7.7 + q * 0.42, z + 0.09), H.p(2.7, 7.7 + q * 0.42, z + 0.09)], 'coral', 0.8);
+      loaf(H, R, 2.01, 10.28, z + 0.14, 16, true);
     }
   }
   for (const j of [7.43, 10.85]) H.line(R, [H.p(1.06, j, 3.1), H.p(2.87, j, 3.1)], 'blue', 2.4);
@@ -283,10 +285,13 @@ const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfa
   shape(H, R, H.faceI(9.9, .08, 1.54, 1.04, 2.93), 'sun', .25);
   H.line(R, [H.p(11.37, .13, .88), H.p(11.37, .13, 1.36)], 'paper', 3);
   box(H, R, 9.6, .18, 2.15, .55, .02, .12, 'sun', .66);
-  box(H, R, .44, .63, 3.73, 2.05, .02, 1.86, 'teal', .62);
+  metal(H,R,.44,.63,3.73,2.05,.02,1.86,'teal');
   for (const z of [.29, 1.03]) {
     shape(H, R, H.faceI(.64, 2.7, 3.29, z, z + .58), 'blue', .77);
-    shape(H, R, H.faceI(.9, 2.73, 2.77, z + .09, z + .48), 'sun', .28);
+    surface(H,R,H.faceI(.9,2.73,2.77,z+.09,z+.48),'blue',.8);
+    for(let n=0;n<4;n++)loaf(H,R,1.25+n*.7,2.77,z+.14,10,n%2===0);
+    H.line(R,[H.p(.94,2.78,z+.14),H.p(3.64,2.78,z+.14)],'sun',1.4);
+    for(const i of [.77,3.73])metal(H,R,i,2.71,.12,.1,z+.12,.32,'paper');
     H.line(R, [H.p(.96, 2.77, z + .53), H.p(3.59, 2.77, z + .53)], 'paper', 3);
   }
   for (const i of [1.0, 1.63, 2.26, 2.89, 3.52]) oval(H, R, ...H.p(i, 2.75, 1.72), 3.3, 4.1, 'paper', 1);
@@ -294,7 +299,8 @@ const room = world('new-york-astoria-bakery', 'Astoria · A Twist Before Breakfa
   shape(H, R, [H.p(.39, .57, 3.0), H.p(4.22, .57, 3.0), H.p(4.44, 2.81, 2.6), H.p(.21, 2.81, 2.6)], 'blue', .47);
   box(H, R, 1.24, .55, 1.7, .74, 3.0, .62, 'paper', 1);
   for (let i = .55; i < 4; i += .23) H.line(R, [H.p(i, 2.64, 2.66), H.p(i, 2.75, 2.65)], 'paper', .75);
-  table(H, R, 3.7, 4.6, 4.03, 1.86, .88, 'sun');
+  benchFrame(H,R,3.7,4.6,4.03,1.86,1,'sun');
+  drape(H,R,3.78,5.42,.52,1.08,1.02,.6,'paper');
   shape(H, R, H.tile(3.77, 4.68, 3.89, 1.7, 1.01), 'paper', 1, .6);
   H.speckle(R, H.tile(5.76, 4.78, 1.63, 1.48, 1.025), 'sun', 45, .45, 1.2, .25);
   bowl(H, R, 4.24, 5.0, 1.11, 15);

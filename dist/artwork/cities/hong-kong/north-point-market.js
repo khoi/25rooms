@@ -1,6 +1,7 @@
+import { benchFrame, metal, bentTube } from '../materials.js';
 import { cornice, hangingRail, caster } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -19,34 +20,137 @@ function leafy(H, R, x, y, size = 1, ink = 'teal') {
 }
 
 function crate(H, R, i, j, w, d, z, kind) {
-  box(H, R, i, j, w, d, z, .32, 'teal', .5);
-  shape(H, R, H.tile(i + .09, j + .08, w - .18, d - .16, z + .34), 'blue', .3);
-  for (let x = i + .15; x < i + w; x += .27) H.line(R, [H.p(x, j + d + .02, z + .06), H.p(x, j + d + .02, z + .25)], 'paper', 1.4);
-  for (let y = j + .15; y < j + d; y += .27) H.line(R, [H.p(i + w + .02, y, z + .06), H.p(i + w + .02, y, z + .25)], 'paper', 1.1);
+  metal(H, R, i, j, w, d, z, 0.07, 'teal');
+  for (const x of [i + 0.035, i + w - 0.095]) for (const y of [j + 0.035, j + d - 0.095]) metal(H, R, x, y, 0.06, 0.06, z, 0.34, 'teal');
+  for (const h of [0.11, 0.28]) {
+    metal(H, R, i, j, w, 0.045, z + h, 0.045, 'teal');
+    metal(H, R, i, j + d - 0.045, w, 0.045, z + h, 0.045, 'teal');
+    metal(H, R, i, j, 0.045, d, z + h, 0.045, 'teal');
+    metal(H, R, i + w - 0.045, j, 0.045, d, z + h, 0.045, 'teal');
+  }
+  for (let n = 0; n < 7; n++)
+    bentTube(
+      H,
+      R,
+      [
+        [i + 0.12 + (n * (w - 0.24)) / 6, j + d, z + 0.08],
+        [i + 0.12 + (n * (w - 0.24)) / 6, j + d, z + 0.31]
+      ],
+      0.65,
+      'teal'
+    );
   for (let n = 0; n < 9; n++) {
-    const [x, y] = H.p(i + .29 + n % 3 * (w - .6) / 2, j + .24 + Math.floor(n / 3) * (d - .5) / 2, z + .38);
-    if (kind === 'greens') leafy(H, R, x, y, .63);
+    const [x, y] = H.p(i + 0.29 + ((n % 3) * (w - 0.6)) / 2, j + 0.24 + (Math.floor(n / 3) * (d - 0.5)) / 2, z + 0.38);
+    if (kind === 'greens') leafy(H, R, x, y, 0.63);
     if (kind === 'tomato') {
-      oval(H, R, x, y - 3, 6.5, 5.7, 'coral', .75);
-      H.line(R, [[x - 3, y - 7], [x, y - 10], [x + 2, y - 7]], 'teal', 1.1);
+      oval(H, R, x, y - 3, 6.5, 5.7, 'coral', 0.75);
+      H.line(
+        R,
+        [
+          [x - 3, y - 7],
+          [x, y - 10],
+          [x + 2, y - 7]
+        ],
+        'teal',
+        1.1
+      );
     }
     if (kind === 'aubergine') {
-      oval(H, R, x, y - 4, 5, 11, 'blue', .78);
-      shape(H, R, [[x - 4, y - 12], [x - 1, y - 17], [x + 4, y - 13], [x + 1, y - 10]], 'teal', .7, .4);
-      H.line(R, [[x - 2, y - 7], [x - 2, y + 1]], 'paper', .8);
+      oval(H, R, x, y - 4, 5, 11, 'blue', 0.78);
+      shape(
+        H,
+        R,
+        [
+          [x - 4, y - 12],
+          [x - 1, y - 17],
+          [x + 4, y - 13],
+          [x + 1, y - 10]
+        ],
+        'teal',
+        0.7,
+        0.4
+      );
+      H.line(
+        R,
+        [
+          [x - 2, y - 7],
+          [x - 2, y + 1]
+        ],
+        'paper',
+        0.8
+      );
     }
     if (kind === 'radish') {
-      shape(H, R, [[x - 5, y - 10], [x + 5, y - 10], [x + 4, y + 2], [x, y + 9], [x - 3, y + 2]], 'paper', .96, .5);
-      for (const a of [-1, 0, 1]) stroke(H, R, [[x, y - 10], [x + a * 5, y - 17], [x + a * 7, y - 21]], 'teal', 2);
+      shape(
+        H,
+        R,
+        [
+          [x - 5, y - 10],
+          [x + 5, y - 10],
+          [x + 4, y + 2],
+          [x, y + 9],
+          [x - 3, y + 2]
+        ],
+        'paper',
+        0.96,
+        0.5
+      );
+      for (const a of [-1, 0, 1])
+        stroke(
+          H,
+          R,
+          [
+            [x, y - 10],
+            [x + a * 5, y - 17],
+            [x + a * 7, y - 21]
+          ],
+          'teal',
+          2
+        );
     }
     if (kind === 'ginger') {
-      stroke(H, R, [[x - 7, y + 2], [x - 2, y - 7], [x + 4, y - 2], [x + 8, y - 9]], 'sun', 6.4);
-      H.line(R, [[x - 3, y - 4], [x + 1, y - 1]], 'blue', .7);
+      stroke(
+        H,
+        R,
+        [
+          [x - 7, y + 2],
+          [x - 2, y - 7],
+          [x + 4, y - 2],
+          [x + 8, y - 9]
+        ],
+        'sun',
+        6.4
+      );
+      H.line(
+        R,
+        [
+          [x - 3, y - 4],
+          [x + 1, y - 1]
+        ],
+        'blue',
+        0.7
+      );
     }
     if (kind === 'onion') {
-      oval(H, R, x, y - 3, 6.5, 7.5, 'sun', .67);
-      H.line(R, [[x - 2, y - 9], [x - 2, y + 1]], 'coral', .75);
-      H.line(R, [[x, y - 10], [x + 1, y - 15]], 'blue', .65);
+      oval(H, R, x, y - 3, 6.5, 7.5, 'sun', 0.67);
+      H.line(
+        R,
+        [
+          [x - 2, y - 9],
+          [x - 2, y + 1]
+        ],
+        'coral',
+        0.75
+      );
+      H.line(
+        R,
+        [
+          [x, y - 10],
+          [x + 1, y - 15]
+        ],
+        'blue',
+        0.65
+      );
     }
   }
 }
@@ -261,9 +365,9 @@ function construction(H, R) {
 }
 
 const room = world('hong-kong-north-point-market', 'North Point · A basket of greens', { floor: 'paper', tone: .55, wall: 'teal', wallTone: .34, height: 3.6, oneWall: true, pattern: 'tiles', head: 20 }, (H, R) => {
-  box(H, R, .34, .34, 10.8, 1.23, 0, 1.24, 'blue', .56);
-  box(H, R, .34, 1.56, 10.8, 1.24, 0, .86, 'blue', .47);
-  box(H, R, .34, 2.79, 10.8, 1.29, 0, .47, 'blue', .42);
+  benchFrame(H,R,0.34,0.34,10.8,1.23,1.24,'teal');
+  benchFrame(H,R,0.34,1.56,10.8,1.24,0.86,'teal');
+  benchFrame(H,R,0.34,2.79,10.8,1.29,0.47,'teal');
   const produce = [['greens', 'radish', 'aubergine'], ['ginger', 'greens', 'onion'], ['tomato', 'radish', 'greens']];
   for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) crate(H, R, .55 + col * 3.5, .44 + row * 1.25, 3.24, 1.08, 1.25 - row * .385, produce[row][col]);
   for (const i of [.28, 5.84, 11.41]) {

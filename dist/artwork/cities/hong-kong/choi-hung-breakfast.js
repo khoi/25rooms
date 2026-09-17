@@ -1,3 +1,4 @@
+import { surface, metal, timber, drape } from '../materials.js';
 import { cornice, panelFront, wallRack, hangingRail, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, windowOn, plant, wallRect, ell, TAU } from '../../worlds/common.js';
@@ -19,45 +20,139 @@ function mug(H, R, i, j, z, ink = 'paper', handle = 1) {
 }
 
 function kitchen(H, R) {
-  box(H, R, .48, .5, 2.51, 6.16, 0, 1.0, 'teal', .5);
-  box(H, R, .43, .46, 2.62, 6.23, 1.0, .13, 'paper', .93);
-  for (let j = .7; j < 6.5; j += 1.22) {
-    H.line(R, [H.p(3.08, j, .09), H.p(3.08, j, .94)], 'blue', .75);
-    H.line(R, [H.p(3.1, j + .27, .8), H.p(3.1, j + .64, .8)], 'blue', 1.6);
+  box(H, R, 0.48, 0.5, 2.51, 6.16, 0, 1.0, 'teal', 0.5);
+  metal(H, R, 0.43, 0.46, 2.62, 6.23, 1, 0.13, 'paper');
+  for (let j = 0.7; j < 6.5; j += 1.22) {
+    H.line(R, [H.p(3.08, j, 0.09), H.p(3.08, j, 0.94)], 'blue', 0.75);
+    H.line(R, [H.p(3.1, j + 0.27, 0.8), H.p(3.1, j + 0.64, 0.8)], 'blue', 1.6);
   }
-  shape(H, R, H.tile(.74, 1.13, 1.96, 1.19, 1.16), 'blue', .45);
-  shape(H, R, H.tile(.94, 1.32, 1.55, .81, 1.18), 'teal', .29);
-  stroke(H, R, [H.p(.85, 1.34, 1.18), H.p(.85, 1.34, 1.9), H.p(1.39, 1.66, 1.9), H.p(1.39, 1.66, 1.73)], 'blue', 2.2);
+  shape(H, R, H.tile(0.74, 1.13, 1.96, 1.19, 1.16), 'blue', 0.45);
+  shape(H, R, H.tile(0.94, 1.32, 1.55, 0.81, 1.18), 'teal', 0.29);
+  stroke(H, R, [H.p(0.85, 1.34, 1.18), H.p(0.85, 1.34, 1.9), H.p(1.39, 1.66, 1.9), H.p(1.39, 1.66, 1.73)], 'blue', 2.2);
   const [rx, ry] = H.p(1.7, 3.2, 1.15);
-  shape(H, R, [[rx - 18, ry - 26], [rx + 18, ry - 26], [rx + 17, ry], [rx - 16, ry]], 'paper', .9);
-  oval(H, R, rx, ry - 26, 18, 8, 'teal', .46);
+  shape(
+    H,
+    R,
+    [
+      [rx - 18, ry - 26],
+      [rx + 18, ry - 26],
+      [rx + 17, ry],
+      [rx - 16, ry]
+    ],
+    'paper',
+    0.9
+  );
+  oval(H, R, rx, ry - 26, 18, 8, 'teal', 0.46);
   oval(H, R, rx, ry - 28, 10, 4, 'paper', 1);
-  H.line(R, [[rx - 5, ry - 31], [rx + 5, ry - 31]], 'blue', 2.2);
-  shape(H, R, [[rx - 6, ry - 9], [rx + 6, ry - 9], [rx + 6, ry - 3], [rx - 6, ry - 3]], 'teal', .6, .5);
+  H.line(
+    R,
+    [
+      [rx - 5, ry - 31],
+      [rx + 5, ry - 31]
+    ],
+    'blue',
+    2.2
+  );
+  shape(
+    H,
+    R,
+    [
+      [rx - 6, ry - 9],
+      [rx + 6, ry - 9],
+      [rx + 6, ry - 3],
+      [rx - 6, ry - 3]
+    ],
+    'teal',
+    0.6,
+    0.5
+  );
   H.dot(rx + 10, ry - 5, 1.5, 'coral');
-  stroke(H, R, [[rx + 18, ry - 4], [rx + 28, ry + 8], [rx + 36, ry - 4]], 'blue', .9);
+  stroke(
+    H,
+    R,
+    [
+      [rx + 18, ry - 4],
+      [rx + 28, ry + 8],
+      [rx + 36, ry - 4]
+    ],
+    'blue',
+    0.9
+  );
   const [kx, ky] = H.p(1.51, 4.54, 1.14);
-  oval(H, R, kx, ky - 12, 13, 17, 'sun', .64);
-  oval(H, R, kx, ky - 25, 8, 3.5, 'paper', .9);
+  oval(H, R, kx, ky - 12, 13, 17, 'sun', 0.64);
+  oval(H, R, kx, ky - 25, 8, 3.5, 'paper', 0.9);
   H.dot(kx, ky - 28, 2.8, 'blue');
-  stroke(H, R, [[kx - 10, ky - 23], [kx - 20, ky - 26], [kx - 20, ky - 8], [kx - 11, ky - 6]], 'blue', 2);
-  shape(H, R, [[kx + 9, ky - 17], [kx + 22, ky - 26], [kx + 18, ky - 10], [kx + 11, ky - 7]], 'sun', .65);
+  stroke(
+    H,
+    R,
+    [
+      [kx - 10, ky - 23],
+      [kx - 20, ky - 26],
+      [kx - 20, ky - 8],
+      [kx - 11, ky - 6]
+    ],
+    'blue',
+    2
+  );
+  shape(
+    H,
+    R,
+    [
+      [kx + 9, ky - 17],
+      [kx + 22, ky - 26],
+      [kx + 18, ky - 10],
+      [kx + 11, ky - 7]
+    ],
+    'sun',
+    0.65
+  );
   mug(H, R, 2.13, 5.18, 1.15, 'coral', 1);
   mug(H, R, 1.29, 5.72, 1.15, 'paper', -1);
   const [bx, by] = H.p(2.35, 4.1, 1.17);
   oval(H, R, bx, by, 14, 5.5, 'paper', 1);
-  shape(H, R, [[bx - 13, by - 9], [bx + 13, by - 9], [bx + 9, by], [bx - 9, by]], 'teal', .55);
+  shape(
+    H,
+    R,
+    [
+      [bx - 13, by - 9],
+      [bx + 13, by - 9],
+      [bx + 9, by],
+      [bx - 9, by]
+    ],
+    'teal',
+    0.55
+  );
   oval(H, R, bx, by - 9, 14, 6, 'paper', 1);
   H.dot(bx, by - 14, 2.5, 'coral');
-  box(H, R, .09, .74, .67, 2.89, 2.12, 1.22, 'teal', .44);
-  for (const j of [1.68, 2.63]) H.line(R, [H.p(.79, j, 2.2), H.p(.79, j, 3.26)], 'blue', .75);
-  for (const j of [1.52, 2.44, 3.42]) H.line(R, [H.p(.8, j, 2.57), H.p(.8, j, 2.91)], 'blue', 1.5);
-  box(H, R, .34, 4.87, .3, 1.31, 1.87, .84, 'sun', .42);
-  const [cx, cy] = H.p(.69, 5.48, 2.83);
+  box(H, R, 0.09, 0.74, 0.67, 2.89, 2.12, 1.22, 'teal', 0.44);
+  for (const j of [1.68, 2.63]) H.line(R, [H.p(0.79, j, 2.2), H.p(0.79, j, 3.26)], 'blue', 0.75);
+  for (const j of [1.52, 2.44, 3.42]) H.line(R, [H.p(0.8, j, 2.57), H.p(0.8, j, 2.91)], 'blue', 1.5);
+  box(H, R, 0.34, 4.87, 0.3, 1.31, 1.87, 0.84, 'sun', 0.42);
+  const [cx, cy] = H.p(0.69, 5.48, 2.83);
   oval(H, R, cx, cy, 4.5, 4, 'paper', 1);
-  for (const j of [4.9, 5.24, 5.59, 5.94]) H.line(R, [H.p(.7, j, 1.94), H.p(.7, j, 2.55)], 'blue', .55, { tone: .4 });
-  shape(H, R, H.faceJ(3.09, 5.9, .57, .56, 1.12), 'paper', .97);
-  for (let j = 5.95; j < 6.45; j += .11) H.line(R, [H.p(3.11, j, .63), H.p(3.11, j, 1.03)], 'teal', .7);
+  for (const j of [4.9, 5.24, 5.59, 5.94]) H.line(R, [H.p(0.7, j, 1.94), H.p(0.7, j, 2.55)], 'blue', 0.55, { tone: 0.4 });
+  shape(H, R, H.faceJ(3.09, 5.9, 0.57, 0.56, 1.12), 'paper', 0.97);
+  for (let j = 5.95; j < 6.45; j += 0.11) H.line(R, [H.p(3.11, j, 0.63), H.p(3.11, j, 1.03)], 'teal', 0.7);
+  surface(H, R, H.faceJ(0.81, 0.85, 1.1, 2.2, 3.27), 'blue', 0.7);
+  for (const z of [2.34, 2.78]) {
+    timber(H, R, 0.83, 0.87, 0.58, 1.04, z, 0.07, 'sun');
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = H.p(1.17, 1.04 + n * 0.22, z + 0.11);
+      oval(H, R, x, y, 4, 8, 'paper', 1);
+      H.line(
+        R,
+        [
+          [x, y - 6],
+          [x, y + 5]
+        ],
+        'teal',
+        0.55
+      );
+    }
+  }
+  surface(H, R, [H.p(0.82, 1.97, 2.14), H.p(1.72, 2.25, 2.14), H.p(1.72, 2.25, 3.3), H.p(0.82, 1.97, 3.3)], 'teal', 0.52);
+  H.line(R, [H.p(1.52, 2.18, 2.57), H.p(1.52, 2.18, 2.9)], 'sun', 2);
+  drape(H, R, 2.52, 5.76, 0.47, 0.71, 1.15, 0.46, 'paper');
 }
 
 function foldingTable(H, R, angle, support) {

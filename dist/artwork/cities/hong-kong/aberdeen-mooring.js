@@ -1,3 +1,4 @@
+import { surface, bentTube, slattedSeat } from '../materials.js';
 import { panelFront } from '../joinery.js';
 import { shallowTray, liddedTin, foldedCloth, coiledLine, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU, ell } from '../../worlds/common.js';
@@ -12,56 +13,178 @@ function ropeCoil(H, R, x, y, rx, ry, ink = 'sun') {
 }
 
 function deck(H, R) {
-  const hull = [[2.2, 1.3], [6.7, 1.3], [7.8, 3], [7.4, 9.2], [4.8, 11], [2.1, 9.4], [1.6, 3.2]];
-  shape(H, R, hull.map(([i, j]) => H.p(i, j, .28)), 'blue', .75, 1.2);
-  const rim = [[2.3, 1.4], [6.5, 1.4], [7.4, 3.1], [7.05, 9.1], [4.8, 10.5], [2.45, 9.2], [1.96, 3.2]];
-  shape(H, R, rim.map(([i, j]) => H.p(i, j, .64)), 'coral', .61);
-  const inner = [[2.5, 1.7], [6.3, 1.7], [7.06, 3.1], [6.73, 8.85], [4.8, 10.06], [2.77, 8.93], [2.27, 3.2]].map(([i, j]) => H.p(i, j, .65));
-  shape(H, R, inner, 'sun', .46);
+  const hull = [
+    [2.2, 1.3],
+    [6.7, 1.3],
+    [7.8, 3],
+    [7.4, 9.2],
+    [4.8, 11],
+    [2.1, 9.4],
+    [1.6, 3.2]
+  ];
+  shape(
+    H,
+    R,
+    hull.map(([i, j]) => H.p(i, j, 0.28)),
+    'blue',
+    0.75,
+    1.2
+  );
+  const rim = [
+    [2.3, 1.4],
+    [6.5, 1.4],
+    [7.4, 3.1],
+    [7.05, 9.1],
+    [4.8, 10.5],
+    [2.45, 9.2],
+    [1.96, 3.2]
+  ];
+  shape(
+    H,
+    R,
+    rim.map(([i, j]) => H.p(i, j, 0.64)),
+    'coral',
+    0.61
+  );
+  const inner = [
+    [2.5, 1.7],
+    [6.3, 1.7],
+    [7.06, 3.1],
+    [6.73, 8.85],
+    [4.8, 10.06],
+    [2.77, 8.93],
+    [2.27, 3.2]
+  ].map(([i, j]) => H.p(i, j, 0.65));
+  shape(H, R, inner, 'sun', 0.46);
   H.clip(inner, () => {
-    for (let j = 1.75; j < 10.4; j += .4) H.line(R, [H.p(2.1, j, .67), H.p(7.3, j, .67)], 'blue', .7, { tone: .5 });
-    for (let j = 2.05; j < 9.8; j += .8) for (const i of [2.65, 6.66]) H.dot(...H.p(i, j, .68), 1.2, 'blue', .5);
+    for (let j = 1.75; j < 10.4; j += 0.4) H.line(R, [H.p(2.1, j, 0.67), H.p(7.3, j, 0.67)], 'blue', 0.7, { tone: 0.5 });
+    for (let j = 2.05; j < 9.8; j += 0.8) for (const i of [2.65, 6.66]) H.dot(...H.p(i, j, 0.68), 1.2, 'blue', 0.5);
   });
   for (const j of [3.6, 6.3, 8.4]) {
-    const [x, y] = H.p(7.25, j, .47);
-    oval(H, R, x, y + 8, 8, 13, 'blue', .81);
-    oval(H, R, x, y + 8, 3.5, 7, 'teal', .6);
-    stroke(H, R, [H.p(7.1, j, .8), [x - 3, y - 3], [x + 2, y + 1]], 'sun', 1.3);
+    const [x, y] = H.p(7.25, j, 0.47);
+    oval(H, R, x, y + 8, 8, 13, 'blue', 0.81);
+    oval(H, R, x, y + 8, 3.5, 7, 'teal', 0.6);
+    stroke(H, R, [H.p(7.1, j, 0.8), [x - 3, y - 3], [x + 2, y + 1]], 'sun', 1.3);
   }
   for (const i of [2.65, 6.5]) {
-    for (const j of [2.1, 5.65]) box(H, R, i, j, .1, .1, .7, 2.25, 'blue', .6);
+    for (const j of [2.1, 5.65]) box(H, R, i, j, 0.1, 0.1, 0.7, 2.25, 'blue', 0.6);
     stroke(H, R, [H.p(i, 2.15, 2.9), H.p(i, 3.65, 3.25), H.p(i, 5.7, 2.9)], 'sun', 2);
   }
-  const roof = [H.p(2.5, 1.8, 2.91), H.p(6.75, 1.8, 2.91), H.p(6.75, 5.7, 2.91), H.p(2.5, 5.7, 2.91)];
-  shape(H, R, roof, 'teal', .58);
-  for (let j = 1.86; j < 5.7; j += .35) H.line(R, [H.p(2.5, j, 2.93), H.p(6.75, j, 2.93)], 'paper', .8, { tone: .53 });
-  shape(H, R, [H.p(2.5, 1.8, 2.91), H.p(6.75, 1.8, 2.91), H.p(6.75, 1.8, 2.54), H.p(2.5, 1.8, 2.54)], 'coral', .53);
-  box(H, R, 2.75, 2.05, 3.65, .64, .68, .46, 'teal', .65);
-  for (let i = 2.82; i < 6.4; i += .38) H.line(R, [H.p(i, 2.1, 1.15), H.p(i, 2.61, 1.15)], 'paper', .7);
-  box(H, R, 2.8, 4.37, 1.25, .87, .68, .45, 'paper', 1);
-  H.line(R, [H.p(3.42, 4.4, 1.15), H.p(3.42, 5.18, 1.15)], 'coral', 2);
-  box(H, R, 2.85, 5.9, 1.18, .84, .69, .2, 'blue', .62);
-  for (let k = 0; k < 6; k++) H.line(R, [H.p(2.91 + k * .18, 5.95, .92), H.p(2.91 + k * .18, 6.69, .92)], 'teal', 2);
-  const [rx, ry] = H.p(2.77, 7.52, 1.04);
-  oval(H, R, rx, ry, 19, 16, 'coral', .85);
-  oval(H, R, rx, ry, 11, 9, 'paper', 1);
-  for (const a of [0, Math.PI / 2, Math.PI, Math.PI * 1.5]) H.line(R, [[rx + Math.cos(a) * 12, ry + Math.sin(a) * 11], [rx + Math.cos(a) * 18, ry + Math.sin(a) * 16]], 'paper', 4);
-  stroke(H, R, [H.p(2.62, 6.63, 1.03), H.p(2.74, 7.7, 1.66), H.p(2.88, 8.55, .96)], 'sun', 1.2);
-  const [bx, by] = H.p(4.9, 9.38, .7);
-  shape(H, R, [[bx - 13, by - 19], [bx + 13, by - 19], [bx + 10, by], [bx - 10, by]], 'paper', 1);
-  oval(H, R, bx, by - 19, 13, 5, 'teal', .54);
-  stroke(H, R, [[bx - 12, by - 17], [bx - 10, by - 34], [bx + 10, by - 34], [bx + 12, by - 17]], 'blue', 1.2);
-  H.line(R, [H.p(3.2, 8.7, .78), H.p(3.3, 3.5, 1.04)], 'sun', 3);
-  shape(H, R, [H.p(3.12, 8.65, .81), H.p(3.43, 8.64, .81), H.p(3.48, 9.58, .81), H.p(3.12, 9.58, .81)], 'coral', .65);
-  for (const [i, j] of [[5.9, 2.9], [5.9, 3.4]]) {
-    const [x, y] = H.p(i, j, .69);
-    oval(H, R, x, y - 4, 7, 4, 'blue', .8);
-    H.line(R, [[x - 5, y - 5], [x + 4, y - 7]], 'paper', 1);
+  for (let n = 0; n < 12; n++) {
+    const a = n / 12,
+      b = (n + 1) / 12;
+    surface(
+      H,
+      R,
+      [
+        H.p(2.5 + 4.25 * a, 1.8, 2.91 + Math.sin(a * Math.PI) * 0.55),
+        H.p(2.5 + 4.25 * b, 1.8, 2.91 + Math.sin(b * Math.PI) * 0.55),
+        H.p(2.5 + 4.25 * b, 4.55, 2.91 + Math.sin(b * Math.PI) * 0.55),
+        H.p(2.5 + 4.25 * a, 4.55, 2.91 + Math.sin(a * Math.PI) * 0.55)
+      ],
+      n % 3 === 0 ? 'paper' : 'teal',
+      0.45,
+      0.4
+    );
   }
-  const [tx, ty] = H.p(6.15, 4.87, .72);
-  shape(H, R, [[tx - 5, ty], [tx + 5, ty], [tx + 5, ty - 21], [tx - 5, ty - 21]], 'sun', .7);
-  oval(H, R, tx, ty - 21, 5, 2, 'blue', .8);
-  ropeCoil(H, R, ...H.p(4.56, 7.98, .7), 25, 10);
+  for (const j of [1.8, 4.55]) {
+    const points = Array.from({ length: 17 }, (_, n) => [2.5 + (n * 4.25) / 16, j, 2.91 + Math.sin((n / 16) * Math.PI) * 0.55]);
+    bentTube(H, R, points, 2, 'sun');
+  }
+  for (const i of [2.5, 6.75]) {
+    bentTube(
+      H,
+      R,
+      [
+        [i, 4.55, 2.93],
+        [i, 5.55, 2.63],
+        [i, 5.65, 0.72]
+      ],
+      1.5,
+      'sun'
+    );
+    for (let n = 0; n < 9; n++) surface(H, R, ell(...H.p(i, 1.92 + n * 0.29, 2.94), 1.3, 1.3), 'sun', 0.8, 0.3);
+  }
+  surface(H, R, [H.p(2.5, 4.55, 2.91), H.p(6.75, 4.55, 2.91), H.p(6.75, 4.65, 2.65), H.p(2.5, 4.65, 2.65)], 'coral', 0.56);
+  slattedSeat(H, R, 2.75, 2.05, 3.65, 0.69, 'sun', 0.53);
+  for (let i = 2.82; i < 6.4; i += 0.38) H.line(R, [H.p(i, 2.1, 1.15), H.p(i, 2.61, 1.15)], 'paper', 0.7);
+  box(H, R, 2.8, 4.37, 1.25, 0.87, 0.68, 0.45, 'paper', 1);
+  H.line(R, [H.p(3.42, 4.4, 1.15), H.p(3.42, 5.18, 1.15)], 'coral', 2);
+  box(H, R, 2.85, 5.9, 1.18, 0.84, 0.69, 0.2, 'blue', 0.62);
+  for (let k = 0; k < 6; k++) H.line(R, [H.p(2.91 + k * 0.18, 5.95, 0.92), H.p(2.91 + k * 0.18, 6.69, 0.92)], 'teal', 2);
+  const [rx, ry] = H.p(2.77, 7.52, 1.04);
+  oval(H, R, rx, ry, 19, 16, 'coral', 0.85);
+  oval(H, R, rx, ry, 11, 9, 'paper', 1);
+  for (const a of [0, Math.PI / 2, Math.PI, Math.PI * 1.5])
+    H.line(
+      R,
+      [
+        [rx + Math.cos(a) * 12, ry + Math.sin(a) * 11],
+        [rx + Math.cos(a) * 18, ry + Math.sin(a) * 16]
+      ],
+      'paper',
+      4
+    );
+  stroke(H, R, [H.p(2.62, 6.63, 1.03), H.p(2.74, 7.7, 1.66), H.p(2.88, 8.55, 0.96)], 'sun', 1.2);
+  const [bx, by] = H.p(4.9, 9.38, 0.7);
+  shape(
+    H,
+    R,
+    [
+      [bx - 13, by - 19],
+      [bx + 13, by - 19],
+      [bx + 10, by],
+      [bx - 10, by]
+    ],
+    'paper',
+    1
+  );
+  oval(H, R, bx, by - 19, 13, 5, 'teal', 0.54);
+  stroke(
+    H,
+    R,
+    [
+      [bx - 12, by - 17],
+      [bx - 10, by - 34],
+      [bx + 10, by - 34],
+      [bx + 12, by - 17]
+    ],
+    'blue',
+    1.2
+  );
+  H.line(R, [H.p(3.2, 8.7, 0.78), H.p(3.3, 3.5, 1.04)], 'sun', 3);
+  shape(H, R, [H.p(3.12, 8.65, 0.81), H.p(3.43, 8.64, 0.81), H.p(3.48, 9.58, 0.81), H.p(3.12, 9.58, 0.81)], 'coral', 0.65);
+  for (const [i, j] of [
+    [5.9, 2.9],
+    [5.9, 3.4]
+  ]) {
+    const [x, y] = H.p(i, j, 0.69);
+    oval(H, R, x, y - 4, 7, 4, 'blue', 0.8);
+    H.line(
+      R,
+      [
+        [x - 5, y - 5],
+        [x + 4, y - 7]
+      ],
+      'paper',
+      1
+    );
+  }
+  const [tx, ty] = H.p(6.15, 4.87, 0.72);
+  shape(
+    H,
+    R,
+    [
+      [tx - 5, ty],
+      [tx + 5, ty],
+      [tx + 5, ty - 21],
+      [tx - 5, ty - 21]
+    ],
+    'sun',
+    0.7
+  );
+  oval(H, R, tx, ty - 21, 5, 2, 'blue', 0.8);
+  ropeCoil(H, R, ...H.p(4.56, 7.98, 0.7), 25, 10);
 }
 
 function aberdeenMooringDetails(H, R) {

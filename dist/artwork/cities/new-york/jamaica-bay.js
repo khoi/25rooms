@@ -1,3 +1,4 @@
+import { surface, timber, metal, bentTube } from '../materials.js';
 import { shallowTray, foldedCloth, coiledLine, boundBook, satchel, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -8,11 +9,60 @@ const watching = { ...seated, al: 160, ar: 154, el: 32, er: 33, head: -12, lean:
 FIGURES.clips.newYorkBinoculars = { dur: 20, keys: [[0, seated], [.13, seated], [.28, watching], [.48, { ...watching, head: -16, lean: 5 }], [.61, watching], [.76, seated], [1, seated]] };
 
 function reeds(H, R, i, j, h, ink = 'teal') {
-  const [x, y] = H.p(i, j, .05);
+  const [x, y] = H.p(i, j, 0.05);
   for (let n = 0; n < 7; n++) {
     const lean = (n - 3) * 4;
-    stroke(H, R, [[x + n - 3, y], [x + lean * .55, y - h * .57], [x + lean, y - h + n % 3 * 7]], ink, 1.35, .6);
-    if (n % 2 === 0) shape(H, R, [[x + lean - 2, y - h + n % 3 * 7], [x + lean, y - h - 10 + n % 3 * 7], [x + lean + 3, y - h + n % 3 * 7]], 'sun', .55, .4);
+    stroke(
+      H,
+      R,
+      [
+        [x + n - 3, y],
+        [x + lean * 0.55, y - h * 0.57],
+        [x + lean, y - h + (n % 3) * 7]
+      ],
+      ink,
+      1.35,
+      0.6
+    );
+    if (n % 2 === 0)
+      shape(
+        H,
+        R,
+        [
+          [x + lean - 2, y - h + (n % 3) * 7],
+          [x + lean, y - h - 10 + (n % 3) * 7],
+          [x + lean + 3, y - h + (n % 3) * 7]
+        ],
+        'sun',
+        0.55,
+        0.4
+      );
+  }
+  for (let n = 0; n < 5; n++) {
+    const lean = (n - 2) * 5,
+      yy = y - h * 0.45 - (n % 2) * 8;
+    surface(
+      H,
+      R,
+      [
+        [x + lean * 0.4, yy],
+        [x + lean - 4, yy - 17],
+        [x + lean - 11, yy - 22],
+        [x + lean - 7, yy - 11]
+      ],
+      ink,
+      0.52,
+      0.35
+    );
+    H.line(
+      R,
+      [
+        [x + lean * 0.4, yy],
+        [x + lean - 11, yy - 22]
+      ],
+      'sun',
+      0.55
+    );
   }
 }
 
@@ -257,7 +307,12 @@ const room = world('new-york-jamaica-bay', 'Jamaica Bay · A Quiet Opening', {
   for (const i of [.2, 3.45, 8.6, 11.65]) box(H, R, i, 3.84, .19, .45, .1, 3.18, 'blue', .73);
   box(H, R, .03, 4.0, .2, 4.1, .12, 2.75, 'teal', .45);
   for (let j = 4.2; j < 8; j += .5) H.line(R, [H.p(.25, j, .18), H.p(.25, j, 2.87)], 'blue', .65, { tone: .4 });
-  box(H, R, .05, 3.8, 11.83, .64, 3.28, .15, 'paper', .82);
+  timber(H,R,.05,3.8,11.83,.64,3.28,.15,'sun');
+  for(const i of [.2,3.45,8.6,11.65]){
+    timber(H,R,i,3.91,.17,2.29,3.22,.15,'sun');
+    bentTube(H,R,[[i,4.17,2.66],[i,4.87,3.24]],2.6,'teal');
+    metal(H,R,i-.04,4.27,.25,.21,3.19,.055,'teal');
+  }
   box(H, R, .08, 4.15, 11.8, .6, 1.27, .12, 'sun', .53);
   for (const i of [1.1, 4.4, 7.7, 10.8]) {
     H.line(R, [H.p(i, 4.4, 3.3), H.p(i, 5.16, 3.66)], 'blue', 2.2);

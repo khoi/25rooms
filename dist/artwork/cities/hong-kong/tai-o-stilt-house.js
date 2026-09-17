@@ -1,3 +1,4 @@
+import { timber, bentTube, metal, cushion } from '../materials.js';
 import { panelFront, wallRack, hangingRail } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, TAU, ell, bottle } from '../../worlds/common.js';
@@ -43,83 +44,125 @@ function deckTable(H, R, i, j, w, d, z, ink) {
 }
 
 function house(H, R) {
-  shape(H, R, H.tile(.05, .05, 11.9, 11.9, .025), 'teal', .34);
+  shape(H, R, H.tile(0.05, 0.05, 11.9, 11.9, 0.025), 'teal', 0.34);
   for (let k = 0; k < 28; k++) {
-    const i = .28 + k % 7 * 1.64, j = .5 + Math.floor(k / 7) * 3.12;
-    stroke(H, R, [H.p(i, j, .04), H.p(i + .45, j + .07, .04), H.p(i + .8, j, .04)], 'paper', .7, .63);
+    const i = 0.28 + (k % 7) * 1.64,
+      j = 0.5 + Math.floor(k / 7) * 3.12;
+    stroke(H, R, [H.p(i, j, 0.04), H.p(i + 0.45, j + 0.07, 0.04), H.p(i + 0.8, j, 0.04)], 'paper', 0.7, 0.63);
   }
-  for (const i of [.64, 5.75, 10.84]) for (const j of [.85, 7.91]) {
-    box(H, R, i, j, .23, .27, .04, 1.46, 'blue', .59);
-    box(H, R, i - .04, j - .03, .31, .33, .05, .2, 'teal', .55);
+  for (const i of [0.64, 5.75, 10.84])
+    for (const j of [0.85, 7.91]) {
+      box(H, R, i, j, 0.23, 0.27, 0.04, 1.46, 'blue', 0.59);
+      box(H, R, i - 0.04, j - 0.03, 0.31, 0.33, 0.05, 0.2, 'teal', 0.55);
+    }
+  for (const i of [0.76, 5.89]) {
+    H.line(R, [H.p(i, 8.03, 0.24), H.p(i + 4.82, 8.03, 1.36)], 'blue', 2.2);
+    H.line(R, [H.p(i, 8.03, 1.35), H.p(i + 4.82, 8.03, 0.26)], 'blue', 2.2);
   }
-  for (const i of [.76, 5.89]) {
-    H.line(R, [H.p(i, 8.03, .24), H.p(i + 4.82, 8.03, 1.36)], 'blue', 2.2);
-    H.line(R, [H.p(i, 8.03, 1.35), H.p(i + 4.82, 8.03, .26)], 'blue', 2.2);
+  for (const j of [1.23, 4.08, 7.91]) timber(H, R, 0.4, j, 10.96, 0.25, 1.08, 0.23, 'sun');
+  for (let n = 0; n < 17; n++) timber(H, R, 0.4, 0.55 + (n * 7.93) / 17, 10.96, 7.93 / 17 - 0.026, 1.26, 0.17, 'sun');
+  for (const i of [0.76, 5.89]) {
+    bentTube(
+      H,
+      R,
+      [
+        [i, 8.08, 0.2],
+        [i + 4.82, 8.08, 1.29]
+      ],
+      4,
+      'sun'
+    );
+    bentTube(
+      H,
+      R,
+      [
+        [i, 8.08, 1.28],
+        [i + 4.82, 8.08, 0.21]
+      ],
+      4,
+      'sun'
+    );
+    for (const x of [i, i + 4.82]) metal(H, R, x - 0.08, 8.1, 0.16, 0.065, 0.18, 1.11, 'teal');
   }
-  box(H, R, .4, .55, 10.96, 7.93, 1.26, .17, 'sun', .35);
-  for (let j = .63; j < 8.4; j += .42) {
-    H.line(R, [H.p(.46, j, 1.44), H.p(11.3, j, 1.44)], 'blue', .65, { tone: .46 });
-    for (let i = j % 2 * 1.5; i < 11; i += 2.76) H.line(R, [H.p(i, j, 1.44), H.p(i, j + .37, 1.44)], 'blue', .5, { tone: .3 });
+  for (let j = 0.63; j < 8.4; j += 0.42) {
+    H.line(R, [H.p(0.46, j, 1.44), H.p(11.3, j, 1.44)], 'blue', 0.65, { tone: 0.46 });
+    for (let i = (j % 2) * 1.5; i < 11; i += 2.76) H.line(R, [H.p(i, j, 1.44), H.p(i, j + 0.37, 1.44)], 'blue', 0.5, { tone: 0.3 });
   }
-  box(H, R, .4, .55, .14, 7.35, 1.43, 2.78, 'paper', 1);
-  box(H, R, .4, .55, 10.96, .14, 1.43, 2.93, 'teal', .46);
-  for (let i = .66; i < 11.26; i += .34) H.line(R, [H.p(i, .71, 1.52), H.p(i, .71, 4.24)], 'blue', .6, { tone: .4 });
-  for (let j = .78; j < 7.8; j += .65) H.line(R, [H.p(.56, j, 1.51), H.p(.56, j, 4.14)], 'blue', .6, { tone: .3 });
-  shape(H, R, [H.p(.25, .48, 4.37), H.p(11.51, .48, 4.37), H.p(11.51, 1.83, 4.03), H.p(.25, 1.83, 4.03)], 'paper', 1);
-  for (let i = .4; i < 11.5; i += .38) H.line(R, [H.p(i, .5, 4.39), H.p(i, 1.8, 4.05)], 'blue', .65, { tone: .43 });
-  const pane = H.faceI(2.73, .73, 3.19, 2.28, 3.66);
-  shape(H, R, pane, 'sun', .19);
+  box(H, R, 0.4, 0.55, 0.14, 7.35, 1.43, 2.78, 'paper', 1);
+  box(H, R, 0.4, 0.55, 10.96, 0.14, 1.43, 2.93, 'teal', 0.46);
+  for (let i = 0.66; i < 11.26; i += 0.34) H.line(R, [H.p(i, 0.71, 1.52), H.p(i, 0.71, 4.24)], 'blue', 0.6, { tone: 0.4 });
+  for (let j = 0.78; j < 7.8; j += 0.65) H.line(R, [H.p(0.56, j, 1.51), H.p(0.56, j, 4.14)], 'blue', 0.6, { tone: 0.3 });
+  shape(H, R, [H.p(0.25, 0.48, 4.37), H.p(11.51, 0.48, 4.37), H.p(11.51, 1.83, 4.03), H.p(0.25, 1.83, 4.03)], 'paper', 1);
+  for (let i = 0.4; i < 11.5; i += 0.38) H.line(R, [H.p(i, 0.5, 4.39), H.p(i, 1.8, 4.05)], 'blue', 0.65, { tone: 0.43 });
+  const pane = H.faceI(2.73, 0.73, 3.19, 2.28, 3.66);
+  shape(H, R, pane, 'sun', 0.19);
   H.clip(pane, () => {
-    shape(H, R, H.faceI(2.71, .75, 3.23, 2.28, 2.98), 'teal', .34);
+    shape(H, R, H.faceI(2.71, 0.75, 3.23, 2.28, 2.98), 'teal', 0.34);
     for (let k = 0; k < 4; k++) {
-      const i = 2.83 + k * .84;
-      shape(H, R, H.faceI(i, .78, .64, 2.62, 3.16 + k % 2 * .18), k % 2 ? 'paper' : 'coral', .5);
-      H.line(R, [H.p(i + .17, .8, 2.61), H.p(i + .17, .8, 2.29)], 'blue', .8);
-      H.line(R, [H.p(i + .48, .8, 2.61), H.p(i + .48, .8, 2.29)], 'blue', .8);
+      const i = 2.83 + k * 0.84;
+      shape(H, R, H.faceI(i, 0.78, 0.64, 2.62, 3.16 + (k % 2) * 0.18), k % 2 ? 'paper' : 'coral', 0.5);
+      H.line(R, [H.p(i + 0.17, 0.8, 2.61), H.p(i + 0.17, 0.8, 2.29)], 'blue', 0.8);
+      H.line(R, [H.p(i + 0.48, 0.8, 2.61), H.p(i + 0.48, 0.8, 2.29)], 'blue', 0.8);
     }
   });
-  H.line(R, [H.p(4.32, .8, 2.27), H.p(4.32, .8, 3.67)], 'paper', 2);
-  box(H, R, 2.63, .72, 3.39, .44, 2.16, .12, 'blue', .56);
-  shape(H, R, H.faceI(7.91, .72, 2.29, 1.52, 3.87), 'blue', .55);
-  shape(H, R, H.faceI(8.02, .75, .68, 1.56, 3.8), 'paper', .85);
-  for (let z = 1.7; z < 3.7; z += .24) H.line(R, [H.p(8.06, .77, z), H.p(8.63, .77, z)], 'teal', .7);
-  H.dot(...H.p(8.54, .8, 2.6), 1.5, 'sun');
-  for (const i of [1.08, 3.96]) box(H, R, i, 2.73, .16, .52, 1.44, .53, 'blue', .6);
-  box(H, R, .96, 2.64, 3.21, .81, 1.97, .13, 'coral', .55);
-  box(H, R, .96, 2.65, 3.21, .13, 2.09, .55, 'coral', .52);
+  H.line(R, [H.p(4.32, 0.8, 2.27), H.p(4.32, 0.8, 3.67)], 'paper', 2);
+  box(H, R, 2.63, 0.72, 3.39, 0.44, 2.16, 0.12, 'blue', 0.56);
+  shape(H, R, H.faceI(7.91, 0.72, 2.29, 1.52, 3.87), 'blue', 0.55);
+  shape(H, R, H.faceI(8.02, 0.75, 0.68, 1.56, 3.8), 'paper', 0.85);
+  for (let z = 1.7; z < 3.7; z += 0.24) H.line(R, [H.p(8.06, 0.77, z), H.p(8.63, 0.77, z)], 'teal', 0.7);
+  H.dot(...H.p(8.54, 0.8, 2.6), 1.5, 'sun');
+  for (const i of [1.08, 3.96]) box(H, R, i, 2.73, 0.16, 0.52, 1.44, 0.53, 'blue', 0.6);
+  cushion(H, R, 0.96, 2.64, 3.21, 0.81, 1.97, 0.13, 'coral');
+  box(H, R, 0.96, 2.65, 3.21, 0.13, 2.09, 0.55, 'coral', 0.52);
   deckTable(H, R, 1.18, 4.26, 2.76, 1.47, 2.15, 'paper');
-  bottle(H, R, ...H.p(1.58, 4.71, 2.3), 'sun', .63);
+  bottle(H, R, ...H.p(1.58, 4.71, 2.3), 'sun', 0.63);
   cup(H, R, ...H.p(2.33, 4.6, 2.3));
-  shape(H, R, H.tile(2.83, 4.52, .73, .73, 2.29), 'coral', .28);
-  for (let k = 0; k < 4; k++) H.line(R, [H.p(2.89 + k * .15, 4.55, 2.31), H.p(2.89 + k * .15, 5.2, 2.31)], 'blue', .5, { tone: .34 });
-  deckTable(H, R, 5.74, 5.66, 1.1, .93, 1.99, 'sun');
+  shape(H, R, H.tile(2.83, 4.52, 0.73, 0.73, 2.29), 'coral', 0.28);
+  for (let k = 0; k < 4; k++) H.line(R, [H.p(2.89 + k * 0.15, 4.55, 2.31), H.p(2.89 + k * 0.15, 5.2, 2.31)], 'blue', 0.5, { tone: 0.34 });
+  deckTable(H, R, 5.74, 5.66, 1.1, 0.93, 1.99, 'sun');
   for (const i of [5.66, 8.58]) {
     H.line(R, [H.p(i, 4.39, 1.45), H.p(i, 4.39, 3.04)], 'blue', 2.6);
-    H.line(R, [H.p(i - .35, 4.05, 1.46), H.p(i, 4.39, 2.27), H.p(i + .36, 4.77, 1.46)], 'blue', 1.5);
+    H.line(R, [H.p(i - 0.35, 4.05, 1.46), H.p(i, 4.39, 2.27), H.p(i + 0.36, 4.77, 1.46)], 'blue', 1.5);
   }
   H.line(R, [H.p(5.62, 4.39, 3.04), H.p(8.62, 4.39, 3.04)], 'sun', 2.3);
-  coil(H, R, 9.84, 5.87, 1.45, .9);
-  box(H, R, 9.73, 1.89, 1.12, 1.17, 1.46, .57, 'teal', .49);
-  box(H, R, 9.85, 2.02, .91, .91, 2.07, .09, 'sun', .5);
-  for (let k = 0; k < 4; k++) H.line(R, [H.p(9.84, 3.08, 1.61 + k * .1), H.p(10.74, 3.08, 1.61 + k * .1)], 'paper', .65);
-  const [lx, ly] = H.p(.59, 6.85, 2.87);
-  oval(H, R, lx, ly, 19, 23, 'coral', .6);
+  coil(H, R, 9.84, 5.87, 1.45, 0.9);
+  box(H, R, 9.73, 1.89, 1.12, 1.17, 1.46, 0.57, 'teal', 0.49);
+  box(H, R, 9.85, 2.02, 0.91, 0.91, 2.07, 0.09, 'sun', 0.5);
+  for (let k = 0; k < 4; k++) H.line(R, [H.p(9.84, 3.08, 1.61 + k * 0.1), H.p(10.74, 3.08, 1.61 + k * 0.1)], 'paper', 0.65);
+  const [lx, ly] = H.p(0.59, 6.85, 2.87);
+  oval(H, R, lx, ly, 19, 23, 'coral', 0.6);
   oval(H, R, lx, ly, 10, 13, 'paper', 1);
   for (let k = 0; k < 4; k++) {
-    const a = Math.PI / 4 + k * Math.PI / 2;
-    H.line(R, [[lx + Math.cos(a) * 12, ly + Math.sin(a) * 16], [lx + Math.cos(a) * 18, ly + Math.sin(a) * 23]], 'paper', 3.4);
+    const a = Math.PI / 4 + (k * Math.PI) / 2;
+    H.line(
+      R,
+      [
+        [lx + Math.cos(a) * 12, ly + Math.sin(a) * 16],
+        [lx + Math.cos(a) * 18, ly + Math.sin(a) * 23]
+      ],
+      'paper',
+      3.4
+    );
   }
-  for (let k = 0; k < 4; k++) box(H, R, 8.02, 8.47 + k * .52, 2.49, .53, .12 + (3 - k) * .31, .22, 'sun', .39);
+  for (let k = 0; k < 4; k++) box(H, R, 8.02, 8.47 + k * 0.52, 2.49, 0.53, 0.12 + (3 - k) * 0.31, 0.22, 'sun', 0.39);
   for (const i of [8.13, 10.38]) H.line(R, [H.p(i, 8.15, 2.32), H.p(i, 10.79, 1.07)], 'blue', 2);
   for (const i of [1.11, 1.65]) {
-    box(H, R, i, 7.37, .34, .31, 1.44, .51, 'blue', .73);
-    box(H, R, i, 7.55, .35, .39, 1.44, .17, 'blue', .81);
+    box(H, R, i, 7.37, 0.34, 0.31, 1.44, 0.51, 'blue', 0.73);
+    box(H, R, i, 7.55, 0.35, 0.39, 1.44, 0.17, 'blue', 0.81);
   }
   const [fx, fy] = H.p(4.48, 2.47, 2.38);
-  oval(H, R, fx, fy + 34, 12, 5, 'teal', .6);
-  H.line(R, [[fx, fy + 31], [fx, fy + 6]], 'blue', 2.5);
+  oval(H, R, fx, fy + 34, 12, 5, 'teal', 0.6);
+  H.line(
+    R,
+    [
+      [fx, fy + 31],
+      [fx, fy + 6]
+    ],
+    'blue',
+    2.5
+  );
   oval(H, R, fx, fy, 19, 21, 'paper', 1);
-  H.outline(R, ell(fx, fy, 16, 18), 'blue', .6);
+  H.outline(R, ell(fx, fy, 16, 18), 'blue', 0.6);
   taiOStiltHouseDetails(H, R);
   construction(H, R);
 }

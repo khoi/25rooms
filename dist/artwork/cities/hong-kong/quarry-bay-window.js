@@ -1,3 +1,4 @@
+import { cushion, drape, benchFrame } from '../materials.js';
 import { cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU } from '../../worlds/common.js';
@@ -246,10 +247,9 @@ const room = world('hong-kong-quarry-bay-window', 'Quarry Bay · One window stil
   box(H, R, .3, 3.12, .74, 3.6, 1.75, .12, 'teal', .5);
   for (let q = 0; q < 9; q++) box(H, R, .4, 3.3 + q * .34, .53, .24, 1.89, .39 + q % 3 * .11, ['coral', 'paper', 'sun'][q % 3], .63);
   box(H, R, .35, 3.3, 2.59, 4.1, .03, .48, 'teal', .54);
-  box(H, R, .4, 3.4, 2.49, 3.93, .51, .17, 'paper', 1);
-  shape(H, R, H.tile(.51, 4.46, 2.24, 2.75, .7), 'coral', .49);
-  for (let q = 0; q < 8; q++) H.line(R, [H.p(.53, 4.56 + q * .35, .72), H.p(2.74, 4.56 + q * .35, .72)], 'paper', 1.4, { tone: .75 });
-  box(H, R, .73, 3.66, 1.85, .67, .69, .16, 'paper', 1);
+  cushion(H,R,.4,3.4,2.49,3.93,.51,.17,'paper');
+  drape(H,R,.51,4.46,2.24,2.75,.71,.47,'coral');
+  cushion(H,R,.73,3.66,1.85,.67,.69,.2,'paper');
   box(H, R, .35, 3.22, 2.63, .2, .49, .63, 'teal', .53);
   box(H, R, 3.22, 4.58, .95, .85, .02, .63, 'paper', .88);
   mug(H, R, 3.75, 4.98, .66, 'teal');
@@ -268,7 +268,7 @@ const room = world('hong-kong-quarry-bay-window', 'Quarry Bay · One window stil
   const [tx, ty] = H.p(2.45, 9.7, .03);
   shape(H, R, [[tx - 12, ty], [tx + 14, ty], [tx + 11, ty - 26], [tx - 11, ty - 26]], 'sun', .65);
   stroke(H, R, [[tx - 7, ty - 25], [tx - 6, ty - 38], [tx + 7, ty - 38], [tx + 8, ty - 25]], 'blue', 1.2);
-  table(H, R, 7.42, 6.9, 3.55, 1.45, .94, 'teal');
+  benchFrame(H,R,7.42,6.9,3.55,1.45,1.06,'teal');
   box(H, R, 7.51, 6.98, 3.37, 1.28, 1.09, .09, 'blue', .8);
   shape(H, R, H.faceI(7.51, 8.25, 3.37, 1.19, 2.59), 'teal', .21, .8);
   shape(H, R, H.faceJ(10.88, 6.98, 1.28, 1.19, 2.59), 'teal', .29, .8);

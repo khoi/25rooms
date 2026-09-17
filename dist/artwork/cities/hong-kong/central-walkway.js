@@ -1,6 +1,7 @@
+import { metal, bentTube, surface } from '../materials.js';
 import { caster, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, coiledLine, framedPanel, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, actor, cycle, TAU, glow } from '../../worlds/common.js';
+import { ell, world, shape, oval, stroke, box, actor, cycle, TAU, glow } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -174,7 +175,7 @@ function construction(H, R) {
   }
 }
 
-const room = world('hong-kong-central-walkway', 'Central · A clear pane at midnight', { floor: 'blue', tone: .32, wall: false, head: 20 }, (H, R) => {
+const room = world('hong-kong-central-walkway', 'Central · A clear pane at midnight', { floor: 'blue', tone: .16, wall: false, head: 35 }, (H, R) => {
   const view = H.faceI(.16, .18, 11.68, .18, 3.52);
   shape(H, R, view, 'blue', .77, .9);
   H.clip(view, () => {
@@ -194,7 +195,12 @@ const room = world('hong-kong-central-walkway', 'Central · A clear pane at midn
     box(H, R, i, 3.19, .31, .35, .03, 3.45, 'paper', .86);
     box(H, R, i - .08, 3.11, .47, .51, .02, .13, 'blue', .58);
   }
-  box(H, R, .4, 3.2, 11.19, .35, 3.48, .25, 'paper', .88);
+  for(const z of [3.47,3.95])metal(H,R,.4,3.2,11.19,.19,z,.09,'paper');
+  for(let n=0;n<9;n++){
+    const i=.48+n*1.23;
+    bentTube(H,R,[[i,3.29,3.53],[i+.62,3.29,3.94],[i+1.23,3.29,3.53]],2.4,'teal');
+    surface(H,R,ell(...H.p(i+.62,3.31,3.94),2.5,2),'sun',.75,.45);
+  }
   for (const i of [.58, 11.43]) {
     H.line(R, [H.p(i, .62, 3.58), H.p(i, 3.32, 3.59), H.p(i, 7.79, 3.22)], 'blue', 2.1);
     H.line(R, [H.p(i, 3.33, .6), H.p(i, 7.79, .6)], 'blue', 1.3);

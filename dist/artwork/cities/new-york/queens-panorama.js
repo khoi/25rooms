@@ -1,3 +1,4 @@
+import { benchFrame, metal, surface } from '../materials.js';
 import { cornice, recessedFrame, panelFront } from '../joinery.js';
 import { shallowTray, boundBook, satchel, framedPanel } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, wallRect, wallPt, cycle, TAU } from '../../worlds/common.js';
@@ -10,58 +11,135 @@ FIGURES.clips.newYorkPanoramaWheelFind = { dur: 18, keys: FIGURES.clips.newYorkP
 FIGURES.clips.newYorkPanoramaLean = { dur: 18, keys: [[0, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [.24, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [.48, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }], [.7, { ...rest, al: 55, ar: 59, el: 30, er: 27, head: 24, lean: -9 }], [.91, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }], [1, { ...rest, al: 44, ar: 45, el: 38, er: 37, head: 15 }]] };
 
 function modelBlock(H, R, i, j, w, d, height, ink = 'paper') {
-  box(H, R, i, j, w, d, .77, height, ink, ink === 'paper' ? 1 : .6);
-  if (height > .36) {
-    for (let z = .88; z < .77 + height - .04; z += .15) H.line(R, [H.p(i + .035, j + d + .007, z), H.p(i + w - .035, j + d + .007, z)], 'blue', .45, { tone: .55, amp: .02 });
-    box(H, R, i + w * .17, j + d * .17, w * .66, d * .66, .77 + height, .05, 'sun', .42);
+  box(H, R, i, j, w, d, 0.77, height, ink, ink === 'paper' ? 1 : 0.6);
+  if (height > 0.36) {
+    for (let z = 0.88; z < 0.77 + height - 0.04; z += 0.15)
+      H.line(R, [H.p(i + 0.035, j + d + 0.007, z), H.p(i + w - 0.035, j + d + 0.007, z)], 'blue', 0.45, { tone: 0.55, amp: 0.02 });
+    box(H, R, i + w * 0.17, j + d * 0.17, w * 0.66, d * 0.66, 0.77 + height, 0.05, 'sun', 0.42);
+  }
+  if (height > 0.45) {
+    metal(H, R, i + w * 0.26, j + d * 0.25, w * 0.48, d * 0.5, 0.82 + height, 0.09, 'teal');
+    for (let n = 0; n < 3; n++)
+      H.line(R, [H.p(i + w * (0.2 + n * 0.27), j + d + 0.014, 0.9), H.p(i + w * (0.2 + n * 0.27), j + d + 0.014, 0.73 + height)], 'teal', 0.4);
+  } else if (height > 0.17) {
+    surface(H, R, [H.p(i, j, 0.77 + height), H.p(i + w, j, 0.77 + height), H.p(i + w * 0.5, j + d * 0.4, 0.86 + height)], 'coral', 0.35, 0.25);
   }
 }
 
 function cityModel(H, R) {
-  box(H, R, 2.35, 2.09, 7.08, 6.98, .1, .5, 'blue', .68);
-  box(H, R, 2.27, 2.01, 7.24, 7.14, .61, .14, 'paper', 1);
-  shape(H, R, H.tile(2.42, 2.16, 6.94, 6.84, .77), 'teal', .66, .6);
+  benchFrame(H, R, 2.35, 2.09, 7.08, 6.98, 0.6, 'teal');
+  box(H, R, 2.27, 2.01, 7.24, 7.14, 0.61, 0.14, 'paper', 1);
+  shape(H, R, H.tile(2.42, 2.16, 6.94, 6.84, 0.77), 'teal', 0.66, 0.6);
   const land = [
-    [[2.64, 2.35], [4.91, 2.35], [4.82, 3.28], [4.26, 4.07], [4.17, 5.59], [3.61, 6.2], [2.64, 6.13]],
-    [[5.75, 2.36], [9.11, 2.36], [9.11, 5.27], [7.41, 5.45], [6.47, 4.95], [6.13, 3.66]],
-    [[6.77, 5.61], [9.11, 5.53], [9.11, 8.7], [5.53, 8.7], [5.7, 7.46], [6.47, 6.98]],
-    [[4.83, 3.05], [5.53, 3.09], [6.15, 6.52], [5.63, 7.39], [5.04, 6.68], [4.44, 4.21]],
-    [[2.65, 7.15], [3.53, 6.96], [4.56, 7.75], [4.47, 8.7], [2.65, 8.7]],
+    [
+      [2.64, 2.35],
+      [4.91, 2.35],
+      [4.82, 3.28],
+      [4.26, 4.07],
+      [4.17, 5.59],
+      [3.61, 6.2],
+      [2.64, 6.13]
+    ],
+    [
+      [5.75, 2.36],
+      [9.11, 2.36],
+      [9.11, 5.27],
+      [7.41, 5.45],
+      [6.47, 4.95],
+      [6.13, 3.66]
+    ],
+    [
+      [6.77, 5.61],
+      [9.11, 5.53],
+      [9.11, 8.7],
+      [5.53, 8.7],
+      [5.7, 7.46],
+      [6.47, 6.98]
+    ],
+    [
+      [4.83, 3.05],
+      [5.53, 3.09],
+      [6.15, 6.52],
+      [5.63, 7.39],
+      [5.04, 6.68],
+      [4.44, 4.21]
+    ],
+    [
+      [2.65, 7.15],
+      [3.53, 6.96],
+      [4.56, 7.75],
+      [4.47, 8.7],
+      [2.65, 8.7]
+    ]
   ];
-  for (const polygon of land) shape(H, R, polygon.map(([i, j]) => H.p(i, j, .79)), 'sun', .27, .7);
-  for (let i = 2.8; i < 4.1; i += .34) for (let j = 2.63; j < 5.88; j += .43) modelBlock(H, R, i, j, .22, .29, .11 + (Math.floor(j * 10) % 3) * .04, 'paper');
-  for (let i = 6.6; i < 8.95; i += .44) for (let j = 2.65; j < 4.98; j += .41) {
-    if (i > 7.87 && j < 3.5) continue;
-    modelBlock(H, R, i, j, .3, .25, .1 + Math.floor(i * 10 + j * 10) % 4 * .035, Math.floor(i * 10) % 3 ? 'paper' : 'coral');
-  }
-  for (let i = 6.65; i < 8.96; i += .47) for (let j = 6.09; j < 8.58; j += .44) modelBlock(H, R, i, j, .33, .28, .12 + Math.floor(j * 10) % 3 * .055);
-  for (let j = 3.29; j < 6.78; j += .32) {
-    const i = 4.76 + (j - 3.29) * .2;
+  for (const polygon of land)
+    shape(
+      H,
+      R,
+      polygon.map(([i, j]) => H.p(i, j, 0.79)),
+      'sun',
+      0.27,
+      0.7
+    );
+  for (let i = 2.8; i < 4.1; i += 0.34)
+    for (let j = 2.63; j < 5.88; j += 0.43) modelBlock(H, R, i, j, 0.22, 0.29, 0.11 + (Math.floor(j * 10) % 3) * 0.04, 'paper');
+  for (let i = 6.6; i < 8.95; i += 0.44)
+    for (let j = 2.65; j < 4.98; j += 0.41) {
+      if (i > 7.87 && j < 3.5) continue;
+      modelBlock(H, R, i, j, 0.3, 0.25, 0.1 + (Math.floor(i * 10 + j * 10) % 4) * 0.035, Math.floor(i * 10) % 3 ? 'paper' : 'coral');
+    }
+  for (let i = 6.65; i < 8.96; i += 0.47)
+    for (let j = 6.09; j < 8.58; j += 0.44) modelBlock(H, R, i, j, 0.33, 0.28, 0.12 + (Math.floor(j * 10) % 3) * 0.055);
+  for (let j = 3.29; j < 6.78; j += 0.32) {
+    const i = 4.76 + (j - 3.29) * 0.2;
     for (let k = 0; k < 2; k++) {
       if (j > 3.95 && j < 4.67 && k === 0) continue;
-      modelBlock(H, R, i + k * .33, j, .24, .22, j > 4.7 && j < 5.7 ? .35 + k * .19 : .13 + k * .07);
+      modelBlock(H, R, i + k * 0.33, j, 0.24, 0.22, j > 4.7 && j < 5.7 ? 0.35 + k * 0.19 : 0.13 + k * 0.07);
     }
   }
-  shape(H, R, [H.p(4.86, 4.06, .82), H.p(5.14, 4.06, .82), H.p(5.3, 4.72, .82), H.p(5.01, 4.72, .82)], 'teal', .85, .5);
-  for (const [i, j, height] of [[5.21, 4.91, .78], [5.55, 5.34, .68], [5.66, 6.49, .98], [5.34, 5.67, .58]]) {
-    modelBlock(H, R, i, j, .2, .23, height);
-    H.line(R, [H.p(i + .1, j + .12, .77 + height), H.p(i + .1, j + .12, 1.02 + height)], 'blue', .55);
+  shape(H, R, [H.p(4.86, 4.06, 0.82), H.p(5.14, 4.06, 0.82), H.p(5.3, 4.72, 0.82), H.p(5.01, 4.72, 0.82)], 'teal', 0.85, 0.5);
+  for (const [i, j, height] of [
+    [5.21, 4.91, 0.78],
+    [5.55, 5.34, 0.68],
+    [5.66, 6.49, 0.98],
+    [5.34, 5.67, 0.58]
+  ]) {
+    modelBlock(H, R, i, j, 0.2, 0.23, height);
+    H.line(R, [H.p(i + 0.1, j + 0.12, 0.77 + height), H.p(i + 0.1, j + 0.12, 1.02 + height)], 'blue', 0.55);
   }
-  for (let i = 2.96; i < 4.22; i += .41) for (let j = 7.45; j < 8.52; j += .45) modelBlock(H, R, i, j, .26, .29, .12);
-  for (const [a, b, c, d] of [[4.04, 4.16, 4.56, 4.13], [5.98, 5.39, 6.77, 5.12], [6.09, 6.52, 6.76, 6.48], [4.36, 8.04, 5.56, 8.09]]) {
-    H.line(R, [H.p(a, b, .94), H.p(c, d, .94)], 'paper', 3.5);
-    H.line(R, [H.p(a, b, .95), H.p(c, d, .95)], 'blue', .6);
-    for (const f of [.22, .78]) {
-      const i = a + (c - a) * f, j = b + (d - b) * f;
-      H.line(R, [H.p(i, j, .8), H.p(i, j, 1.19)], 'coral', .8);
+  for (let i = 2.96; i < 4.22; i += 0.41) for (let j = 7.45; j < 8.52; j += 0.45) modelBlock(H, R, i, j, 0.26, 0.29, 0.12);
+  for (const [a, b, c, d] of [
+    [4.04, 4.16, 4.56, 4.13],
+    [5.98, 5.39, 6.77, 5.12],
+    [6.09, 6.52, 6.76, 6.48],
+    [4.36, 8.04, 5.56, 8.09]
+  ]) {
+    H.line(R, [H.p(a, b, 0.94), H.p(c, d, 0.94)], 'paper', 3.5);
+    H.line(R, [H.p(a, b, 0.95), H.p(c, d, 0.95)], 'blue', 0.6);
+    for (const f of [0.22, 0.78]) {
+      const i = a + (c - a) * f,
+        j = b + (d - b) * f;
+      H.line(R, [H.p(i, j, 0.8), H.p(i, j, 1.19)], 'coral', 0.8);
     }
-    stroke(H, R, [H.p(a, b, .95), H.p(a + (c - a) * .22, b + (d - b) * .22, 1.19), H.p(a + (c - a) * .5, b + (d - b) * .5, 1.01), H.p(a + (c - a) * .78, b + (d - b) * .78, 1.19), H.p(c, d, .95)], 'blue', .5);
+    stroke(
+      H,
+      R,
+      [
+        H.p(a, b, 0.95),
+        H.p(a + (c - a) * 0.22, b + (d - b) * 0.22, 1.19),
+        H.p(a + (c - a) * 0.5, b + (d - b) * 0.5, 1.01),
+        H.p(a + (c - a) * 0.78, b + (d - b) * 0.78, 1.19),
+        H.p(c, d, 0.95)
+      ],
+      'blue',
+      0.5
+    );
   }
-  const runway = [H.p(7.87, 2.67, .82), H.p(8.91, 2.67, .82), H.p(8.91, 2.91, .82), H.p(7.87, 2.91, .82)];
-  shape(H, R, runway, 'blue', .4, .4);
-  for (let k = 0; k < 6; k++) H.line(R, [H.p(7.96 + k * .16, 2.79, .83), H.p(8.04 + k * .16, 2.79, .83)], 'paper', .8);
-  modelBlock(H, R, 8.14, 3.12, .53, .21, .09, 'coral');
-  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(3.1 + k * .3, 6.55, .83), 4, 1.5, 'paper', 1);
+  const runway = [H.p(7.87, 2.67, 0.82), H.p(8.91, 2.67, 0.82), H.p(8.91, 2.91, 0.82), H.p(7.87, 2.91, 0.82)];
+  shape(H, R, runway, 'blue', 0.4, 0.4);
+  for (let k = 0; k < 6; k++) H.line(R, [H.p(7.96 + k * 0.16, 2.79, 0.83), H.p(8.04 + k * 0.16, 2.79, 0.83)], 'paper', 0.8);
+  modelBlock(H, R, 8.14, 3.12, 0.53, 0.21, 0.09, 'coral');
+  for (let k = 0; k < 4; k++) oval(H, R, ...H.p(3.1 + k * 0.3, 6.55, 0.83), 4, 1.5, 'paper', 1);
 }
 
 function rail(H, R, from, to, posts, z = 1.43) {

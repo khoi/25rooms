@@ -1,6 +1,7 @@
+import { branchSpray, benchFrame } from '../materials.js';
 import { recessedFrame, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe, slattedCrate } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, ell, bottle } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, plant, cycle, TAU, bottle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -11,9 +12,9 @@ const companion = { ...rest, drop: .47, ll: 84, lr: 80, kl: -84, kr: -80, head: 
 FIGURES.clips.hongKongPingShanRespond = { dur: 18, keys: [[0, companion], [.35, companion], [.49, { ...companion, ar: 87, er: 17, head: -3 }], [.62, companion], [.71, { ...companion, ar: 34, er: 39 }], [.78, companion], [1, companion]] };
 
 function stool(H, R, i, j, ink = 'sun', repaired = false) {
-  table(H, R, i, j, 1.15, 1.07, .55, ink);
-  for (const x of [i + .1, i + 1.02]) H.line(R, [H.p(x, j + .08, .3), H.p(x, j + .94, .3)], 'blue', 1.1);
-  if (repaired) for (let k = 0; k < 3; k++) box(H, R, i + .03, j + .81, .26, .28, k * .022, .02, k % 2 ? 'coral' : 'paper', .54);
+  benchFrame(H, R, i, j, 1.15, 1.07, 0.67, ink);
+  for (const x of [i + 0.1, i + 1.02]) H.line(R, [H.p(x, j + 0.08, 0.3), H.p(x, j + 0.94, 0.3)], 'blue', 1.1);
+  if (repaired) for (let k = 0; k < 3; k++) box(H, R, i + 0.03, j + 0.81, 0.26, 0.28, k * 0.022, 0.02, k % 2 ? 'coral' : 'paper', 0.54);
 }
 
 function cup(H, R, i, j, z) {
@@ -24,22 +25,96 @@ function cup(H, R, i, j, z) {
 }
 
 function courtyardTree(H, R) {
-  const [x, y] = H.p(2.24, 2.66, .15);
-  oval(H, R, x, y, 43, 20, 'blue', .22);
+  const [x, y] = H.p(2.24, 2.66, 0.15);
+  oval(H, R, x, y, 43, 20, 'blue', 0.22);
   oval(H, R, x, y - 4, 39, 17, 'paper', 1);
-  oval(H, R, x, y - 5, 32, 13, 'sun', .31);
-  shape(H, R, [[x - 7, y - 6], [x + 9, y - 6], [x + 3, y - 63], [x + 23, y - 94], [x + 17, y - 98], [x - 5, y - 71], [x - 17, y - 103], [x - 23, y - 99], [x - 7, y - 59]], 'coral', .41);
-  stroke(H, R, [[x - 3, y - 8], [x - 2, y - 58], [x + 21, y - 94]], 'blue', .8, .64);
-  stroke(H, R, [[x - 3, y - 53], [x - 23, y - 83], [x - 37, y - 89]], 'blue', 2.4, .63);
-  stroke(H, R, [[x + 2, y - 66], [x + 29, y - 83], [x + 45, y - 87]], 'blue', 2.1, .63);
-  for (const [dx, dy, rx, ry, tone] of [[-36, -98, 26, 16, .51], [-16, -113, 28, 19, .62], [14, -113, 31, 19, .57], [41, -98, 26, 17, .48], [8, -94, 27, 17, .59]]) {
-    oval(H, R, x + dx, y + dy, rx, ry, 'teal', tone);
-    for (let k = 0; k < 6; k++) {
-      const a = k * TAU / 6;
-      stroke(H, R, [[x + dx + Math.cos(a) * rx * .34, y + dy + Math.sin(a) * ry * .34], [x + dx + Math.cos(a) * rx * .61, y + dy + Math.sin(a) * ry * .56]], 'paper', .75, .52);
-    }
+  oval(H, R, x, y - 5, 32, 13, 'sun', 0.31);
+  shape(
+    H,
+    R,
+    [
+      [x - 7, y - 6],
+      [x + 9, y - 6],
+      [x + 3, y - 63],
+      [x + 23, y - 94],
+      [x + 17, y - 98],
+      [x - 5, y - 71],
+      [x - 17, y - 103],
+      [x - 23, y - 99],
+      [x - 7, y - 59]
+    ],
+    'coral',
+    0.41
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 3, y - 8],
+      [x - 2, y - 58],
+      [x + 21, y - 94]
+    ],
+    'blue',
+    0.8,
+    0.64
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x - 3, y - 53],
+      [x - 23, y - 83],
+      [x - 37, y - 89]
+    ],
+    'blue',
+    2.4,
+    0.63
+  );
+  stroke(
+    H,
+    R,
+    [
+      [x + 2, y - 66],
+      [x + 29, y - 83],
+      [x + 45, y - 87]
+    ],
+    'blue',
+    2.1,
+    0.63
+  );
+  for (const [dx, dy] of [
+    [-39, -76],
+    [-23, -97],
+    [2, -105],
+    [25, -101],
+    [43, -84]
+  ]) {
+    stroke(
+      H,
+      R,
+      [
+        [x, y - 52],
+        [x + dx * 0.6, y + dy + 13],
+        [x + dx, y + dy]
+      ],
+      'sun',
+      2
+    );
+    for (let n = 0; n < 5; n++) branchSpray(H, R, x + dx + (n - 2) * 8, y + dy + (n % 2) * 9, 0.65 + (n % 2) * 0.12, 'teal', n % 2 ? 1 : -1);
   }
-  for (let k = 0; k < 8; k++) oval(H, R, ...H.p(2.61 + k % 4 * .61, 3.56 + Math.floor(k / 4) * .46, .023), 13 + k % 3 * 4, 5, 'teal', .11);
+  for (let n = 0; n < 7; n++)
+    stroke(
+      H,
+      R,
+      [
+        [x - 3, y - 12],
+        [x + (n - 3) * 5, y - 3],
+        [x + (n - 3) * 9, y + 2]
+      ],
+      'coral',
+      1.2
+    );
+  for (let k = 0; k < 8; k++) oval(H, R, ...H.p(2.61 + (k % 4) * 0.61, 3.56 + Math.floor(k / 4) * 0.46, 0.023), 13 + (k % 3) * 4, 5, 'teal', 0.11);
 }
 
 function courtyard(H, R) {

@@ -1,5 +1,6 @@
+import { surface, metal, slattedSeat } from '../materials.js';
 import { shallowTray, foldedCloth, satchel } from '../furnishings.js';
-import { world, shape, oval, stroke, box, bench, actor, cycle, ell, table } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, cycle, ell, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -206,7 +207,14 @@ function construction(H, R) {
 const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
   floor: 'teal', tone: .28, wall: false,
 }, (H, R) => {
-  box(H, R, .1, .03, 11.75, .38, .01, 3.8, 'paper', .9);
+  surface(H,R,H.faceI(.1,.41,11.75,.01,3.8),'paper',1);
+  surface(H,R,H.faceJ(11.85,.03,.38,.01,3.8),'sun',.2);
+  surface(H,R,H.tile(.1,.03,11.75,.38,3.8),'sun',.23);
+  for(let n=0;n<9;n++)metal(H,R,.12+n*1.3,.03,1.27,.38,.02,.29,'paper');
+  for(const i of [2.1,6.73,10.45]){
+    H.line(R,[H.p(i,.42,3.73),H.p(i+.13,.42,3.34),H.p(i+.04,.42,3.1)],'blue',.5,{tone:.35});
+  }
+  surface(H,R,[H.p(8.91,.42,.81),H.p(10.1,.42,.84),H.p(10.03,.42,1.38),H.p(9.05,.42,1.29)],'sun',.08,.3);
   shape(H, R, H.faceI(.65, .43, 10.55, .3, 3.48), 'blue', .47, .9);
   shape(H, R, H.faceI(1.04, .46, 9.78, .33, 3.13), 'teal', .48, .65);
   H.line(R, [H.p(1.05, .49, 2.73), H.p(10.8, .49, 2.73)], 'paper', 2.1);
@@ -232,7 +240,7 @@ const room = world('new-york-orchard-beach', 'Orchard Beach · Off the Wall', {
     const [x, y] = H.p(.38, j, .08);
     for (let q = 0; q < 6; q++) stroke(H, R, [[x + q * 2, y], [x - 4 + q * 3, y - 12 - q % 3 * 4], [x - 8 + q * 4, y - 20 - q % 2 * 4]], 'teal', 1.2, .6);
   }
-  bench(H, R, 9.77, 7.34, 1.64, 'teal');
+  slattedSeat(H,R,9.77,7.34,1.64,0,'teal',.59);
   for (let q = 0; q < 4; q++) H.line(R, [H.p(9.85, 7.49 + q * .15, .7), H.p(11.34, 7.49 + q * .15, .7)], 'paper', .75);
   shape(H, R, [H.p(10.92, 7.37, 1.17), H.p(11.33, 7.37, 1.17), H.p(11.33, 8.07, .28), H.p(10.92, 8.07, .28)], 'paper', 1, .7);
   for (const i of [10.99, 11.18]) H.line(R, [H.p(i, 7.44, 1.1), H.p(i, 8.03, .36)], 'coral', 1.3);

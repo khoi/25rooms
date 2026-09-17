@@ -1,3 +1,4 @@
+import { surface, bentTube } from '../materials.js';
 import { cornice, wallRack, hangingRail } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool, servicePipe, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, ell } from '../../worlds/common.js';
@@ -26,10 +27,41 @@ function basket(H, R, i, j, w = 1.62, d = 1.16, z = 0, filled = true) {
 }
 
 function basin(H, R, i, j, w, d, z) {
-  box(H, R, i, j, w, d, z, .4, 'paper', 1);
-  shape(H, R, H.tile(i + .12, j + .12, w - .24, d - .24, z + .42), 'teal', .43);
-  for (let k = 0; k < 5; k++) H.line(R, [H.p(i + .27 + k * .23, j + .35, z + .43), H.p(i + .55 + k * .23, j + .35, z + .43)], 'paper', .65, { tone: .76 });
+  const rim = Array.from({ length: 48 }, (_, n) => {
+    const a = (n * TAU) / 48;
+    return H.p(i + w * 0.5 + Math.cos(a) * w * 0.5, j + d * 0.5 + Math.sin(a) * d * 0.5, z + 0.43);
+  });
+  const foot = rim.map(([x, y]) => [x, y + 14]);
+  surface(H, R, [...foot.slice(0, 25), ...rim.slice(0, 25).reverse()], 'paper', 1);
+  surface(H, R, rim, 'teal', 0.4);
+  H.outline(R, rim, 'paper', 2.8, { tone: 1 });
+  for (let n = 0; n < 6; n++) {
+    const p = H.p(i + w * (0.24 + n * 0.095), j + d * 0.56, z + 0.44);
+    H.line(
+      R,
+      [
+        [p[0] - 6, p[1]],
+        [p[0] + 6, p[1]]
+      ],
+      'paper',
+      0.85
+    );
+  }
+  for (const a of [i + 0.1, i + w - 0.1])
+    bentTube(
+      H,
+      R,
+      [
+        [a, j + d * 0.32, z + 0.39],
+        [a, j + d * 0.39, z + 0.62],
+        [a, j + d * 0.66, z + 0.62],
+        [a, j + d * 0.73, z + 0.39]
+      ],
+      1.5,
+      'teal'
+    );
 }
+
 
 function shed(H, R) {
   for (const side of ['nw', 'ne']) {

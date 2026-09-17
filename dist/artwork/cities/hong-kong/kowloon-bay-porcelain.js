@@ -1,3 +1,4 @@
+import { benchFrame, drape } from '../materials.js';
 import { cornice, windowBay, cityView, panelFront, wallRack, hangingRail, taskLight, caster } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, boundBook, handTool, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, TAU } from '../../worlds/common.js';
@@ -14,17 +15,46 @@ function blossom(H, R, x, y, size = 1, uneven = false) {
 }
 
 function plate(H, R, x, y, radius = 22, decorated = false, upright = false, turn = 0, uneven = false) {
-  const ry = radius * (upright ? .88 : .6);
+  const ry = radius * (upright ? 0.88 : 0.6);
   oval(H, R, x, y, radius, ry, 'paper', 1);
-  H.outline(R, Array.from({ length: 42 }, (_, q) => [x + Math.cos(q * TAU / 42) * radius * .82, y + Math.sin(q * TAU / 42) * ry * .82]), decorated ? 'sun' : 'blue', decorated ? 1.6 : .7, { tone: decorated ? .85 : .45 });
+  H.outline(
+    R,
+    Array.from({ length: 42 }, (_, q) => [x + Math.cos((q * TAU) / 42) * radius * 0.82, y + Math.sin((q * TAU) / 42) * ry * 0.82]),
+    decorated ? 'sun' : 'blue',
+    decorated ? 1.6 : 0.7,
+    { tone: decorated ? 0.85 : 0.45 }
+  );
   if (decorated) {
-    blossom(H, R, x + Math.sin(turn) * radius * .2, y, radius / 27, uneven);
+    blossom(H, R, x + Math.sin(turn) * radius * 0.2, y, radius / 27, uneven);
     for (let q = 0; q < 8; q++) {
-      const a = q * TAU / 8 + turn;
-      oval(H, R, x + Math.cos(a) * radius * .67, y + Math.sin(a) * ry * .67, 1.8, 1.2, q % 2 ? 'teal' : 'coral', .65);
+      const a = (q * TAU) / 8 + turn;
+      oval(H, R, x + Math.cos(a) * radius * 0.67, y + Math.sin(a) * ry * 0.67, 1.8, 1.2, q % 2 ? 'teal' : 'coral', 0.65);
     }
   }
-  H.line(R, [[x - radius * .58, y - ry * .38], [x - radius * .14, y - ry * .52]], 'paper', 1.8);
+  H.line(
+    R,
+    [
+      [x - radius * 0.58, y - ry * 0.38],
+      [x - radius * 0.14, y - ry * 0.52]
+    ],
+    'paper',
+    1.8
+  );
+  if (decorated)
+    for (let n = 0; n < 18; n++) {
+      const a = (n * TAU) / 18 + turn,
+        b = a + 0.12;
+      H.line(
+        R,
+        [
+          [x + Math.cos(a) * radius * 0.72, y + Math.sin(a) * ry * 0.72],
+          [x + Math.cos(b) * radius * 0.77, y + Math.sin(b) * ry * 0.77],
+          [x + Math.cos(a + 0.24) * radius * 0.72, y + Math.sin(a + 0.24) * ry * 0.72]
+        ],
+        'teal',
+        0.55
+      );
+    }
 }
 
 function cup(H, R, i, j, z, ink = 'paper', brushes = false) {
@@ -239,7 +269,8 @@ const room = world('hong-kong-kowloon-bay-porcelain', 'Kowloon Bay · A quiet ri
     }
   }
   for (const j of [1.04, 6.66]) box(H, R, .14, j, .15, .13, .18, 2.98, 'blue', .6);
-  table(H, R, 1.97, 3.44, 4.95, 2.53, .94, 'paper');
+  benchFrame(H,R,1.97,3.44,4.95,2.53,1.06,'sun');
+  drape(H,R,2.05,4.93,1.27,1.08,1.08,.48,'paper');
   shape(H, R, H.tile(2.14, 3.61, 4.59, 2.17, 1.08), 'teal', .14, .55);
   const [px, py] = H.p(5.14, 5.26, 1.13);
   oval(H, R, px, py + 7, 35, 19, 'blue', .48);

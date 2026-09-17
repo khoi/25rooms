@@ -1,3 +1,4 @@
+import { slattedSeat, metal, surface, bentTube } from '../materials.js';
 import { shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, handTool } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, cycle, ell, TAU, table } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
@@ -13,88 +14,193 @@ function rail(H, R, i, j, h, ink = 'sun') {
   H.line(R, [H.p(i, j, .69), H.p(i, j, h)], ink, 1.8);
 }
 
-function tramSeat(H, R, i, j, w, z = .73) {
-  for (const x of [i + .1, i + w - .22]) box(H, R, x, j + .1, .12, .61, z, .43, 'blue', .74);
-  box(H, R, i, j, w, .8, z + .43, .13, 'sun', .52);
-  box(H, R, i, j, w, .1, z + .56, .66, 'teal', .68);
-  for (let x = i + .17; x < i + w; x += .34) H.line(R, [H.p(x, j + .12, z + .6), H.p(x, j + .12, z + 1.2)], 'paper', .8, { tone: .5 });
+function tramSeat(H, R, i, j, w, z = 0.73) {
+  slattedSeat(H, R, i, j, w, z - 0.18, 'sun', 0.63);
+  for (const x of [i + 0.13, i + w - 0.15]) {
+    metal(H, R, x, j + 0.14, 0.13, 0.18, z + 0.2, 0.75, 'teal');
+    for (const h of [0.3, 0.7]) H.dot(...H.p(x + 0.07, j + 0.33, z + h), 1.2, 'sun');
+  }
 }
 
+
 function body(H, R) {
-  for (const i of [3.3, 8.3]) for (const j of [4.15, 7.45]) {
-    oval(H, R, ...H.p(i, j, .25), 15, 12, 'blue', .9);
-    oval(H, R, ...H.p(i, j, .25), 7, 6, 'paper', .7);
-    H.dot(...H.p(i, j, .25), 2.5, 'blue');
-  }
-  box(H, R, 1.24, 3.9, 9.63, 4.06, .43, .3, 'teal', .74);
-  shape(H, R, H.faceI(1.24, 3.91, 9.63, .73, 5.02), 'teal', .57);
-  shape(H, R, H.faceJ(1.25, 3.9, 4.06, .73, 5.02), 'teal', .63);
+  for (const i of [3.3, 8.3])
+    for (const j of [4.15, 7.45]) {
+      oval(H, R, ...H.p(i, j, 0.25), 15, 12, 'blue', 0.9);
+      oval(H, R, ...H.p(i, j, 0.25), 7, 6, 'paper', 0.7);
+      H.dot(...H.p(i, j, 0.25), 2.5, 'blue');
+    }
+  box(H, R, 1.24, 3.9, 9.63, 4.06, 0.43, 0.3, 'teal', 0.74);
+  shape(H, R, H.faceI(1.24, 3.91, 9.63, 0.73, 5.02), 'teal', 0.57);
+  shape(H, R, H.faceJ(1.25, 3.9, 4.06, 0.73, 5.02), 'teal', 0.63);
   for (const z of [1.28, 3.41]) {
     for (let k = 0; k < 5; k++) {
       const i = 1.7 + k * 1.72;
-      shape(H, R, H.faceI(i, 3.94, 1.42, z, z + 1.16), 'paper', .96);
-      shape(H, R, H.faceI(i + .1, 3.96, 1.22, z + .11, z + 1.07), 'blue', .18);
-      H.line(R, [H.p(i + .72, 3.99, z + .12), H.p(i + .72, 3.99, z + 1.05)], 'paper', 1.8);
-      H.line(R, [H.p(i + .14, 4.02, z + .34), H.p(i + 1.3, 4.02, z + .34)], 'teal', 1);
-      H.line(R, [H.p(i + 1.08, 4.05, z + .19), H.p(i + 1.23, 4.05, z + .19)], 'blue', 1.5);
+      shape(H, R, H.faceI(i, 3.94, 1.42, z, z + 1.16), 'paper', 0.96);
+      shape(H, R, H.faceI(i + 0.1, 3.96, 1.22, z + 0.11, z + 1.07), 'blue', 0.18);
+      H.line(R, [H.p(i + 0.72, 3.99, z + 0.12), H.p(i + 0.72, 3.99, z + 1.05)], 'paper', 1.8);
+      H.line(R, [H.p(i + 0.14, 4.02, z + 0.34), H.p(i + 1.3, 4.02, z + 0.34)], 'teal', 1);
+      H.line(R, [H.p(i + 1.08, 4.05, z + 0.19), H.p(i + 1.23, 4.05, z + 0.19)], 'blue', 1.5);
     }
   }
-  shape(H, R, H.faceJ(1.29, 4.3, 3.16, 3.39, 4.64), 'paper', .92);
+  shape(H, R, H.faceJ(1.29, 4.3, 3.16, 3.39, 4.64), 'paper', 0.92);
   for (const j of [5.27, 6.36]) H.line(R, [H.p(1.32, j, 3.4), H.p(1.32, j, 4.64)], 'teal', 2);
-  box(H, R, 1.2, 3.83, 9.76, .2, 4.99, .19, 'paper', .9);
-  box(H, R, 1.16, 3.9, .18, 4.13, 4.99, .19, 'teal', .67);
-  box(H, R, 1.3, 4.1, 6.25, 3.51, 2.67, .19, 'sun', .43);
-  for (let j = 4.2; j < 7.6; j += .31) H.line(R, [H.p(1.39, j, 2.89), H.p(7.44, j, 2.89)], 'blue', .65, { tone: .43 });
-  for (let j = 4.1; j < 7.8; j += .3) H.line(R, [H.p(1.4, j, .76), H.p(10.71, j, .76)], 'blue', .6, { tone: .42 });
-  tramSeat(H, R, 3.58, 4.13, 3.12, .74);
+  box(H, R, 1.2, 3.83, 9.76, 0.2, 4.99, 0.19, 'paper', 0.9);
+  box(H, R, 1.16, 3.9, 0.18, 4.13, 4.99, 0.19, 'teal', 0.67);
+  box(H, R, 1.3, 4.1, 6.25, 3.51, 2.67, 0.19, 'sun', 0.43);
+  for (let j = 4.2; j < 7.6; j += 0.31) H.line(R, [H.p(1.39, j, 2.89), H.p(7.44, j, 2.89)], 'blue', 0.65, { tone: 0.43 });
+  for (let j = 4.1; j < 7.8; j += 0.3) H.line(R, [H.p(1.4, j, 0.76), H.p(10.71, j, 0.76)], 'blue', 0.6, { tone: 0.42 });
+  tramSeat(H, R, 3.58, 4.13, 3.12, 0.74);
   tramSeat(H, R, 2.06, 4.24, 4.51, 2.9);
   for (const i of [2.14, 4.31, 6.57]) {
     H.line(R, [H.p(i, 7.61, 2.87), H.p(i, 7.61, 3.43)], 'blue', 1.8);
     H.line(R, [H.p(i, 7.61, 3.43), H.p(Math.min(i + 2.17, 7.47), 7.61, 3.43)], 'teal', 2.4);
   }
-  for (let k = 0; k < 6; k++) box(H, R, 1.49 + k * .34, 5.55, .37, 1.45, .73, .29 + k * .32, 'paper', .82);
+  for (let k = 0; k < 6; k++) box(H, R, 1.49 + k * 0.34, 5.55, 0.37, 1.45, 0.73, 0.29 + k * 0.32, 'paper', 0.82);
   stroke(H, R, [H.p(1.62, 6.95, 1.37), H.p(3.55, 6.95, 3.26), H.p(3.79, 6.95, 3.26)], 'sun', 2.7);
-  for (const [i, j] of [[3.58, 7.61], [7.24, 5.2], [8.1, 7.65], [10.63, 4.15]]) rail(H, R, i, j, 2.59);
-  box(H, R, 8.52, 6.45, .74, .73, .74, .47, 'blue', .67);
-  box(H, R, 8.47, 6.41, .85, .84, 1.21, .12, 'coral', .74);
-  box(H, R, 8.45, 7.13, .88, .11, 1.33, .72, 'coral', .65);
-  box(H, R, 9.57, 5.89, .93, 1.29, .74, .91, 'teal', .7);
-  shape(H, R, H.tile(9.58, 5.9, .93, 1.29, 1.67), 'blue', .78);
+  for (const [i, j] of [
+    [3.58, 7.61],
+    [7.24, 5.2],
+    [8.1, 7.65],
+    [10.63, 4.15]
+  ])
+    rail(H, R, i, j, 2.59);
+  box(H, R, 8.52, 6.45, 0.74, 0.73, 0.74, 0.47, 'blue', 0.67);
+  box(H, R, 8.47, 6.41, 0.85, 0.84, 1.21, 0.12, 'coral', 0.74);
+  box(H, R, 8.45, 7.13, 0.88, 0.11, 1.33, 0.72, 'coral', 0.65);
+  box(H, R, 9.57, 5.89, 0.93, 1.29, 0.74, 0.91, 'teal', 0.7);
+  surface(H, R, [H.p(9.58, 5.9, 1.88), H.p(10.51, 5.9, 1.88), H.p(10.51, 7.19, 1.67), H.p(9.58, 7.19, 1.67)], 'teal', 0.8);
+  for (let n = 0; n < 5; n++) surface(H, R, ell(...H.p(10.23, 6.08 + n * 0.15, 1.86 - n * 0.025), 2.5, 2), 'paper', 1, 0.45);
+  bentTube(
+    H,
+    R,
+    [
+      [9.58, 5.93, 1.91],
+      [9.58, 7.17, 1.7]
+    ],
+    1.8,
+    'sun'
+  );
   const [cx, cy] = H.p(10.07, 6.64, 1.72);
-  oval(H, R, cx, cy, 13, 7, 'paper', .87);
-  H.line(R, [[cx, cy], [cx - 9, cy - 3]], 'blue', 1.5);
+  oval(H, R, cx, cy, 13, 7, 'paper', 0.87);
+  H.line(
+    R,
+    [
+      [cx, cy],
+      [cx - 9, cy - 3]
+    ],
+    'blue',
+    1.5
+  );
   for (const a of [-1, 1]) H.dot(cx + a * 18, cy + 3, 3.2, a === 1 ? 'coral' : 'sun');
   H.line(R, [H.p(9.9, 6.16, 1.76), H.p(10.18, 6.21, 2.01)], 'blue', 3);
   H.dot(...H.p(10.18, 6.21, 2.01), 4, 'coral');
-  box(H, R, 7.26, 6.7, .45, .67, .75, .69, 'blue', .8);
-  box(H, R, 7.18, 6.72, .62, .51, 1.44, .31, 'paper', .84);
-  shape(H, R, H.faceI(7.26, 7.25, .43, 1.54, 1.7), 'teal', .7);
+  box(H, R, 7.26, 6.7, 0.45, 0.67, 0.75, 0.69, 'blue', 0.8);
+  box(H, R, 7.18, 6.72, 0.62, 0.51, 1.44, 0.31, 'paper', 0.84);
+  shape(H, R, H.faceI(7.26, 7.25, 0.43, 1.54, 1.7), 'teal', 0.7);
   const [mx, my] = H.p(10.47, 4.31, 2.74);
   stroke(H, R, [H.p(10.4, 4.05, 2.21), [mx + 3, my + 19], [mx, my]], 'blue', 2);
-  oval(H, R, mx, my, 13, 16, 'blue', .72);
-  oval(H, R, mx - 1, my - 1, 10, 13, 'paper', .84);
-  shape(H, R, [[mx - 8, my + 3], [mx + 6, my - 7], [mx + 6, my + 7]], 'teal', .3);
+  oval(H, R, mx, my, 13, 16, 'blue', 0.72);
+  oval(H, R, mx - 1, my - 1, 10, 13, 'paper', 0.84);
+  shape(
+    H,
+    R,
+    [
+      [mx - 8, my + 3],
+      [mx + 6, my - 7],
+      [mx + 6, my + 7]
+    ],
+    'teal',
+    0.3
+  );
   const [fx, fy] = H.p(8.8, 4.13, 2.5);
-  oval(H, R, fx, fy, 11, 11, 'paper', .7);
-  for (const a of [0, TAU / 3, TAU * 2 / 3]) shape(H, R, [[fx, fy], [fx + Math.cos(a) * 9, fy + Math.sin(a) * 9], [fx + Math.cos(a + .8) * 6, fy + Math.sin(a + .8) * 6]], 'teal', .56);
-  H.outline(R, ell(fx, fy, 11, 11), 'blue', .8);
+  oval(H, R, fx, fy, 11, 11, 'paper', 0.7);
+  for (const a of [0, TAU / 3, (TAU * 2) / 3])
+    shape(
+      H,
+      R,
+      [
+        [fx, fy],
+        [fx + Math.cos(a) * 9, fy + Math.sin(a) * 9],
+        [fx + Math.cos(a + 0.8) * 6, fy + Math.sin(a + 0.8) * 6]
+      ],
+      'teal',
+      0.56
+    );
+  H.outline(R, ell(fx, fy, 11, 11), 'blue', 0.8);
   H.dot(fx, fy, 2.5, 'sun');
-  shape(H, R, H.faceJ(10.85, 4.0, 3.91, .75, 1.29), 'teal', .72);
-  shape(H, R, H.faceJ(10.86, 4.07, 3.73, 1.88, 3.32), 'paper', .3);
+  shape(H, R, H.faceJ(10.85, 4.0, 3.91, 0.75, 1.29), 'teal', 0.72);
+  shape(H, R, H.faceJ(10.86, 4.07, 3.73, 1.88, 3.32), 'paper', 0.3);
   for (const j of [4.08, 5.94, 7.78]) H.line(R, [H.p(10.88, j, 1.8), H.p(10.88, j, 3.38)], 'teal', 2.4);
   H.line(R, [H.p(10.9, 5.79, 1.94), H.p(10.9, 6.33, 2.53)], 'blue', 1.4);
-  box(H, R, 10.72, 4.0, .2, 3.98, 3.3, .17, 'teal', .67);
+  box(H, R, 10.72, 4.0, 0.2, 3.98, 3.3, 0.17, 'teal', 0.67);
   const [bx, by] = H.p(9.05, 4.22, 1.19);
-  oval(H, R, bx, by, 9, 5, 'sun', .76);
-  shape(H, R, [[bx - 7, by], [bx - 5, by - 11], [bx + 4, by - 11], [bx + 7, by]], 'sun', .78);
+  oval(H, R, bx, by, 9, 5, 'sun', 0.76);
+  shape(
+    H,
+    R,
+    [
+      [bx - 7, by],
+      [bx - 5, by - 11],
+      [bx + 4, by - 11],
+      [bx + 7, by]
+    ],
+    'sun',
+    0.78
+  );
   H.dot(bx, by - 12, 2, 'blue');
   const [tx, ty] = H.p(9.76, 5.97, 1.76);
-  shape(H, R, [[tx - 4, ty], [tx + 4, ty], [tx + 4, ty - 18], [tx - 4, ty - 18]], 'paper', .9);
-  oval(H, R, tx, ty - 18, 4, 2, 'teal', .7);
-  stroke(H, R, [[tx - 5, ty - 4], [tx - 12, ty - 3], [tx - 13, ty - 13], [tx - 8, ty - 9]], 'sun', 3);
+  shape(
+    H,
+    R,
+    [
+      [tx - 4, ty],
+      [tx + 4, ty],
+      [tx + 4, ty - 18],
+      [tx - 4, ty - 18]
+    ],
+    'paper',
+    0.9
+  );
+  oval(H, R, tx, ty - 18, 4, 2, 'teal', 0.7);
+  stroke(
+    H,
+    R,
+    [
+      [tx - 5, ty - 4],
+      [tx - 12, ty - 3],
+      [tx - 13, ty - 13],
+      [tx - 8, ty - 9]
+    ],
+    'sun',
+    3
+  );
   const [jx, jy] = H.p(5.2, 4.65, 3.82);
-  shape(H, R, [[jx - 11, jy - 14], [jx + 11, jy - 14], [jx + 15, jy], [jx + 7, jy + 6], [jx + 10, jy + 18], [jx - 10, jy + 18], [jx - 7, jy + 6], [jx - 15, jy]], 'coral', .55);
-  H.line(R, [[jx, jy - 11], [jx, jy + 17]], 'paper', .8);
+  shape(
+    H,
+    R,
+    [
+      [jx - 11, jy - 14],
+      [jx + 11, jy - 14],
+      [jx + 15, jy],
+      [jx + 7, jy + 6],
+      [jx + 10, jy + 18],
+      [jx - 10, jy + 18],
+      [jx - 7, jy + 6],
+      [jx - 15, jy]
+    ],
+    'coral',
+    0.55
+  );
+  H.line(
+    R,
+    [
+      [jx, jy - 11],
+      [jx, jy + 17]
+    ],
+    'paper',
+    0.8
+  );
 }
 
 function kennedyTownTramDetails(H, R) {

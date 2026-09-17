@@ -1,3 +1,4 @@
+import { surface, bentTube } from '../materials.js';
 import { recessedFrame, specimen } from '../joinery.js';
 import { shallowTray, foldedCloth, satchel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, actor, plant, cycle, TAU, table } from '../../worlds/common.js';
@@ -212,8 +213,12 @@ const room = world('hong-kong-wan-chai-steps', 'Wan Chai · Rain on the landing'
   for (let q = 0; q < 8; q++) H.line(R, [H.p(10.56 + q * .12, .75, 1.14), H.p(10.56 + q * .12, .75, 1.52)], 'blue', .75);
   rail(H, R, [[11.29, .8, 1.1], [11.29, .8, .64], [11.59, 1.5, .53], [11.59, 8.25, .53]]);
   for (const j of [1.6, 4.65]) box(H, R, 5.14, j, .16, .16, 1.01, 2.56, 'teal', .6);
-  box(H, R, 5.1, .52, 6.4, 3.42, 3.58, .12, 'paper', .8);
-  for (let q = 0; q < 14; q++) H.line(R, [H.p(5.28 + q * .43, .58, 3.71), H.p(5.28 + q * .43, 3.83, 3.71)], 'teal', .75, { tone: .58 });
+  for(let n=0;n<15;n++){
+    const i=5.1+n*6.4/15;
+    surface(H,R,[H.p(i,.52,3.76),H.p(i+.426,.52,3.76),H.p(i+.426,3.94,3.54),H.p(i,3.94,3.54)],n%4===0?'paper':'teal',n%4===0?1:.25,.5);
+    bentTube(H,R,[[i,.52,3.77],[i,3.94,3.55]],1.1,'paper');
+  }
+  for(const i of [5.23,8.24,11.32])bentTube(H,R,[[i,.57,2.89],[i,1.44,3.7],[i,3.88,3.53]],2,'teal');
   box(H, R, 5.06, 3.92, 6.51, .15, 3.49, .21, 'teal', .63);
   rail(H, R, [[11.35, 4.04, 3.58], [11.35, 4.04, 1.09], [11.59, 4.45, 1.03]]);
   for (let q = 0; q < 5; q++) {

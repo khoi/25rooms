@@ -1,3 +1,4 @@
+import { timber, cushion, benchFrame } from '../materials.js';
 import { cornice, panelFront, wallRack, hangingRail, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, foldedCloth, boundBook, satchel, framedPanel, slattedCrate } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, actor, cycle, ell, windowOn, plant } from '../../worlds/common.js';
@@ -261,7 +262,7 @@ const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other 
   }
   H.line(R, [H.p(10.96, .6, .23), H.p(11.38, .6, .23), H.p(11.38, .6, .57)], 'blue', 1.8);
   oval(H, R, ...H.p(11.39, .6, .6), 5, 3, 'coral', .75);
-  table(H, R, .84, 1.0, 3.32, 1.16, .8, 'sun');
+  benchFrame(H,R,.84,1,3.32,1.16,.92,'sun');
   box(H, R, 1.03, 1.19, 1.68, .92, .95, .08, 'blue', .75);
   shape(H, R, H.faceI(1.12, 1.21, 1.45, 1.05, 1.74), 'teal', .32);
   shape(H, R, H.faceI(1.24, 1.23, 1.19, 1.15, 1.61), 'blue', .67, .6);
@@ -270,12 +271,13 @@ const room = world('new-york-lower-east-bedroom', 'Lower East Side · The Other 
   box(H, R, 1.03, 4.02, 1.09, .12, .59, .67, 'teal', .64);
   for (const i of [1.14, 1.96]) for (const j of [3.39, 4.02]) box(H, R, i, j, .08, .08, 0, .46, 'blue', .6);
   for (const [i, j] of [[.46, .62], [5.13, .62], [.46, 5.1], [5.13, 5.1]]) box(H, R, i, j, .18, .18, 0, 2.53, 'teal', .74);
-  box(H, R, .35, .51, 5.02, 4.98, 2.18, .23, 'teal', .66);
-  box(H, R, .55, .72, 4.46, 4.34, 2.42, .26, 'paper', 1);
+  for(const j of [.51,5.23])timber(H,R,.35,j,5.02,.26,2.12,.29,'teal');
+  for(let n=0;n<9;n++)timber(H,R,.44+n*.55,.66,.24,4.62,2.18,.18,'sun');
+  cushion(H,R,.55,.72,4.46,4.34,2.39,.3,'paper');
   shape(H, R, H.tile(.69, 2.1, 4.15, 2.74, 2.7), 'coral', .66);
   for (let j = 2.19; j < 4.8; j += .4) H.line(R, [H.p(.72, j, 2.71), H.p(4.8, j, 2.71)], 'paper', 1.4, { tone: .85 });
   for (const i of [1.05, 3.12]) {
-    box(H, R, i, .9, 1.42, .87, 2.7, .13, 'paper', 1);
+    cushion(H,R,i,.9,1.42,.87,2.7,.19,'paper');
     shape(H, R, H.tile(i + .09, .99, 1.23, .65, 2.85), 'teal', .18, .6);
   }
   box(H, R, .42, .58, .13, 4.86, 2.64, .71, 'teal', .5);

@@ -1,6 +1,7 @@
+import { surface, benchFrame, bentTube } from '../materials.js';
 import { wallCourse, cornice, recessedFrame, panelFront, wallRack, taskLight } from '../joinery.js';
 import { drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, boundBook, satchel, framedPanel } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, plant, rug, ell } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, plant, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -9,20 +10,30 @@ const playing = { ...rest, al: 115, ar: 91, el: 50, er: 81, head: -3, lean: -2 }
 FIGURES.clips.newYorkTrumpetPhrase = { dur: 12, keys: [[0, lowered], [.12, lowered], [.28, playing], [.4, { ...playing, al: 113, head: -5 }], [.53, playing], [.67, { ...playing, ar: 93, head: -1 }], [.8, playing], [.91, lowered], [1, lowered]] };
 
 function trumpet(H, R, hand, raised, t) {
-  const [x, y] = hand, angle = -.12 + (1 - raised) * .72;
+  const [x, y] = hand,
+    angle = -0.12 + (1 - raised) * 0.72;
   const p = (a, b) => [x + a * Math.cos(angle) - b * Math.sin(angle), y + a * Math.sin(angle) + b * Math.cos(angle)];
   stroke(H, R, [p(-6, -2), p(19, -2), p(29, -5)], 'sun', 3.6);
   stroke(H, R, [p(24, 0), p(19, 8), p(1, 8), p(-1, 2), p(2, 0), p(18, 0)], 'sun', 3.2);
-  stroke(H, R, [p(24, 0), p(19, 8), p(1, 8)], 'blue', .55);
-  shape(H, R, [p(22, -4), p(36, -10), p(36, 4), p(22, 0)], 'sun', .9, .65);
+  stroke(H, R, [p(24, 0), p(19, 8), p(1, 8)], 'blue', 0.55);
+  shape(H, R, [p(22, -4), p(36, -10), p(36, 4), p(22, 0)], 'sun', 0.9, 0.65);
   const rim = ell(0, 0, 2.6, 7, 20).map(([a, b]) => p(36 + a, b - 3));
-  shape(H, R, rim, 'coral', .65, .7);
+  shape(H, R, rim, 'coral', 0.65, 0.7);
   for (let q = 0; q < 3; q++) {
-    const press = raised > .8 ? Math.max(0, Math.sin(t * 5 + q * 2)) * 1.6 : 0;
+    const press = raised > 0.8 ? Math.max(0, Math.sin(t * 5 + q * 2)) * 1.6 : 0;
     stroke(H, R, [p(4 + q * 5, 5), p(4 + q * 5, -5 + press)], 'sun', 2.2);
     H.line(R, [p(1 + q * 5, -6 + press), p(7 + q * 5, -6 + press)], 'blue', 1.1);
   }
   H.line(R, [p(-10, -2), p(-5, -2)], 'blue', 1.6);
+  H.line(R, [p(-4, -3), p(19, -3), p(29, -6)], 'paper', 0.8);
+  for (let n = 0; n < 3; n++) {
+    const a = 4 + n * 5;
+    H.line(R, [p(a - 2, 2), p(a - 2, 8), p(a + 2, 8)], 'blue', 0.5);
+    H.line(R, [p(a - 2, 2), p(a + 2, 2)], 'paper', 0.8);
+  }
+  H.line(R, [p(7, 8), p(7, 12), p(16, 12), p(16, 8)], 'sun', 1.1);
+  const inner = ell(0, 0, 1.3, 4.6, 20).map(([a, b]) => p(36 + a, b - 3));
+  surface(H, R, inner, 'blue', 0.65, 0.4);
 }
 
 function bay(H, R) {
@@ -233,7 +244,7 @@ const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window
   oval(H, R, px, py, 20, 20, 'blue', .7);
   for (const r of [8, 12, 16]) H.outline(R, ell(px, py, r, r), 'paper', .6, { tone: .6 });
   oval(H, R, px, py, 5, 5, 'coral', .8);
-  table(H, R, 8.65, 1.0, 2.4, 1.45, .81, 'coral');
+  benchFrame(H,R,8.65,1,2.4,1.45,.93,'sun');
   box(H, R, 8.88, 1.13, 1.25, 1.0, .95, .19, 'blue', .7);
   oval(H, R, ...H.p(9.48, 1.62, 1.17), 19, 9, 'blue', .82);
   oval(H, R, ...H.p(9.48, 1.62, 1.18), 5, 2.5, 'sun', .8);
@@ -259,7 +270,9 @@ const room = world('new-york-corona-trumpet', 'Corona · A Phrase for the Window
   box(H, R, 8.85, 8.79, .4, .56, .78, .08, 'coral', .65);
   shape(H, R, H.tile(4.1, 9.45, 3.1, 1.3, .12), 'blue', .82, 1);
   shape(H, R, H.tile(4.2, 9.56, 2.9, 1.09, .14), 'teal', .42, .6);
-  shape(H, R, H.faceI(4.13, 9.48, 3.05, .16, .85), 'blue', .75, .8);
+  surface(H,R,[H.p(4.13,9.48,.16),H.p(7.18,9.48,.16),H.p(7.18,9.12,1.1),H.p(4.13,9.12,1.1)],'blue',.75);
+  surface(H,R,[H.p(4.28,9.41,.25),H.p(7.03,9.41,.25),H.p(7.03,9.15,.98),H.p(4.28,9.15,.98)],'coral',.35);
+  for(const i of [4.37,6.93])bentTube(H,R,[[i,9.47,.18],[i,9.71,.46],[i,10.1,.17]],1,'sun');
   for (const i of [4.42, 6.68]) box(H, R, i, 10.73, .14, .1, .12, .08, 'sun', .85);
   stroke(H, R, [H.p(5.16, 10.81, .13), H.p(5.25, 10.84, .28), H.p(5.97, 10.84, .28), H.p(6.1, 10.81, .13)], 'blue', 2);
   const [cx, cy] = H.p(2.45, 9.74, .07);

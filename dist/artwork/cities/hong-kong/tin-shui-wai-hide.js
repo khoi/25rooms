@@ -1,3 +1,4 @@
+import { benchFrame, timber, metal, bentTube } from '../materials.js';
 import { recessedFrame, wallRack } from '../joinery.js';
 import { shelfUnit, shallowTray, liddedTin, foldedCloth, boundBook, satchel, handTool, framedPanel, servicePipe } from '../furnishings.js';
 import { world, shape, oval, stroke, box, table, bench, actor, bottle, cycle, TAU } from '../../worlds/common.js';
@@ -33,55 +34,167 @@ function egret(H, R, x, y, turn = 0) {
 }
 
 function hide(H, R) {
-  shape(H, R, H.tile(.08, .08, 11.84, 2.15, .03), 'teal', .32);
-  for (let k = 0; k < 15; k++) H.line(R, [H.p(.4 + k % 5 * 2.2, .2 + Math.floor(k / 5) * .7, .04), H.p(1.4 + k % 5 * 2.2, .2 + Math.floor(k / 5) * .7, .04)], 'paper', .8, { tone: .6 });
-  for (const [i, j, s] of [[.6, .6, .65], [1.5, 1.5, .75], [8.2, .5, .68], [10.9, 1.2, .8]]) reeds(H, R, i, j, s);
-  box(H, R, .12, 2.28, 11.76, 9.56, .02, .18, 'sun', .2);
-  for (let j = 2.35; j < 11.8; j += .48) {
-    H.line(R, [H.p(.2, j, .21), H.p(11.8, j, .21)], 'blue', .65, { tone: .38 });
-    for (let i = j % 2; i < 11.8; i += 2.5) H.line(R, [H.p(i, j, .21), H.p(i, j + .44, .21)], 'blue', .5, { tone: .27 });
+  shape(H, R, H.tile(0.08, 0.08, 11.84, 2.15, 0.03), 'teal', 0.32);
+  for (let k = 0; k < 15; k++)
+    H.line(
+      R,
+      [H.p(0.4 + (k % 5) * 2.2, 0.2 + Math.floor(k / 5) * 0.7, 0.04), H.p(1.4 + (k % 5) * 2.2, 0.2 + Math.floor(k / 5) * 0.7, 0.04)],
+      'paper',
+      0.8,
+      { tone: 0.6 }
+    );
+  for (const [i, j, s] of [
+    [0.6, 0.6, 0.65],
+    [1.5, 1.5, 0.75],
+    [8.2, 0.5, 0.68],
+    [10.9, 1.2, 0.8]
+  ])
+    reeds(H, R, i, j, s);
+  box(H, R, 0.12, 2.28, 11.76, 9.56, 0.02, 0.18, 'sun', 0.2);
+  for (let j = 2.35; j < 11.8; j += 0.48) {
+    H.line(R, [H.p(0.2, j, 0.21), H.p(11.8, j, 0.21)], 'blue', 0.65, { tone: 0.38 });
+    for (let i = j % 2; i < 11.8; i += 2.5) H.line(R, [H.p(i, j, 0.21), H.p(i, j + 0.44, 0.21)], 'blue', 0.5, { tone: 0.27 });
   }
-  box(H, R, .12, 2.17, 11.76, .19, .2, 1.58, 'teal', .54);
-  box(H, R, .12, 2.17, 11.76, .19, 2.53, .73, 'teal', .54);
-  for (let i = .38; i < 11.9; i += .66) {
-    H.line(R, [H.p(i, 2.38, .26), H.p(i, 2.38, 1.72)], 'blue', .7, { tone: .52 });
-    H.line(R, [H.p(i, 2.38, 2.58), H.p(i, 2.38, 3.2)], 'blue', .7, { tone: .52 });
+  box(H, R, 0.12, 2.17, 11.76, 0.19, 0.2, 1.58, 'teal', 0.54);
+  box(H, R, 0.12, 2.17, 11.76, 0.19, 2.53, 0.73, 'teal', 0.54);
+  for (let i = 0.38; i < 11.9; i += 0.66) {
+    H.line(R, [H.p(i, 2.38, 0.26), H.p(i, 2.38, 1.72)], 'blue', 0.7, { tone: 0.52 });
+    H.line(R, [H.p(i, 2.38, 2.58), H.p(i, 2.38, 3.2)], 'blue', 0.7, { tone: 0.52 });
   }
-  for (const i of [.14, 4.06, 7.9, 11.65]) box(H, R, i, 2.13, .2, .29, .2, 3.27, 'blue', .57);
-  box(H, R, .05, 2.42, .16, 8.65, .21, 2.52, 'teal', .32);
-  for (let j = 2.6; j < 10.9; j += .62) H.line(R, [H.p(.24, j, .3), H.p(.24, j, 2.65)], 'blue', .65, { tone: .42 });
-  box(H, R, .04, 2.12, 11.85, .95, 3.28, .13, 'sun', .33);
-  for (let i = .25; i < 11.7; i += .53) H.line(R, [H.p(i, 2.16, 3.43), H.p(i, 3.04, 3.43)], 'blue', .55, { tone: .4 });
-  table(H, R, 1.02, 2.53, 9.89, .83, 1.22, 'paper');
+  for (const i of [0.14, 4.06, 7.9, 11.65]) box(H, R, i, 2.13, 0.2, 0.29, 0.2, 3.27, 'blue', 0.57);
+  box(H, R, 0.05, 2.42, 0.16, 8.65, 0.21, 2.52, 'teal', 0.32);
+  for (let j = 2.6; j < 10.9; j += 0.62) H.line(R, [H.p(0.24, j, 0.3), H.p(0.24, j, 2.65)], 'blue', 0.65, { tone: 0.42 });
+  for (const i of [0.23, 4.13, 7.98, 11.68]) {
+    timber(H, R, i, 2.22, 0.15, 3.57, 3.3, 0.17, 'sun');
+    bentTube(
+      H,
+      R,
+      [
+        [i, 2.36, 2.81],
+        [i, 3.17, 3.33]
+      ],
+      3,
+      'sun'
+    );
+    for (const j of [2.42, 3.02]) {
+      metal(H, R, i - 0.025, j, 0.2, 0.2, 3.29, 0.05, 'teal');
+      H.dot(...H.p(i + 0.07, j + 0.1, 3.35), 1.1, 'blue');
+    }
+  }
+  timber(H, R, 0.13, 2.14, 11.64, 0.67, 3.43, 0.1, 'sun');
+  benchFrame(H, R, 1.02, 2.53, 9.89, 0.83, 1.34, 'sun');
   for (const i of [2.2, 5.2, 8.4]) {
-    shape(H, R, H.tile(i, 2.67, .91, .44, 1.36), 'sun', .28, .6);
-    const [x, y] = H.p(i + .46, 2.9, 1.38);
-    oval(H, R, x, y, 6, 2.5, 'teal', .65);
-    H.line(R, [[x - 7, y + 3], [x + 7, y + 3]], 'blue', .55);
+    shape(H, R, H.tile(i, 2.67, 0.91, 0.44, 1.36), 'sun', 0.28, 0.6);
+    const [x, y] = H.p(i + 0.46, 2.9, 1.38);
+    oval(H, R, x, y, 6, 2.5, 'teal', 0.65);
+    H.line(
+      R,
+      [
+        [x - 7, y + 3],
+        [x + 7, y + 3]
+      ],
+      'blue',
+      0.55
+    );
   }
   bench(H, R, 1.23, 4.59, 3.13, 'sun');
   bench(H, R, 7.47, 4.59, 3.35, 'sun');
-  table(H, R, 1.42, 7.2, 2.55, 1.64, .89, 'teal');
-  shape(H, R, H.tile(1.75, 7.48, 1.11, .91, 1.03), 'paper', 1);
-  H.line(R, [H.p(2.31, 7.48, 1.05), H.p(2.31, 8.39, 1.05)], 'blue', .65);
-  for (let k = 0; k < 4; k++) H.line(R, [H.p(2.42, 7.61 + k * .17, 1.06), H.p(2.77, 7.61 + k * .17, 1.06)], 'teal', .5);
-  bottle(H, R, ...H.p(3.47, 7.47, 1.06), 'teal', .49);
-  table(H, R, 2.18, 9.09, 1.0, .86, .55, 'sun');
-  const [bx, by] = H.p(9.57, 6.31, .27);
-  shape(H, R, [[bx - 17, by], [bx + 14, by], [bx + 17, by - 28], [bx - 11, by - 32]], 'coral', .59);
-  stroke(H, R, [[bx - 10, by - 25], [bx - 6, by - 39], [bx + 8, by - 37], [bx + 12, by - 25]], 'blue', 1.4);
-  shape(H, R, [[bx - 10, by - 3], [bx + 9, by - 3], [bx + 10, by - 14], [bx - 10, by - 14]], 'sun', .55);
-  const [sx, sy] = H.p(10.63, 3.69, .23);
-  for (const dx of [-15, 0, 14]) H.line(R, [[sx, sy - 59], [sx + dx, sy]], 'blue', 1.5);
-  shape(H, R, [[sx - 20, sy - 69], [sx + 16, sy - 60], [sx + 18, sy - 68], [sx - 18, sy - 77]], 'blue', .76);
+  table(H, R, 1.42, 7.2, 2.55, 1.64, 0.89, 'teal');
+  shape(H, R, H.tile(1.75, 7.48, 1.11, 0.91, 1.03), 'paper', 1);
+  H.line(R, [H.p(2.31, 7.48, 1.05), H.p(2.31, 8.39, 1.05)], 'blue', 0.65);
+  for (let k = 0; k < 4; k++) H.line(R, [H.p(2.42, 7.61 + k * 0.17, 1.06), H.p(2.77, 7.61 + k * 0.17, 1.06)], 'teal', 0.5);
+  bottle(H, R, ...H.p(3.47, 7.47, 1.06), 'teal', 0.49);
+  table(H, R, 2.18, 9.09, 1.0, 0.86, 0.55, 'sun');
+  const [bx, by] = H.p(9.57, 6.31, 0.27);
+  shape(
+    H,
+    R,
+    [
+      [bx - 17, by],
+      [bx + 14, by],
+      [bx + 17, by - 28],
+      [bx - 11, by - 32]
+    ],
+    'coral',
+    0.59
+  );
+  stroke(
+    H,
+    R,
+    [
+      [bx - 10, by - 25],
+      [bx - 6, by - 39],
+      [bx + 8, by - 37],
+      [bx + 12, by - 25]
+    ],
+    'blue',
+    1.4
+  );
+  shape(
+    H,
+    R,
+    [
+      [bx - 10, by - 3],
+      [bx + 9, by - 3],
+      [bx + 10, by - 14],
+      [bx - 10, by - 14]
+    ],
+    'sun',
+    0.55
+  );
+  const [sx, sy] = H.p(10.63, 3.69, 0.23);
+  for (const dx of [-15, 0, 14])
+    H.line(
+      R,
+      [
+        [sx, sy - 59],
+        [sx + dx, sy]
+      ],
+      'blue',
+      1.5
+    );
+  shape(
+    H,
+    R,
+    [
+      [sx - 20, sy - 69],
+      [sx + 16, sy - 60],
+      [sx + 18, sy - 68],
+      [sx - 18, sy - 77]
+    ],
+    'blue',
+    0.76
+  );
   oval(H, R, sx + 17, sy - 64, 3, 5, 'paper', 1);
-  const [ux, uy] = H.p(.65, 9.64, .23);
-  stroke(H, R, [[ux, uy], [ux, uy - 57], [ux + 6, uy - 64], [ux + 12, uy - 60]], 'blue', 1.8);
-  shape(H, R, [[ux - 3, uy - 3], [ux - 7, uy - 43], [ux + 5, uy - 45], [ux + 5, uy - 4]], 'coral', .68);
-  shape(H, R, H.tile(5.19, 9.56, 3.12, 1.19, .22), 'teal', .2);
-  for (let k = 0; k < 9; k++) H.line(R, [H.p(5.35 + k * .33, 9.64, .24), H.p(5.35 + k * .33, 10.65, .24)], 'blue', .55, { tone: .3 });
-  box(H, R, .38, 5.7, .69, .77, .22, .55, 'teal', .6);
-  oval(H, R, ...H.p(.72, 6.08, .79), 9, 4, 'blue', .56);
+  const [ux, uy] = H.p(0.65, 9.64, 0.23);
+  stroke(
+    H,
+    R,
+    [
+      [ux, uy],
+      [ux, uy - 57],
+      [ux + 6, uy - 64],
+      [ux + 12, uy - 60]
+    ],
+    'blue',
+    1.8
+  );
+  shape(
+    H,
+    R,
+    [
+      [ux - 3, uy - 3],
+      [ux - 7, uy - 43],
+      [ux + 5, uy - 45],
+      [ux + 5, uy - 4]
+    ],
+    'coral',
+    0.68
+  );
+  shape(H, R, H.tile(5.19, 9.56, 3.12, 1.19, 0.22), 'teal', 0.2);
+  for (let k = 0; k < 9; k++) H.line(R, [H.p(5.35 + k * 0.33, 9.64, 0.24), H.p(5.35 + k * 0.33, 10.65, 0.24)], 'blue', 0.55, { tone: 0.3 });
+  box(H, R, 0.38, 5.7, 0.69, 0.77, 0.22, 0.55, 'teal', 0.6);
+  oval(H, R, ...H.p(0.72, 6.08, 0.79), 9, 4, 'blue', 0.56);
   tinShuiWaiHideDetails(H, R);
   construction(H, R);
 }

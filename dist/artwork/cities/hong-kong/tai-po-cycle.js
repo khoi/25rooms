@@ -1,6 +1,7 @@
+import { surface } from '../materials.js';
 import { panelFront, taskLight, specimen } from '../joinery.js';
 import { shelfUnit, drawerUnit, shallowTray, liddedTin, foldedCloth, coiledLine, satchel, handTool } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, wallRect, wallPt, ell, TAU } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, table, actor, cycle, ell, TAU } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -21,15 +22,34 @@ function wheel(H, R, x, y, radius = 22, narrow = .82) {
 }
 
 function bicycle(H, R, i, j, ink = 'coral', size = 1, basket = true) {
-  const [x, y] = H.p(i, j, .04), p = (a, b) => [x + a * size, y + b * size];
-  wheel(H, R, ...p(-36, -21), 21 * size, .81);
-  wheel(H, R, ...p(40, -21), 21 * size, .81);
-  const frame = [[-36, -21], [-14, -46], [1, -22], [25, -45], [40, -21], [1, -22], [-36, -21]];
-  H.line(R, frame.map(([a, b]) => p(a, b)), 'blue', 3.9 * size);
-  H.line(R, frame.map(([a, b]) => p(a, b)), ink, 2.1 * size);
+  const [x, y] = H.p(i, j, 0.04),
+    p = (a, b) => [x + a * size, y + b * size];
+  wheel(H, R, ...p(-36, -21), 21 * size, 0.81);
+  wheel(H, R, ...p(40, -21), 21 * size, 0.81);
+  const frame = [
+    [-36, -21],
+    [-14, -46],
+    [1, -22],
+    [25, -45],
+    [40, -21],
+    [1, -22],
+    [-36, -21]
+  ];
+  H.line(
+    R,
+    frame.map(([a, b]) => p(a, b)),
+    'blue',
+    3.9 * size
+  );
+  H.line(
+    R,
+    frame.map(([a, b]) => p(a, b)),
+    ink,
+    2.1 * size
+  );
   H.line(R, [p(-14, -46), p(14, -40), p(25, -45)], ink, 3 * size);
   H.line(R, [p(-14, -44), p(-16, -53)], 'blue', 2.3 * size);
-  oval(H, R, ...p(-15, -55), 11 * size, 3 * size, 'blue', .75);
+  oval(H, R, ...p(-15, -55), 11 * size, 3 * size, 'blue', 0.75);
   H.line(R, [p(25, -45), p(24, -59), p(31, -63), p(38, -61)], 'blue', 2.4 * size);
   H.outline(R, ell(...p(1, -22), 7 * size, 7 * size), 'blue', 1.1);
   H.line(R, [p(-4, -17), p(7, -27), p(13, -27)], 'blue', 1.6 * size);
@@ -37,10 +57,26 @@ function bicycle(H, R, i, j, ink = 'coral', size = 1, basket = true) {
   H.line(R, [p(-51, -43), p(-21, -43)], 'teal', 3 * size);
   H.line(R, [p(2, -20), p(6, -2)], 'blue', 1.6 * size);
   if (basket) {
-    shape(H, R, [p(27, -57), p(51, -57), p(47, -40), p(31, -40)], 'sun', .5, .7);
-    for (let q = 0; q < 5; q++) H.line(R, [p(30 + q * 4.5, -56), p(33 + q * 3, -41)], 'blue', .7, { tone: .56 });
-    for (const z of [-52, -47, -42]) H.line(R, [p(30, z), p(49, z)], 'blue', .7, { tone: .56 });
+    shape(H, R, [p(27, -57), p(51, -57), p(47, -40), p(31, -40)], 'sun', 0.5, 0.7);
+    for (let q = 0; q < 5; q++) H.line(R, [p(30 + q * 4.5, -56), p(33 + q * 3, -41)], 'blue', 0.7, { tone: 0.56 });
+    for (const z of [-52, -47, -42]) H.line(R, [p(30, z), p(49, z)], 'blue', 0.7, { tone: 0.56 });
   }
+  for (const [a, b, c, d] of [
+    [-36, -21, 1, -22],
+    [-14, -46, 25, -45]
+  ]) {
+    H.line(R, [p(a, b - 3), p(c, d - 3)], 'paper', 0.6);
+  }
+  const chain = [p(-36, -23), p(0, -29), p(8, -24), p(5, -16), p(-36, -19)];
+  H.line(R, chain, 'blue', 0.8);
+  H.line(R, [p(23, -54), p(30, -49), p(34, -34)], 'blue', 0.65);
+  H.line(R, [p(20, -57), p(7, -45), p(-12, -41), p(-29, -27)], 'blue', 0.65);
+  for (let n = 0; n < 12; n++) {
+    const a = (n * TAU) / 12;
+    H.dot(...p(1 + Math.cos(a) * 8, -22 + Math.sin(a) * 8), 0.8, 'sun');
+  }
+  surface(H, R, [p(-42, -47), p(-27, -47), p(-29, -28), p(-44, -29)], 'teal', 0.58, 0.6);
+  H.line(R, [p(-40, -44), p(-29, -44), p(-31, -40), p(-39, -40)], 'sun', 0.8);
 }
 
 function bottle(H, R, i, j, z, ink) {

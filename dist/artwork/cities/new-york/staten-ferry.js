@@ -1,6 +1,7 @@
+import { surface, metal, bentTube } from '../materials.js';
 import { cornice } from '../joinery.js';
 import { shallowTray, foldedCloth, boundBook, satchel, framedPanel, servicePipe } from '../furnishings.js';
-import { world, shape, oval, stroke, box, table, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
+import { world, shape, oval, stroke, box, actor, cycle, TAU, wallRect, wallPt, windowOn } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -9,18 +10,78 @@ FIGURES.clips.newYorkFerrySip = { dur: 16, keys: [[0, seated], [.14, seated], [.
 FIGURES.clips.newYorkFerryDoze = { dur: 16, keys: [[0, { ...seated, head: 20, ar: 15, er: 43, al: 15, el: 40 }], [.5, { ...seated, head: 26, ar: 15, er: 43, al: 15, el: 40, y: -.5 }], [1, { ...seated, head: 20, ar: 15, er: 43, al: 15, el: 40 }]] };
 
 function seatRow(H, R, i, j, length) {
-  for (const x of [i + .25, i + length * .5, i + length - .3]) {
-    box(H, R, x, j + .1, .16, .7, 0, .5, 'blue', .75);
-    box(H, R, x, j + .08, .15, .12, .5, .69, 'blue', .8);
+  metal(H, R, i + 0.11, j + 0.36, length - 0.22, 0.16, 0.3, 0.13, 'teal');
+  for (const x of [i + 0.24, i + length * 0.5, i + length - 0.3]) {
+    bentTube(
+      H,
+      R,
+      [
+        [x, j + 0.08, 0.02],
+        [x, j + 0.33, 0.49],
+        [x, j + 0.79, 0.49],
+        [x, j + 0.79, 0.02]
+      ],
+      3.2,
+      'teal'
+    );
+    metal(H, R, x - 0.13, j + 0.72, 0.29, 0.19, 0.02, 0.06, 'blue');
   }
-  box(H, R, i, j, length, .86, .46, .12, 'coral', .74);
-  box(H, R, i, j, length, .1, .61, .62, 'coral', .75);
-  for (let k = .4; k < length; k += .87) {
-    H.line(R, [H.p(i + k, j + .02, .68), H.p(i + k, j + .02, 1.17)], 'sun', .8, { tone: .7 });
-    H.line(R, [H.p(i + k, j + .12, .59), H.p(i + k, j + .77, .59)], 'blue', .55, { tone: .4 });
+  const count = Math.max(1, Math.round(length / 0.88)),
+    w = length / count;
+  for (let n = 0; n < count; n++) {
+    const x = i + n * w + 0.03,
+      sw = w - 0.06;
+    const seat = [
+      [x, j + 0.07, 0.63],
+      [x + sw, j + 0.07, 0.63],
+      [x + sw, j + 0.65, 0.57],
+      [x + sw - 0.08, j + 0.84, 0.6],
+      [x + 0.08, j + 0.84, 0.6],
+      [x, j + 0.65, 0.57]
+    ];
+    surface(
+      H,
+      R,
+      seat.map((p) => H.p(...p)),
+      'coral',
+      0.65,
+      0.65
+    );
+    const back = [
+      [x, j + 0.07, 0.63],
+      [x + sw, j + 0.07, 0.63],
+      [x + sw, j - 0.035, 1.15],
+      [x + sw - 0.12, j - 0.055, 1.28],
+      [x + 0.12, j - 0.055, 1.28],
+      [x, j - 0.035, 1.15]
+    ];
+    surface(
+      H,
+      R,
+      back.map((p) => H.p(...p)),
+      'coral',
+      0.7,
+      0.65
+    );
+    for (let k = 0; k < 3; k++)
+      H.line(R, [H.p(x + 0.13 + (k * (sw - 0.26)) / 2, j + 0.05, 0.78), H.p(x + 0.13 + (k * (sw - 0.26)) / 2, j - 0.01, 1.1)], 'sun', 0.85);
+    H.line(R, [H.p(x + 0.09, j + 0.75, 0.6), H.p(x + sw - 0.09, j + 0.75, 0.6)], 'paper', 1);
   }
-  for (const x of [i, i + length]) stroke(H, R, [H.p(x, j + .7, .55), H.p(x, j + .7, .96), H.p(x, j + .06, .96)], 'blue', 2.2);
+  for (const x of [i, i + length])
+    bentTube(
+      H,
+      R,
+      [
+        [x, j + 0.71, 0.6],
+        [x, j + 0.74, 0.98],
+        [x, j + 0.06, 1.04],
+        [x, j + 0.03, 0.64]
+      ],
+      2.5,
+      'teal'
+    );
 }
+
 
 function harbor(H, R, polygon, shift = 0) {
   const xs = polygon.map(p => p[0]), ys = polygon.map(p => p[1]);
