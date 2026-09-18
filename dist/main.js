@@ -140,6 +140,11 @@ function focusRoom(index, duration = 1100) {
   history.replaceState(null, '', `${location.pathname}?${parameters}#${room.id}`);
 }
 
+function stepRoom(direction) {
+  setTour(false);
+  focusRoom(tourIndex < 0 && direction < 0 ? layout.rooms.length - 1 : tourIndex + direction);
+}
+
 function viewAll() {
   setTour(false);
   tourIndex = -1;
@@ -303,10 +308,12 @@ stage.addEventListener('dblclick', event => {
 addEventListener('keydown', event => {
   if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.target instanceof HTMLButtonElement || collections.contains(event.target)) return;
   const key = event.key.toLowerCase(), step = 120 / view.zoom;
-  if (!['arrowleft', 'arrowright', 'arrowup', 'arrowdown', 'w', 'a', 's', 'd', '+', '=', '-', '_', '0', 'escape', ' '].includes(key)) return;
+  if (!['arrowleft', 'arrowright', '<', '>', 'arrowup', 'arrowdown', 'w', 'a', 's', 'd', '+', '=', '-', '_', '0', 'escape', ' '].includes(key)) return;
   event.preventDefault(); interrupt();
-  if (['arrowleft', 'a'].includes(key)) view.x -= step;
-  else if (['arrowright', 'd'].includes(key)) view.x += step;
+  if (['arrowleft', '<'].includes(key)) stepRoom(-1);
+  else if (['arrowright', '>'].includes(key)) stepRoom(1);
+  else if (key === 'a') view.x -= step;
+  else if (key === 'd') view.x += step;
   else if (['arrowup', 'w'].includes(key)) view.y -= step;
   else if (['arrowdown', 's'].includes(key)) view.y += step;
   else if (['+', '='].includes(key)) view.zoom = clamp(view.zoom * 1.2, fitTarget().zoom, maximumZoom);
@@ -314,8 +321,8 @@ addEventListener('keydown', event => {
   else if (key === ' ') setTour(!tour);
   else viewAll();
 });
-document.querySelector('#previous').addEventListener('click', () => { setTour(false); focusRoom(tourIndex < 0 ? layout.rooms.length - 1 : tourIndex - 1); });
-document.querySelector('#next').addEventListener('click', () => { setTour(false); focusRoom(tourIndex + 1); });
+document.querySelector('#previous').addEventListener('click', () => stepRoom(-1));
+document.querySelector('#next').addEventListener('click', () => stepRoom(1));
 document.querySelector('#reset').addEventListener('click', viewAll);
 tourButton.addEventListener('click', () => setTour(!tour));
 addEventListener('pointermove', () => {
