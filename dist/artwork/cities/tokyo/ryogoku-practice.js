@@ -57,9 +57,12 @@ function wrestler(H, R, i, j, lift, pose = 'practice', size = 1) {
 
 
 function stableDetails(H, R) {
-  box(H, R, .28, 6.9, .95, 3.75, .02, .81, 'coral', .44);
+  box(H, R, .28, 6.9, .95, 3.75, .02, .81, 'blue', .7);
+  for (const j of [6.91, 8.07, 9.21, 10.51]) box(H, R, .27, j, 1.04, .1, .08, .76, 'coral', .6);
+  for (const z of [.07, .76]) box(H, R, .24, 6.86, 1.08, 3.85, z, .09, 'coral', .58);
+  for (const j of [7.05, 8.18, 9.32]) box(H, R, .35, j, .84, .99, .12, .055, 'sun', .5);
   for (const j of [7.05, 8.18, 9.32]) {
-    shape(H, R, H.faceJ(1.245, j, 1.0, .16, .66), 'blue', .65, .65);
+    shape(H, R, H.faceJ(.5, j, 1.0, .16, .66), 'blue', .65, .65);
     for (let k = 0; k < 4; k++) {
       const [x, y] = H.p(1.25, j + .17 + k * .23, .38);
       oval(H, R, x, y, 5.5, 4.5, k % 2 ? 'paper' : 'sun', k % 2 ? 1 : .32);
@@ -170,6 +173,15 @@ export default world('tokyo-ryogoku-practice', 'Ryogoku · Morning practice', {
   for (const j of [4.9, 9.7, 11.7]) box(H, R, .05, j, .22, .18, .01, 3.5, 'blue', .66);
   box(H, R, .08, .05, 11.72, .24, 3.3, .26, 'blue', .7);
   box(H, R, .05, .08, .24, 11.72, 3.3, .26, 'blue', .7);
+  for (const side of ['i', 'j']) for (let a = .35; a < 11.5; a += .48) {
+    const p = (b, z) => side === 'i' ? H.p(b, .12, z) : H.p(.12, b, z);
+    shape(H, R, [p(a, .14), p(a + .43, .14), p(a + .43, .68), p(a, .68)], 'coral', .24, .55);
+  }
+  for (const i of [1.1, 4.75, 8.8, 11.45]) {
+    box(H, R, i, .13, .2, .46, 2.97, .27, 'coral', .55);
+    shape(H, R, [H.p(i + .1, .21, 2.61), H.p(i + .1, 1.14, 3.29), H.p(i + .1, .21, 3.29)], 'blue', .55, .8);
+  }
+  box(H, R, .08, .08, 11.72, .47, 3.46, .11, 'sun', .55);
   for (const z of [.7, 2.85]) {
     box(H, R, .1, .1, 11.68, .1, z, .13, 'coral', .35);
     box(H, R, .1, .1, .1, 11.68, z, .13, 'coral', .35);
@@ -205,7 +217,14 @@ export default world('tokyo-ryogoku-practice', 'Ryogoku · Morning practice', {
   const worn = H.tile(.55, 5.65, 1.75, 1.8, .02);
   H.tint(worn, 'coral', .18);
   H.speckle(R, worn, 'blue', 50, .4, 1.1, .2);
-  box(H, R, .95, 5.8, .42, .46, .02, 2.5, 'coral', .45);
+  box(H, R, .75, 5.6, .83, .84, .01, .16, 'blue', .5);
+  box(H, R, .95, 5.8, .42, .46, .17, 2.35, 'coral', .5);
+  for (const z of [.26, 2.31]) {
+    box(H, R, .91, 5.77, .5, .52, z, .12, 'blue', .7);
+    for (const i of [1.01, 1.27]) H.dot(...H.p(i, 6.3, z + .06), 1.4, 'paper', 1);
+  }
+  oval(H, R, ...H.p(1.16, 6.27, 1.22), 7, 21, 'sun', .25);
+  for (let k = 0; k < 4; k++) line(H, R, [H.p(1.02 + k * .08, 6.29, .8), H.p(1.03 + k * .08, 6.29, 1.6)], .5, 'paper');
   for (const z of [.63, .88, 1.12, 1.38, 1.59]) line(H, R, [H.p(.98, 6.28, z), H.p(1.34, 6.28, z + .08)], .7, 'paper', .65);
   for (let k = 0; k < 7; k++) line(H, R, [H.p(1 + k * .046, 6.28, 1.85), H.p(1 + k * .046, 6.28, 2.42)], .5, 'blue', .4);
   box(H, R, 5.05, .85, 1.23, .89, .38, .12, 'coral', .58);
@@ -250,6 +269,26 @@ export default world('tokyo-ryogoku-practice', 'Ryogoku · Morning practice', {
   shape(H, R, [[tx - 5, ty], [tx + 5, ty], [tx + 5, ty - 9], [tx - 5, ty - 9]], 'paper', 1, .6);
   oval(H, R, tx, ty - 9, 5, 2, 'teal', .4);
   stableDetails(H, R);
+  box(H, R, 10.92, 3.22, .74, 3.86, .02, .11, 'coral', .46);
+  for (const j of [3.3, 6.85]) box(H, R, 11.38, j, .12, .12, .13, 2.0, 'blue', .65);
+  for (const z of [.65, 1.52]) box(H, R, 11.33, 3.3, .19, 3.67, z, .13, 'coral', .6);
+  for (const [j, h] of [[3.6, 1.9], [4.15, 1.55], [6.58, 1.8]]) {
+    line(H, R, [H.p(11.1, j, .16), H.p(11.43, j, h)], 2.2, 'sun');
+    box(H, R, 10.93, j - .12, .4, .28, .14, .09, 'paper', .8);
+    line(H, R, [H.p(11.05, j, .16), H.p(11.44, j, .16)], 1.3, 'coral');
+  }
+  bucket(H, R, 10.52, 7.56, .02, 'sun');
+  const [ax, ay] = H.p(10.78, 7.46, .12);
+  oval(H, R, ax, ay, 12, 5, 'paper', 1);
+  for (let k = 0; k < 4; k++) line(H, R, [[ax - 8 + k * 5, ay - 2], [ax - 7 + k * 5, ay + 2]], .7, 'coral');
+  shape(H, R, H.faceI(2.8, .08, 1.45, 1.45, 2.51), 'paper', 1, .7);
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(3.04 + k * .43, .1, 2.24);
+    oval(H, R, x, y, 4, 4, 'blue', .55);
+    line(H, R, [[x, y + 5], [x, y + 17], [x + 6, y + 23]], 2, 'coral', .5);
+    line(H, R, [[x, y + 12], [x - 7, y + 20]], 2, 'coral', .5);
+  }
+
 }, (H, R, t) => {
   const s = cycle(t, 12) * 12;
   const smooth = v => v * v * (3 - 2 * v);

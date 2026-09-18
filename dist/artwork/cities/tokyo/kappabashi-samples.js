@@ -44,7 +44,24 @@ function soda(H, R, x, y, s = 1) {
 }
 
 function workbench(H, R) {
-  table(H, R, 3.4, 4.2, 5.2, 2.25, 1.05, 'teal');
+  box(H, R, 3.46, 4.28, 5.07, 2.04, .08, .14, 'blue', .6);
+  for (const i of [3.49, 6.27, 8.32]) box(H, R, i, 4.33, .17, 1.88, .2, .84, 'coral', .6);
+  box(H, R, 3.5, 4.37, 4.9, .12, .24, .72, 'blue', .65);
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 3.72, 4.7, 2.25, 1.4, .26 + n * .22, .16, 'sun', .4);
+    shape(H, R, H.faceI(3.87, 6.13, 1.93, .3 + n * .22, .39 + n * .22), 'paper', 1);
+    H.line(R, [H.p(4.53, 6.16, .35 + n * .22), H.p(5.11, 6.16, .35 + n * .22)], 'blue', 2);
+  }
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 6.51 + n * .53, 4.72, .43, 1.06, .25, .5, ['teal', 'paper', 'coral'][n], .7);
+    H.line(R, [H.p(6.6 + n * .53, 5.81, .52), H.p(6.82 + n * .53, 5.81, .52)], 'blue', 1.5);
+  }
+  box(H, R, 3.4, 4.2, 5.2, 2.25, 1.02, .15, 'teal', .75);
+  H.line(R, [H.p(3.48, 6.48, 1.1), H.p(8.51, 6.48, 1.1)], 'sun', 1.5);
+  shape(H, R, [H.p(7.36, 6.27, 1.18), H.p(8.01, 6.27, 1.18), H.p(8.05, 6.52, .64), H.p(7.42, 6.53, .71)], 'paper', 1);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(7.43 + n * .15, 6.3, 1.16), H.p(7.49 + n * .15, 6.54, .74)], 'teal', .7);
+  const light = H.p(4.85, 5.14, 1.18);
+  H.glow(...light, 65, 30, 'sun', .22);
   shape(H, R, H.tile(3.65, 4.47, 2.5, 1.65, 1.18), 'paper', 1);
   for (let k = 0; k < 3; k++) {
     const [x, y] = H.p(6.65 + k * .65, 4.65, 1.18);
@@ -168,6 +185,20 @@ function productionDetails(H, R) {
 
 const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kappabashi food-sample studio', { floor: 'sun', tone: .14, wall: 'paper', wallTone: 1, pattern: 'tiles', height: 4.15, head: 20 }, (H, R) => {
   windowOn(H, R, 'nw', 7.7, .7, 6.65, 3.03, { sky: 'teal', skyTone: .1, frameInk: 'coral' });
+  box(H, R, .36, .12, 11.18, .2, .18, 3.68, 'teal', .64);
+  box(H, R, .37, .25, 11.18, 1.06, .05, .46, 'coral', .65);
+  for (let n = 0; n < 8; n++) {
+    shape(H, R, H.faceI(.55 + n * 1.35, 1.33, 1.12, .15, .41), 'sun', .5);
+    H.line(R, [H.p(.95 + n * 1.35, 1.35, .32), H.p(1.28 + n * 1.35, 1.35, .32)], 'blue', 1.8);
+  }
+  for (const i of [.4, 3.05, 5.75, 8.45, 11.4]) box(H, R, i, .29, .12, .99, .52, 3.2, 'coral', .7);
+  box(H, R, .3, .2, 11.3, 1.18, 3.74, .15, 'sun', .64);
+  for (let n = 0; n < 4; n++) {
+    const i = 1.6 + n * 2.65;
+    H.line(R, [H.p(i, .38, 3.77), H.p(i, 1.38, 3.77), H.p(i, 1.38, 3.53)], 'blue', 1.7);
+    oval(H, R, ...H.p(i, 1.38, 3.51), 9, 4, 'paper', 1);
+    H.glow(...H.p(i, .88, 2.45), 44, 44, 'sun', .17);
+  }
   for (const z of [.58, 1.75, 2.92]) {
     box(H, R, .55, .35, 10.8, .85, z, .1, 'sun', .5);
     for (let k = 0; k < 8; k++) {
@@ -191,13 +222,35 @@ const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kap
       for (const dx of [-3, 0, 3]) stroke(H, R, [[x, y + 22], [x + dx, y + 34], [x + dx * .7, y + 41], [x, y + 43]], 'blue', .7);
     } else oval(H, R, x, y + 33, 5, 7, 'paper', 1);
   }
+  box(H, R, .09, 4.55, .3, 6.84, .66, .12, 'sun', .6);
+  box(H, R, .24, 5.88, 1.04, .97, .09, .76, 'teal', .5);
+  box(H, R, .17, 5.8, 1.19, 1.12, .85, .12, 'paper', 1);
+  shape(H, R, H.tile(.31, 5.96, .83, .73, .98), 'blue', .65);
+  shape(H, R, H.tile(.43, 6.06, .59, .5, .99), 'teal', .36);
+  H.dot(...H.p(.72, 6.3, 1), 2, 'blue', 1);
+  stroke(H, R, [H.p(.28, 6.13, .99), H.p(.28, 6.13, 1.46), H.p(.64, 6.13, 1.46), H.p(.64, 6.13, 1.29)], 'blue', 2.2);
+  shape(H, R, H.faceJ(1.3, 5.98, .72, .24, .71), 'paper', 1);
+  H.line(R, [H.p(1.33, 6.2, .57), H.p(1.33, 6.47, .57)], 'blue', 1.4);
   table(H, R, 1, 7, 1.5, 3.6, .86, 'coral');
   box(H, R, 1.17, 7.2, 1.15, 1.04, .99, .22, 'paper', 1);
   ramen(H, R, ...H.p(1.75, 7.72, 1.23), 1.03);
   dish(H, R, ...H.p(1.7, 9.9, 1), 20);
   shrimp(H, R, ...H.p(1.5, 9.8, 1.02), .8);
   shrimp(H, R, ...H.p(1.95, 10.1, 1.03), .8);
-  table(H, R, 9.6, 2.6, 1.7, 3.6, .94, 'sun');
+  box(H, R, 9.57, 2.57, 1.77, 3.66, .1, .84, 'teal', .56);
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.faceJ(11.36, 2.73 + n * .84, .67, .25, .78), 'paper', 1);
+    H.line(R, [H.p(11.39, 2.9 + n * .84, .61), H.p(11.39, 3.21 + n * .84, .61)], 'blue', 1.6);
+  }
+  box(H, R, 9.53, 2.52, 1.87, 3.78, .94, .12, 'sun', .7);
+  for (const j of [2.57, 6.16]) box(H, R, 9.53, j, .09, .09, 1.06, 1.5, 'blue', .6);
+  box(H, R, 9.49, 2.51, .15, 3.79, 2.53, .11, 'blue', .65);
+  for (let n = 0; n < 6; n++) {
+    const j = 2.8 + n * .52;
+    H.line(R, [H.p(9.58, j, 2.53), H.p(9.67, j, 2.27)], 'blue', .8);
+    shape(H, R, H.faceJ(9.68, j - .16, .32, 1.86, 2.27), 'paper', 1);
+    shrimp(H, R, ...H.p(9.69, j, 2.03), .45);
+  }
   for (let k = 0; k < 4; k++) {
     box(H, R, 9.8, 2.9 + k * .75, 1.25, .62, 1.07, .09, 'teal', .4);
     for (let q = 0; q < 3; q++) {
@@ -206,10 +259,17 @@ const room = world('tokyo-kappabashi-samples', 'Lunch that lasts forever — Kap
     }
   }
   workbench(H, R);
-  for (let k = 0; k < 4; k++) {
-    box(H, R, 9 + k % 2 * 1.2, 8.45 + Math.floor(k / 2) * 1.25, 1.03, 1.08, 0, .7 + k % 2 * .17, 'sun', .45);
-    H.line(R, [H.p(9.51 + k % 2 * 1.2, 8.45 + Math.floor(k / 2) * 1.25, .7 + k % 2 * .17), H.p(9.51 + k % 2 * 1.2, 9.53 + Math.floor(k / 2) * 1.25, .7 + k % 2 * .17)], 'paper', 2);
-  }
+  box(H, R, 9.15, 8.63, 2.24, 2.26, .06, .17, 'coral', .55);
+  box(H, R, 9.15, 8.63, 2.24, .13, .23, .72, 'sun', .58);
+  box(H, R, 9.15, 8.63, .13, 2.26, .23, .72, 'sun', .58);
+  box(H, R, 11.26, 8.63, .13, 2.26, .23, .72, 'sun', .58);
+  shape(H, R, H.tile(9.36, 8.84, 1.68, 1.8, .27), 'paper', 1);
+  sampleMeal(H, R, ...H.p(10.21, 9.49, .34), 4, 1.05);
+  parfait(H, R, ...H.p(10.73, 10.29, .36), .61);
+  box(H, R, 9.15, 10.77, 2.24, .12, .23, .38, 'sun', .6);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(9.23, 10.91, .3 + n * .13), H.p(11.33, 10.91, .3 + n * .13)], 'coral', .8);
+  shape(H, R, [H.p(9.15, 8.62, .96), H.p(11.4, 8.62, .96), H.p(11.4, 8.15, 1.68), H.p(9.15, 8.15, 1.68)], 'sun', .35);
+  for (const i of [9.53, 11.01]) H.line(R, [H.p(i, 8.61, .98), H.p(i, 8.16, 1.64)], 'coral', 2);
   table(H, R, 4, 9.05, 3.1, 1.45, .9, 'paper');
   const [cx, cy] = H.p(6.3, 9.75, 1.03);
   oval(H, R, cx, cy, 11, 4, 'coral', .23);

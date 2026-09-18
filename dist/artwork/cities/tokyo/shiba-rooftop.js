@@ -8,7 +8,15 @@ FIGURES.clips.tokyoShibaLaundry = {
 };
 
 function tomato(H, R, i, j, ripe = false) {
-  box(H, R, i, j, 1.48, 1.01, .08, .57, 'coral', .38);
+  for (const x of [i + .08, i + 1.28]) box(H, R, x, j + .13, .12, .73, .02, .18, 'blue', .6);
+  box(H, R, i, j, 1.48, 1.01, .18, .47, 'coral', .38);
+  for (const z of [.29, .46]) H.line(R, [H.p(i, j + 1.02, z), H.p(i + 1.48, j + 1.02, z)], 'sun', 1.2);
+  for (const x of [i + .12, i + 1.34]) {
+    box(H, R, x, j + 1.025, .09, .035, .2, .45, 'teal', .6);
+    H.dot(...H.p(x + .04, j + 1.07, .53), 1.2, 'paper');
+  }
+  box(H, R, i - .04, j - .04, 1.56, .1, .64, .1, 'sun', .55);
+  box(H, R, i - .04, j + .95, 1.56, .1, .64, .1, 'sun', .55);
   shape(H, R, H.tile(i + .11, j + .11, 1.26, .79, .67), 'blue', .42);
   for (const off of [.26, 1.08]) {
     const [x, y] = H.p(i + off, j + .53, .69);
@@ -77,7 +85,15 @@ function nurseryPot(H, R, i, j, z, ink = 'coral', size = .65) {
 }
 
 function roofNeighbors(H, R) {
+  for (const j of [3.82, 7.17]) {
+    H.line(R, [H.p(10.14, j, .14), H.p(11.43, j, 1.08)], 'blue', 2);
+    H.line(R, [H.p(11.43, j, .14), H.p(10.14, j, 1.08)], 'blue', 2);
+  }
   table(H, R, 10.03, 3.8, 1.53, 3.5, 1.13, 'sun');
+  for (const j of [3.85, 7.2]) box(H, R, 10.02, j, 1.56, .09, 1.24, .28, 'coral', .48);
+  box(H, R, 11.48, 3.85, .08, 3.45, 1.24, .28, 'coral', .48);
+  for (let k = 0; k < 6; k++) H.line(R, [H.p(10.15 + k * .21, 3.91, 1.26), H.p(10.15 + k * .21, 7.13, 1.26)], 'blue', .65);
+
   box(H, R, 10.11, 3.88, 1.37, 3.34, .35, .11, 'teal', .5);
   for (let k = 0; k < 4; k++) box(H, R, 10.26, 4.03 + k * .68, 1.06, .55, .48, .32, k % 2 ? 'paper' : 'coral', k % 2 ? 1 : .45);
   for (const [i, j, ink, s] of [[10.33, 4.14, 'coral', .7], [11.09, 4.48, 'sun', .65], [10.49, 5.17, 'paper', .8], [11.12, 5.68, 'coral', .6], [10.48, 6.48, 'teal', .73]]) nurseryPot(H, R, i, j, 1.28, ink, s);
@@ -124,6 +140,17 @@ function roofNeighbors(H, R) {
     oval(H, R, x, y - 34, 13, 4, 'teal', .48);
     for (let k = 0; k < 3; k++) H.line(R, [[x - 6, y - 24 + k * 4], [x + 6, y - 24 + k * 4]], 'blue', .65);
   }
+  table(H, R, .56, 11.01, 2.95, .73, .62, 'sun');
+  box(H, R, .69, 11.08, 1.21, .51, .76, .08, 'paper');
+  for (let k = 0; k < 3; k++) {
+    oval(H, R, ...H.p(1.03 + k * .28, 11.33, .87), 5, 3, k === 0 ? 'coral' : 'teal', .7);
+    H.line(R, [H.p(1.03 + k * .28, 11.33, .9), H.p(.99 + k * .28, 11.32, 1.03)], 'teal', .8);
+  }
+  const [qx, qy] = H.p(2.63, 11.37, .77);
+  oval(H, R, qx, qy - 7, 10, 8, 'sun', .58);
+  for (const dy of [-11, -7, -3]) H.line(R, [[qx - 9, qy + dy], [qx + 9, qy + dy]], 'coral', .75);
+  stroke(H, R, [[qx + 7, qy - 3], [qx + 17, qy + 5], [qx + 29, qy + 3]], 'coral', 1);
+  box(H, R, 2.18, 11.13, .51, .42, .03, .42, 'teal', .4);
   const [bx, by] = H.p(4.88, 10.75, .1);
   for (const dx of [-29, 29]) {
     H.outline(R, ell(bx + dx, by, 20, 20), 'blue', 2);
@@ -161,11 +188,26 @@ export default world('tokyo-shiba-rooftop', 'Shiba · The tower beyond the tomat
   for (const j of [4.1, 8]) H.line(R, [H.p(.5, j, .025), H.p(11.8, j, .025)], 'blue', .65, { tone: .33 });
   box(H, R, .75, 1.15, 2.45, 2.42, .03, 2.95, 'paper', 1);
   box(H, R, .61, 1.01, 2.73, 2.69, 2.98, .15, 'teal', .6);
-  shape(H, R, H.faceI(1.08, 3.59, 1.74, .12, 2.54), 'blue', .59);
+  shape(H, R, H.faceI(1.08, 3.59, 1.74, 1.35, 2.54), 'blue', .59);
   shape(H, R, H.faceI(1.25, 3.62, 1.4, 1.39, 2.27), 'teal', .39);
-  H.line(R, [H.p(2.57, 3.64, .89), H.p(2.57, 3.64, 1.15)], 'sun', 2);
-  box(H, R, 1.02, 3.61, 1.84, .48, .02, .17, 'teal', .35);
+  shape(H, R, H.faceJ(3.24, 2.35, 1.03, .13, 2.54), 'blue', .65);
+  H.outline(R, H.faceJ(3.27, 2.41, .91, .19, 2.46), 'paper', 1.2);
+  H.line(R, [H.p(3.3, 3.14, 1.01), H.p(3.3, 3.14, 1.27)], 'sun', 2);
+  box(H, R, 3.24, 2.38, .42, 1.04, .02, .15, 'teal', .4);
+  for (const j of [1.38]) {
+    shape(H, R, H.faceJ(3.22, j, .61, 1.16, 2.54), 'blue', .66);
+    H.outline(R, H.faceJ(3.25, j + .05, .51, 1.24, 2.46), 'paper', 1.6);
+    H.line(R, [H.p(3.27, j + .3, 1.24), H.p(3.27, j + .3, 2.46)], 'teal', 1.4);
+  }
+  for (const z of [.32, .7, 1.08, 1.46, 1.84, 2.22, 2.6]) H.line(R, [H.p(.77, 3.59, z), H.p(1.04, 3.59, z)], 'blue', .7);
+  stroke(H, R, [H.p(.63, 1.1, 3.08), H.p(.63, 3.73, 3.08), H.p(.63, 3.73, .18), H.p(.91, 4.35, .05)], 'teal', 3);
   box(H, R, 3.72, 1.3, 1.75, 1.34, .12, 1.46, 'paper', 1);
+  shape(H, R, H.faceI(3.88, 2.66, 1.41, .42, 1.32), 'teal', .35);
+  for (const z of [.46, 1.29]) H.line(R, [H.p(3.84, 2.68, z), H.p(5.32, 2.68, z)], 'blue', 1.6);
+  for (const i of [3.9, 5.26]) H.dot(...H.p(i, 2.7, 1.16), 1.5, 'sun');
+  oval(H, R, ...H.p(4.63, 2.7, .95), 8, 9, 'paper');
+  H.line(R, [H.p(4.63, 2.72, .95), H.p(4.78, 2.72, 1.06)], 'coral', 1.3);
+
   box(H, R, 3.65, 1.23, 1.89, 1.48, 1.58, .13, 'teal', .49);
   for (const i of [4.03, 5.03]) stroke(H, R, [H.p(i, 1.38, .2), H.p(i, 1.38, 1.84), H.p(i + .38, 1.38, 1.84)], 'blue', 2.6);
   box(H, R, 10.03, 1.32, 1.59, .93, .1, 1.05, 'paper', 1);
@@ -175,6 +217,14 @@ export default world('tokyo-shiba-rooftop', 'Shiba · The tower beyond the tomat
   stroke(H, R, [[ax, ay], [ax, ay - 53]], 'blue', 1.5);
   H.line(R, [[ax - 31, ay - 39], [ax + 31, ay - 49]], 'blue', 1.4);
   for (let k = 0; k < 6; k++) H.line(R, [[ax - 24 + k * 9, ay - 48 - k * 1.5], [ax - 24 + k * 9, ay - 31 - k * 1.5]], 'blue', .9);
+  table(H, R, .55, 4.04, 2.53, .67, 1.28, 'teal');
+  box(H, R, .59, 4.07, 2.44, .61, 1.4, .1, 'paper');
+  shape(H, R, H.tile(.81, 4.14, 1.06, .43, 1.52), 'blue', .76);
+  shape(H, R, H.tile(.92, 4.19, .84, .31, 1.53), 'teal', .44);
+  stroke(H, R, [H.p(1.2, 4.09, 1.52), H.p(1.2, 4.09, 2.03), H.p(1.2, 4.42, 2.03), H.p(1.2, 4.42, 1.85)], 'blue', 2);
+  stroke(H, R, [H.p(1.3, 4.37, 1.26), H.p(1.3, 4.37, .43), H.p(.71, 4.37, .43), H.p(.71, 4.37, .09)], 'teal', 2.4);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(2.06 + k * .18, 4.17, 1.52), H.p(2.06 + k * .18, 4.61, 1.52)], 'blue', .9);
+  bottle(H, R, ...H.p(2.73, 4.35, 1.53), 'coral', .35);
   tomato(H, R, 1.06, 5.02);
   tomato(H, R, 1.06, 7.08, true);
   for (const [i, j, size] of [[1.45, 9.5, .87], [2.57, 9.73, .73], [1.24, 10.8, .66]]) {

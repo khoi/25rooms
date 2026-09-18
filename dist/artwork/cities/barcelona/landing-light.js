@@ -33,6 +33,10 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
   wallCourse(H, R, 'nw', .1, 11.9, 1.02, 'teal');
   cornice(H, R, 'ne', .1, 11.9, 4.43, 'paper');
   cornice(H, R, 'nw', .1, 11.9, 4.43, 'paper');
+  surface(H, R, H.tile(.71, 10.83, 5.17, .65, .019), 'paper', .91, .8);
+  for (let n = 0; n < 8; n++) H.line(R, [H.p(.8 + n * .62, 10.89, .03), H.p(.8 + n * .62, 11.41, .03)], 'blue', .75);
+  metal(H, R, .81, 11.12, 4.89, .17, .035, .05, 'teal');
+  for (let n = 0; n < 18; n++) H.line(R, [H.p(.93 + n * .26, 11.14, .09), H.p(.93 + n * .26, 11.25, .09)], 'paper', .7);
   windowBay(H, R, 'nw', 1.11, 3.46, 2.29, 1.89, { night: true, ink: 'teal', divisions: 2, view: P => cityView(H, R, P, 3.46, 1.89, true) });
   for (let n = 0; n < 4; n++) {
     const j = .34 + n * .75, z = 2.26 - n * .32;
@@ -48,11 +52,30 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
     timber(H, R, i - .02, 3.29, .73, 2.1, z, .13, n === 3 ? 'paper' : 'sun');
     H.line(R, [H.p(i + .69, 3.32, z + .1), H.p(i + .69, 5.36, z + .1)], 'paper', 1.4);
   }
+  for (let n = 0; n < 4; n++) {
+    const j = .34 + n * .75, z = 2.26 - n * .32;
+    surface(H, R, H.tile(1.44, j + .06, 1.36, .66, z + .142), 'coral', .37, .6);
+    H.line(R, [H.p(1.46, j + .71, z + .14), H.p(2.77, j + .71, z + .14)], 'sun', 2);
+    H.line(R, [H.p(.66, j + .81, z - .18), H.p(1.23, j + .81, z - .18)], 'paper', .85);
+  }
+  surface(H, R, H.tile(1.44, 3.38, 1.36, 1.97, 1.443), 'coral', .37, .6);
+  H.line(R, [H.p(1.48, 3.47, 1.45), H.p(1.48, 5.26, 1.45)], 'sun', 1.2);
+  H.line(R, [H.p(2.74, 3.47, 1.45), H.p(2.74, 5.26, 1.45)], 'sun', 1.2);
+  for (const [x, w, ink] of [[.71, 1.11, 'paper'], [1.95, 1.53, 'teal']]) {
+    surface(H, R, H.faceI(x, 5.45, w, .13, 1.18), ink, .52, 1);
+    surface(H, R, H.faceI(x + .11, 5.47, w - .22, .25, 1.05), 'blue', .24, .7);
+    H.line(R, [H.p(x + w - .21, 5.5, .56), H.p(x + w - .21, 5.5, .78)], 'sun', 2.2);
+    for (const h of [.34, .98]) H.line(R, [H.p(x + .04, 5.48, h), H.p(x + .15, 5.48, h)], 'teal', 2.8);
+  }
+  bentTube(H, R, [[.31, .57, 3.07], [.31, 3.75, 1.71], [.31, 5.02, 1.71]], 2.8, 'sun');
+  for (const [j, z] of [[.79, 2.93], [2.34, 2.27], [4.71, 1.71]]) bentTube(H, R, [[.09, j, z - .17], [.32, j, z]], 1.5, 'blue');
   surface(H, R, H.tile(5.9, 4.75, .56, .4, .4), 'coral', .48, .5);
   for (let n = 0; n < 5; n++) {
     const j = .48 + n * .75, z = 2.39 - n * .32;
     metal(H, R, 3.63, j, .1, .1, z, .93, 'blue');
     oval(H, R, ...H.p(3.68, j + .05, z + .56), 3, 6, 'teal', .6);
+    const p = H.p(3.68, j + .05, z + .43);
+    stroke(H, R, [[p[0], p[1] + 9], [p[0] - 7, p[1] + 3], [p[0] - 6, p[1] - 4], [p[0], p[1] - 2], [p[0] + 6, p[1] - 4], [p[0] + 7, p[1] + 3], [p[0], p[1] + 9]], 'paper', .85);
   }
   bentTube(H, R, [[3.68, .4, 3.43], [3.68, 3.55, 2.04], [3.68, 5.47, 2.04]], 4.2, 'sun');
   for (let n = 0; n < 5; n++) {
@@ -76,6 +99,14 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
       H.line(R, [P(u, z + h * .56, .63), P(u + w, z + h * .56, .63)], 'paper', 1.3);
     }
   });
+  for (const z of [.66, 1.63]) {
+    for (const x of [4.82, 7.74]) bentTube(H, R, [[x, .16, z - .31], [x, .74, z], [x, .16, z]], 1.9, 'teal');
+  }
+  timber(H, R, 4.61, .2, 3.44, .9, .07, .18, 'sun');
+  for (const x of [4.69, 6.32]) {
+    surface(H, R, H.faceI(x, 1.12, 1.45, .17, .53), 'teal', .61, .75);
+    H.line(R, [H.p(x + .48, 1.14, .37), H.p(x + .98, 1.14, .37)], 'paper', 1.7);
+  }
   const lamp = niche(2.02, 3.12, .65);
   H.glow(lamp[0], lamp[1] + 28, 73, 79, 'sun', .38);
   shape(H, R, [[lamp[0] - 13, lamp[1] + 4], [lamp[0] + 13, lamp[1] + 4], [lamp[0] + 8, lamp[1] - 12], [lamp[0] - 8, lamp[1] - 12]], 'paper', .92);
@@ -98,6 +129,15 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
       H.line(R, [H.p(x + .25, j + 1.42, 2.06), H.p(x + .79, j + 1.42, 3.11)], 'paper', 1.9);
     }
   });
+  for (const h of [.78, 1.36, 1.93, 2.49, 3.05]) {
+    timber(H, R, 8.91, 1.7, 1.1, .12, h, .08, 'sun');
+    metal(H, R, 9.09, 1.82, .62, .06, h + .12, .1, 'paper');
+    H.line(R, [H.p(9.28, 1.9, h + .14), H.p(9.59, 1.9, h + .14)], 'coral', .65);
+  }
+  recessedFrame(H, R, 'ne', 11.59, .32, 1.48, 1.09, 'paper', P => {
+    for (const z of [.28, .57, .84]) H.dot(...P(.16, z), 1.4, 'teal');
+  });
+  bentTube(H, R, [[11.73, .17, 1.48], [11.73, .17, .29], [8.72, .17, .29]], 1.2, 'teal');
   timber(H, R, 8.59, .2, 3.08, 1.86, 3.92, .12, 'paper');
   vessel(H, R, 9.06, .93, 4.07, 9, 16, 'coral');
   for (let n = 0; n < 3; n++) metal(H, R, 9.62 + n * .48, .67, .37, .56, 4.06, .23, n ? 'paper' : 'sun');
@@ -108,6 +148,14 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
     const p = P(u, -.15);
     if (n === 1) surface(H, R, [[p[0] - 7, p[1]], [p[0] + 7, p[1]], [p[0] + 10, p[1] + 31], [p[0] - 10, p[1] + 29]], 'coral', .45, .7);
   });
+  recessedFrame(H, R, 'nw', 7.35, 3.45, 3.96, .4, 'sun', P => {
+    surface(H, R, [P(.1, .07), P(3.34, .07), P(3.34, .33), P(.1, .33)], 'teal', .51);
+    for (let n = 0; n < 6; n++) H.line(R, [P(.3 + n * .52, .08), P(.3 + n * .52, .33)], 'paper', 1.1);
+  });
+  for (const j of [7.22, 10.84]) {
+    timber(H, R, .06, j, .39, .19, .09, 3.88, 'paper');
+    timber(H, R, .07, j - .04, .48, .27, .13, .41, 'sun');
+  }
   const D = (u, z) => wallPt(H, 'nw', 7.35 + u, z, -.32);
   surface(H, R, [D(0, .12), D(3.45, .12), D(3.45, 3.83), D(0, 3.83)], 'teal', .8, 1.4);
   surface(H, R, [D(.17, .12), D(3.27, .12), D(3.27, 3.65), D(.17, 3.65)], 'blue', .87, .8);
@@ -120,23 +168,47 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
     for (let n = 0; n < 3; n++) H.dot(...P(.25, .19 + n * .09), 1.3, 'coral');
   });
   floorLight(H, 5.1, 6.79, 146, .48);
-  benchFrame(H, R, 8.72, 8.38, 2.53, 1.13, .67, 'sun');
-  cushion(H, R, 8.84, 8.5, 1.05, .8, .7, .12, 'teal');
-  drape(H, R, 10.12, 8.57, .88, .56, .72, .39, 'paper');
-  for (const i of [9.12, 9.77]) {
-    const p = H.p(i, 8.96, .12);
-    shape(H, R, [[p[0] - 9, p[1]], [p[0] - 9, p[1] - 8], [p[0] - 1, p[1] - 8], [p[0] + 2, p[1] - 4], [p[0] + 11, p[1] - 2], [p[0] + 10, p[1] + 3]], 'blue', .73, .75);
-  }
-  timber(H, R, 10.26, 5.57, 1.11, 1.23, .96, .13, 'teal');
-  for (const i of [10.37, 11.12]) timber(H, R, i, 5.68, .12, .92, .07, .92, 'teal');
-  drape(H, R, 10.34, 5.66, .95, .91, 1.1, .34, 'paper');
-  const pan = H.p(10.77, 6.17, 1.22);
+  timber(H, R, 10.14, 4.09, 1.32, 1.55, .17, .11, 'teal');
+  surface(H, R, H.faceI(10.26, 5.54, 1.07, .27, .71), 'paper', .72, .8);
+  H.line(R, [H.p(10.59, 5.56, .53), H.p(11.02, 5.56, .53)], 'coral', 2.3);
+  timber(H, R, 10.26, 4.22, 1.11, 1.23, .96, .13, 'teal');
+  for (const i of [10.37, 11.12]) timber(H, R, i, 4.33, .12, .92, .07, .92, 'teal');
+  drape(H, R, 10.34, 4.31, .95, .91, 1.1, .34, 'paper');
+  const pan = H.p(10.77, 4.82, 1.22);
   oval(H, R, ...pan, 17, 7, 'coral', .52);
   oval(H, R, pan[0], pan[1] - 3, 13, 5, 'blue', .67);
   H.line(R, [[pan[0] + 11, pan[1] - 3], [pan[0] + 27, pan[1] - 11]], 'blue', 3);
-  const keys = H.p(11.06, 5.9, 1.13);
+  const lid = H.p(10.49, 4.34, 1.36);
+  oval(H, R, ...lid, 13, 12, 'paper', .9);
+  oval(H, R, lid[0], lid[1], 10, 9, 'teal', .19);
+  H.line(R, [[lid[0] - 3, lid[1] - 2], [lid[0] + 3, lid[1] - 4]], 'coral', 3);
+  metal(H, R, 10.6, 5.28, .61, .43, 1.13, .2, 'paper');
+  surface(H, R, H.tile(10.58, 5.26, .65, .47, 1.34), 'teal', .46, .6);
+  const keys = H.p(11.06, 4.55, 1.13);
   oval(H, R, ...keys, 7, 3, 'sun', .65);
   H.line(R, [[keys[0] - 2, keys[1]], [keys[0] + 5, keys[1] - 1]], 'blue', 1.2);
+  floorShadow(H, 9.16, 7.47, 2.76, 1.55, .19);
+  for (const x of [9.28, 11.6]) timber(H, R, x, 7.55, .15, .16, .07, 2.47, 'sun');
+  timber(H, R, 9.2, 7.52, 2.65, .21, 2.25, .18, 'teal');
+  for (let n = 0; n < 5; n++) timber(H, R, 9.36 + n * .49, 7.59, .1, .1, .65, 1.45, 'sun');
+  for (const x of [9.63, 10.81]) bentTube(H, R, [[x, 7.75, 2.24], [x, 7.98, 2.03], [x + .17, 7.98, 2.07]], 2.3, 'blue');
+  const cape = H.p(10.97, 7.89, 2.12);
+  shape(H, R, [[cape[0] - 6, cape[1]], [cape[0] + 9, cape[1]], [cape[0] + 17, cape[1] + 43], [cape[0] - 14, cape[1] + 42]], 'coral', .63, .9);
+  for (const dx of [-8, 1, 10]) H.line(R, [[cape[0] + dx * .4, cape[1] + 7], [cape[0] + dx, cape[1] + 38]], 'paper', .85);
+  const scarf = H.p(9.66, 7.92, 2.05);
+  shape(H, R, [[scarf[0] - 5, scarf[1]], [scarf[0] + 6, scarf[1]], [scarf[0] + 9, scarf[1] + 34], [scarf[0] - 4, scarf[1] + 32]], 'teal', .71, .65);
+  for (let n = 0; n < 5; n++) H.line(R, [[scarf[0] - 3, scarf[1] + 11 + n * 4], [scarf[0] + 7, scarf[1] + 12 + n * 4]], 'sun', .9);
+  benchFrame(H, R, 9.22, 7.73, 2.53, 1.13, .67, 'sun');
+  timber(H, R, 9.43, 7.86, 2.1, .81, .2, .08, 'teal');
+  const polish = H.p(11.06, 8.49, .3);
+  oval(H, R, ...polish, 7, 3, 'coral', .77);
+  H.line(R, [[polish[0] - 7, polish[1] - 4], [polish[0] + 6, polish[1] - 7]], 'blue', 4);
+  cushion(H, R, 9.34, 7.85, 1.05, .8, .7, .12, 'teal');
+  drape(H, R, 10.62, 7.92, .88, .56, .72, .39, 'paper');
+  for (const i of [9.62, 10.27]) {
+    const p = H.p(i, 8.31, .12);
+    shape(H, R, [[p[0] - 9, p[1]], [p[0] - 9, p[1] - 8], [p[0] - 1, p[1] - 8], [p[0] + 2, p[1] - 4], [p[0] + 11, p[1] - 2], [p[0] + 10, p[1] + 3]], 'blue', .73, .75);
+  }
   vessel(H, R, 1.42, 10.35, .05, 16, 30, 'teal');
   umbrella(H, R, ...H.p(1.42, 10.35, .72), 47, 'coral');
   umbrella(H, R, ...H.p(1.89, 10.35, .75), 29, 'sun');
@@ -155,6 +227,10 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
   H.line(R, [P(.42, 1.77), P(1.47, 3.2)], 'paper', 2);
   for (const z of [.57, 3.18]) H.line(R, [P(0, z), P(.19, z)], 'sun', 3);
   H.line(R, [P(.18, 1.44), P(2.88, 1.44)], 'sun', 1.8);
+  for (const u of [.13, 2.94]) H.line(R, [P(u, .33), P(u, 3.48)], 'sun', 1);
+  surface(H, R, [P(.19, .28), P(2.85, .28), P(2.85, .48), P(.19, .48)], 'blue', .4, .65);
+  for (const u of [.3, 2.73]) H.dot(...P(u, .38), 1.3, 'paper');
+  H.line(R, [P(.47, 1.71), P(1.28, 2.93)], 'paper', 1.1, {tone:.45});
   const knob = P(2.68, 1.43);
   H.line(R, [knob, [knob[0] + 7, knob[1] + 2]], 'blue', 2.8);
   const closer = H.p(.36, 7.62, 3.68), hinge = P(.78, 3.54), elbow = [(closer[0] + hinge[0]) / 2 + 8, (closer[1] + hinge[1]) / 2 - 3];
@@ -173,6 +249,9 @@ const room = world('barcelona-landing-light', 'Someone keeps the door', { wall: 
   shape(H, R, [[bag[0] - 14, bag[1] - 2], [bag[0] - 17, bag[1] - 29], [bag[0] + 15, bag[1] - 33], [bag[0] + 17, bag[1] - 2]], 'teal', .67, 1);
   shape(H, R, [[bag[0] - 16, bag[1] - 28], [bag[0] + 15, bag[1] - 33], [bag[0] + 12, bag[1] - 20], [bag[0] - 13, bag[1] - 17]], 'paper', .6, .8);
   for (let n = 0; n < 3; n++) H.line(R, [[bag[0] - 10 + n * 8, bag[1] - 15], [bag[0] - 9 + n * 8, bag[1] - 5]], 'paper', .6);
+  surface(H, R, [[bag[0] - 10, bag[1] - 13], [bag[0] + 10, bag[1] - 15], [bag[0] + 10, bag[1] - 4], [bag[0] - 9, bag[1] - 3]], 'coral', .33, .7);
+  H.line(R, [[bag[0] - 7, bag[1] - 11], [bag[0] + 7, bag[1] - 12]], 'paper', 1);
+  H.dot(bag[0] + 8, bag[1] - 12, 1.4, 'sun');
   H.dot(base[0] + 8, base[1], 2.4, 'coral', .8);
   neighbour(H, R, 'barcelonaLandingBag', top, 'sw', ['paper', .95], handle > .9 ? -12 : 13, Math.sin(handle * Math.PI * 4) * Math.sin(handle * Math.PI));
   const strap = H.p(1.47, 10.35, 1.4);

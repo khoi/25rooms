@@ -48,7 +48,34 @@ function jar(H, R, i, j, z, ink, n) {
   H.line(R, [[x - 3, y - 14], [x - 3, y - 7]], 'teal', .65);
 }
 
+function deskFront(H, R, i) {
+  box(H, R, i, 4.27, 2.7, .08, .08, .13, 'blue', .8);
+  for (const a of [.11, 2.44]) box(H, R, i + a, 4.27, .13, .09, .21, .75, 'paper', .85);
+  for (let k = 0; k < 3; k++) {
+    const a = i + .35 + k * .67;
+    shape(H, R, H.faceI(a, 4.36, .56, .32, .83), k === 1 ? 'blue' : 'teal', .7, .65);
+    H.line(R, [H.p(a + .13, 4.38, .69), H.p(a + .4, 4.38, .69)], 'sun', 1.4);
+  }
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(i + 2.46, 4.38, .3 + k * .09), H.p(i + 2.6, 4.38, .3 + k * .09)], 'blue', .7);
+}
+
 const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', tone: 1, wall: 'blue', wallTone: .95, height: 3.4, pattern: 'tiles' }, (H, R) => {
+  for (const side of [0, 1]) {
+    const p = (a, z) => side ? H.p(a, .09, z) : H.p(.09, a, z);
+    for (const z of [.13, 3.16, 3.33]) H.line(R, [p(.1, z), p(11.9, z)], 'paper', 2.5);
+    for (const a of [.25, 5.3, 11.65]) {
+      H.line(R, [p(a, .12), p(a, 2.82), p(a + .28, 3.16)], 'paper', 5);
+      for (const z of [.4, 1.7, 2.8]) H.dot(...p(a, z), 1.5, 'coral');
+    }
+  }
+  shape(H, R, H.faceI(1.04, .12, 1.44, .1, 2.97), 'paper', 1);
+  shape(H, R, [H.p(1.2, .14, .3), H.p(2.28, .14, .3), H.p(2.28, .14, 2.52), H.p(2.08, .14, 2.74), H.p(1.43, .14, 2.74), H.p(1.2, .14, 2.52)], 'teal', .6);
+  const [hx, hy] = H.p(1.75, .17, 1.93);
+  oval(H, R, hx, hy, 11, 14, 'blue', .9);
+  oval(H, R, hx, hy, 7, 10, 'paper', .8);
+  H.line(R, [H.p(1.73, .17, .33), H.p(1.73, .17, 1.34)], 'blue', 1);
+  H.line(R, [H.p(1.52, .19, 1.17), H.p(1.95, .19, 1.17)], 'sun', 2);
+  box(H, R, 1.07, .1, 1.4, .65, .01, .08, 'blue', .65);
   windowOn(H, R, 'ne', 8.4, 1.35, 5.5, 1.75, { skyTone: 1, frameInk: 'paper', inside: () => {
     for (let k = 0; k < 48; k++) H.dot(...H.p(5.8 + R() * 5.2, .015, 1.45 + R() * 1.5), .7, 'paper');
     const [x, y] = H.p(9.7, .015, 2.35);
@@ -64,6 +91,14 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     H.dot(x + 26, y, 1.8, k === 3 ? 'coral' : 'teal');
   }
 
+  const [ox, oy] = H.p(.15, 2.8, 2.3);
+  oval(H, R, ox, oy, 20, 12, 'teal', .22);
+  H.outline(R, ell(ox, oy, 31, 19), 'blue', .9);
+  H.outline(R, ell(ox, oy, 12, 30), 'coral', .8);
+  H.dot(ox, oy, 5, 'sun');
+  H.dot(ox + 29, oy - 6, 3.4, 'coral');
+  H.line(R, [[ox + 29, oy - 6], [ox + 45, oy - 17]], 'blue', .7);
+  for (const j of [1.36, 4.68]) box(H, R, .3, j, 1.2, .08, .83, .92, 'paper', .85);
   box(H, R, .3, 1.35, 1.2, 3.4, 0, .8, 'coral', .55);
   for (const z of [.88, 1.6]) {
     box(H, R, .3, 1.35, 1.2, 3.4, z, .09, 'sun', .72);
@@ -85,10 +120,28 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     }
   }
 
+  shape(H, R, H.faceJ(.15, 5.66, 4.76, 1.58, 2.92), 'paper', .9);
+  shape(H, R, H.faceJ(.19, 5.8, 4.47, 1.73, 2.77), 'teal', .5);
+  for (let k = 0; k < 3; k++) {
+    const j = 6.14 + k * 1.18;
+    const [x, y] = H.p(.23, j, 2.22);
+    oval(H, R, x, y, 16, 18, 'blue', .9);
+    oval(H, R, x, y, 12, 14, 'paper', .9);
+    for (let a = 0; a < 3; a++) {
+      const t = a * Math.PI * 2 / 3;
+      shape(H, R, [[x, y], [x + Math.cos(t) * 11, y + Math.sin(t) * 12], [x + Math.cos(t + .6) * 10, y + Math.sin(t + .6) * 11]], 'teal', .8, .5);
+    }
+    H.dot(x, y, 2, 'sun');
+  }
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(.23, 9.12, 1.9 + k * .13), H.p(.23, 10.02, 1.9 + k * .13)], 'blue', 1.2);
+  H.line(R, [H.p(.23, 5.73, 1.66), H.p(.23, 10.36, 1.66)], 'coral', 1.4);
+  stroke(H, R, [H.p(.2, 10.45, 2.4), H.p(.2, 11.07, 2.4), H.p(.2, 11.07, .4), H.p(.8, 11.07, .4)], 'paper', 3);
+  for (const z of [.7, 1.45, 2.22]) H.line(R, [H.p(.15, 10.99, z), H.p(.15, 11.18, z)], 'coral', 2);
   for (let k = 0; k < 5; k++) passport(H, R, .4 + k * .18, 4.18, .9, k % 2 ? 'teal' : 'coral');
   for (const i of [2.7, 5.7]) {
     box(H, R, i, 2.9, 2.7, 1.35, 0, .99, 'teal', .5);
     box(H, R, i - .05, 2.85, 2.8, 1.45, .99, .12, 'paper', 1);
+    deskFront(H, R, i);
     terminal(H, R, i + 1.74, 3, 1.12, i < 3 ? 'ENTRY' : 'VISA');
     for (let k = 0; k < 3; k++) passport(H, R, i + .22 + k * .04, 3.14 - k * .05, 1.13 + k * .04, 'coral');
     passport(H, R, i + .91, 3.62, 1.13, 'teal', true);
@@ -130,7 +183,23 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   shape(H, R, H.tile(1.17, 5.15, 1.56, 4.4, .65), 'teal', .42, .8);
   for (let j = 5.2; j < 9.55; j += .22) H.line(R, [H.p(1.2, j, .67), H.p(2.7, j, .67)], 'paper', .75);
   luggage(H, R, 1.54, 5.28, .68, 'teal', .79);
+  for (const j of [5.2, 8.85]) for (const i of [1.14, 2.55]) {
+    box(H, R, i, j, .16, .17, .04, .46, 'paper', .85);
+    H.line(R, [H.p(i, j, .09), H.p(3.69 - i, j, .46)], 'blue', 1);
+  }
+  for (const j of [5.25, 5.62, 8.75, 9.1]) {
+    const [x, y] = H.p(1.87, j, .66);
+    oval(H, R, x, y, 18, 5, 'paper', .95);
+    H.line(R, [[x - 15, y], [x + 15, y]], 'blue', .75);
+  }
   box(H, R, 1.04, 6.2, 1.83, 1.4, .69, 1.15, 'sun', .8);
+  box(H, R, 1.01, 6.18, 1.9, .16, .68, 1.24, 'paper', .9);
+  box(H, R, 1.01, 7.51, 1.9, .16, 1.78, .13, 'paper', .9);
+  shape(H, R, H.faceJ(2.88, 6.41, .85, .84, 1.63), 'blue', .85);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(2.9, 6.53, 1 + k * .1), H.p(2.9, 7.05, 1 + k * .1)], 'teal', 1);
+  for (const j of [6.43, 7.17]) for (const z of [.87, 1.61]) H.dot(...H.p(2.91, j, z), 1.6, 'sun');
+  stroke(H, R, [H.p(2.9, 6.4, .88), H.p(3.16, 6.4, .3), H.p(3.16, 7.01, .22), H.p(3.15, 7.01, .77)], 'blue', 1.8);
+  for (const i of [1.1, 2.78]) box(H, R, i, 6.21, .12, 1.31, 1.88, .07, 'coral', .85);
   shape(H, R, H.faceI(1.19, 7.61, 1.5, .72, 1.57), 'blue', .95, .7);
   for (let k = 0; k < 7; k++) H.line(R, [H.p(1.27 + k * .2, 7.62, .73), H.p(1.27 + k * .2, 7.62, 1.51)], 'teal', 1.1);
   for (let k = 0; k < 5; k++) box(H, R, 1.13 + k * .33, 6.32, .2, .3, 1.85, .05, k % 2 ? 'coral' : 'blue');
@@ -151,6 +220,14 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
   passport(H, R, 10.39, 7.66, .93, 'coral', true);
   bottle(H, R, ...H.p(10.54, 7.12, .92), 'teal', .36);
 
+  for (const i of [8.52, 10.86]) {
+    box(H, R, i, 6.78, .13, 1.68, .12, .12, 'blue', .85);
+    H.line(R, [H.p(i, 6.85, .16), H.p(i, 8.34, .73)], 'blue', 1.5);
+  }
+  box(H, R, 9.72, 8.11, 1.03, .7, .41, .24, 'teal', .8);
+  shape(H, R, H.tile(9.79, 8.17, .86, .56, .66), 'blue', .9);
+  for (let k = 0; k < 3; k++) jar(H, R, 9.96 + k * .25, 8.44, .68, ['sun', 'coral', 'teal'][k], k);
+  H.line(R, [H.p(10.03, 8.82, .52), H.p(10.5, 8.82, .52)], 'sun', 2);
   table(H, R, 8.8, 10.06, 2.3, 1.15, .56, 'teal');
   for (let k = 0; k < 4; k++) {
     const [x, y] = H.p(9.02 + k * .52, 10.64, .69);
@@ -159,6 +236,11 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     else shape(H, R, starPts(x, y - 8, 6, 2.5, 5), k ? 'coral' : 'sun', .8, .6);
   }
 
+  box(H, R, 8.85, 10.15, 2.15, .8, .12, .12, 'blue', .65);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 8.98 + k * .62, 10.28, .51, .51, .24, .19, 'paper', 1);
+    H.line(R, [H.p(9.12 + k * .62, 10.8, .33), H.p(9.33 + k * .62, 10.8, .33)], 'coral', 1);
+  }
   table(H, R, 2.78, 10.3, 4.8, .94, .35, 'teal');
   for (let k = 0; k < 19; k++) H.line(R, [H.p(2.85 + k * .24, 10.37, .51), H.p(2.85 + k * .24, 11.16, .51)], 'blue', .8);
 
@@ -172,6 +254,7 @@ const detailed = world('moon-customs', 'Moon customs office', { floor: 'paper', 
     actor(HH, R, i, 2.62, t + phase, 'write', { shirt: ['coral', .75], pants: ['blue', .8], glasses: true }, .8, .84);
     box(HH, R, i - 1.18, 2.9, 2.7, 1.35, 0, .99, 'teal', .5);
     box(HH, R, i - 1.23, 2.85, 2.8, 1.45, .99, .12, 'paper', 1);
+    deskFront(HH, R, i - 1.18);
     terminal(HH, R, i + .56, 3, 1.12, phase ? 'VISA' : 'ENTRY');
     passport(HH, R, i - .28, 3.62, 1.13, 'teal', true);
     for (let k = 0; k < 3; k++) passport(HH, R, i - .96 + k * .03, 3.14 - k * .03, 1.13 + k * .025, 'coral');

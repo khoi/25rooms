@@ -17,7 +17,21 @@ function stack(H, R, i, j, z, n, tied = false) {
 }
 
 function repairDesk(H, R) {
-  table(H, R, 1.2, 5.55, 3.65, 1.75, 1.04, 'sun');
+  box(H, R, 1.2, 5.55, 1.0, 1.75, .06, .93, 'blue', .7);
+  for (let k = 0; k < 4; k++) {
+    box(H, R, 1.25, 5.67, .9, 1.61, .15 + k * .21, .17, 'coral', .5);
+    H.line(R, [H.p(1.53, 7.3, .22 + k * .21), H.p(1.85, 7.3, .22 + k * .21)], 'sun', 1.7);
+  }
+  for (const j of [5.65, 7.1]) {
+    box(H, R, 4.6, j, .15, .15, .04, .99, 'coral', .6);
+    H.line(R, [H.p(2.1, j, .3), H.p(4.68, j, .3)], 'blue', 2);
+  }
+  box(H, R, 1.16, 5.5, 3.74, 1.83, 1.01, .15, 'sun', .6);
+  box(H, R, 2.35, 5.6, 1.8, 1.32, .87, .11, 'blue', .6);
+  box(H, R, 2.4, 6.52, 1.65, 1.17, .9, .07, 'coral', .5);
+  for (const i of [2.4, 3.95]) box(H, R, i, 6.52, .1, 1.17, .98, .09, 'sun', .6);
+  for (let k = 0; k < 3; k++) shape(H, R, H.tile(2.62 + k * .02, 6.89, .89, .54, .99 + k * .01), 'paper', 1, .4);
+  H.line(R, [H.p(3.71, 6.9, 1.01), H.p(3.71, 7.46, 1.01)], 'blue', 1.5);
   shape(H, R, H.tile(2, 5.78, 2, 1.28, 1.17), 'teal', .5);
   const [x, y] = H.p(2.9, 6.45, 1.19);
   shape(H, R, [[x - 24, y - 5], [x, y - 11], [x + 22, y - 4], [x + 20, y + 10], [x, y + 5], [x - 24, y + 10]], 'paper', 1);
@@ -107,6 +121,16 @@ function bookshopStock(H, R) {
 }
 
 const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secondhand bookshop', { floor: 'sun', tone: .24, wall: 'paper', wallTone: 1, height: 4.4, head: 20, pattern: 'boards' }, (H, R) => {
+  box(H, R, .22, .08, 11.46, 1.06, .03, 4.02, 'blue', .67);
+  box(H, R, .12, 1.22, 1.03, 3.73, .04, 3.76, 'blue', .67);
+  for (const z of [.03, 3.98]) box(H, R, .17, .18, 11.61, 1.06, z, .17, 'coral', .6);
+  for (let k = 0; k < 8; k++) {
+    const i = .53 + k * 1.36;
+    shape(H, R, H.faceI(i, 1.15, 1.2, .07, .32), 'coral', .5, .6);
+    H.line(R, [H.p(i + .4, 1.17, .21), H.p(i + .8, 1.17, .21)], 'sun', 1.5);
+  }
+  for (const j of [1.31, 4.78]) box(H, R, .19, j, 1.01, .15, .04, 3.9, 'coral', .55);
+  box(H, R, .17, 1.25, 1.05, 3.67, 3.73, .17, 'coral', .65);
   for (const i of [.38, 3.05, 5.75, 8.5, 11.45]) box(H, R, i, .3, .13, .77, .15, 3.85, 'blue', .75);
   for (let row = 0; row < 4; row++) {
     const z = .35 + row * .94;
@@ -126,6 +150,9 @@ const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secon
   for (const i of [4.35, 5.15]) H.line(R, [H.p(i, 2.18, .06), H.p(i, 1.3, 3.62)], 'sun', 4);
   for (let k = 0; k < 9; k++) H.line(R, [H.p(4.35, 2.14 - k * .098, .16 + k * .39), H.p(5.15, 2.14 - k * .098, .16 + k * .39)], 'blue', 2);
   for (const i of [4.35, 5.15]) oval(H, R, ...H.p(i, 2.18, .07), 4, 4, 'blue', .8);
+  box(H, R, .08, 5.11, .24, 2.61, .96, .14, 'coral', .6);
+  box(H, R, .08, 5.11, .24, 2.61, 2.61, .13, 'coral', .6);
+  for (const j of [5.11, 7.59]) box(H, R, .08, j, .24, .13, .96, 1.75, 'coral', .6);
   const print = wallRect(H, 'nw', 5.3, 7.55, 1.1, 2.6, -.02);
   shape(H, R, print, 'sun', .2);
   H.clip(print, () => {
@@ -138,6 +165,12 @@ const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secon
   H.tint(H.tile(.1, 8.5, 4.5, 2.3, .03), 'sun', .16);
   for (const [i, j] of [[6.2, 3.5], [8.5, 6.1]]) {
     table(H, R, i, j, 2.05, 1.45, .62, 'coral');
+    box(H, R, i + .09, j + .07, 1.88, 1.3, .21, .08, 'sun', .5);
+    for (let k = 0; k < 3; k++) box(H, R, i + .16 + k * .59, j + .15, .48, .92, .31, .19, colors[k + 1], .6);
+    for (const di of [.03, 1.96]) {
+      H.line(R, [H.p(i + di, j + .06, .65), H.p(i + di, j + .06, 1.28), H.p(i + di, j + 1.37, 1.28), H.p(i + di, j + 1.37, .65)], 'blue', 1.8);
+    }
+    H.line(R, [H.p(i + .13, j + 1.45, .31), H.p(i + 1.91, j + 1.45, .59)], 'coral', 1.4);
     for (const di of [.14, 1.8]) for (const dj of [.1, 1.3]) oval(H, R, ...H.p(i + di, j + dj, .08), 3, 4, 'blue', .8);
     for (let k = 0; k < 6; k++) volume(H, R, i + .13 + k * .29, j + .12, .75, .2, .43 + k % 2 * .12, colors[k % 5]);
     for (let k = 0; k < 4; k++) box(H, R, i + .13 + k * .43, j + .82, .37, .48, .75, .07, colors[(k + 2) % 5], .5);
@@ -161,6 +194,16 @@ const room = world('tokyo-jimbocho-books', 'One book too many — Jimbocho secon
   H.line(R, arcPts(bx, by - 25, 7, 10, Math.PI, Math.PI * 2, 10), 'blue', 2);
   H.line(R, [[bx - 6, by - 9], [bx + 6, by - 11]], 'paper', .8);
   bookshopStock(H, R);
+  for (const j of [8.29, 11.35]) box(H, R, .02, j, .23, .14, .02, 3.49, 'coral', .6);
+  box(H, R, .02, 8.28, .28, 3.21, 3.41, .16, 'coral', .65);
+  box(H, R, .02, 8.27, .39, 3.25, .04, .09, 'sun', .55);
+  for (const j of [8.55, 9.55, 10.55]) H.line(R, [H.p(.04, j, 1.1), H.p(.04, j + .48, 2.8)], 'paper', 1.3);
+  box(H, R, 10.49, 4.3, 1.18, 2.41, 1.94, .12, 'coral', .6);
+  for (const j of [4.31, 6.58]) box(H, R, 10.51, j, 1.14, .11, .02, 1.95, 'coral', .58);
+  const [px, py] = H.p(8.95, 10.55, 1.16);
+  shape(H, R, [[px - 6, py], [px + 6, py], [px + 7, py - 18], [px - 7, py - 18]], 'paper', 1, .6);
+  for (let k = 0; k < 4; k++) H.line(R, [[px - 4 + k * 3, py - 12], [px - 7 + k * 5, py - 34 + k % 2 * 6]], k % 2 ? 'coral' : 'blue', 1.5);
+
 }, (H, R, t) => {
   const u = cycle(t, 15), lift = Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .15) / .65)));
   H.at(3.35, 4.8, 0, HH => {

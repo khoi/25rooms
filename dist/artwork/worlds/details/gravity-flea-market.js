@@ -115,6 +115,14 @@ function inverted(H, R, i, j, z, t, ink, angle = Math.PI, clip = 'talk') {
 
 export default function enrich(room) {
   const bazaar = world(room.id, room.title, { floor: 'paper', tone: 1, wall: 'blue', wallTone: .38, height: 4.8, pattern: 'tiles', head: room.head }, (H, R) => {
+    for (const j of [.6, 5.5, 11.4]) {
+      box(H, R, .04, j, .24, .19, .03, 4.65, 'sun', .65);
+      H.line(R, [H.p(.3, j, 4), H.p(.3, j + .45, 4.57)], 'coral', 2);
+    }
+    box(H, R, .03, .5, .27, 11.1, 4.62, .12, 'coral', .7);
+    box(H, R, .05, .03, 11.4, .27, 4.62, .12, 'sun', .7);
+    for (const i of [5.5, 8.3, 11.4]) box(H, R, i, .06, .16, .35, 3.5, 1.1, 'coral', .6);
+    for (const j of [1, 3, 6.5, 9.5]) for (const z of [1.12, 2.52, 3.4]) H.line(R, [H.p(.05, j, z - .4), H.p(.55, j, z), H.p(.05, j, z)], 'sun', 1.5);
     shape(H, R, H.tile(4.3, 4.6, 3.3, 4.3, .02), 'coral', .19);
     for (let k = 0; k < 8; k++) H.line(R, [H.p(4.3, 4.7 + k * .55, .025), H.p(7.6, 4.7 + k * .55, .025)], 'sun', 1.2, { tone: .7 });
 
@@ -134,6 +142,23 @@ export default function enrich(room) {
       box(H, R, .06, 6.1, .55, 4.9, z, .1, 'sun', .7);
       for (let k = 0; k < 5; k++) antique(H, R, ...H.p(.36, 6.45 + k, z + .1), ['guitar', 'horn', 'books', 'radio', 'guitar'][k], inks[k % 4], k === 1 ? .53 : .6);
     }
+    box(H, R, 1.5, .06, 3.35, .38, 1.1, .12, 'sun', .7);
+    box(H, R, 1.5, .06, 3.35, .22, 3.48, .12, 'coral', .7);
+    for (const i of [1.5, 4.7]) box(H, R, i, .06, .15, .38, 1.15, 2.33, 'sun', .65);
+    for (let k = 0; k < 3; k++) {
+      const [x, y] = H.p(2.1 + k * 1.06, .34, 2.15);
+      oval(H, R, x, y, 17, 23, 'paper');
+      oval(H, R, x, y, 12, 18, 'teal', .35);
+      antique(H, R, x, y + 10, ['clock', 'fan', 'globe'][k], 'coral', .48);
+      H.line(R, [[x, y - 23], [x, y - 39]], 'sun', 1);
+    }
+    const [scaleX, scaleY] = H.p(3.2, .38, 1.24);
+    H.line(R, [[scaleX, scaleY], [scaleX, scaleY - 29]], 'blue', 2);
+    H.line(R, [[scaleX - 23, scaleY - 29], [scaleX + 23, scaleY - 29]], 'sun', 3);
+    for (const dx of [-21, 21]) {
+      H.line(R, [[scaleX + dx, scaleY - 29], [scaleX + dx - 9, scaleY - 7], [scaleX + dx + 9, scaleY - 7], [scaleX + dx, scaleY - 29]], 'blue', .7);
+      oval(H, R, scaleX + dx, scaleY - 7, 10, 4, 'coral');
+    }
     box(H, R, 5.7, .08, 5.6, .48, 3.65, .12, 'sun', .85);
     for (let k = 0; k < 6; k++) {
       const [x, y] = H.p(6.05 + k * .96, .35, 3.64);
@@ -143,6 +168,19 @@ export default function enrich(room) {
 
     box(H, R, 1.25, 3.65, 2.8, 1.6, 0, .18, 'blue', .15);
     table(H, R, 1.3, 3.7, 2.65, 1.45, .86, 'coral');
+    box(H, R, 1.4, 3.8, 2.4, 1.2, .2, .08, 'sun', .6);
+    antique(H, R, ...H.p(1.9, 4.6, .3), 'case', 'teal', .55);
+    antique(H, R, ...H.p(3.1, 4.5, .3), 'books', 'coral', .6);
+    box(H, R, 1.35, 3.68, 2.55, .12, .98, .7, 'teal', .65);
+    for (let k = 0; k < 5; k++) {
+      const [x, y] = H.p(1.62 + k * .46, 3.84, 1.47);
+      H.line(R, [[x, y], [x, y + 17]], 'sun', 2);
+      oval(H, R, x, y + 19, 3 + k % 2 * 2, 4, 'paper');
+      H.dot(x, y - 3, 1.6, 'blue');
+    }
+    box(H, R, 3.62, 4.8, .33, .48, .96, .2, 'blue');
+    H.line(R, [H.p(3.8, 5, 1.18), H.p(3.8, 5, 1.5)], 'sun', 2);
+    H.line(R, [H.p(3.65, 5, 1.5), H.p(4, 5, 1.5)], 'blue', 2);
     for (let k = 0; k < 3; k++) antique(H, R, ...H.p(1.6 + k * .78, 4.38, 1), ['clock', 'sewing', 'radio'][k], 'teal', .62);
     for (let k = 0; k < 5; k++) {
       const [x, y] = H.p(1.5 + k * .44, 4.9, 1);
@@ -184,6 +222,17 @@ export default function enrich(room) {
     for (let k = 0; k < 7; k++) H.line(R, [H.p(8.17 + k * .47, 7.51, .04), H.p(8.17 + k * .47, 10.82, .04)], 'paper', 1.3);
     antique(H, R, ...H.p(10.7, 8.6, .06), 'chair', 'coral', 1.12);
     antique(H, R, ...H.p(9.85, 10.25, .06), 'lamp', 'sun', 1.1);
+    box(H, R, 8.05, 10.55, 1.35, .75, .03, .3, 'sun', .6);
+    box(H, R, 8.05, 10.5, 1.35, .09, .35, .68, 'teal', .65);
+    for (const i of [8.2, 9.17]) {
+      H.line(R, [H.p(i, 10.6, .4), H.p(i, 10.6, .93)], 'sun', 2);
+      oval(H, R, ...H.p(i, 10.6, .68), 5, 6, 'paper');
+    }
+    for (let k = 0; k < 3; k++) {
+      const [x, y] = H.p(8.25 + k * .36, 10.96, .38);
+      oval(H, R, x, y, 7, 4, 'coral');
+      oval(H, R, x, y - 2, 3, 2, 'blue');
+    }
     antique(H, R, ...H.p(8.7, 9.85, .06), 'case', 'teal', .9);
     antique(H, R, ...H.p(10.8, 10.2, .06), 'fan', 'coral', .8);
     box(H, R, 9.2, 6.25, 1.25, .75, .05, .6, 'coral');

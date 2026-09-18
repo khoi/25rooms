@@ -1,7 +1,7 @@
 import { benchFrame, bentTube, branchSpray, caneChair, cushion, floorLight, metal, pendant, surface, timber, vessel } from '../materials.js';
 import { masonry, archedBay, cabinetFrame, rackFrame, boardFloor } from '../structure.js';
 import { caster } from '../joinery.js';
-import { boundBook } from '../furnishings.js';
+import { boundBook, coiledLine, foldedCloth, satchel } from '../furnishings.js';
 import { TAU, actor, cycle, ell, glow, shape, wallPt, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -172,13 +172,54 @@ const room = world(
       for (let n = 0; n < 7; n++) H.line(R, [P(0.23 + n * 0.34, 0.24), P(0.23 + n * 0.34, 0.5 + (n % 3) * 0.17)], 'sun', 1.4);
     });
     cabinetFrame(H, R, 0.49, 0.64, 2.16, 3.71, 0.04, 3.7, 1, 'sun', (i, j, w, d, z, h) => {
-      for (let row = 0; row < 5; row++) {
-        timber(H, R, i, j, w, d, z + row * 0.68, 0.08, 'sun');
-        for (let n = 0; n < 5; n++)
-          boundBook(H, R, i + 0.12, j + 0.1 + n * 0.65, w - 0.24, 0.52, z + 0.13 + row * 0.68, ['teal', 'paper', 'coral'][(row + n) % 3]);
+      for (let row = 0; row < 4; row++) {
+        const level = z + row * 0.87;
+        timber(H, R, i, j, w, d, level, 0.09, 'sun');
+        if (row < 2) {
+          for (let n = 0; n < 3; n++) {
+            surface(H, R, H.faceJ(i + w, j + 0.1 + n * 1.09, 0.99, level + 0.13, level + 0.74), 'teal', 0.59);
+            H.line(R, [H.p(i + w + 0.01, j + 0.41 + n * 1.09, level + 0.53), H.p(i + w + 0.01, j + 0.75 + n * 1.09, level + 0.53)], 'sun', 2);
+          }
+        } else {
+          for (let n = 0; n < 7; n++) {
+            const jj = j + 0.12 + n * 0.36;
+            timber(H, R, i + 0.18, jj, w - 0.3, 0.22, level + 0.12, 0.43 + n % 3 * 0.08, ['teal', 'paper', 'coral'][n % 3]);
+            H.line(R, [H.p(i + w - 0.1, jj + 0.05, level + 0.22), H.p(i + w - 0.1, jj + 0.17, level + 0.22)], 'sun', 0.8);
+          }
+          boundBook(H, R, i + 0.1, j + 2.92, w - 0.2, 0.46, level + 0.13, 'paper');
+        }
       }
     });
+    for (const i of [3.88, 5.49, 7.1]) {
+      surface(H, R, H.faceI(i, 0.23, 1.28, 3.08, 4.01), 'sun', 0.52);
+      surface(H, R, H.faceI(i + 0.11, 0.25, 1.06, 3.18, 3.91), 'paper', 1);
+      surface(H, R, [H.p(i + 0.18, 0.27, 3.29), H.p(i + 0.51, 0.27, 3.81), H.p(i + 1.06, 0.27, 3.38)], i < 5 ? 'coral' : 'teal', 0.69);
+    }
+    surface(H, R, H.faceJ(0.26, 5.02, 2.93, 2.92, 4.02), 'teal', 0.78);
+    for (let n = 0; n < 13; n++) H.line(R, [H.p(0.29, 5.15 + n * 0.21, 3.01), H.p(0.29, 5.15 + n * 0.21, 3.91)], 'sun', 0.8);
+    for (let n = 0; n < 3; n++) {
+      const i = 9.3 + n * 0.57;
+      surface(H, R, H.faceI(i, 0.39, 0.45, 0.28, 1.11), 'teal', 0.54);
+      H.line(R, [H.p(i + 0.08, 0.41, 0.41), H.p(i + 0.08, 0.41, 0.97)], 'paper', 1);
+    }
     piano(H, R);
+    for (const i of [3.77, 7.87]) {
+      surface(H, R, H.faceI(i, 2.69, 0.18, 1.18, 1.95), 'sun', 0.45);
+      for (const z of [1.26, 1.86]) H.dot(...H.p(i + 0.08, 2.7, z), 1.5, 'paper');
+    }
+    timber(H, R, 4.02, 2.58, 3.74, 0.06, 0.51, 0.08, 'teal');
+    for (const i of [4.31, 5.29, 6.27, 7.25]) H.outline(R, [H.p(i, 2.59, 0.64), H.p(i + 0.31, 2.59, 0.82), H.p(i + 0.61, 2.59, 0.64)], 'sun', 0.7);
+    const [mx, my] = H.p(4.22, 1.28, 2.31);
+    surface(H, R, [[mx - 9, my], [mx + 9, my], [mx + 5, my - 26], [mx - 5, my - 26]], 'sun', 0.65);
+    H.line(R, [[mx, my - 5], [mx + 3, my - 22]], 'blue', 1.2);
+    H.dot(mx + 2, my - 17, 2, 'coral');
+    foldedCloth(H, R, 6.66, 1.18, 0.68, 0.58, 2.33, 'paper', 'teal');
+    bentTube(H, R, [[5.49, 0.99, 2.3], [5.49, 0.99, 3.14], [6.18, 1.2, 3.14]], 1.9, 'sun');
+    metal(H, R, 5.75, 1.11, 1.1, 0.23, 3.07, 0.14, 'sun');
+    for (const i of [3.44, 4.32]) bentTube(H, R, [[i, 5.07, 0.06], [3.88, 5.07, 0.31], [3.88, 5.07, 1.72]], 1.8, 'teal');
+    surface(H, R, [H.p(3.22, 4.91, 1.63), H.p(4.51, 4.91, 1.63), H.p(4.51, 4.69, 2.31), H.p(3.22, 4.69, 2.31)], 'sun', 0.68);
+    surface(H, R, [H.p(3.31, 4.92, 1.7), H.p(4.42, 4.92, 1.7), H.p(4.42, 4.71, 2.25), H.p(3.31, 4.71, 2.25)], 'paper', 1);
+    for (let n = 0; n < 4; n++) H.line(R, [H.p(3.42, 4.75 + n * 0.04, 2.14 - n * 0.1), H.p(4.28, 4.75 + n * 0.04, 2.14 - n * 0.1)], 'blue', 0.5);
     surface(H, R, H.tile(3.29, 4.47, 4.24, 3.89, 0.034), 'coral', 0.25);
     for (let n = 0; n < 15; n++) H.line(R, [H.p(3.44 + n * 0.26, 8.36, 0.04), H.p(3.44 + n * 0.26, 8.62, 0.04)], 'sun', 0.9);
     for (let n = 0; n < 4; n++) {
@@ -192,7 +233,8 @@ const room = world(
     cushion(H, R, 0.57, 8.33, 0.33, 2.71, 0.79, 0.68, 'coral');
     cushion(H, R, 0.89, 8.51, 0.83, 0.8, 0.82, 0.18, 'sun');
     benchFrame(H, R, 4.08, 9.67, 2.06, 1.33, 0.71, 'sun');
-    boundBook(H, R, 4.25, 9.86, 1.29, 0.91, 0.76, 'paper');
+    foldedCloth(H, R, 4.19, 9.84, 1.55, 0.99, 0.75, 'teal', 'paper');
+    boundBook(H, R, 4.25, 9.86, 1.02, 0.73, 0.84, 'paper');
     glass(H, R, 5.81, 10.54, 0.76, 'teal');
     caneChair(H, R, 8.37, 9.03, 'sun', true);
     cushion(H, R, 8.4, 9.14, 0.82, 0.53, 0.7, 0.14, 'coral');
@@ -236,6 +278,15 @@ const room = world(
     rackFrame(H, R, 10.0, 8.51, 1.23, 2.22, 0.04, [0.14, 0.92], 'sun', (i, j, w, d, z, row) => {
       for (let n = 0; n < 3; n++) boundBook(H, R, i + 0.08, j + 0.11 + n * 0.57, w - 0.16, 0.48, z + 0.08, row ? 'paper' : 'teal');
     });
+    metal(H, R, 10.0, 2.86, 1.53, 1.05, 0.08, 1.18, 'teal');
+    surface(H, R, H.faceI(10.13, 3.92, 1.27, 0.2, 1.03), 'blue', 0.78);
+    for (let n = 0; n < 9; n++) H.line(R, [H.p(10.21 + n * 0.14, 3.94, 0.24), H.p(10.21 + n * 0.14, 3.94, 0.96)], 'paper', 0.55);
+    for (const i of [10.29, 10.68, 11.07]) H.dot(...H.p(i, 3.94, 1.16), 2, i === 10.68 ? 'coral' : 'sun');
+    coiledLine(H, R, 10.79, 4.26, 0.06, 15, 'blue');
+    bentTube(H, R, [[10.22, 3.94, 1.12], [9.72, 4.26, 0.07], [10.63, 4.45, 0.07]], 0.85, 'sun');
+    satchel(H, R, 7.31, 10.57, 0.06, 'coral', 0.89);
+    glass(H, R, 4.57, 10.14, 0.92, 'coral');
+    for (const j of [9.01, 10.69]) H.line(R, [H.p(0.95, j, 0.91), H.p(2.73, j, 0.91)], 'paper', 1);
     pendant(H, R, 5.56, 6.31, 4.45, 3.21, 'paper', 1.02);
   },
   (H, R, t) => {

@@ -106,6 +106,12 @@ const room = world(
       [7.84, 3.54]
     ])
       archedBay(H, R, 'ne', pos, w, 0.89, 2.13, 'teal');
+    surface(H, R, H.faceJ(0.18, 3.03, 3.15, 1.51, 2.91), 'teal', 0.63);
+    surface(H, R, H.faceJ(0.21, 3.18, 2.85, 1.64, 2.78), 'paper', 1);
+    for (const [j, z, c] of [[3.4, 1.87, 'coral'], [4.14, 2.18, 'sun'], [5.06, 1.89, 'teal']]) {
+      surface(H, R, H.faceJ(0.24, j, 0.59, z, z + 0.43), c, 0.55);
+      H.dot(...H.p(0.26, j + 0.3, z + 0.37), 1.6, 'blue');
+    }
     for (const i of [0.34, 11.46]) {
       metal(H, R, i, 1.42, 0.17, 0.17, 0.02, 3.62, 'teal');
       metal(H, R, i - 0.11, 1.3, 0.39, 0.39, 0.02, 0.12, 'blue');
@@ -121,6 +127,20 @@ const room = world(
         0.4
       );
     for (let n = 0; n < 14; n++) H.line(R, [H.p(0.68 + n * 0.81, 2.73, 3.31), H.p(0.68 + n * 0.81, 2.73, 3.14)], 'teal', 1.1);
+    for (const i of [0.34, 5.81, 11.46]) {
+      bentTube(H, R, [[i, 0.38, 3.28], [i, 2.68, 3.31], [i, 0.38, 2.5]], 2, 'teal');
+      H.dot(...H.p(i, 2.7, 3.3), 2.4, 'coral');
+    }
+    for (const i of [0.34, 11.46]) {
+      metal(H, R, i - 0.22, 1.12, 0.62, 0.65, 0.13, 0.22, 'paper');
+      bentTube(H, R, [[i, 1.42, 1.68], [i + 0.28, 1.42, 1.68], [i + 0.28, 1.42, 1.5]], 2.4, 'sun');
+    }
+    timber(H, R, 2.83, 0.35, 3.72, 1.21, 0.74, 0.12, 'teal');
+    for (const i of [3.0, 6.25]) timber(H, R, i, 0.48, 0.18, 0.85, 0.03, 0.74, 'teal');
+    surface(H, R, H.faceI(3.01, 1.59, 1.66, 0.12, 0.65), 'sun', 0.48);
+    H.line(R, [H.p(3.58, 1.62, 0.42), H.p(4.1, 1.62, 0.42)], 'blue', 2);
+    foldedCloth(H, R, 4.91, 0.6, 1.27, 0.72, 0.87, 'coral', 'paper');
+    boundBook(H, R, 3.18, 0.64, 1.23, 0.66, 0.87, 'paper');
     planter(H, R, 0.48, 2.72, 1.75, 4.25);
     planter(H, R, 8.79, 0.88, 2.54, 1.71);
     planter(H, R, 9.88, 8.88, 1.44, 2.43);
@@ -148,6 +168,15 @@ const room = world(
         'teal'
       );
     timber(H, R, 4.11, 5.03, 3.27, 2.44, 1.04, 0.16, 'sun');
+    for (const j of [5.22, 7.24]) metal(H, R, 4.23, j, 3.03, 0.07, 0.88, 0.12, 'teal');
+    bentTube(H, R, [[4.36, 6.18, 0.51], [7.07, 6.18, 0.51]], 2, 'blue');
+    for (const i of [4.34, 7.1]) H.dot(...H.p(i, 6.18, 0.59), 2.1, 'sun');
+    metal(H, R, 6.64, 5.06, 0.61, 0.35, 1.22, 0.36, 'teal');
+    for (const i of [6.8, 7.08]) {
+      oval(H, R, ...H.p(i, 5.43, 1.43), 4, 4, 'paper', 1);
+      H.line(R, [H.p(i, 5.44, 1.43), H.p(i + 0.05, 5.44, 1.5)], 'coral', 1);
+      H.dot(...H.p(i, 5.22, 1.61), 2.4, 'sun');
+    }
     surface(H, R, H.tile(4.63, 5.42, 2.26, 1.78, 1.215), 'paper', 1);
     for (let r = 0; r < 8; r++)
       for (let c = 0; c < 8; c++) if ((r + c) % 2) surface(H, R, H.tile(4.69 + c * 0.269, 5.46 + r * 0.214, 0.267, 0.211, 1.224), 'teal', 0.54, 0.2);
@@ -164,10 +193,22 @@ const room = world(
     ])
       piece(H, R, ...H.p(4.82 + c * 0.269, 5.57 + r * 0.214, 1.23), ink, k, 0.62);
     shallowTray(H, R, 4.28, 5.13, 0.31, 1.02, 1.23, 'coral');
+    for (let n = 0; n < 3; n++) piece(H, R, ...H.p(4.43, 5.36 + n * 0.3, 1.42), n % 2 ? 'paper' : 'blue', n === 2, 0.6);
+    H.line(R, [H.p(5.77, 5.43, 1.23), H.p(5.77, 7.19, 1.23)], 'coral', 0.65);
     vessel(H, R, 7.17, 6.81, 1.22, 4, 9, 'paper');
     benchFrame(H, R, 2.59, 8.75, 2.48, 1.71, 0.92, 'teal');
     boundBook(H, R, 2.86, 8.98, 1.18, 0.86, 0.96, 'paper');
     foldedCloth(H, R, 4.26, 9.14, 0.49, 0.8, 0.96, 'coral', 'paper');
+    shallowTray(H, R, 2.78, 9.06, 1.16, 0.8, 0.17, 'teal');
+    for (let n = 0; n < 4; n++) piece(H, R, ...H.p(3.02 + (n % 2) * 0.47, 9.27 + Math.floor(n / 2) * 0.3, 0.38), 'blue', n === 3, 0.7);
+    H.line(R, [H.p(3.4, 9.01, 1.0), H.p(3.41, 9.96, 1.0)], 'coral', 1.3);
+    for (const i of [6.25, 6.68]) {
+      bentTube(H, R, [[i, 10.9, 0.04], [i, 10.02, 1.62], [i + 0.84, 10.02, 1.62], [i + 0.84, 10.9, 0.04]], 2.1, 'teal');
+      surface(H, R, H.faceI(i + 0.08, 10.07, 0.68, 1.04, 1.48), 'coral', 0.6);
+      surface(H, R, [H.p(i + 0.08, 10.8, 0.15), H.p(i + 0.76, 10.8, 0.15), H.p(i + 0.76, 10.19, 1.0), H.p(i + 0.08, 10.19, 1.0)], 'sun', 0.54);
+    }
+    metal(H, R, 9.24, 5.11, 0.64, 1.47, 0.03, 0.035, 'blue');
+    for (let n = 0; n < 9; n++) H.line(R, [H.p(9.3, 5.2 + n * 0.15, 0.08), H.p(9.82, 5.2 + n * 0.15, 0.08)], 'paper', 1.3);
     for (const i of [7.77, 8.31, 8.85]) metal(H, R, i, 9.04, 0.075, 0.075, 0.02, 0.78, 'teal');
     bentTube(
       H,

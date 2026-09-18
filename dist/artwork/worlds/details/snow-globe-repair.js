@@ -2,6 +2,33 @@ import { world, box, table, bench, shape, oval, stroke, ell, arcPts, actor, cycl
 
 function village(H, R, x, y, s = 1, variant = 0) {
   oval(H, R, x, y, 16 * s, 4 * s, 'paper', 1);
+  const point = (a, b) => [x + a * s, y + b * s];
+  if (variant % 4 === 1) {
+    H.fill(ell(x, y - 2 * s, 17 * s, 4 * s), 'teal', .6, { fine: true });
+    shape(H, R, [[-7, -3], [-5, -25], [4, -25], [7, -3]].map(p => point(...p)), 'paper', 1, .65);
+    for (const z of [-8, -16]) shape(H, R, [[-6, z], [5, z], [5, z - 4], [-5, z - 4]].map(p => point(...p)), 'coral', .8, .4);
+    shape(H, R, [[-6, -25], [-6, -32], [5, -32], [5, -25]].map(p => point(...p)), 'sun', .85, .5);
+    shape(H, R, [[-8, -32], [0, -38], [8, -32]].map(p => point(...p)), 'blue', 1, .6);
+    H.line(R, [point(0, -25), point(0, -32)], 'blue', .65);
+    H.line(R, [point(-12, 0), point(-8, -4), point(-4, 0)], 'paper', 1.1);
+    return;
+  }
+  if (variant % 4 === 2) {
+    H.fill(ell(x, y - 2 * s, 17 * s, 4 * s), 'teal', .5, { fine: true });
+    shape(H, R, [[-15, -8], [14, -8], [9, -2], [-9, -2]].map(p => point(...p)), 'coral', .8, .6);
+    H.line(R, [point(0, -7), point(0, -31)], 'blue', 1.1);
+    shape(H, R, [[-2, -29], [-2, -11], [-14, -11]].map(p => point(...p)), 'paper', 1, .5);
+    shape(H, R, [[2, -26], [13, -11], [2, -11]].map(p => point(...p)), 'sun', .7, .5);
+    H.line(R, [point(-14, 1), point(-8, -1), point(-3, 1), point(3, -1), point(10, 1)], 'paper', 1);
+    return;
+  }
+  if (variant % 4 === 3) {
+    shape(H, R, [[-16, 0], [-9, -23], [-2, -10], [7, -32], [17, 0]].map(p => point(...p)), 'teal', .8, .6);
+    shape(H, R, [[2, -20], [7, -32], [12, -18], [8, -21], [5, -19]].map(p => point(...p)), 'paper', 1, .4);
+    shape(H, R, [[-13, -12], [-9, -23], [-4, -13], [-9, -16]].map(p => point(...p)), 'paper', 1, .4);
+    oval(H, R, ...point(-6, -4), 4 * s, 2 * s, 'sun', .8);
+    return;
+  }
   for (let k = 0; k < 3; k++) {
     const tx = x + (-12 + k * 12) * s, ty = y - (k % 2) * 3 * s;
     if ((k + variant) % 3 === 0) {
@@ -21,8 +48,9 @@ function village(H, R, x, y, s = 1, variant = 0) {
 function globe(H, R, i, j, z, r = 17, variant = 0, t = 0, cracked = false) {
   const [x, y] = H.p(i, j, z), cy = y - r * 1.02;
   const glass = ell(x, cy, r, r * 1.1, 32);
-  shape(H, R, glass, 'paper', .95, .8);
-  H.tint(glass, 'teal', .1);
+  H.fill(glass, 'teal', .16, { fine: true });
+  H.outline(R, glass, 'blue', .8);
+  H.line(R, arcPts(x + 1, cy, r * .92, r * 1.02, -.65, 1.14, 12), 'teal', 1.6);
   H.clip(glass, () => {
     village(H, R, x, y - 4, r / 22, variant);
     for (let k = 0; k < 15; k++) {
@@ -32,7 +60,7 @@ function globe(H, R, i, j, z, r = 17, variant = 0, t = 0, cracked = false) {
   });
   H.line(R, arcPts(x - 2, cy, r * .74, r * .83, 3.35, 4.4, 10), 'paper', 2.2);
   if (cracked) stroke(H, R, [[x + r * .3, cy - r * .88], [x, cy - r * .35], [x + r * .22, cy], [x + r * .08, cy + r * .48]], 'blue', .9);
-  shape(H, R, [[x - r * .88, y - 3], [x + r * .88, y - 3], [x + r * .95, y + 3], [x - r * .95, y + 3]], variant % 2 ? 'sun' : 'coral', .85);
+  shape(H, R, [[x - r * .88, y - 3], [x + r * .88, y - 3], [x + r * .95, y + 3], [x - r * .95, y + 3]], variant % 2 ? 'blue' : 'coral', .85);
   H.line(R, [[x - r * .75, y], [x + r * .75, y]], 'blue', .65);
 }
 
@@ -86,17 +114,33 @@ function shell(H, R, i, j, z, r = 17) {
 }
 
 export default function enrich(room) {
-  const richer = world(room.id, room.title, { floor: 'coral', tone: .23, wall: 'blue', wallTone: .75, height: 3.8, pattern: 'boards' }, (H, R) => {
+  const richer = world(room.id, room.title, { floor: 'blue', tone: .43, wall: 'blue', wallTone: .75, height: 3.8, pattern: 'boards' }, (H, R) => {
+    const [lightX, lightY] = H.p(5.1, 6.35, .03);
+    H.light(lightX, lightY, 190, 91, .88);
+    H.glow(lightX, lightY, 155, 72, 'sun', .16);
+    for (const [i, j, w, d] of [[3.3, 5.1, 4.45, 2.25], [8.75, 2.9, 2.4, 1.5], [7.95, 9.55, 3, 1.5]]) H.tint(H.tile(i + .25, j + .35, w, d, .04), 'blue', .4, { fine: true });
+    H.fill(H.faceI(.5, .5, 10.76, .35, 3.48), 'blue', .95, { fine: true });
+    box(H, R, .45, .46, 10.94, 1.06, 0, .3, 'teal', .6);
+    for (const i of [.47, 3.14, 5.81, 8.48, 11.15]) {
+      box(H, R, i, .49, .16, .95, .3, 3.16, 'coral', .75);
+      H.line(R, [H.p(i + .04, 1.45, .38), H.p(i + .04, 1.45, 3.4)], 'sun', 1);
+    }
+    box(H, R, .43, .44, 11, 1.1, 3.49, .16, 'teal', .65);
+    for (let n = 0; n < 8; n++) {
+      const i = .64 + n * 1.31;
+      shape(H, R, H.faceI(i, 1.53, 1.16, .08, .53), 'coral', .65);
+      H.line(R, [H.p(i + .43, 1.55, .34), H.p(i + .72, 1.55, .34)], 'sun', 2);
+    }
     for (const z of [.7, 1.8, 2.9]) {
-      box(H, R, .55, .65, 10.7, .76, z, .12, 'sun', .78);
+      box(H, R, .55, .65, 10.7, .76, z, .12, 'teal', .68);
       for (let k = 0; k < 8; k++) {
-        globe(H, R, 1 + k * 1.36, 1.02, z + .14, 13 + k % 3, k, k * .3);
+        globe(H, R, 1 + k * 1.36, 1.02, z + .14, 13 + k % 3, k + Math.round(z * 2), k * .3);
         tag(H, R, 1 + k * 1.36, 1.42, z + .08, String(11 + k + Math.floor(z) * 8));
       }
     }
 
     const peg = [H.p(.04, 2.25, 1.5), H.p(.04, 5.15, 1.5), H.p(.04, 5.15, 3.4), H.p(.04, 2.25, 3.4)];
-    shape(H, R, peg, 'sun', .55);
+    shape(H, R, peg, 'teal', .4);
     for (let j = 2.4; j < 5; j += .38) for (let z = 1.7; z < 3.3; z += .32) H.dot(...H.p(.05, j, z), .6, 'blue', .5);
     for (let k = 0; k < 7; k++) {
       const [x, y] = H.p(.06, 2.55 + k % 4 * .64, 2.9 - Math.floor(k / 4) * .7);
@@ -125,14 +169,44 @@ export default function enrich(room) {
     oval(H, R, fx, fy - 36, 22, 6, 'sun', .7);
 
     stroke(H, R, [[fx, fy + 6], [fx - 1, fy + 12], [fx - 33, fy + 12], [fx - 33, fy + 18]], 'blue', 4);
+    for (const i of [9.54, 10.52]) {
+      H.line(R, [H.p(i, 3.1, 1.28), H.p(i, 3.1, 2.6)], 'sun', 2);
+      H.dot(...H.p(i, 3.84, 1.36), 1.8, 'paper');
+    }
+    stroke(H, R, [H.p(10.7, 3.65, 1.4), H.p(11.05, 3.65, 1.2), H.p(11.05, 3.65, .2), H.p(10.3, 4.25, .12)], 'blue', 2.5);
+    box(H, R, 9.07, 2.98, 1.58, .7, .2, .18, 'blue', .8);
+    for (const i of [9.16, 9.55, 9.94, 10.33]) jar(H, R, i, 3.34, .42, 'teal', '');
     globe(H, R, 9, 3.77, 1.18, 19, 2, 0);
     const [gx, gy] = H.p(10.55, 3.84, 1.83);
     oval(H, R, gx, gy, 9, 9, 'paper', 1);
     H.line(R, [[gx, gy], [gx + 4, gy - 4]], 'coral', 1.2);
     H.dot(gx, gy, 1.5, 'blue');
     jar(H, R, 10.75, 4.1, 1.18, 'teal', 'WATER');
-    table(H, R, 3.25, 4.95, 4.35, 2.2, 1.07, 'teal');
-    shape(H, R, H.tile(3.45, 5.15, 1.6, 1.7, 1.21), 'paper', .92, .6);
+    H.fill(H.faceI(4.1, 6.85, 2.6, .1, 1.06), 'blue', .94, { fine: true });
+    for (const i of [3.35, 6.63]) {
+      box(H, R, i, 5.04, .78, 1.97, .1, .85, 'coral', .68);
+      for (const z of [.23, .49, .75]) {
+        shape(H, R, H.faceI(i + .07, 7.02, .64, z - .1, z + .1), 'sun', .63);
+        H.line(R, [H.p(i + .25, 7.03, z), H.p(i + .51, 7.03, z)], 'blue', 1.8);
+      }
+    }
+    box(H, R, 3.25, 4.95, 4.35, 2.2, 1.07, .14, 'teal', .7);
+    box(H, R, 3.31, 5.01, 4.22, .12, 1.21, .13, 'sun', .75);
+    H.line(R, [H.p(4.14, 5.24, .3), H.p(6.63, 5.24, .3)], 'blue', 3);
+    shape(H, R, H.tile(4.25, 5.25, 2.22, 1.4, .32), 'sun', .5);
+    for (let n = 0; n < 3; n++) shell(H, R, 4.65 + n * .64, 6.3, .34, 10);
+    box(H, R, 3.05, 6.48, .37, .4, 1.18, .2, 'blue', .8);
+    box(H, R, 2.94, 6.54, .22, .26, .72, .53, 'coral', .8);
+    const [vx, vy] = H.p(3.04, 6.68, .91);
+    H.line(R, [[vx - 8, vy], [vx + 9, vy]], 'sun', 2);
+    for (const dx of [-8, 9]) H.dot(vx + dx, vy, 2.2, 'blue');
+    const benchTop = H.tile(3.25, 4.95, 4.35, 2.2, 1.22);
+    H.clip(benchTop, () => {
+      const [x, y] = H.p(5.1, 6.05, 1.22);
+      H.light(x, y, 115, 49, .98);
+      H.glow(x, y, 96, 42, 'sun', .18);
+    });
+    shape(H, R, H.tile(3.45, 5.15, 1.6, 1.7, 1.23), 'paper', .98, .6);
     for (let k = 0; k < 5; k++) H.line(R, [H.p(3.53, 5.3 + k * .25, 1.22), H.p(4.85, 5.3 + k * .25, 1.22)], 'teal', .5);
     const [bx, by] = H.p(4.3, 5.85, 1.24);
     H.outline(R, ell(bx, by - 10, 18, 20), 'blue', .7);
@@ -151,6 +225,14 @@ export default function enrich(room) {
     stroke(H, R, [[mx, my], [mx - 7, my - 36], [mx + 10, my - 52], [mx + 27, my - 42]], 'blue', 2);
     oval(H, R, mx + 29, my - 35, 14, 12, 'paper', .75);
     H.outline(R, ell(mx + 29, my - 35, 11, 9), 'teal', 1.2);
+    stroke(H, R, [[mx - 4, my - 4], [mx - 17, my - 56], [mx + 12, my - 77], [mx + 44, my - 68]], 'blue', 3);
+    for (const [dx, dy] of [[-17, -56], [12, -77]]) oval(H, R, mx + dx, my + dy, 3.5, 3.5, 'sun', .9);
+    shape(H, R, [[mx + 34, my - 72], [mx + 48, my - 75], [mx + 62, my - 61], [mx + 32, my - 54]], 'teal', .9);
+    H.line(R, [[mx + 34, my - 54], [mx + 61, my - 60]], 'paper', 2.4);
+    const [repairX, repairY] = H.p(6.9, 5.27, 1.35);
+    shape(H, R, [[repairX - 8, repairY - 6], [repairX + 5, repairY - 8], [repairX + 8, repairY + 1], [repairX - 6, repairY + 2]], 'paper', 1, .5);
+    H.line(R, [[repairX - 4, repairY - 4], [repairX + 3, repairY - 5]], 'coral', 2);
+    H.line(R, [[repairX - 2, repairY - 7], [repairX - 2, repairY + 1]], 'blue', .6);
     stool(H, R, 4.3, 7.65);
     stool(H, R, 6.85, 7.75);
     table(H, R, 9, 6.05, 2.05, 1.52, 1.05, 'sun');
@@ -165,6 +247,14 @@ export default function enrich(room) {
 
     box(H, R, 9.35, 6.4, 1.2, .65, .1, .65, 'coral', .5);
     for (let k = 0; k < 4; k++) H.line(R, [H.p(9.4, 6.5 + k * .14, .54), H.p(10.45, 6.5 + k * .14, .54)], 'paper', 2);
+    box(H, R, .1, 6.5, .26, 1.05, 1.25, 1.28, 'coral', .65);
+    shape(H, R, H.faceJ(.38, 6.58, .86, 1.34, 2.44), 'blue', .82);
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = H.p(.4, 6.72 + n * .19, 2.27);
+      H.line(R, [[x, y], [x, y + 19 + n % 2 * 8]], 'sun', 1.3);
+      oval(H, R, x, y + 21 + n % 2 * 8, 3, 5, 'paper', 1);
+    }
+    shape(H, R, [H.p(.39, 7.55, 1.25), H.p(.39, 7.55, 2.54), H.p(.97, 7.86, 2.54), H.p(.97, 7.86, 1.25)], 'coral', .6);
     bench(H, R, .75, 9.25, 2.9, 'sun');
     globe(H, R, 1.07, 9.64, .7, 14, 5, 0, true);
     tag(H, R, 1.38, 9.94, .69, '18');

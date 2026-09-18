@@ -101,12 +101,48 @@ export default function enrich(room) {
     under(H, R) {
       slab(H, R, this, { ink: 'blue', tone: .23 });
       backWalls(H, R, this, 3.2, { ink: 'blue', tone: .86, style: 'brick' });
+      for (const a of [.3, 3.4, 6.9, 11.6]) {
+        for (let z = .05; z < 3.2; z += .46) {
+          box(H, R, a, .06, .31, .35, z, .42, 'blue', .64);
+          if (a < 1 || a > 11) box(H, R, .06, a, .35, .31, z, .42, 'blue', .64);
+        }
+      }
+      for (const j of [3.1, 5.3, 10.7]) {
+        const p = (a, z) => H.p(.12, j + a, z);
+        shape(H, R, [p(0, 1.95), p(.95, 1.95), p(.95, 2.77), p(.72, 3.02), p(.23, 3.02), p(0, 2.77)], 'blue', .98);
+        stroke(H, R, [p(-.08, 1.9), p(-.08, 2.8), p(.2, 3.12), p(.74, 3.12), p(1.04, 2.8), p(1.04, 1.9)], 'coral', 3);
+        for (let n = 0; n < 4; n++) H.line(R, [p(.1 + n * .23, 2.02), p(.1 + n * .23, 2.78)], 'sun', 1);
+      }
       for (let i = 0; i < 12; i++) for (let j = 0; j < 12; j++) H.outline(R, H.tile(i, j, 1, 1, .01), 'blue', .6, { tone: .4, amp: .12 });
       for (let k = 0; k < 14; k++) box(H, R, .8 + k * .75, 10.95, .65, .68, .04, .08, 'coral', .46);
 
+      shape(H, R, [H.p(.2, .66, 2.45), H.p(3.27, .66, 2.45), H.p(3.02, .14, 3.11), H.p(.47, .14, 3.11)], 'coral', .72);
+      box(H, R, .22, .62, 3.08, .19, 2.41, .11, 'sun', .8);
+      for (let k = 0; k < 8; k++) H.line(R, [H.p(.43 + k * .36, .82, 2.43), H.p(.43 + k * .36, .82, 2.53)], 'blue', 1.1);
+      pipe(H, R, [[2.56, .18, 3.12], [2.56, .18, 3.38], [5.67, .18, 3.38], [5.67, .18, 2.55]], 'teal', 5);
+      for (const i of [3.45, 4.7]) H.line(R, [H.p(i, .09, 3.16), H.p(i, .2, 3.4)], 'sun', 2);
+      shape(H, R, H.faceI(4.0, .13, 2.45, 1.88, 2.84), 'blue', .98);
+      for (const z of [1.89, 2.77]) box(H, R, 3.96, .13, 2.55, .32, z, .1, 'coral', .85);
+      for (let n = 0; n < 3; n++) {
+        const [x, y] = H.p(4.4 + n * .73, .38, 2.15);
+        oval(H, R, x, y, 7, 13, 'sun', .7);
+        H.line(R, [[x - 5, y - 8], [x + 5, y + 8]], 'coral', 1);
+        H.line(R, [[x, y - 14], [x, y - 20]], 'paper', .9);
+      }
       pipe(H, R, [[1.25, 1.15, 2.35], [1.25, 1.15, 2.92], [5.85, 1.15, 2.92], [5.85, 2.55, 2.92], [5.85, 2.55, 1.23]], 'coral', 9);
       pipe(H, R, [[.35, 1.0, 1.0], [.35, 5.75, 1.0], [2.5, 5.75, 1.0], [2.5, 5.75, .25]], 'teal', 5);
-      box(H, R, .7, 1.15, 2.4, 1.6, 0, 1.9, 'blue', .38);
+      box(H, R, .58, 1.03, 2.64, 1.85, 0, .19, 'blue', .95);
+      box(H, R, .7, 1.15, 2.4, 1.6, .19, 1.71, 'blue', .6);
+      for (const i of [.78, 3]) {
+        box(H, R, i, 1.23, .13, 1.45, .23, 1.66, 'coral', .8);
+        for (const z of [.35, .86, 1.43, 1.77]) H.dot(...H.p(i + .06, 2.78, z), 1.7, 'sun');
+      }
+      for (const z of [.3, 1.13, 1.82]) box(H, R, .7, 2.76, 2.4, .07, z, .08, 'coral', .7);
+      box(H, R, 1.07, 2.78, 1.52, .28, .12, .15, 'coral', .75);
+      for (let n = 0; n < 7; n++) H.line(R, [H.p(1.13 + n * .2, 2.81, .29), H.p(1.13 + n * .2, 3.01, .29)], 'blue', 1);
+      pipe(H, R, [[.78, 1.55, .4], [.42, 1.55, .4], [.42, 1.55, 2.65]], 'teal', 4);
+      gauge(H, R, .47, 1.57, 2.38, '');
+      for (const j of [1.63, 2.2]) H.line(R, [H.p(.75, j, 2.13), H.p(3.06, j, 2.13)], 'coral', 2);
       box(H, R, .5, .95, 2.8, 2, 1.9, .2, 'blue', .92);
       for (let k = 0; k < 6; k++) stone(H, R, .9 + k % 3 * .75, 1.2 + Math.floor(k / 3) * .6, 2.13, .66, k % 2 ? 'blue' : 'coral');
       const [fx, fy] = H.p(1.95, 2.78, .64);
@@ -120,7 +156,12 @@ export default function enrich(room) {
       H.outline(R, ell(vx, vy, 12, 12), 'coral', 3);
       H.line(R, [[vx - 10, vy], [vx + 10, vy]], 'coral', 2);
       H.line(R, [[vx, vy - 10], [vx, vy + 10]], 'coral', 2);
-      bench(H, R, 3.5, .85, 3.5, 'coral');
+      for (const i of [3.55, 6.75]) {
+        box(H, R, i, .9, .15, 1.55, .04, .56, 'blue', .85);
+        H.line(R, [H.p(i, .96, .53), H.p(i, 2.28, .08)], 'sun', 2);
+      }
+      for (let j = .9; j < 2.2; j += .24) box(H, R, 3.5, j, 3.5, .19, .55, .12, 'coral', .66);
+      for (const z of [.9, 1.12]) box(H, R, 3.5, .85, 3.5, .12, z, .12, 'coral', .7);
       for (let n = 0; n < 3; n++) towel(H, R, 3.75 + n * 1.0, 1.03, .7, 'paper', .7, .4);
       for (let n = 0; n < 5; n++) {
         const i = 7.6 + n * .75;
@@ -138,7 +179,17 @@ export default function enrich(room) {
         oval(H, R, x, y - 8, 4, 2, 'sun');
       }
 
-      box(H, R, 3.45, 3.2, 4.6, 3.8, .0, .35, 'blue', .44);
+      box(H, R, 3.45, 3.2, 4.6, 3.8, .0, .35, 'blue', .74);
+      for (let k = 0; k < 9; k++) {
+        box(H, R, 3.42 + k * .52, 6.97, .48, .19, .08, .34, k % 3 ? 'blue' : 'coral', .65);
+        H.line(R, [H.p(3.48 + k * .52, 7.17, .15), H.p(3.81 + k * .52, 7.17, .35)], 'paper', .6);
+      }
+      for (let k = 0; k < 7; k++) box(H, R, 8.05, 3.27 + k * .53, .16, .48, .07, .34, 'blue', .6);
+      for (const j of [3.27, 6.47]) {
+        pipe(H, R, [[3.15, j, .06], [3.15, j, .85], [3.15, j + .42, .85], [3.15, j + .42, .12]], 'coral', 2);
+      }
+      box(H, R, 4.27, 7.21, 2.1, .34, .02, .12, 'blue', .7);
+      for (let k = 0; k < 11; k++) H.line(R, [H.p(4.37 + k * .18, 7.25, .15), H.p(4.37 + k * .18, 7.5, .15)], 'paper', 1);
       pool(H, R, 3.7, 3.4, 4.1, 3.25, 'coral');
       H.tint(H.tile(3.87, 3.57, 3.78, 2.92, .12), 'sun', .38);
       for (const [i, j] of [[4.1, 4.15], [5.6, 3.8], [6.6, 5.25]]) {
@@ -182,6 +233,17 @@ export default function enrich(room) {
         shape(H, R, [H.p(.15, j, 1.59), H.p(.15, j + .55, 1.59), H.p(.15, j + .55, .72), H.p(.15, j, .72)], n % 2 ? 'paper' : 'teal', .95);
         for (const z of [.83, .94]) H.line(R, [H.p(.16, j, z), H.p(.16, j + .55, z)], 'coral', 1.4);
       }
+      box(H, R, .28, 10.92, .45, .75, .05, 1.02, 'blue', .7);
+      pipe(H, R, [[.52, 11.32, .3], [.52, 11.32, 1.78], [.52, 10.95, 1.78]], 'teal', 3);
+      oval(H, R, ...H.p(.52, 10.94, 1.76), 10, 3, 'sun', .8);
+      for (let n = 0; n < 4; n++) H.line(R, [H.p(.52, 10.93 + n * .04, 1.7), H.p(.52, 10.93 + n * .04, 1.42)], 'paper', .6);
+      box(H, R, 1.12, 11.1, 1.3, .62, .04, .07, 'blue', .8);
+      for (let k = 0; k < 7; k++) box(H, R, 1.17 + k * .17, 11.1, .1, .62, .12, .07, 'coral', .7);
+      bucket(H, R, 2.78, 11.24, 0, 'teal');
+      towel(H, R, 3.14, 11.19, .08, 'paper', .62, .43);
+      const [sx, sy] = H.p(2.79, 11.3, .49);
+      H.line(R, [[sx, sy + 8], [sx + 13, sy - 23]], 'sun', 2);
+      shape(H, R, [[sx + 9, sy - 26], [sx + 17, sy - 22], [sx + 21, sy - 31], [sx + 13, sy - 35]], 'blue', .8);
       table(H, R, .6, 9.7, .8, .8, .55, 'teal');
       towel(H, R, .66, 9.83, .69, 'paper');
       bucket(H, R, .85, 10.84);

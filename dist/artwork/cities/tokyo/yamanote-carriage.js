@@ -16,10 +16,20 @@ function bag(H, R, i, j, z, ink = 'blue') {
 }
 
 function bench(H, R, i, j, count, rear = true) {
+  for (const x of [i + .2, i + count * 1.15 - .4]) {
+    box(H, R, x, j + .18, .18, .84, .03, .39, 'paper', 1);
+    line(H, R, [H.p(x, j + .9, .07), H.p(x + .18, j + .9, .35)], 1.2);
+  }
+  box(H, R, i, j + .15, count * 1.15, .9, .24, .15, 'blue', .7);
+  for (let k = 0; k < count * 4; k++) line(H, R, [H.p(i + .09 + k * .28, j + 1.06, .26), H.p(i + .09 + k * .28, j + 1.06, .37)], .7, 'paper');
   box(H, R, i, j, count * 1.15, 1.24, .38, .2, 'blue', .55);
   box(H, R, i, rear ? j : j + 1.03, count * 1.15, .2, .57, .86, 'teal', .73);
   for (let k = 0; k < count; k++) {
-    box(H, R, i + k * 1.15 + .035, j + .2, 1.07, .99, .59, .19, 'teal', .62);
+    const q = i + k * 1.15;
+    shape(H, R, [H.p(q + .05, j + .2, .61), H.p(q + 1.1, j + .2, .61), H.p(q + 1.08, j + 1.14, .67), H.p(q + .92, j + 1.24, .7), H.p(q + .17, j + 1.24, .7), H.p(q + .03, j + 1.12, .67)], 'teal', .66, .75);
+    box(H, R, q + .065, rear ? j + .05 : j + 1.06, 1.0, .16, .8, .57, k === 0 ? 'blue' : 'teal', .55);
+    for (const z of [.89, 1.28]) line(H, R, [H.p(q + .16, rear ? j + .22 : j + 1.23, z), H.p(q + .95, rear ? j + .22 : j + 1.23, z)], .6, 'paper', .55);
+    if (k % 3 === 2) stroke(H, R, [H.p(q + 1.13, j + .4, .68), H.p(q + 1.13, j + .4, 1.07), H.p(q + 1.13, j + 1.1, .99)], 'paper', 2.5);
     line(H, R, [H.p(i + k * 1.15 + .15, j + .23, .8), H.p(i + k * 1.15 + .93, j + .23, .8)], .7, 'paper', .55);
   }
   for (const x of [i - .05, i + count * 1.15]) {
@@ -142,6 +152,13 @@ const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between
 }, (H, R) => {
   shape(H, R, H.faceI(0, 0, 12, 0, 3.7), 'paper', 1, 1);
   shape(H, R, H.faceJ(0, 0, 12, 0, 3.7), 'paper', .87, 1);
+  for (const i of [.05, 11.6]) box(H, R, i, .02, .3, .38, .05, 3.55, 'blue', .46);
+  box(H, R, .02, .03, 11.8, .37, 3.56, .18, 'paper', 1);
+  box(H, R, .03, .03, .4, 11.8, 3.5, .22, 'teal', .5);
+  for (const j of [.45, 3.5, 8.05, 11.4]) {
+    shape(H, R, [H.p(.1, j, 3.1), H.p(.1, j, 3.67), H.p(1.45, j, 3.67), H.p(.64, j, 3.31)], 'paper', 1, .9);
+    line(H, R, [H.p(.36, j, 3.48), H.p(1.1, j, 3.6)], 1.3, 'teal');
+  }
   panel(H, R, 'ne', 0, 12, .04, .45, 'teal', .55);
   panel(H, R, 'nw', 0, 12, .04, .45, 'teal', .55);
   panel(H, R, 'ne', 0, 12, 3.42, 3.7, 'blue', .18);
@@ -150,6 +167,15 @@ const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between
   panel(H, R, 'nw', 4.27, 7.63, .08, 3.24, 'paper', 1, .06);
   panel(H, R, 'nw', 4.27, 7.63, .1, .48, 'sun', .55, .08);
   for (let j = 4.4; j < 7.55; j += .26) line(H, R, [H.p(.02, j, .14), H.p(.28, j, .14)], .7);
+  for (const j of [4.02, 7.74]) {
+    box(H, R, .03, j, .24, .16, .02, 3.37, 'paper', 1);
+    line(H, R, [H.p(.29, j + .08, .09), H.p(.29, j + .08, 3.32)], 1.4);
+  }
+  box(H, R, .04, 4.1, .5, 3.67, 3.24, .17, 'blue', .65);
+  for (let j = 4.3; j < 7.65; j += .35) {
+    oval(H, R, ...H.p(.46, j, 3.34), 2.5, 3, 'paper', 1);
+    line(H, R, [H.p(.48, j, 3.36), H.p(.48, j + .17, 3.36)], .8, 'sun');
+  }
   panel(H, R, 'nw', 4.14, 7.75, 3.3, 3.49, 'teal', .8, .1);
   for (let k = 0; k < 8; k++) H.dot(...wallPt(H, 'nw', 4.5 + k * .38, 3.6, .08), k === 3 ? 2.6 : 1.7, k === 3 ? 'coral' : 'teal', .8);
   for (const j of [2, 9.45]) {
@@ -180,6 +206,15 @@ const room = world('tokyo-yamanote-carriage', 'Yamanote Line · The city between
   const [cx, cy] = H.p(2.1, 2.35, .05);
   stroke(H, R, [[cx, cy], [cx - 2, cy - 46], [cx + 6, cy - 49], [cx + 9, cy - 44]], 'blue', 2.4);
   stroller(H, R);
+  line(H, R, [H.p(9.41, 5.48, .64), H.p(9.75, 5.59, .4)], 2.4, 'paper');
+  oval(H, R, ...H.p(9.61, 5.52, .63), 3, 3, 'sun', .8);
+  bag(H, R, 9.44, 5.46, .2, 'teal');
+  panel(H, R, 'nw', .5, 1.06, .52, 1.27, 'paper', 1, .12);
+  for (const z of [.68, .97]) line(H, R, [wallPt(H, 'nw', .65, z, .15), wallPt(H, 'nw', .9, z, .15)], 1.4);
+  const [ex, ey] = H.p(.3, 2.9, .08);
+  shape(H, R, [[ex - 7, ey], [ex + 7, ey], [ex + 8, ey - 29], [ex - 7, ey - 29]], 'coral', .7, .7);
+  line(H, R, [[ex, ey - 29], [ex, ey - 36], [ex + 10, ey - 36], [ex + 13, ey - 18]], 1.4);
+  line(H, R, [[ex - 6, ey - 12], [ex + 6, ey - 12]], 4, 'paper');
   for (const i of [1.7, 2.4]) {
     const [x, y] = wallPt(H, 'ne', i, 3.31, .1);
     H.dot(x, y - 3, 2, 'teal', .8);

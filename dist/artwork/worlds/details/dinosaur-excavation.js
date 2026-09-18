@@ -66,6 +66,12 @@ function tent(H, R) {
 }
 
 function skeleton(H, R) {
+  for(const [i,j,w,d] of [[3.68,6.12,.75,.47],[6.05,6.48,.9,.54],[5.55,4.02,.6,.6]]) {
+    shape(H,R,H.tile(i-.1,j-.1,w+.2,d+.2,.145),'coral',.6);
+    shape(H,R,H.tile(i,j,w,d,.15),'paper',.88);
+    for(let n=0;n<3;n++) H.line(R,[H.p(i+.08+n*.2,j,.16),H.p(i+.11+n*.2,j+d,.16)],'teal',.6);
+  }
+
   for (let n = 0; n < 9; n++) {
     const [x, y] = H.p(3.4 + n * .43, 5.3, .16);
     oval(H, R, x, y, 4.7, 3.1, 'paper', 1);
@@ -83,6 +89,10 @@ function skeleton(H, R) {
   }
   const [x, y] = H.p(7.62, 5.3, .18);
   shape(H, R, [[x - 15, y - 6], [x - 5, y - 20], [x + 14, y - 15], [x + 30, y - 3], [x + 28, y + 8], [x + 8, y + 14], [x - 7, y + 6]], 'paper', 1);
+  stroke(H,R,[[x-9,y+7],[x+4,y+19],[x+23,y+16],[x+30,y+8]],'blue',4.5);
+  stroke(H,R,[[x-9,y+7],[x+4,y+19],[x+23,y+16],[x+30,y+8]],'paper',3);
+  H.line(R,[[x-7,y-12],[x-2,y-4],[x-8,y+4]],'coral',.85);
+  H.line(R,[[x+12,y-12],[x+14,y-5],[x+23,y+2]],'coral',.85);
   oval(H, R, x + 3, y - 7, 6, 5, 'blue', .8);
   oval(H, R, x + 24, y - 1, 2.5, 2, 'blue', .8);
   for (let n = 0; n < 6; n++) H.line(R, [[x + 3 + n * 4, y + 8], [x + 5 + n * 4, y + 12]], 'blue', .85);
@@ -93,12 +103,33 @@ function skeleton(H, R) {
 export default function enrich(room) {
   const detailed = world(room.id, room.title, { floor: 'sun', tone: .3, wall: 'coral', wallTone: .24, wallStyle: 'brick', height: 1.1 }, (H, R) => {
 
+    for (const [i,j,w,d,h] of [[.05,.08,7.6,.65,1.7],[.08,.7,.6,2.4,1.35],[.08,8.9,.65,2.9,.85]]) {
+      box(H,R,i,j,w,d,0,h,'coral',.46);
+      for (let z=.17;z<h;z+=.25) {
+        stroke(H,R,[H.p(i,j+d+.01,z),H.p(i+w*.25,j+d+.01,z+.05),H.p(i+w*.7,j+d+.01,z-.04),H.p(i+w,j+d+.01,z+.02)],z% .5>.2?'sun':'paper',1.4,.65);
+      }
+    }
+    for(const i of [1,3.65,7.4]) {
+      box(H,R,i,.82,.12,.13,0,1.5,'teal',.8);
+      H.line(R,[H.p(i,.9,.25),H.p(i+.6,1.55,.04)],'sun',2);
+    }
+    box(H,R,.88,.78,6.8,.18,1.4,.12,'teal',.7);
+    for(let n=0;n<4;n++) {
+      const [x,y]=H.p(1.3+n*1.4,.77,.88);
+      shape(H,R,[[x-12,y-6],[x+4,y-14],[x+14,y],[x+3,y+9],[x-11,y+4]],'sun',.65);
+      bone(H,R,x,y,15+n*2,-.45,2.5);
+    }
     box(H, R, 2.15, 3.1, 6.7, 5.6, 0, .12, 'coral', .4);
     shape(H, R, H.tile(2.4, 3.35, 6.2, 5.1, .125), 'sun', .42);
     for (let i = 2.4; i < 8.7; i += 1.04) H.line(R, [H.p(i, 3.35, .14), H.p(i, 8.45, .14)], 'paper', .6, { tone: .9 });
     for (let j = 3.35; j < 8.5; j += 1.02) H.line(R, [H.p(2.4, j, .14), H.p(8.6, j, .14)], 'paper', .6, { tone: .9 });
 
     for (const [i, j, number] of [[3.25, 4.8, '01'], [4.45, 4.65, '02'], [6.8, 4.95, '03'], [8.1, 5.8, '04'], [4.5, 7.7, '05'], [7.15, 8, '06'], [6.3, 3.2, '07']]) tag(H, R, i, j, number);
+    for (const [i,j,w,d] of [[2.22,3.16,2,.25],[7.3,6.5,1.45,.42],[2.27,6.6,.37,1.4]]) {
+      box(H,R,i,j,w,d,.13,.22,'coral',.55);
+      shape(H,R,H.tile(i+.04,j+.04,w-.08,d-.08,.36),'sun',.48);
+      for(let n=0;n<4;n++) H.line(R,[H.p(i+n*w/4,j+d,.2),H.p(i+(n+.55)*w/4,j+d,.28)],'paper',.9);
+    }
     skeleton(H, R);
     for (const i of [2.15, 8.85]) for (const j of [3.1, 8.7]) {
       box(H, R, i, j, .08, .08, 0, .52, 'blue');
@@ -107,6 +138,12 @@ export default function enrich(room) {
     for (let n = 0; n < 8; n++) {
       box(H, R, 2.15 + n * .8, 8.77, .7, .23, 0, .13, 'paper', .8);
       H.line(R, [H.p(2.25 + n * .8, 8.8, .14), H.p(2.25 + n * .8, 8.97, .14)], 'blue', .65);
+    }
+    for(const i of [.65,3.6]) H.line(R,[H.p(i,.75,.14),H.p(i,1.8,.82)],'sun',1.4);
+    box(H,R,.68,.78,3.08,.93,.19,.1,'coral',.62);
+    for(let n=0;n<3;n++) {
+      box(H,R,.8+n*.91,.82,.8,.74,.3,.35,'paper',.85);
+      H.line(R,[H.p(1.03+n*.91,1.57,.47),H.p(1.39+n*.91,1.57,.47)],'teal',2);
     }
     table(H, R, .55, .65, 3.35, 1.3, .85, 'teal');
     for (let n = 0; n < 4; n++) tray(H, R, .7 + n * .77, .75, `F${n + 1}`, .98, n % 2 ? 'sun' : 'coral');
@@ -119,6 +156,13 @@ export default function enrich(room) {
     bone(H, R, ...H.p(1.13, 2.6, .67), 17, .4, 3);
 
     tent(H, R);
+    box(H,R,9.08,2.53,1.3,.65,.03,.1,'teal',.7);
+    for(let n=0;n<4;n++) H.line(R,[H.p(9.2+n*.24,2.57,.14),H.p(9.2+n*.24,3.14,.14)],'sun',.7);
+    for (const i of [8.5,11.1]) H.line(R,[H.p(i,.68,.05),H.p(9.8,.68,2.18)],'sun',1.5);
+    const [lanX,lanY]=H.p(9.8,2.76,1.48);
+    H.line(R,[H.p(9.8,2.7,2.18),[lanX,lanY]],'blue',1);
+    shape(H,R,[[lanX-6,lanY],[lanX+6,lanY],[lanX+8,lanY+17],[lanX-8,lanY+17]],'sun',.88);
+    H.glow(lanX,lanY+12,27,20,'sun',.25);
     const map = H.tile(4.9, .55, 2.15, 1.35, .25);
     shape(H, R, map, 'paper', .95);
     for (let n = 1; n < 5; n++) H.line(R, [H.p(4.9 + n * .42, .55, .26), H.p(4.9 + n * .42, 1.9, .26)], 'teal', .6);
@@ -143,6 +187,11 @@ export default function enrich(room) {
     for (let n = 0; n < 4; n++) tray(H, R, 1.97 + n * .85, 9.8, `027-${n + 8}`, 1.08);
     notebook(H, R, 4.25, 10.45, 1.09, 1.05, .48);
     for (let n = 0; n < 3; n++) brush(H, R, ...H.p(2.1 + n * .32, 10.6, 1.12), -.65, .6);
+    box(H,R,1.87,9.74,3.62,1.18,.48,.08,'coral',.7);
+    for(const i of [2.05,3.2,4.4]) {
+      box(H,R,i,10.97,.85,.3,.63,.23,'sun',.6);
+      H.line(R,[H.p(i+.25,11.28,.75),H.p(i+.6,11.28,.75)],'blue',1.6);
+    }
     const [mx, my] = H.p(3.6, 10.65, 1.15);
     H.outline(R, ell(mx, my, 6, 4.5), 'blue', 1.6);
     H.line(R, [[mx - 5, my + 4], [mx - 12, my + 10]], 'coral', 2.8);
@@ -153,6 +202,16 @@ export default function enrich(room) {
     const [hx, hy] = H.p(10.2, 4.95, 2.9);
     oval(H, R, hx, hy, 7, 7, 'sun', .9);
     oval(H, R, hx, hy, 3, 3, 'blue', .8);
+    for(const [i,j] of [[9.3,4.25],[11.25,4.25],[10.3,6.4]]) {
+      box(H,R,i-.18,j-.16,.4,.35,0,.12,'sun',.7);
+      H.line(R,[H.p(i-.2,j-.16,.14),H.p(i+.17,j+.15,.14)],'blue',1.1);
+    }
+    H.line(R,[H.p(9.8,4.5,.85),H.p(10.85,4.5,.85)],'coral',2);
+    const [winX,winY]=H.p(10.9,4.5,.9);
+    oval(H,R,winX,winY,10,10,'teal',.8);
+    oval(H,R,winX,winY,6,6,'sun',.8);
+    H.line(R,[[winX,winY],[winX+16,winY+5],[winX+16,winY+13]],'blue',2);
+    stroke(H,R,[H.p(10.2,4.95,2.9),H.p(10.9,4.5,1),H.p(10.9,4.5,.9)],'sun',1.2);
     box(H, R, 10.35, 6.7, .85, .7, 0, .37, 'coral');
 
     for (let n = 0; n < 3; n++) oval(H, R, ...H.p(11.15, 7.8 + n * .24, .06), 8, 4, 'paper', .9);

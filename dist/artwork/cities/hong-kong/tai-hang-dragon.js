@@ -1,7 +1,7 @@
-import { surface, timber, vessel, bentTube, benchFrame, pendant } from '../materials.js';
+import { surface, timber, vessel, bentTube, benchFrame, pendant, metal } from '../materials.js';
 import { masonry, cabinetFrame, boardFloor } from '../structure.js';
 import { windowBay } from '../joinery.js';
-import { foldedCloth, coiledLine, handTool } from '../furnishings.js';
+import { foldedCloth, coiledLine, handTool, shallowTray, slattedCrate, boundBook } from '../furnishings.js';
 import { TAU, actor, cycle, ell, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -24,6 +24,10 @@ function trestle(H, R, i, j) {
   for (const x of [i, i + 0.8]) {
     H.line(R, [H.p(x, j, 0.04), H.p(x, j + 0.57, 1.04), H.p(x, j + 1.14, 0.04)], 'blue', 3.4);
     H.line(R, [H.p(x, j + 0.15, 0.37), H.p(x, j + 0.95, 0.37)], 'coral', 2);
+  }
+  for(const x of [i,i+0.8]) {
+    bentTube(H,R,[[x,j+0.16,0.12],[x,j+0.84,0.84]],1.3,'sun');
+    metal(H,R,x-0.09,j+0.45,0.17,0.22,0.87,0.16,'teal');
   }
   timber(H, R, i - 0.09, j + 0.42, 0.98, 0.31, 1.02, 0.12, 'coral');
 }
@@ -119,6 +123,11 @@ function dragonHead(H, R, i, j, z) {
     1,
     0.8
   );
+  for(let n=0;n<4;n++) stroke(H,R,[[x-28+n*6,y+3],[x-29+n*6,y-17],[x-17+n*5,y-32]],'teal',1.1);
+  for(const dy of [-21,-9,2]) stroke(H,R,[[x-29,y+dy],[x-18,y+dy+3],[x-5,y+dy-2]],'sun',1.6);
+  for(const dx of [-22,-9]) {
+    stroke(H,R,[[x+dx-3,y-3],[x+dx+3,y+3],[x+dx-3,y+6],[x+dx+3,y]],'paper',1.1);
+  }
   oval(H, R, x + 8, y - 15, 11, 12, 'paper', 1);
   oval(H, R, x + 11, y - 14, 5, 6, 'blue', 0.85);
   H.dot(x + 13, y - 16, 1.6, 'paper', 1);
@@ -264,6 +273,12 @@ const room = world(
           H.outline(R, ell(x, y, 7, 9), 'paper', 0.8);
         }
     });
+    for(const z of [3.35,3.83]) timber(H,R,3.12,0.5,7.75,0.65,z,0.09,'sun');
+    for(let n=0;n<8;n++) bentTube(H,R,[[3.38+n*0.82,0.73,3.49],[3.72+n*0.82,0.73,4.22]],1.8,n%3?'sun':'teal');
+    bentTube(H,R,[[0.31,6.92,3.79],[0.31,10.74,3.79],[0.31,10.74,2.7]],1.6,'teal');
+    metal(H,R,0.25,10.43,0.29,0.57,2.3,0.43,'paper');
+    for(const j of [6.83,7.52]) bentTube(H,R,[[0.41,j,0.04],[0.08,j,3.91]],3,'sun');
+    for(let n=0;n<7;n++) bentTube(H,R,[[0.38-n*0.04,6.83,0.4+n*0.49],[0.38-n*0.04,7.52,0.4+n*0.49]],2,n===3?'paper':'sun');
     for (const [i, j] of [
       [2.57, 3.01],
       [4.54, 3.94],
@@ -292,6 +307,11 @@ const room = world(
         'teal'
       );
     }
+    for(let n=0;n<5;n++) {
+      const [x,y]=H.p(3.24+n*1.14,3.58+n*0.32,1.43);
+      H.outline(R,ell(x,y,9,19),'teal',1.5);
+      stroke(H,R,[[x-4,y-16],[x+3,y-10],[x-4,y-3],[x+3,y+4],[x-4,y+12]],'paper',1);
+    }
     dragonHead(H, R, 9.65, 5.47, 1.66);
     for (let n = 0; n < 6; n++) {
       const [x, y] = H.p(2.01 - n * 0.16, 2.86 - n * 0.19, 1.28 - n * 0.045);
@@ -313,7 +333,7 @@ const room = world(
     cabinetFrame(H, R, 4.11, 9.67, 3.82, 1.56, 0.05, 0.74, 3, 'sun', (i, j, w, d, z, h, n) => {
       for (let k = 0; k < 3; k++) coiledLine(H, R, i + w * 0.5, j + 0.34 + k * 0.35, z + 0.12, 10, ['teal', 'coral', 'sun'][n]);
     });
-    const [x, y] = H.p(8.99, 9.52, 0.79);
+    const [x, y] = H.p(8.99, 9.52, 0.49);
     for (let n = 0; n < 9; n++) {
       const a = (n * TAU) / 9;
       H.line(
@@ -343,6 +363,19 @@ const room = world(
         0.9
       );
     }
+    slattedCrate(H,R,0.53,4.33,1.24,2.06,0.05,0.68,'teal');
+    for(let n=0;n<5;n++) {
+      const [x,y]=H.p(0.82,4.69+n*0.3,0.72);
+      for(let q=0;q<7;q++) H.line(R,[[x-12,y+q-3],[x+13,y+q-8]],'sun',0.9);
+      H.line(R,[[x,y-7],[x-2,y+4]],n===2?'coral':'teal',1.8);
+    }
+    shallowTray(H,R,4.29,9.85,1.19,1.09,0.82,'teal');
+    coiledLine(H,R,5.99,10.11,0.83,10,'coral');
+    boundBook(H,R,2.68,0.83,1.3,0.78,3.03,'paper');
+    for(const j of [8.13,10.53]) timber(H,R,0.52,j,1.9,0.13,0.38,0.12,'teal');
+    timber(H,R,0.56,8.13,1.8,2.47,0.38,0.07,'sun');
+    foldedCloth(H,R,0.69,8.41,1.2,1.73,0.49,'coral','paper');
+    for(const i of [4.38,5.73,7.09]) metal(H,R,i,11.19,0.23,0.08,0.38,0.17,'teal');
     pendant(H, R, 6.81, 3.34, 4.4, 3.31, 'coral', 1.12);
   },
   (H, R, t) => {

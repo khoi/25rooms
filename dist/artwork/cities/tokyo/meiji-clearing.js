@@ -20,25 +20,41 @@ function oldTree(H, R, i, j, height, spread) {
   shape(H, R, trunk, 'coral', .35);
   H.tint(trunk, 'blue', .42);
   for (let k = 0; k < 7; k++) stroke(H, R, [[x - 11 + k * 4, y - 6], [x - 7 + k * 2, y - h * .43], [x - 15 + k * 3, y - h + 6]], 'blue', .7, .6);
-  for (const [dx, dy, s] of [[-28, 2, .85], [20, -20, 1], [51, 13, .65]]) {
-    stroke(H, R, [[x, y - h * .55], [x + dx * .5, y - h * .86], [x + dx, y - h + dy]], 'blue', 7);
-    const foliage = blob(R, x + dx, y - h + dy, spread * s, spread * s * .56, -.2);
-    shape(H, R, foliage, 'teal', .78);
-    H.clip(foliage, () => {
-      H.tint(blob(R, x + dx + 11, y - h + dy + 16, spread * s, spread * s * .4, .3), 'blue', .24);
-      for (let n = 0; n < 16; n++) {
-        const lx = x + dx + (R() - .5) * spread * s * 1.6;
-        const ly = y - h + dy + (R() - .5) * spread * s * .7;
-        stroke(H, R, [[lx - 5, ly + 1], [lx, ly - 2], [lx + 5, ly]], 'paper', .8, .35);
+  const crown = [[-44,-8,.59],[-20,-32,.64],[14,-41,.67],[47,-24,.64],[68,1,.43],[-51,17,.47],[-15,8,.72],[25,-1,.58],[45,25,.57],[-6,30,.47]].map(([dx, dy, size], n) => [dx * (i > 6 ? -1 : 1), dy + (i > 6 ? Math.sin(n * 1.7) * 9 : 0), size]);
+  for (let n = 0; n < crown.length; n++) {
+    const [dx, dy, scale] = crown[n];
+    shape(H, R, blob(R, x + dx, y - h + dy, spread * scale, spread * scale * .58, n * .6), n % 3 ? 'teal' : 'blue', n % 3 ? .75 : .55, .75);
+  }
+  const branches = [[-39, -17], [-13, -40], [27, -38], [63, -8], [44, 21], [-45, 23]].map(([dx, dy]) => [dx * (i > 6 ? -1 : 1), dy]);
+  for (let n = 0; n < branches.length; n++) {
+    const [dx, dy] = branches[n];
+    const ax = x - 3, ay = y - h * .57, bx = x + dx * .48, by = y - h * .89, cx = x + dx, cy = y - h + dy;
+    shape(H, R, [[ax - 6, ay], [bx - 4, by], [cx - 1, cy], [cx + 2, cy], [bx + 4, by + 1], [ax + 7, ay]], 'blue', .77, .65);
+    stroke(H, R, [[ax + 1, ay], [bx + 1, by + 2], [cx, cy]], 'sun', 1.4, .4);
+    for (const side of [-1, 1]) {
+      const ex = cx + side * 17, ey = cy - 12;
+      stroke(H, R, [[bx, by], [cx, cy], [ex, ey]], 'blue', 1.4, .8);
+      for (let k = 0; k < 3; k++) {
+        const lx = cx + side * (k * 6 + 3), ly = cy - k * 4;
+        shape(H, R, loop([[lx, ly], [lx + side * 5, ly - 11], [lx + side * 11, ly - 12], [lx + side * 9, ly - 4]], 1), 'teal', .64, .5);
+        H.line(R, [[lx, ly], [lx + side * 9, ly - 10]], 'sun', .6, { tone: .6 });
       }
-    });
-    for (let n = 0; n < 7; n++) {
-      const a = n * TAU / 7;
-      const lx = x + dx + Math.cos(a) * spread * s * .86;
-      const ly = y - h + dy + Math.sin(a) * spread * s * .47;
-      shape(H, R, blob(R, lx, ly, 14 + R() * 8, 9 + R() * 6, a), 'teal', .67 + R() * .15, .65);
-      stroke(H, R, [[lx - 7, ly + 1], [lx, ly - 3], [lx + 7, ly]], 'paper', .85, .42);
     }
+  }
+  for (let n = 0; n < crown.length; n++) {
+    const [dx, dy, scale] = crown[n];
+    for (let k = 0; k < 3; k++) {
+      const a = n * .82 + k * 2.18;
+      const px = x + dx + Math.cos(a) * spread * scale * .57, py = y - h + dy + Math.sin(a) * spread * scale * .3;
+      const fan = [[px - 13, py + 4], [px - 11, py - 6], [px - 5, py - 3], [px - 2, py - 12], [px + 5, py - 7], [px + 13, py - 8], [px + 9, py + 1], [px + 15, py + 5], [px + 3, py + 9], [px - 5, py + 6]];
+      shape(H, R, fan.map(([fx, fy]) => [px + (fx - px) * Math.cos(a * .31) - (fy - py) * Math.sin(a * .31), py + (fx - px) * Math.sin(a * .31) + (fy - py) * Math.cos(a * .31)]), 'teal', n % 3 ? .52 : .32, .55);
+      stroke(H, R, [[px - 9, py + 2], [px, py], [px + 8, py - 4]], 'blue', .7, .55);
+      for (const side of [-1, 1]) H.line(R, [[px, py], [px + side * 4, py - 6]], 'paper', .7, { tone: .65 });
+    }
+  }
+  for (const [dx, dy] of [[-42,12],[37,17],[21,29]]) {
+    shape(H, R, loop([[x - 4, y - 13], [x + dx * .45, y + dy * .32], [x + dx, y + dy], [x + dx * .73, y + dy + 3], [x + 4, y + 2]], 1), 'blue', .57, .6);
+    stroke(H, R, [[x, y - 8], [x + dx * .5, y + dy * .45], [x + dx * .9, y + dy]], 'coral', 1.6, .48);
   }
   for (let n = 0; n < 6; n++) oval(H, R, x - 22 + n * 8, y + 2 + Math.sin(n) * 4, 9, 3, 'teal', .67);
 }
@@ -125,7 +141,15 @@ export default world('tokyo-meiji-clearing', 'Meiji Jingu · A clearing inside t
     box(H, R, i + .08, 1.83, .34, .34, .22, 3.55, 'sun', .32);
     for (let k = 0; k < 3; k++) H.line(R, [H.p(i + .13 + k * .07, 2.18, .38), H.p(i + .13 + k * .07, 2.18, 3.61)], 'coral', .55, { tone: .65 });
   }
-  box(H, R, 2.7, 1.72, 6.9, .56, 3.82, .3, 'sun', .32);
+  shape(H, R, [H.p(2.7, 1.72, 3.83), H.p(9.6, 1.72, 3.83), H.p(9.77, 1.72, 4.16), H.p(2.53, 1.72, 4.16)], 'sun', .42);
+  shape(H, R, [H.p(2.53, 1.72, 4.16), H.p(9.77, 1.72, 4.16), H.p(9.77, 2.28, 4.16), H.p(2.53, 2.28, 4.16)], 'paper', .75);
+  shape(H, R, H.faceI(2.7, 2.28, 6.9, 3.83, 4.12), 'sun', .4);
+  for (const i of [3.48, 8.58]) {
+    box(H, R, i - .17, 1.71, .67, .59, 3.63, .17, 'sun', .5);
+    shape(H, R, H.faceI(i, 2.2, .28, 2.76, 3.07), 'coral', .35);
+    for (const z of [2.85, 3.3, 3.73]) H.dot(...H.p(i + .13, 2.22, z), 2.1, 'blue', .65);
+  }
+  for (let n = 0; n < 4; n++) stroke(H, R, [H.p(2.88, 2.3, 3.88 + n * .055), H.p(5.8, 2.3, 3.9 + n * .045), H.p(9.37, 2.3, 3.88 + n * .055)], 'coral', .55, .45);
   box(H, R, 3.15, 1.86, 5.85, .31, 3.21, .19, 'sun', .42);
   box(H, R, 5.95, 1.88, .29, .28, 3.4, .45, 'sun', .34);
   for (const i of [3.28, 8.81]) H.line(R, [H.p(i, 2.21, 3.25), H.p(i, 2.21, 3.4)], 'blue', 1.3);
@@ -141,8 +165,38 @@ export default world('tokyo-meiji-clearing', 'Meiji Jingu · A clearing inside t
   shape(H, R, [H.p(9.57, 3.97, 1.64), H.p(10.19, 4.59, 2.05), H.p(10.81, 5.21, 1.64), H.p(9.57, 5.21, 1.64)], 'blue', .32);
   for (const i of [.75, 3.7]) box(H, R, i, 7.35, .14, .24, 0, 2.3, 'sun', .47);
   for (const z of [1.3, 2.06]) box(H, R, .6, 7.37, 3.35, .15, z, .12, 'sun', .46);
-  box(H, R, .45, 7.17, 3.65, .65, 2.29, .16, 'teal', .52);
-  bench(H, R, .75, 9.9, 2.8, 'sun');
+  for (const i of [.71, 3.66]) {
+    box(H, R, i - .16, 7.17, .5, .65, .01, .18, 'blue', .4);
+    H.line(R, [H.p(i + .08, 7.46, .35), H.p(i + .64 * (i < 2 ? 1 : -1), 7.46, 1.22)], 'sun', 3);
+    H.line(R, [H.p(i + .08, 7.46, 1.8), H.p(i + .58 * (i < 2 ? 1 : -1), 7.46, 2.25)], 'sun', 3);
+    for (const z of [1.37, 2.13]) H.dot(...H.p(i + .08, 7.55, z), 2, 'blue');
+  }
+  shape(H, R, [H.p(.32, 6.97, 2.37), H.p(2.27, 7.44, 2.81), H.p(4.25, 6.97, 2.37), H.p(4.25, 7.95, 2.37), H.p(.32, 7.95, 2.37)], 'teal', .62);
+  box(H, R, .35, 7.86, 3.87, .13, 2.23, .15, 'sun', .5);
+  for (let k = 0; k < 12; k++) H.line(R, [H.p(.45 + k * .32, 7.04, 2.4), H.p(.45 + k * .32, 7.86, 2.4)], 'blue', .7);
+  box(H, R, .84, 7.12, 2.78, .49, .55, .09, 'sun', .5);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, .99 + k * .7, 7.19, .57, .34, .66, .13, 'paper', 1);
+    H.line(R, [H.p(1.05 + k * .7, 7.53, .73), H.p(1.47 + k * .7, 7.53, .73)], 'coral', .9);
+  }
+  for (const j of [9.95, 10.2, 10.45]) box(H, R, .72, j, 2.88, .19, .55, .13, 'sun', .45);
+  for (const i of [.93, 3.15]) {
+    box(H, R, i, 10.01, .19, .52, .06, .49, 'blue', .5);
+    H.line(R, [H.p(i, 10.09, .18), H.p(i + .43, 10.4, .55)], 'coral', 2);
+  }
+  for (const i of [.92, 3.25]) for (const j of [10.04, 10.54]) H.dot(...H.p(i, j, .7), 1.5, 'blue');
+  const fallen = [H.p(.36, 5.19, .15), H.p(1.76, 5.71, .21), H.p(1.92, 6.3, .15)];
+  stroke(H, R, fallen, 'blue', 10, .55);
+  stroke(H, R, fallen.map(([x, y]) => [x, y - 3]), 'coral', 6, .4);
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = H.p(.76 + k * .36, 5.42 + k * .25, .32);
+    H.line(R, [[x, y], [x, y - 7]], 'paper', 2);
+    oval(H, R, x, y - 8, 5, 2.5, 'sun', .55);
+  }
+  for (let k = 0; k < 8; k++) {
+    const i = 3.24 + k * .17;
+    box(H, R, i, 10.93, .12, .59, .03, .05, 'blue', .28);
+  }
   const [bx, by] = H.p(1.3, 10.3, .7);
   shape(H, R, [[bx - 10, by], [bx - 9, by - 17], [bx + 9, by - 17], [bx + 11, by]], 'teal', .7);
   stroke(H, R, [[bx - 5, by - 16], [bx - 5, by - 25], [bx + 5, by - 25], [bx + 6, by - 16]], 'blue', 1);

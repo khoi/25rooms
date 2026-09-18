@@ -1,7 +1,7 @@
 import { world, shape, oval, stroke, cycle, mix, wallPt, wallRect } from '../../worlds/common.js';
-import { timber, metal, bentTube, cushion, benchFrame, slattedSeat, floorLight } from '../materials.js';
+import { timber, metal, bentTube, cushion, benchFrame, slattedSeat, floorLight, drape, vessel } from '../materials.js';
 import { cabinetFrame, boardFloor } from '../structure.js';
-import { windowBay, cornice, recessedFrame, panelFront, taskLight } from '../joinery.js';
+import { windowBay, cornice, recessedFrame, panelFront, taskLight, caster } from '../joinery.js';
 import { foldedCloth, shallowTray, boundBook, satchel, coiledLine, handTool } from '../furnishings.js';
 
 const ease = (a, b, t) => { const u = Math.max(0, Math.min(1, (t - a) / (b - a))); return u * u * (3 - 2 * u); };
@@ -35,10 +35,29 @@ function curtain(H,R,start,width,sway=0) {
   H.line(R,[P(0,.78),P(width+sway,.79)],'sun',1);
 }
 function projector(H,R,turn=0) {
+  timber(H,R,7.16,7.25,2.81,1.49,.3,.12,'teal');
+  for(const i of [7.23,9.69])bentTube(H,R,[[i,7.3,.33],[i,8.54,1.08]],2,'teal');
+  metal(H,R,7.35,7.37,1.44,.88,.44,.45,'blue');
+  for(const z of [.56,.76]){
+    shape(H,R,H.faceI(7.45,8.28,1.23,z-.065,z+.065),'paper',.68,.55);
+    for(let n=0;n<5;n++)H.line(R,[H.p(7.57+n*.105,8.31,z-.04),H.p(7.57+n*.105,8.31,z+.04)],'blue',.75);
+    H.dot(...H.p(8.49,8.32,z),1.5,z>.6?'sun':'coral');
+  }
+  shallowTray(H,R,8.98,7.42,.81,.99,.46,'teal');
+  coiledLine(H,R,9.4,7.9,.64,10,'sun');
   benchFrame(H,R,7.02,7.11,3.14,1.77,1.2,'sun');
+  for(const i of [7.12,9.92]){metal(H,R,i,8.84,.17,.07,.91,.3,'teal');H.dot(...H.p(i+.08,8.94,1.06),1.2,'sun');}
+  timber(H,R,7.14,8.86,2.89,.07,.97,.16,'teal');
+
   timber(H,R,7.05,7.14,3.1,.12,1.23,.32,'blue');
   for(const i of [7.56,8.72]) for(const j of [7.4,8.1]) metal(H,R,i,j,.23,.2,1.23,.1,'coral');
   metal(H,R,7.37,7.29,1.76,1.1,1.33,.52,'paper');
+  shape(H,R,H.tile(7.54,7.42,1.39,.73,1.861),'paper',.94,.5);
+  H.line(R,[H.p(7.56,7.94,1.88),H.p(8.9,7.94,1.88)],'blue',.7);
+  for(let n=0;n<6;n++)H.line(R,[H.p(8.41+n*.07,7.42,1.88),H.p(8.41+n*.07,7.78,1.88)],'teal',1);
+  for(const i of [7.69,7.93])H.dot(...H.p(i,7.62,1.9),2.2,'teal');
+  H.dot(...H.p(8.1,7.62,1.9),1.4,'sun');
+  for(const x of [7.52,8.96])H.dot(...H.p(x,8.41,1.81),1.2,'blue');
   const a=H.p(7.39,7.83,1.57),b=H.p(6.95,7.83,1.57);
   shape(H,R,[[a[0]-6,a[1]-10],[a[0]+6,a[1]+10],[b[0]+6,b[1]+10],[b[0]-6,b[1]-10]],'blue',.8,.8);
   oval(H,R,...b,8,11,'teal',.65); oval(H,R,b[0]-1,b[1],5.5,8,'blue',.82);
@@ -52,11 +71,11 @@ function projector(H,R,turn=0) {
   stroke(H,R,[b,[b[0]-13,b[1]+7],[cap[0]-10,cap[1]-7],cap],'coral',1.3);
   for(const d of [0,5]) {oval(H,R,cap[0]-8+d,cap[1]-6,2.3,1.6,'sun',.85);}
   bentTube(H,R,[[9.05,7.76,1.51],[9.72,7.85,1.22],[9.7,8.35,.28],[8.84,8.49,.12],[8.2,7.88,.16]],1.7,'blue');
-  foldedCloth(H,R,7.66,7.35,.93,.81,.46,'paper','teal'); coiledLine(H,R,9.44,7.82,.42,13,'blue');
+  foldedCloth(H,R,9.21,8.3,.72,.44,1.23,'paper','teal');
   return b;
 }
 const room=world('cape-town-cinema-evening','The screen keeps a little light',{floor:'blue',tone:.32,wall:'blue',wallTone:.47,height:3.8,head:70},(H,R)=>{
-  boardFloor(H,R,0,0,12,12,.01,'teal',.65);
+  boardFloor(H,R,0,0,12,12,.01,'blue',.65);
   for(const side of ['ne','nw']) {cornice(H,R,side,0,12,3.7,'paper');H.line(R,[wallPt(H,side,0,.13,-.12),wallPt(H,side,12,.13,-.12)],'sun',2);}
   recessedFrame(H,R,'nw',1.68,7.34,1.02,2.43,'paper',P=>shape(H,R,[P(.14,.14),P(7.2,.14),P(7.2,2.29),P(.14,2.29)],'paper',1,.5));
   metal(H,R,.13,1.45,.43,7.81,3.5,.24,'paper');
@@ -64,6 +83,16 @@ const room=world('cape-town-cinema-evening','The screen keeps a little light',{f
   curtain(H,R,.8,1.15); curtain(H,R,9.01,1.3);
   stroke(H,R,[H.p(.6,10.52,3.55),H.p(.6,10.5,1.0),H.p(.7,10.4,.84)],'sun',1.2);
   oval(H,R,...H.p(.72,10.4,.87),2.5,5,'coral',.8);
+  timber(H,R,.1,1.48,.11,7.55,.88,.12,'teal');
+  for(const j of [2.1,5.0,8.52]){const p=H.p(.42,j,.92);oval(H,R,...p,2.4,2.4,'sun',.85);}
+  for(const i of [3.96,5.07,6.18,7.29]){
+    shape(H,R,wallRect(H,'ne',i,i+.86,2.18,3.38,-.23),'blue',.79,.8);
+    shape(H,R,wallRect(H,'ne',i+.09,i+.77,2.28,3.28,-.25),'teal',.24,.5);
+    H.line(R,[wallPt(H,'ne',i+.2,2.35,-.26),wallPt(H,'ne',i+.61,3.22,-.26)],'paper',.8,{tone:.42});
+  }
+  bentTube(H,R,[[.19,10.9,.2],[.19,10.9,3.36],[.19,.19,3.36],[7.85,.19,3.36],[7.85,.19,.61]],1.6,'teal');
+  metal(H,R,7.71,.17,.33,.15,.43,.42,'paper');
+  for(const z of [.57,.72])H.dot(...H.p(7.88,.35,z),1.2,'blue');
   windowBay(H,R,'ne',1.0,2.55,1.0,2.09,{night:true,divisions:2});
   for(let n=0;n<8;n++) timber(H,R,1.1+n*.28,.26,.22,.12,1.16,1.74,'teal');
   H.line(R,[H.p(1.2,.44,1.37),H.p(3.25,.44,2.7)],'sun',2.4);
@@ -84,7 +113,11 @@ const room=world('cape-town-cinema-evening','The screen keeps a little light',{f
     }
   });
   for(const [i,j,w] of [[2.7,3.25,1.65],[4.95,3.85,1.65],[2.3,6.06,1.65],[4.63,6.56,1.65]]) {
-    slattedSeat(H,R,i,j,w,.02,'coral',.9);cushion(H,R,i+.1,j+.17,w-.2,.6,.75,.13,'paper');
+    slattedSeat(H,R,i,j,w,.02,'coral',.9);
+    cushion(H,R,i+.09,j+.015,w-.19,.14,.94,.55,'coral');
+    H.line(R,[H.p(i+.18,j+.18,1.22),H.p(i+w-.18,j+.18,1.22)],'sun',.7);
+    for(const x of [i+.14,i+w-.14])bentTube(H,R,[[x,j+.7,.61],[x,j+.7,1.12],[x,j+.22,1.12]],2.3,'teal');
+    cushion(H,R,i+.1,j+.17,w-.2,.6,.75,.13,'paper');
     for(let n=0;n<4;n++) H.line(R,[H.p(i+.28+n*.31,j+.2,.9),H.p(i+.28+n*.31,j+.72,.9)],'coral',1.2);
   }
   shape(H,R,H.tile(2.68,6.2,.48,.56,.9),'teal',.65,.55); for(let n=0;n<4;n++) H.line(R,[H.p(2.71+n*.11,6.21,.91),H.p(2.74+n*.11,6.72,.91)],'paper',.8);
@@ -98,6 +131,24 @@ const room=world('cape-town-cinema-evening','The screen keeps a little light',{f
   foldedCloth(H,R,5.87,.42,.51,.54,1.17,'paper','sun'); handTool(H,R,6.54,.82,1.2,'brush','teal',.2);
   taskLight(H,R,7.15,.56,1.2,'coral',-.33);
   metal(H,R,6.35,.15,.86,.1,2.55,.63,'teal');for(let n=0;n<7;n++) H.line(R,[H.p(6.44+n*.09,.27,2.63),H.p(6.44+n*.09,.27,3.08)],'blue',1.1);
+  for(const [i,j]of[[1.4,9.45],[3.59,9.45],[1.4,10.72],[3.59,10.72]])caster(H,R,i,j,.09);
+  metal(H,R,1.21,9.25,2.62,1.61,.17,.42,'blue');
+  shape(H,R,H.tile(1.35,9.39,2.34,1.33,.61),'coral',.52,.65);
+  for(const i of [1.54,2.71]){
+    shape(H,R,H.tile(i,9.6,.78,.87,.64),'blue',.84,.6);
+    const p=H.p(i+.39,10.03,.67);stroke(H,R,[[p[0]-8,p[1]+3],[p[0]-9,p[1]-11],[p[0],p[1]-18],[p[0]+9,p[1]-11],[p[0]+8,p[1]+3]],'paper',2.5);
+    for(const dx of [-8,8])oval(H,R,p[0]+dx,p[1],4,6,'teal',.7);
+  }
+  shape(H,R,H.faceI(1.28,9.31,2.47,.62,1.52),'blue',.8,.75);
+  shape(H,R,H.faceI(1.42,9.35,2.2,.75,1.39),'teal',.3,.6);
+  for(const x of [1.5,3.38])metal(H,R,x,10.91,.19,.08,.31,.2,'sun');
+  H.line(R,[H.p(2.14,10.96,.43),H.p(2.79,10.96,.43)],'paper',2.2);
+  foldedCloth(H,R,1.53,10.65,1.91,.34,.65,'paper','coral');
+  shallowTray(H,R,9.47,3.24,1.36,.76,.23,'teal');
+  benchFrame(H,R,9.24,3.06,1.86,1.18,.65,'teal');
+  vessel(H,R,9.68,3.47,.68,6,15,'paper');
+  boundBook(H,R,10.05,3.29,.79,.61,.68,'coral');
+  satchel(H,R,10.23,4.24,.04,'coral',.45);
   floorLight(H,4.2,5.4,155,.32); metal(H,R,7.0,10.94,3.16,.54,.03,.08,'paper');
 },(H,R,time)=>{
   const t=cycle(time,20)*20, turn=.64*ease(4,8,t)*(1-ease(12,18,t));

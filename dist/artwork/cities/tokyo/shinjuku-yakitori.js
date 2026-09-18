@@ -124,12 +124,36 @@ export default world('tokyo-shinjuku-yakitori', 'Omoide Yokocho · Six stools an
   shape(H, R, H.tile(.85, 1.5, 1.48, .75, 1.19), 'blue', .8);
   shape(H, R, H.tile(.99, 1.6, 1.19, .49, 1.2), 'paper', .8);
   stroke(H, R, [H.p(1.93, 1.42, 1.2), H.p(1.93, 1.42, 1.75), H.p(1.49, 1.68, 1.75), H.p(1.49, 1.68, 1.53)], 'blue', 2.3);
+  for (const i of [3.21, 5.03, 6.85]) {
+    box(H, R, i, 1.24, 1.69, 1.12, .1, .85, 'teal', .5);
+    shape(H, R, H.faceI(i + .09, 2.38, 1.51, .24, .8), 'blue', .72);
+    for (let k = 0; k < 3; k++) plate(H, R, i + .5, 2.02, .29 + k * .12, false);
+    box(H, R, i + .96, 1.5, .48, .69, .26, .4, 'sun', .5);
+  }
   table(H, R, 3.16, 1.19, 5.65, 1.25, 1.08, 'teal');
+  for (const i of [3.45, 5.1, 6.75]) {
+    H.line(R, [H.p(i, .16, 1.92), H.p(i, .5, 1.92)], 'sun', 2);
+    const [x, y] = H.p(i, .52, 1.83);
+    oval(H, R, x, y, 8, 11, 'paper', .7);
+    H.line(R, [[x, y - 10], [x, y - 25]], 'blue', 2);
+  }
+  box(H, R, .63, 2.53, 1.91, .09, .83, .09, 'sun', .5);
+  shape(H, R, H.faceI(.94, 2.66, .71, .34, .89), 'paper', .9);
+  for (const z of [.43, .5]) H.line(R, [H.p(.94, 2.67, z), H.p(1.65, 2.67, z)], 'teal', 1);
+
   for (let k = 0; k < 3; k++) {
     box(H, R, 3.4 + k * 1.2, 1.33, 1.04, .77, 1.21, .07, 'paper');
     for (let q = 0; q < 4; q++) skewer(H, R, 3.89 + k * 1.2, 1.49 + q * .16, 1.3, .5, k === 1 ? 1 : 0);
   }
+  for (const i of [2.37, 6.13]) for (const j of [3.89, 4.62]) box(H, R, i, j, .15, .15, .04, .55, 'teal', .7);
   box(H, R, 2.24, 3.76, 4.16, 1.12, .52, .64, 'blue', .87);
+  box(H, R, 2.29, 4.9, 4.05, .08, .63, .15, 'paper', .75);
+  for (let k = 0; k < 9; k++) shape(H, R, H.faceI(2.44 + k * .42, 4.99, .22, .66, .73), 'blue', .88);
+  box(H, R, 3.09, 4.91, 2.32, .45, .42, .09, 'teal', .6);
+  shape(H, R, H.tile(3.21, 4.99, 2.06, .27, .53), 'blue', .8);
+  H.line(R, [H.p(3.91, 5.38, .46), H.p(4.53, 5.38, .46)], 'sun', 2.2);
+  for (const i of [2.24, 6.27]) box(H, R, i, 3.76, .12, 1.12, 1.16, .18, 'paper', .7);
+
   shape(H, R, H.tile(2.39, 3.86, 3.86, .88, 1.18), 'blue', .96);
   for (let k = 0; k < 14; k++) {
     const i = 2.5 + k % 7 * .52, j = 3.99 + Math.floor(k / 7) * .34;
@@ -138,7 +162,12 @@ export default world('tokyo-shinjuku-yakitori', 'Omoide Yokocho · Six stools an
   for (let k = 0; k < 12; k++) H.line(R, [H.p(2.43 + k * .32, 3.83, 1.34), H.p(2.43 + k * .32, 4.78, 1.34)], 'blue', 1.15);
   for (let k = 0; k < 5; k++) skewer(H, R, 2.85 + k * .57, 4.26, 1.43, -.45, k === 4 ? 1 : 0);
   shape(H, R, [H.p(2.01, 3.49, 2.54), H.p(6.65, 3.49, 2.54), H.p(6.14, 2.88, 3.03), H.p(2.6, 2.88, 3.03)], 'blue', .66);
+  shape(H, R, [H.p(2.01, 3.49, 2.54), H.p(6.65, 3.49, 2.54), H.p(6.65, 3.85, 2.54), H.p(2.01, 3.85, 2.54)], 'blue', .92);
+  box(H, R, 2.0, 3.81, 4.68, .1, 2.52, .1, 'paper', .6);
+  for (let k = 0; k < 10; k++) H.line(R, [H.p(2.18 + k * .43, 3.51, 2.56), H.p(2.18 + k * .43, 3.78, 2.56)], 'teal', 1.5);
   box(H, R, 3.67, 2.55, 1.13, .61, 3.03, .38, 'teal', .48);
+  for (const i of [2.34, 6.29]) H.line(R, [H.p(i, 3.51, 2.65), H.p(i, .3, 3.19)], 'sun', 1.2);
+
   for (let k = 0; k < 7; k++) H.line(R, [H.p(2.4 + k * .57, 3.5, 2.57), H.p(2.59 + k * .51, 3.01, 2.92)], 'paper', .7, { tone: .4 });
   table(H, R, 1.65, 5.1, 8.85, 1.02, 1.18, 'sun');
   foreground(H, R);

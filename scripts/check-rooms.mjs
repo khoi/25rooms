@@ -86,11 +86,11 @@ function animationTimes(room) {
   return [...times].sort((a, b) => a - b);
 }
 
-const cityCollections = COLLECTIONS.filter(collection => !['new', 'original'].includes(collection.id));
+const authoredCollections = COLLECTIONS.filter(collection => collection.id !== 'original');
 let roomsDrawn = 0;
 let animationFrames = 0;
 let loopRooms = 0;
-for (const room of cityCollections.flatMap(collection => collection.rooms)) {
+for (const room of authoredCollections.flatMap(collection => collection.rooms)) {
   if (room.loopSeconds !== undefined) assert.notEqual(room.stillTime, undefined, `${room.id}: missing reduced-motion pose`);
   assert.equal(typeof room.under, 'function', `${room.id} static artwork`);
   assert.equal(typeof room.live, 'function', `${room.id} animated artwork`);
@@ -117,4 +117,4 @@ for (const room of cityCollections.flatMap(collection => collection.rooms)) {
   if (room.loopSeconds !== undefined) loopRooms++;
 }
 
-process.stdout.write(`${ids.size} unique rooms across ${COLLECTIONS.length} collections; valid layout and hit targets; ${roomsDrawn} city rooms draw in ${animationFrames} sampled animation frames, including ${loopRooms} declared loop boundaries.\n`);
+process.stdout.write(`${ids.size} unique rooms across ${COLLECTIONS.length} collections; valid layout and hit targets; ${roomsDrawn} authored rooms draw in ${animationFrames} sampled animation frames, including ${loopRooms} declared loop boundaries.\n`);

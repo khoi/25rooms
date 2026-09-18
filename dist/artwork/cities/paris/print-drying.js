@@ -2,7 +2,7 @@ import { world, box, shape, oval, stroke, actor, wallPt, wallRect, ell } from '.
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, benchFrame, drape, bentTube, vessel } from '../materials.js';
 import { cabinetFrame, basin } from '../structure.js';
-import { windowBay, cityView, wallCourse, cornice, taskLight, floorShadow } from '../joinery.js';
+import { windowBay, cityView, wallCourse, cornice, taskLight, floorShadow, wallRack, caster } from '../joinery.js';
 
 const ease = (a, b, t) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
 const rest = { x: 0, y: 0, drop: 0, lean: 0, head: 0, al: -10, ar: 12, el: -6, er: 6, ll: -5, lr: 5, kl: 0, kr: 0, roll: 0 };
@@ -47,6 +47,26 @@ const room = world('paris-print-drying', 'A sheet against the rail', { floor: 'p
   cornice(H,R,'nw',0,12,4.18,'paper');
   windowBay(H,R,'nw',4.9,5.6,1.3,2.65,{divisions:3,view:P=>cityView(H,R,P,5.6,2.65)});
   H.tint(H.tile(1.1,4.9,5.5,3.4,.02),'sun',.17);
+  wallRack(H,R,'nw',.6,3.8,1.28,2.63,3,'teal',(P,z,row)=>{
+    if(row===0){
+      for(let n=0;n<3;n++){const a=P(.55+n*1.05,z+.05);shape(H,R,[[a[0]-10,a[1]],[a[0]+10,a[1]],[a[0]+8,a[1]-15],[a[0]-8,a[1]-15]],['coral','sun','teal'][n],.65,.7);oval(H,R,a[0],a[1]-15,9,3,'paper',1);H.line(R,[[a[0]-5,a[1]-8],[a[0]+5,a[1]-8]],'paper',1.8);}
+    }else if(row===1){
+      for(let n=0;n<4;n++){const a=P(.43+n*.85,z+.06);H.line(R,[[a[0]-6,a[1]],[a[0]+7,a[1]-9]],'sun',3);shape(H,R,[[a[0]+4,a[1]-9],[a[0]+12,a[1]-16],[a[0]+13,a[1]-9],[a[0]+8,a[1]-5]],'blue',.68,.5);}
+    }else{
+      for(let n=0;n<3;n++){const a=P(.55+n*1.02,z+.02);shape(H,R,[[a[0]-9,a[1]],[a[0]+8,a[1]],[a[0]+8,a[1]-25],[a[0]-9,a[1]-25]],'sun',.45,.65);stroke(H,R,[[a[0]-5,a[1]-6],[a[0],a[1]-19],[a[0]+5,a[1]-10]],n===1?'coral':'teal',2);}
+    }
+  });
+  timber(H,R,.28,3.98,1.13,4.78,.1,.18,'teal');
+  for(const j of [4.07,6.31,8.5]) timber(H,R,.38,j,.18,.18,.27,.8,'teal');
+  for(const j of [6.4,7.52])box(H,R,.41,j,.85,.84,.31,.43,'paper',.85);
+  timber(H,R,.28,3.98,1.13,4.78,1.02,.15,'sun');
+  for(const j of [4.22,4.83,5.45]){
+    metal(H,R,.52,j,.6,.38,1.18,.045,'blue');
+    H.tint(H.tile(.59,j+.04,.46,.27,1.233),'coral',.28);
+  }
+  drape(H,R,.42,6.31,.88,1.17,1.18,.43,'paper');
+  roller(H,R,.86,7.94,1.19,'coral');
+  bentTube(H,R,[[.31,8.77,1.22],[.31,8.77,1.66],[.65,8.77,1.66]],1.6,'teal');
   for (const p of [1.1,10.8]) bentTube(H,R,[[p,.14,0],[p,.14,4.02],[p,.65,4.02]],1.5,'teal');
   shape(H,R,wallRect(H,'ne',6.6,9.4,3.4,3.69,-.18),'blue',.52);
   for(let n=0;n<11;n++) H.line(R,[wallPt(H,'ne',6.73+n*.23,3.45,-.2),wallPt(H,'ne',6.73+n*.23,3.62,-.2)],'paper',.9);
@@ -79,18 +99,29 @@ const room = world('paris-print-drying', 'A sheet against the rail', { floor: 'p
     for(const u of [.16,.81]) metal(H,R,x+u,2.17,.08,.12,z-.03,.17,n===1?'sun':'teal');
   }
   floorShadow(H,2.1,4.3,6.1,2.8,.2);
-  benchFrame(H,R,2.1,4.3,6.1,2.6,1.24,'sun');
   timber(H,R,2.35,4.6,2.1,1.85,.35,.1,'teal');
   for(let n=0;n<4;n++) box(H,R,2.5+n*.05,4.85,.9,.9,.46+n*.11,.08,'paper',1);
-  metal(H,R,2.45,4.62,2.1,1.63,1.25,.14,'blue');
-  for(const i of [2.65,4.1]) {
-    metal(H,R,i,4.85,.18,.25,1.39,1.13,'teal');
-    metal(H,R,i-.07,4.76,.32,.45,2.47,.13,'teal');
+  benchFrame(H,R,2.1,4.3,6.1,2.6,1.24,'sun');
+  metal(H,R,2.34,4.56,2.18,1.96,1.25,.13,'blue');
+  for(const j of [4.66,6.18]){
+    const frame=[H.p(2.46,j,1.4),H.p(2.5,j,2.22),H.p(2.76,j,2.69),H.p(3.24,j,2.89),H.p(3.85,j,2.71),H.p(4.2,j,2.16),H.p(4.25,j,1.4)];
+    shape(H,R,frame,'teal',.73,.95);
+    shape(H,R,[H.p(2.71,j+.01,1.56),H.p(2.78,j+.01,2.2),H.p(3.17,j+.01,2.48),H.p(3.62,j+.01,2.27),H.p(3.95,j+.01,1.56)],'blue',.72,.7);
+    for(const i of [2.63,4.06]){metal(H,R,i,j-.08,.14,.25,1.39,.17,'sun');H.dot(...H.p(i+.07,j+.16,1.49),1.4,'paper');}
   }
-  bentTube(H,R,[[2.62,5.15,2.06],[4.26,5.15,2.06],[4.5,5.15,2.06],[4.5,5.15,2.5]],3.5,'blue');
-  metal(H,R,2.63,5.13,1.62,.42,1.87,.28,'blue');
-  H.line(R,[H.p(2.68,5.57,2.08),H.p(4.23,5.57,2.08)],'paper',2);
-  shape(H,R,H.tile(2.73,5.12,1.26,1.02,1.45),'paper',1);
+  const A=H.p(3.35,4.74,2.16),B=H.p(3.35,6.29,2.16);
+  shape(H,R,[[A[0]-15,A[1]-12],[B[0]-15,B[1]-12],[B[0]+15,B[1]+12],[A[0]+15,A[1]+12]],'blue',.84,.8);
+  oval(H,R,...B,15,19,'teal',.8);oval(H,R,...B,10,14,'blue',.64);
+  H.line(R,[[A[0]-11,A[1]-10],[B[0]-11,B[1]-10]],'paper',2.1);
+  metal(H,R,2.52,5.07,1.6,1.36,1.45,.11,'sun');
+  shape(H,R,H.tile(2.65,5.28,1.34,1.36,1.58),'paper',1,.65);
+  for(const i of [2.69,3.92])metal(H,R,i,6.23,.09,.18,1.59,.07,'coral');
+  const wh=H.p(3.35,6.48,2.17);oval(H,R,...wh,24,26,'sun',.7);oval(H,R,...wh,19,21,'paper',1);
+  for(let n=0;n<6;n++){const a=n*Math.PI/3;H.line(R,[wh,[wh[0]+Math.sin(a)*20,wh[1]+Math.cos(a)*22]],'teal',3.1);}
+  oval(H,R,...wh,6,7,'teal',.8);H.line(R,[[wh[0]+16,wh[1]-17],[wh[0]+26,wh[1]-13]],'blue',4);oval(H,R,wh[0]+27,wh[1]-13,4,6,'sun',.7);
+  for(const i of [2.73,3.87]){metal(H,R,i,4.82,.09,.13,2.54,.43,'blue');bentTube(H,R,[[i-.15,4.87,2.95],[i+.23,4.87,2.95]],2.5,'sun');}
+  timber(H,R,2.44,6.79,2.02,.45,.62,.16,'sun');
+  for(const i of [2.6,4.08])bentTube(H,R,[[i,6.24,1.27],[i,7.14,.8]],1.8,'blue');
   metal(H,R,4.79,4.57,1.3,1.43,1.26,.08,'teal');
   H.tint(H.tile(4.87,4.67,1.14,1.2,1.35),'blue',.32);
   roller(H,R,5.42,5.4,1.38);
@@ -100,19 +131,45 @@ const room = world('paris-print-drying', 'A sheet against the rail', { floor: 'p
   H.line(R,[[root[0]+16,root[1]-70],H.p(7.58,6.35,1.27),[root[0]+16,root[1]-39]],'blue',1.9);
   metal(H,R,6.8,6.4,.65,.24,1.24,.1,'blue');
   taskLight(H,R,6.3,4.55,1.24,'coral',.75);
+  timber(H,R,9.05,5.22,2.12,3.26,.23,.11,'teal');
+  for(let n=0;n<3;n++){
+    box(H,R,9.12,5.36+n*.95,1.95,.78,.35,.22,n===1?'coral':'paper',n===1?.45:1);
+    H.line(R,[H.p(9.15,6.16+n*.95,.46),H.p(10.9,6.16+n*.95,.46)],'sun',1.2);
+  }
   benchFrame(H,R,8.95,5.1,2.35,3.65,.82,'teal');
+  for(const j of [5.27,8.4])metal(H,R,9.04,j,.15,.15,.83,.84,'teal');
+  metal(H,R,9.04,5.27,.15,3.29,1.58,.09,'teal');
+  H.line(R,[H.p(9.06,5.49,1.64),H.p(9.06,8.22,.99)],'sun',2);
+
   for(let k=0;k<3;k++) box(H,R,9.08+k*.04,5.4,1.85,1.05,.83+k*.1,.075,k===2?'coral':'paper',.65);
   for(const j of [6.9,7.25,7.6]) H.line(R,[H.p(9.2,j,.84),H.p(10.7,j+.38,.84)],'paper',4);
   box(H,R,9.25,8,1.6,.57,.83,.35,'sun',.5);
   H.line(R,[H.p(9.3,8.29,1.19),H.p(10.75,8.29,1.19)],'teal',1.4);
+  const apron=wallPt(H,'nw',11.22,2.83,-.24);
+  H.line(R,[[apron[0],apron[1]-8],[apron[0],apron[1]]],'blue',1.3);
+  shape(H,R,[[apron[0]-6,apron[1]],[apron[0]+6,apron[1]],[apron[0]+8,apron[1]+15],[apron[0]+14,apron[1]+34],[apron[0]-12,apron[1]+33],[apron[0]-7,apron[1]+15]],'coral',.64,.75);
+  H.line(R,[[apron[0]-4,apron[1]+20],[apron[0]+7,apron[1]+21],[apron[0]+6,apron[1]+29],[apron[0]-3,apron[1]+28]],'paper',.75);
   basin(H,R,.35,9.2,1.2,1.9,.9,'paper');
   for (const x of [.45,1.3]) metal(H,R,x,9.35,.1,1.5,0,.9,'blue');
   drape(H,R,.52,10.4,.6,.42,.91,.65,'paper');
+  timber(H,R,2.51,9.73,4.16,.97,.22,.1,'sun');
+  for(let n=0;n<4;n++){const x=2.68+n*.84;box(H,R,x,9.82,.64,.72,.32,.2,n%2?'coral':'teal',.4);H.line(R,[H.p(x+.28,10.55,.35),H.p(x+.28,10.55,.48)],'paper',1.2);}
   benchFrame(H,R,2.4,9.6,4.5,1.3,.68,'sun');
   image(H,R,H.tile(2.6,9.74,1.45,.98,.7),true);
   image(H,R,H.tile(4.28,9.76,1.35,.92,.7));
   shape(H,R,H.tile(5.86,9.82,.79,.65,.7),'paper',1);
   shape(H,R,H.tile(6.02,9.95,.38,.28,.71),'teal',.65);
+  floorShadow(H,8.35,10.12,2.66,1.28,.18);
+  for(const i of [8.52,10.65])caster(H,R,i,11.27,.08);
+  timber(H,R,8.35,10.12,2.66,1.28,.24,.12,'teal');
+  for(const i of [8.43,10.81])timber(H,R,i,10.17,.12,1.13,.36,1.14,'teal');
+  for(let n=0;n<5;n++){
+    const j=10.29+n*.19,z=1.03+(n%2)*.17;
+    shape(H,R,[H.p(8.59,j,.39),H.p(10.69,j,.39),H.p(10.69,j-.19,z),H.p(8.59,j-.19,z)],n===2?'coral':'paper',n===2?.5:1,.75);
+    H.line(R,[H.p(8.78,j-.17,z-.08),H.p(10.48,j-.17,z-.08)],'teal',1.1);
+  }
+  timber(H,R,8.39,11.32,2.49,.12,.35,.46,'teal');
+  H.line(R,[H.p(8.72,11.46,.62),H.p(10.45,11.46,.62)],'sun',1.4);
   box(H,R,3.2,10.73,.48,.23,.7,.12,'sun',.65);
   H.line(R,[H.p(3.26,10.82,.83),H.p(3.52,10.88,.83)],'blue',1.2);
 }, (H,R,t)=>{

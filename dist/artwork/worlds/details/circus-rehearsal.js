@@ -96,6 +96,13 @@ export default function enrich(room) {
       H.speckle(R, H.tile(.05, .05, 11.9, 11.9, .01), 'coral', 800, .15, .8, .25);
       const peak = H.p(5.8, .2, 5.3);
       for (let k = 0; k < 12; k++) shape(H, R, [peak, H.p(k, .25, .02), H.p(k + 1, .25, .02)], k % 2 ? 'coral' : 'paper', .78);
+      for (const i of [.25, 3, 5.8, 8.6, 11.8]) line(H, R, peak, H.p(i, .3, .04), 'blue', 1.4);
+      for (const side of [0, 1]) {
+        const i = side ? 10.8 : .3;
+        shape(H, R, [H.p(i, .4, .05), H.p(i + .9, .4, .05), H.p(i + .9, .4, 2.5), H.p(i + .5, .4, 3.1), H.p(i, .4, 3.4)], 'coral', .8);
+        for (let n = 0; n < 4; n++) line(H, R, H.p(i + n * .22, .42, .1), H.p(i + n * .16, .42, 3.1), 'sun', 1.1);
+        line(H, R, H.p(i, .45, 1.2), H.p(i + .9, .45, 1.25), 'sun', 3);
+      }
       for (const i of [.35, 11.6]) {
         box(H, R, i, .8, .12, .12, 0, 4, 'blue', .8);
         shape(H, R, [H.p(i, .8, 4), H.p(i + .35, .8, 3.8), H.p(i, .8, 3.6)], 'sun', .9);
@@ -129,6 +136,17 @@ export default function enrich(room) {
       line(H, R, H.p(3.8, 2.1), H.p(3.8, 2.1, 4.35), 'blue', 3);
       line(H, R, H.p(7.6, 2.1), H.p(7.6, 2.1, 4.35), 'blue', 3);
       line(H, R, H.p(3.8, 2.1, 4.35), H.p(7.6, 2.1, 4.35), 'blue', 3);
+      for (const i of [3.8, 7.6]) {
+        for (const z of [.25, 2.5, 4.12]) {
+          box(H, R, i - .12, 2, .25, .23, z, .13, 'coral', .7);
+          H.dot(...H.p(i, 2.25, z + .06), 1.5, 'sun');
+        }
+        line(H, R, H.p(i, 2.1, 4.1), H.p(i + (i < 5 ? -.85 : .85), 1.15, .05), 'sun', 1.3);
+        const [x, y] = H.p(i, 2.15, 4.15);
+        oval(H, R, x, y, 7, 8, 'coral', .8);
+        oval(H, R, x, y, 3, 4, 'blue', .9);
+        line(H, R, [x - 6, y], [x - 6, y + 39], 'sun', 1);
+      }
       for (const i of [3.15, 3.62]) line(H, R, H.p(i, 3.5), H.p(i, 2.15, 3.3), 'coral', 2.5);
       for (let k = 0; k < 10; k++) line(H, R, H.p(3.15, 3.5 - k * .135, k * .33), H.p(3.62, 3.5 - k * .135, k * .33), 'blue', 1.2);
       line(H, R, H.p(.65, 1.1), H.p(.65, 1.1, 2.65), 'blue', 2);
@@ -141,6 +159,16 @@ export default function enrich(room) {
         for (let n = 0; n < 3; n++) H.dot(x, y + 11 + n * 5, 1, 'sun');
       }
       table(H, R, .65, 2.65, 2.15, 1.1, .88, 'teal');
+      box(H, R, .75, 2.73, .6, .85, .13, .67, 'coral', .6);
+      for (const z of [.23, .51]) {
+        shape(H, R, H.faceI(.82, 3.61, .47, z, z + .2), 'sun', .5);
+        H.dot(...H.p(1.05, 3.63, z + .1), 1.5, 'blue');
+      }
+      line(H, R, H.p(1.65, 3.42, .16), H.p(2.42, 3.42, .16), 'blue', 3);
+      const pedal = H.tile(1.8, 3.1, .45, .4, .2);
+      shape(H, R, pedal, 'blue', .8);
+      stroke(H, R, [H.p(1.3, 3, 1), H.p(1.4, 3.1, .3), H.p(1.94, 3.32, .2)], 'coral', 1.5);
+
       const [sx, sy] = H.p(1.45, 3.1, 1.03);
       shape(H, R, [[sx - 12, sy], [sx + 13, sy], [sx + 13, sy - 5], [sx + 1, sy - 5], [sx + 1, sy - 15], [sx - 12, sy - 15]], 'blue', .8);
       oval(H, R, sx - 12, sy - 11, 5, 6, 'coral');
@@ -156,6 +184,8 @@ export default function enrich(room) {
       oval(H, R, hx, hy, 12, 4, 'blue');
       shape(H, R, [[hx - 7, hy], [hx + 7, hy], [hx + 8, hy - 15], [hx - 8, hy - 15]], 'blue', .9);
       line(H, R, [hx - 7, hy - 4], [hx + 7, hy - 4], 'coral', 3);
+      box(H, R, 8.2, .65, 3.1, 3, .01, .15, 'coral', .45);
+      for (let n = 0; n < 7; n++) line(H, R, H.p(8.25 + n * .43, .72, .17), H.p(8.25 + n * .43, 3.57, .17), 'blue', .65);
       for (const [i, j, radius, ink] of [[8.6, 2.1, 18, 'coral'], [9.7, 2.4, 11, 'teal'], [10.45, 2.8, 9, 'coral']]) drum(H, R, i, j, radius, ink);
       for (const [i, j] of [[8.8, 1.1], [10.8, 2]]) {
         const [x, y] = H.p(i, j);
@@ -171,6 +201,14 @@ export default function enrich(room) {
       shape(H, R, [[tx + 9, ty - 10], [tx + 20, ty - 17], [tx + 20, ty - 3]], 'sun', .9);
       for (let k = 0; k < 3; k++) line(H, R, [tx - 5 + k * 5, ty - 3], [tx - 5 + k * 5, ty - 9], 'blue', 1);
       trunk(H, R, .65, 6.45, 2, 'teal', 'PROPS');
+      shape(H, R, H.faceI(.65, 6.45, 2, .76, 1.65), 'coral', .7);
+      shape(H, R, H.faceI(.79, 6.47, 1.72, .88, 1.51), 'blue', .85);
+      for (const i of [.9, 2.2]) line(H, R, H.p(i, 6.5, 1.38), H.p(i, 7.15, .8), 'sun', 1.3);
+      for (let n = 0; n < 3; n++) {
+        const [x, y] = H.p(1.05 + n * .57, 6.48, 1.17);
+        ring(H, R, x, y, 7, ['sun', 'teal', 'coral'][n]);
+      }
+
       for (let k = 0; k < 5; k++) club(H, R, ...H.p(.82 + k * .34, 6.65, .98), inks[k % 3], (k - 2) * .17, .67);
       box(H, R, .75, 8, 1.55, .75, .15, .7, 'coral', .6);
       for (const i of [.8, 2.1]) {

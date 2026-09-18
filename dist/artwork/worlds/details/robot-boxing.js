@@ -57,6 +57,26 @@ function robot(H, R, i, j, t, ink, pose = 'skip', z = 0) {
 }
 
 const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', tone: .48, wall: 'coral', wallTone: .56, wallStyle: 'brick', height: 3.2, pattern: 'boards' }, (H, R) => {
+  for (const j of [.18, 4.5, 8.5, 11.5]) {
+    box(H, R, .04, j, .25, .28, 0, 3.1, 'blue', .7);
+    H.line(R, [H.p(.16, j, 2.3), H.p(.75, j, 3.05)], 'paper', 2);
+  }
+  box(H, R, .04, .12, .32, 11.6, 3.06, .14, 'blue', .8);
+  for (const z of [2.5, 2.68]) {
+    H.line(R, [H.p(.3, .04, z), H.p(11.7, .04, z)], 'paper', 3);
+    for (const i of [1, 4.4, 7.4, 11.3]) H.line(R, [H.p(i, .02, z - .1), H.p(i, .09, z + .1)], 'blue', 2);
+  }
+  box(H, R, 4.45, .08, 2.1, .25, 1.3, 1.05, 'blue', .8);
+  for (const i of [4.98, 6]) {
+    const [x, y] = H.p(i, .35, 1.86);
+    oval(H, R, x, y, 16, 16, 'teal', .7);
+    for (let k = 0; k < 5; k++) {
+      const a = k * TAU / 5;
+      stroke(H, R, [[x, y], [x + Math.cos(a) * 8, y + Math.sin(a) * 8], [x + Math.cos(a + .4) * 12, y + Math.sin(a + .4) * 12]], 'paper', 4);
+    }
+    H.dot(x, y, 3, 'sun');
+    H.outline(R, ell(x, y, 17, 17), 'sun', 1.5);
+  }
   shape(H, R, wallRect(H, 'nw', .35, 11.65, .08, .45), 'blue', .78);
   shape(H, R, wallRect(H, 'ne', .35, 11.65, .08, .45), 'blue', .78);
 
@@ -74,6 +94,12 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
     for (let z = 1.64; z < 1.92; z += .09) H.line(R, [H.p(i + .17, .88, z), H.p(i + .54, .88, z)], 'blue', .8);
     H.dot(...H.p(i + .55, .89, 1), 1.5, 'sun');
   }
+  shape(H, R, H.faceI(2.13, .89, .58, .16, 1.94), 'blue', .9);
+  shape(H, R, [H.p(2.1, .89, .12), H.p(2.1, .89, 2.02), H.p(1.73, 1.42, 2.02), H.p(1.73, 1.42, .12)], 'teal', .7);
+  for (const z of [.48, 1.12]) box(H, R, 2.14, .25, .56, .61, z, .05, 'sun', .8);
+  glove(H, R, ...H.p(2.37, .7, .64), 'coral', .65);
+  bottle(H, R, ...H.p(2.4, .7, 1.18), 'teal', .37);
+  stroke(H, R, [H.p(2.42, .51, 1.86), H.p(2.3, .7, 1.6), H.p(2.6, .7, 1.6), H.p(2.42, .51, 1.86)], 'paper', 1);
   towel(H, R, 1.27, .35, 2.12);
   const score = H.p(10.12, .09, 2.05);
   shape(H, R, [[score[0] - 48, score[1] - 28], [score[0] + 48, score[1] - 28], [score[0] + 48, score[1] + 25], [score[0] - 48, score[1] + 25]], 'blue', .95);
@@ -115,7 +141,13 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
     H.dot(x, y - 1, 1.6, 'sun');
   }
   dumbbell(H, R, 2.8, 10.15, .13, .76);
-  box(H, R, 3.8, 3.5, 5.4, 5.5, 0, .5, 'teal', .62);
+  box(H, R, 3.8, 3.5, 5.4, 5.5, .31, .19, 'teal', .62);
+  for (const i of [3.9, 5.55, 7.2, 8.9]) {
+    box(H, R, i, 3.6, .18, 5.25, 0, .33, 'blue', .9);
+    H.line(R, [H.p(i, 8.94, .06), H.p(Math.min(i + 1.55, 9.05), 8.94, .3)], 'sun', 2);
+    H.dot(...H.p(i + .07, 9.01, .22), 1.4, 'paper');
+  }
+  for (const j of [3.7, 5.35, 7, 8.8]) box(H, R, 3.84, j, 5.32, .12, .15, .16, 'coral', .8);
   shape(H, R, H.tile(4, 3.7, 5, 5.1, .51), 'teal', .35);
   const [cx, cy] = H.p(6.5, 6.25, .53);
   H.outline(R, ell(cx, cy, 42, 19), 'paper', 2.5);
@@ -127,6 +159,11 @@ const gym = world('robot-boxing', 'Underground boxing club', { floor: 'blue', to
   for (const z of [.9, 1.4, 1.9]) {
     H.line(R, [H.p(3.93, 3.63, z), H.p(9.2, 3.63, z)], 'paper', 1.4);
     H.line(R, [H.p(3.93, 3.63, z), H.p(3.93, 9, z)], 'paper', 1.4);
+  }
+  for (const i of [3.93, 9.2]) for (const j of [3.63, 9]) for (const z of [.9, 1.4, 1.9]) {
+    const [x, y] = H.p(i, j, z);
+    H.line(R, [[x - 6, y - 2], [x + 6, y + 2]], 'blue', 3);
+    oval(H, R, x, y, 4.8, 3, i < 5 ? 'coral' : 'sun', .9);
   }
   for (let n = 0; n < 3; n++) box(H, R, 8.15, 9 + n * .3, .8, .3, 0, .45 - n * .14, 'coral');
   towel(H, R, 4.1, 8.97, 1.92);

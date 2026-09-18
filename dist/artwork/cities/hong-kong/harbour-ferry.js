@@ -1,7 +1,7 @@
-import { surface, timber, metal, vessel, bentTube, pendant, slattedSeat } from '../materials.js';
+import { surface, timber, metal, vessel, bentTube, pendant, slattedSeat, benchFrame, drape } from '../materials.js';
 import { cabinetFrame, boardFloor } from '../structure.js';
 
-import { foldedCloth, coiledLine } from '../furnishings.js';
+import { foldedCloth, coiledLine, shallowTray, handTool, boundBook } from '../furnishings.js';
 import { TAU, actor, box, cycle, ell, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -32,6 +32,10 @@ FIGURES.clips.hongKongFerrySit = {
 
 function seat(H, R, i, j, width = 4.9) {
   slattedSeat(H, R, i, j, width, 0, 'sun', 0.81);
+  for (const x of [i + 0.22, i + width - 0.24]) {
+    metal(H, R, x - 0.19, j + 0.15, 0.38, 0.72, 0.025, 0.06, 'teal');
+    for (const y of [j + 0.23, j + 0.78]) H.dot(...H.p(x, y, 0.096), 1.5, 'sun');
+  }
   for (let n = 0; n < 3; n++) metal(H, R, i + 0.42 + (n * (width - 0.84)) / 2, j + 0.17, 0.1, 0.1, 0.73, 0.68, 'teal');
 }
 
@@ -113,6 +117,15 @@ const room = world(
           'teal'
         );
     }
+    for (const j of [1.1, 4.52, 8.14]) {
+      metal(H, R, 0.29, j, 1.33, 0.17, 3.74, 0.18, 'teal');
+      metal(H, R, 10.2, j, 1.41, 0.17, 3.74, 0.18, 'teal');
+    }
+    for (let n = 0; n < 12; n++) timber(H, R, 0.21, 0.45 + n * 0.58, 1.52, 0.52, 3.95, 0.07, 'paper');
+    for (const j of [1.35, 4.83, 8.87]) {
+      metal(H, R, 0.1, j, 0.47, 0.43, 0.025, 0.065, 'teal');
+      for (const y of [j + 0.07, j + 0.35]) H.dot(...H.p(0.45, y, 0.1), 1.5, 'sun');
+    }
     for (let n = 0; n < 8; n++) timber(H, R, 0.22 + n * 0.35, 0.35, 0.3, 1.71, 3.9, 0.08, 'paper');
     lifering(H, R, 0.35, 2.47, 2.48);
     cabinetFrame(H, R, 0.37, 9.2, 1.23, 2.11, 0.08, 1.33, 1, 'teal', (i, j, w, d, z) => {
@@ -121,6 +134,21 @@ const room = world(
         coiledLine(H, R, i + w * 0.5, j + d * 0.45, z + 0.12 + n * 0.34, 10, 'sun');
       }
     });
+    cabinetFrame(H, R, 8.59, 0.53, 2.64, 1.4, 0.09, 2.23, 2, 'teal', (i, j, w, d, z, h, n) => {
+      timber(H, R, i, j, w, d, z + 0.9, 0.07, 'paper');
+      for (let q = 0; q < 2; q++) {
+        foldedCloth(H, R, i + 0.11, j + 0.17, w - 0.22, d - 0.3, z + 0.16 + q * 0.26, 'coral', 'sun');
+      }
+      vessel(H, R, i + w / 2, j + d / 2, z + 1.04, 8, 20, 'paper', false);
+    });
+    shallowTray(H, R, 8.85, 0.73, 1.87, 0.99, 2.36, 'sun');
+    handTool(H, R, 9.22, 1.16, 2.54, 'spanner', 'teal');
+    foldedCloth(H, R, 9.83, 0.89, 0.57, 0.61, 2.53, 'paper', 'coral');
+    bentTube(H, R, [[11.49, 0.32, 0.3], [11.49, 0.32, 3.32], [8.01, 0.32, 3.32]], 1.5, 'teal');
+    const [lx, ly] = H.p(8.01, 0.34, 3.1);
+    oval(H, R, lx, ly, 10, 14, 'sun', 0.8);
+    for (const dx of [-6, 0, 6]) H.line(R, [[lx + dx, ly - 12], [lx + dx, ly + 12]], 'blue', 0.9);
+    for (const dy of [-7, 0, 7]) H.line(R, [[lx - 8, ly + dy], [lx + 8, ly + dy]], 'blue', 0.9);
     seat(H, R, 1.97, 5.41, 5.23);
     seat(H, R, 2.72, 8.61, 4.98);
     seat(H, R, 7.43, 3.21, 3.68);
@@ -129,6 +157,14 @@ const room = world(
       [8.71, 3.36]
     ])
       luggage(H, R, i, j);
+    benchFrame(H, R, 7.85, 10.69, 3.61, 0.83, 0.35, 'teal');
+    luggage(H, R, 10.59, 10.87);
+    boundBook(H, R, 8.06, 10.8, 0.92, 0.52, 0.38, 'coral');
+    for (let n = 0; n < 10; n++) {
+      metal(H, R, 0.4 + n * 0.71, 11.7, 0.52, 0.17, 0.026, 0.025, 'blue');
+    }
+    drape(H, R, 6.4, 8.63, 0.73, 0.6, 1.52, 0.83, 'coral');
+    bentTube(H, R, [[7.25, 8.9, 0.03], [7.25, 8.9, 1.2], [7.06, 8.9, 1.35], [6.94, 8.9, 1.25]], 2, 'sun');
     metal(H, R, 9.72, 8.96, 1.36, 1.7, 0.06, 0.13, 'teal');
     for (const x of [9.79, 10.98])
       bentTube(

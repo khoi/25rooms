@@ -184,6 +184,8 @@ export default world('tokyo-sangenjaya-home', 'Sangenjaya · The last light at h
     for (let k = 0; k < 13; k++) H.line(R, [H.p(5.17 + k * .51, .12, .39), H.p(5.17 + k * .51, .12, 1.03)], 'teal', .85);
   });
   balconyFrame(H, R);
+  for (const z of [.22, .28, 3.78, 3.85]) H.line(R, [H.p(4.65, .2, z), H.p(11.73, .2, z)], 'paper', 1.1);
+  box(H, R, 4.54, .16, 7.19, .25, 3.86, .11, 'teal', .5);
   for (const i of [4.58, 11.66]) {
     shape(H, R, H.faceI(i, .18, .35, .39, 3.76), 'paper', .88);
     for (let k = 0; k < 3; k++) H.line(R, [H.p(i + .04 + k * .11, .2, .4), H.p(i + .04 + k * .11, .2, 3.73)], 'blue', .6, { tone: .45 });
@@ -202,11 +204,28 @@ export default world('tokyo-sangenjaya-home', 'Sangenjaya · The last light at h
   shape(H, R, H.faceI(1.05, .17, 1.13, 2.07, 2.55), 'teal', .3);
   for (let k = 0; k < 5; k++) H.line(R, [H.p(.77 + k * .36, .18, .27), H.p(.99 + k * .36, .18, .27)], 'blue', .7);
   box(H, R, 2.97, .12, 1.04, .48, 0, 1.68, 'paper', .84);
+  box(H, R, 3.01, .17, .96, .44, 1.69, .08, 'sun', .4);
+  oval(H, R, ...H.p(3.38, .39, 1.8), 8, 4, 'teal', .55);
+  H.line(R, [H.p(3.34, .39, 1.83), H.p(3.67, .4, 1.83)], 'sun', 1.4);
+  H.dot(...H.p(3.68, .4, 1.83), 2.7, 'blue');
+
   for (let k = 0; k < 4; k++) {
     H.line(R, [H.p(3.04, .62, .22 + k * .35), H.p(3.91, .62, .22 + k * .35)], 'blue', .65);
     H.dot(...H.p(3.76, .64, .37 + k * .35), 1.3, 'coral');
   }
+  shape(H, R, H.faceJ(.04, 2.38, 4.12, 1.1, 2.06), 'teal', .33);
+  for (let k = 0; k < 13; k++) H.line(R, [H.p(.055, 2.4 + k * .32, 1.11), H.p(.055, 2.4 + k * .32, 2.04)], 'paper', .65);
+  for (const z of [1.43, 1.74]) H.line(R, [H.p(.06, 2.39, z), H.p(.06, 6.49, z)], 'paper', .65);
   box(H, R, .2, 2.39, 1.39, 4.08, 0, 1.08, 'paper', .84);
+  box(H, R, .28, 2.47, 1.17, 3.91, .03, .1, 'blue', .65);
+  shape(H, R, H.faceJ(1.62, 3.85, 1.18, .16, .92), 'blue', .77);
+  for (const j of [4.01, 4.72]) {
+    H.line(R, [H.p(1.66, j, .19), H.p(1.66, j, .85)], 'sun', 1.1);
+    oval(H, R, ...H.p(1.69, j, .54), 5, 9, 'paper', .6);
+  }
+  shape(H, R, [H.p(1.63, 3.84, .17), H.p(2.16, 3.59, .17), H.p(2.16, 3.59, .92), H.p(1.63, 3.84, .92)], 'teal', .51);
+  H.line(R, [H.p(2.1, 3.61, .66), H.p(2.1, 3.61, .82)], 'sun', 1.4);
+
   for (const j of [2.55, 3.8, 5.14]) H.outline(R, H.faceJ(1.61, j, 1.12, .17, .94), 'blue', .7);
   shape(H, R, H.tile(.39, 2.63, 1.02, 1.06, 1.1), 'blue', .7);
   oval(H, R, ...H.p(.91, 3.18, 1.14), 15, 8, 'paper', .75);
@@ -243,12 +262,32 @@ export default world('tokyo-sangenjaya-home', 'Sangenjaya · The last light at h
   shape(H, R, [[ux - 6, uy - 3], [ux - 8, uy - 48], [ux - 2, uy - 54], [ux + 6, uy - 46], [ux + 4, uy - 3]], 'coral', .74);
   H.line(R, [[ux - 1, uy - 48], [ux + 1, uy - 5]], 'paper', .9);
   box(H, R, 4.19, 3.51, 2.73, 3.69, 0, .18, 'paper');
+  for (let k = 0; k < 7; k++) {
+    H.line(R, [H.p(4.24 + k * .38, 7.23, .04), H.p(4.24 + k * .38, 7.23, .17)], 'teal', .7);
+    H.line(R, [H.p(6.94, 3.68 + k * .47, .05), H.p(6.94, 3.68 + k * .47, .16)], 'teal', .7);
+  }
+
   box(H, R, 4.25, 3.59, 2.61, 2.68, .18, .15, 'teal', .33);
   for (let k = 0; k < 9; k++) H.line(R, [H.p(4.29 + k * .31, 3.63, .35), H.p(4.29 + k * .31, 6.23, .35)], 'paper', .8);
   box(H, R, 4.55, 3.72, 1.94, .72, .33, .18, 'paper');
   for (let k = 0; k < 6; k++) oval(H, R, ...H.p(4.43 + k * .44, 6.65, .32), 10, 13, 'paper', .9);
   H.line(R, [H.p(4.25, 6.43, .38), H.p(6.86, 6.43, .38)], 'teal', 1.2);
+  box(H, R, 10.28, 2.57, .88, 1.26, .07, .85, 'teal', .44);
+  for (let k = 0; k < 3; k++) {
+    H.outline(R, H.faceI(10.34, 3.85, .76, .14 + k * .24, .33 + k * .24), 'blue', .7);
+    H.line(R, [H.p(10.54, 3.87, .25 + k * .24), H.p(10.91, 3.87, .25 + k * .24)], 'sun', 1.3);
+  }
+  box(H, R, 8.44, 2.6, 1.62, .73, .37, .07, 'paper');
+  for (let k = 0; k < 4; k++) box(H, R, 8.57, 2.71, 1.27, .49, .46 + k * .09, .07, ['blue', 'paper', 'teal', 'coral'][k], .5);
   table(H, R, 8.28, 2.4, 3.02, 1.61, 1.05, 'coral');
+  H.line(R, [H.p(8.32, 4.03, 1.11), H.p(11.25, 4.03, 1.11)], 'sun', 1.2);
+  box(H, R, 8.39, 2.12, 2.76, .08, 1.22, .71, 'teal', .3);
+  for (const [i, z, ink] of [[8.51, 1.4, 'paper'], [9.14, 1.35, 'sun'], [9.84, 1.43, 'paper']]) {
+    shape(H, R, H.faceI(i, 2.23, .53, z, z + .38), ink, .85);
+    H.dot(...H.p(i + .27, 2.25, z + .34), 1.5, 'coral');
+    H.line(R, [H.p(i + .08, 2.26, z + .1), H.p(i + .39, 2.26, z + .23)], 'teal', .8);
+  }
+
   table(H, R, 9.19, 4.66, .93, .88, .49, 'teal');
   box(H, R, 10.81, 2.12, .23, .25, 0, 2.45, 'blue', .65);
   box(H, R, 8.49, 2.11, 2.55, .59, 2.08, .09, 'paper');

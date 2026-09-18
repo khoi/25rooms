@@ -27,13 +27,35 @@ const memories = world('memory-lost-and-found', 'Memory lost-and-found', { floor
 
 const noodles = world('rainy-noodle-alley', 'Rainy noodle alley', { floor: 'blue', tone: .7, wall: 'teal', wallTone: .75, wallStyle: 'brick', height: 3.8, pattern: 'tiles' }, (H, R) => {
   for (const [i, ink] of [[.7, 'coral'], [6.2, 'sun']]) {
-    box(H, R, i, 1.5, 4.5, 1.8, 0, 1.15, ink);
-    box(H, R, i, 1.3, .1, 2.2, 1.15, 1.4, 'blue'); box(H, R, i + 4.3, 1.3, .1, 2.2, 1.15, 1.4, 'blue');
-    for (let k = 0; k < 9; k++) shape(H, R, [H.p(i + k * .5, .8, 2.7), H.p(i + (k + 1) * .5, .8, 2.7), H.p(i + (k + 1) * .5, 4, 2.3), H.p(i + k * .5, 4, 2.3)], k % 2 ? 'paper' : ink, .8);
+    for (const x of [i + .1, i + 4.15]) box(H, R, x, 1.55, .2, 1.65, .08, .98, 'blue', .85);
+    box(H, R, i, 1.5, 4.5, 1.8, 1.03, .12, ink);
+    box(H, R, i + .2, 1.65, 4, 1.4, .18, .1, 'teal', .8);
+    for (let n = 0; n < 3; n++) {
+      box(H, R, i + .3 + n * 1.3, 2.4, 1.05, .7, .29, .58, 'coral', .55);
+      shape(H, R, H.faceI(i + .38 + n * 1.3, 3.12, .87, .38, .73), 'blue', .85);
+      for (let k = 0; k < 4; k++) H.line(R, [H.p(i + .45 + n * 1.3 + k * .2, 3.14, .44), H.p(i + .45 + n * 1.3 + k * .2, 3.14, .68)], 'sun', 1.3);
+    }
+    box(H, R, i + 2.3, 1.57, 1.6, .8, 1.16, .16, 'blue', .9);
+    for (const dx of [2.65, 3.48]) {
+      const [sx, sy] = H.p(i + dx, 1.98, 1.34);
+      oval(H, R, sx, sy, 12, 5, 'sun', .9);
+      oval(H, R, sx, sy, 8, 3, 'blue', .95);
+    }
+    for (const z of [1.45, 2.05]) box(H, R, i + .18, .15, 4.08, .55, z, .09, ink, .7);
+    for (const x of [i + .25, i + 4.1]) box(H, R, x, .15, .1, .55, .1, 2.15, 'blue', .8);
+    for (let n = 0; n < 6; n++) bottle(H, R, ...H.p(i + .55 + n * .61, .5, 1.56), n % 2 ? 'teal' : 'coral', .37);
 
+    for (const x of [i + .05, i + 4.35]) box(H, R, x, .5, .1, .1, .05, 3.7, 'blue', .85);
+    for (let k = 0; k < 9; k++) shape(H, R, [H.p(i + k * .5, .2, 3.9), H.p(i + (k + 1) * .5, .2, 3.9), H.p(i + (k + 1) * .5, 1.5, 3.55), H.p(i + k * .5, 1.5, 3.55)], k % 2 ? 'paper' : ink, .8);
+    H.line(R, [H.p(i, 1.5, 3.55), H.p(i + 4.5, 1.5, 3.55)], 'blue', 3);
+    for (const x of [i + .1, i + 4.3]) {
+      H.line(R, [H.p(x, .5, 2.8), H.p(x, 1.5, 3.55)], 'blue', 1.4);
+      H.line(R, [H.p(x, .2, 3.9), H.p(x, 1.5, 3.55)], 'blue', 1.4);
+    }
+    for (let k = 0; k < 9; k++) shape(H, R, [H.p(i + k * .5, 1.5, 3.55), H.p(i + (k + 1) * .5, 1.5, 3.55), H.p(i + (k + 1) * .5, 1.5, 3.35), H.p(i + k * .5, 1.5, 3.35)], k % 2 ? 'paper' : ink, .85);
     for (let k = 0; k < 3; k++) { const [x, y] = H.p(i + 1 + k, 3, 1.25); oval(H, R, x, y, 10, 5, 'paper'); stroke(H, R, [[x - 7, y], [x, y + 8], [x + 7, y]], ink, 4); }
   }
-  for (const i of [1.5, 4, 7, 9.7]) lantern(H, R, i, 3.6, 2.8, i < 6 ? 'coral' : 'sun');
+  for (const i of [1.5, 4, 7, 9.7]) lantern(H, R, i, 1.5, 3.15, i < 6 ? 'coral' : 'sun');
   for (let k = 0; k < 7; k++) { const [x, y] = H.p(1 + R() * 10, 6 + R() * 5); oval(H, R, x, y, 17 + R() * 18, 7, 'teal', .45); H.line(R, [[x - 8, y], [x + 8, y]], 'coral', 1); }
   bench(H, R, 1.5, 4.3, 3, 'coral');
 }, (H, R, t) => {

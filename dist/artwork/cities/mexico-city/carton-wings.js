@@ -33,6 +33,11 @@ function birdBody(H,R,x,y,s=1){
   oval(H,R,...P(68,-85),8*s,9*s,'paper',1);oval(H,R,...P(69,-85),3*s,4*s,'blue',.9);
   for(const a of [-35,-12,12,34])stroke(H,R,[P(a,-21),P(a+6,2),P(a+2,17)],'paper',.8);
   for(const [a,b,c] of [[-33,-24,'teal'],[-8,-21,'paper'],[19,-16,'teal'],[41,-48,'paper']])shape(H,R,[P(a,b),P(a+14,b+2),P(a+12,b+12),P(a-2,b+9)],c,c==='paper'?1:.63,.5);
+  for(const [a,b,w,h] of [[-46,-21,16,11],[-18,5,18,12],[22,-6,13,17],[51,-57,11,16],[60,-95,12,8]]){
+    shape(H,R,[P(a,b),P(a+w,b-2),P(a+w+2,b+h),P(a+1,b+h+2)],'paper',1,.5);
+    H.line(R,[P(a+3,b+3),P(a+w-2,b+1)],'teal',.7);
+    H.line(R,[P(a+3,b+h-2),P(a+w-1,b+h-4)],'coral',.7);
+  }
   const socket=P(8,-19);oval(H,R,...socket,10*s,8*s,'blue',.78);oval(H,R,...socket,6*s,4.5*s,'sun',.8);H.line(R,[socket,P(22,-13)],'blue',5*s);H.line(R,[socket,P(22,-13)],'paper',1.2*s);
 }
 function wing(H,R,x,y,lift){
@@ -45,6 +50,13 @@ function wing(H,R,x,y,lift){
   shape(H,R,[P(32,3),P(48,1),P(53,14),P(37,17)],'coral',.35,.5);
   for(let n=0;n<6;n++)H.line(R,[P(35+n*2,4),P(37+n*2,14)],'paper',.65);
   for(let n=0;n<14;n++)H.line(R,[P(15+n*6,20-(n%3)*3),P(16+n*6,23-(n%3)*3)],'sun',.7);
+  for(const [a,b] of [[27,-26],[47,-31],[64,-32],[80,-25],[97,-16]]){
+    H.line(R,[P(a-4,b-1),P(a+4,b+2)],'coral',1.4);
+    for(const d of [-2,1,4])H.line(R,[P(a+d,b-3),P(a+d-1,b+4)],'blue',.55);
+  }
+  H.line(R,[P(7,13),P(38,22),P(72,19),P(104,7)],'sun',1.3);
+  shape(H,R,[P(57,-21),P(71,-23),P(75,-8),P(61,-6)],'paper',1,.6);
+  for(let k=0;k<4;k++)H.line(R,[P(60+k*3,-17),P(62+k*3,-8)],'coral',.65);
   oval(H,R,...P(0,6),6,4,'blue',.7);
   return [P(12,13),P(85,13)];
 }
@@ -79,8 +91,33 @@ const room=world('mexico-city-carton-wings','A wing waits to fly',{wall:false,fl
     else{const p=P(.8,.45);shape(H,R,[[p[0]-13,p[1]],[p[0]-5,p[1]-12],[p[0]+3,p[1]-4],[p[0]+12,p[1]-10],[p[0]+7,p[1]+9]],n===1?'teal':'coral',.6,.7);}
     for(const a of [.07,1.47])H.dot(...P(a,.94),1.5,'sun');
   }
+  const template=(j,z,scale)=>{
+    const P=(a,b)=>H.p(.27,j+a*scale,z+b*scale);
+    const q=[[0,.1],[.25,.8],[.85,1.12],[1.64,.84],[2.07,.27],[1.7,.04],[1.39,.23],[1.14,.03],[.81,.23],[.51,.08]].map(([a,b])=>P(a,b));
+    shape(H,R,q,'sun',.33,.8);
+    for(const [a,b] of [[.28,.73],[.78,1],[1.29,.9],[1.78,.53]])H.line(R,[P(.16,.25),P(a,b)],'teal',1.4);
+    H.line(R,[P(.37,.98),P(.37,1.31)],'blue',.8);H.dot(...P(.37,1.32),1.7,'coral');
+    H.line(R,[P(1.54,.93),P(1.54,1.21)],'blue',.8);H.dot(...P(1.54,1.22),1.7,'coral');
+  };
+  template(7.84,1.34,1.25);
+  hangingRail(H,R,'nw',7.72,3.49,3.37,3,(P,u,n)=>{
+    const [x,y]=P(u,-.2);H.line(R,[[x,y],[x+3,y+20]],'sun',2.4);
+    if(n===0){oval(H,R,x+3,y+26,9,8,'paper',1);oval(H,R,x+3,y+26,5,4,'blue',.65);}
+    else {shape(H,R,[[x-4,y+16],[x+6,y+16],[x+9,y+32],[x-3,y+32]],n===1?'teal':'paper',n===1?.55:1,.65);for(let k=0;k<3;k++)H.line(R,[[x-1+k*3,y+23],[x-2+k*3,y+32]],'blue',.7);}
+  });
   benchFrame(H,R,.78,4.27,1.61,4.05,1.17,'sun');
+  timber(H,R,.93,4.42,1.29,3.71,.39,.1,'teal');
+  for(let k=0;k<3;k++){
+    box(H,R,1.02,4.56+k*1.04,1.08,.84,.52,.26,k===1?'paper':'coral',k===1?1:.43);
+    H.line(R,[H.p(2.13,4.78+k*1.04,.67),H.p(2.13,5.09+k*1.04,.67)],'blue',2);
+  }
   for(let n=0;n<4;n++)shape(H,R,H.tile(.95,4.56+n*.77,1.24,.62,1.2),'paper',1,.55);
+  const coil=H.p(1.48,4.86,1.24);
+  for(let k=0;k<4;k++)H.outline(R,ell(coil[0],coil[1],12-k*2,5-k*.65),'coral',1.3);
+  stroke(H,R,[[coil[0]+9,coil[1]+2],[coil[0]+18,coil[1]+11],[coil[0]+24,coil[1]+6]],'coral',1);
+  const scissors=H.p(1.72,6.36,1.26);
+  for(const dx of [-4,4]){oval(H,R,scissors[0]+dx,scissors[1],3.5,5,'paper',1);H.line(R,[[scissors[0]+dx,scissors[1]-3],[scissors[0]-dx,scissors[1]-20]],'blue',1.5);}
+  H.dot(scissors[0],scissors[1]-9,1.7,'sun');
   vessel(H,R,1.55,7.63,1.23,13,13,'paper',false);
   const beak=H.p(1.43,5.62,1.25);shape(H,R,[[beak[0]-9,beak[1]-15],[beak[0]+16,beak[1]],[beak[0]-7,beak[1]+7]],'sun',.65,.65);
   for(let n=0;n<3;n++)H.line(R,[[beak[0]-5+n*4,beak[1]],[beak[0]-10+n*6,beak[1]-28]],'blue',1.2);
@@ -91,19 +128,44 @@ const room=world('mexico-city-carton-wings','A wing waits to fly',{wall:false,fl
     bentTube(H,R,[[i,4.01,.55],[i,6.09,1.46]],2.2,'teal');
     cushion(H,R,i-.24,4.14,.72,1.72,1.5,.27,'paper');
   }
+  for(const i of [4.02,6.58]){
+    for(const j of [4.01,6.09]){
+      metal(H,R,i-.1,j,.41,.29,.59,.31,'teal');
+      H.dot(...H.p(i+.21,j+.31,.73),2,'paper');
+    }
+    for(let k=0;k<3;k++)H.line(R,[H.p(i-.18+k*.21,5.55,1.8),H.p(i-.12+k*.21,5.69,1.8)],'coral',.8);
+  }
+  for(const j of [3.82,6.31])bentTube(H,R,[[3.77,j,.61],[6.92,j,.61]],2.6,'teal');
   metal(H,R,5.31,4.32,.28,.27,.56,1.11,'teal');
   box(H,R,4.65,4.42,1.45,.92,.58,.4,'blue',.52);
   drape(H,R,5.83,3.91,.62,1.91,1.78,.29,'paper');
   const bp=H.p(5.02,4.89,2.01);birdBody(H,R,bp[0],bp[1],1.18);
   for(let n=0;n<4;n++)shape(H,R,[H.p(3.96,4.64,2.2+n*.09),H.p(2.48,4.56,2.63+n*.05),H.p(3.31,5.27,1.97+n*.08),H.p(4.25,5.06,1.88+n*.09)],n%2?'coral':'teal',.6,.7);
-  for(const j of [8.71,9.65])timber(H,R,7.5,j,3.59,.24,.11,.68,'sun');
-  for(const i of [7.62,10.81])timber(H,R,i,8.77,.15,1.13,.12,.12,'teal');
-  cushion(H,R,7.47,8.61,3.7,1.41,.78,.21,'paper');
-  shape(H,R,H.tile(3.06,9.48,1.43,.9,.08),'sun',.52,.65);
-  for(let n=0;n<12;n++)H.line(R,[H.p(3.13+n*.1,10.39,.08),H.p(3.18+n*.1,10.39,.23),H.p(3.23+n*.1,10.39,.08)],'coral',.7);
-  for(const [i,j,ink] of [[4.94,9.35,'paper'],[5.64,10.08,'coral']])shape(H,R,[H.p(i,j,.08),H.p(i+1,j+.07,.08),H.p(i+.81,j+.7,.08),H.p(i+.18,j+.88,.08)],ink,ink==='paper'?1:.5,.7);
-  H.line(R,[H.p(5.65,10.12,.09),H.p(6.24,10.52,.09)],'teal',1.5);
+  for(const i of [9.59,10.91])for(const j of [9.01,9.68])timber(H,R,i,j,.15,.15,.06,1.56,'sun');
+  for(const j of [9.03,9.65])timber(H,R,9.56,j,1.54,.15,.49,.13,'teal');
+  timber(H,R,9.45,8.87,1.76,1.05,1.6,.09,'sun');
+  cushion(H,R,9.45,8.87,1.76,1.05,1.69,.18,'paper');
+  const i=2.54,j=9.23,w=4.56,d=1.65;
+  timber(H,R,i,j,w,d,.08,.14,'sun');
+  for(const x of [i,i+w-.14])timber(H,R,x,j,.14,d,.12,.61,'sun');
+  for(const y of [j,j+d-.14])timber(H,R,i,y,w,.14,.12,.61,'sun');
+  shape(H,R,H.tile(i+.17,j+.16,w-.34,d-.32,.24),'blue',.65,.6);
+  for(const x of [2.83,3.59,5.99,6.62]){
+    const P=(a,z)=>H.p(x,j+.16+a,z);
+    shape(H,R,[P(0,.25),P(.38,.25),P(.47,.57),P(.71,.63),P(.89,.46),P(1.19,.25),P(1.31,.25),P(1.31,.75),P(0,.75)],'paper',1,.7);
+  }
+  drape(H,R,4.26,9.47,.86,.89,.38,.13,'paper');
+  shape(H,R,[H.p(4.4,9.53,.59),H.p(4.84,9.56,.64),H.p(5.01,10.25,.47),H.p(4.69,10.38,.44)],'teal',.53,.7);
+  for(let k=0;k<5;k++)H.line(R,[H.p(4.5+k*.07,9.65,.6),H.p(4.65+k*.07,10.22,.48)],'sun',.65);
+  H.line(R,[H.p(3.04,10.92,.41),H.p(3.74,10.92,.41)],'blue',2.1);
+  H.line(R,[H.p(5.91,10.92,.41),H.p(6.61,10.92,.41)],'blue',2.1);
+  for(const x of [2.84,6.66])for(const z of [.24,.58])H.dot(...H.p(x,10.92,z),1.5,'teal');
+  const twine=H.p(2.6,8.56,.06);
+  oval(H,R,...twine,10,4,'sun',.6);H.outline(R,ell(...twine,6,2),'coral',1.1);stroke(H,R,[[twine[0]+7,twine[1]+2],[twine[0]+20,twine[1]+8],[twine[0]+27,twine[1]+1]],'coral',.8);
   const foot=H.p(7.72,10.43,.11);stroke(H,R,[[foot[0],foot[1]-13],[foot[0],foot[1]],[foot[0]+12,foot[1]+3]],'sun',4);H.line(R,[[foot[0],foot[1]],[foot[0]-8,foot[1]+4]],'sun',3);
+  const scrap=H.p(11.25,7.16,.03);
+  shape(H,R,[[scrap[0]-17,scrap[1]-28],[scrap[0]+17,scrap[1]-28],[scrap[0]+13,scrap[1]],[scrap[0]-14,scrap[1]]],'coral',.4,.8);oval(H,R,scrap[0],scrap[1]-28,17,6,'blue',.56);
+  for(let k=0;k<5;k++)shape(H,R,[[scrap[0]-12+k*6,scrap[1]-25],[scrap[0]-17+k*7,scrap[1]-45],[scrap[0]-9+k*6,scrap[1]-49+k%2*10],[scrap[0]-4+k*6,scrap[1]-26]],k%2?'sun':'paper',k%2?.4:1,.6);
   for(const j of [3.7,5.1])bentTube(H,R,[[11.56,j,.05],[11.56,j,3.1]],2.4,'sun');
   for(let z=.32;z<3.1;z+=.43)bentTube(H,R,[[11.56,3.7,z],[11.56,5.1,z]],2,'sun');
 },(H,R,t)=>{

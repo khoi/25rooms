@@ -76,6 +76,12 @@ function cart(H, R, i, j) {
 
 export default function enrich(room) {
   const rich = world(room.id, room.title, { floor: 'blue', tone: .86, wall: 'blue', wallTone: .92, height: 3.7 }, (H, R) => {
+    for (const side of [0, 1]) for (let n = 0; n < 6; n++) {
+      const a = .2 + n * 1.9, p = (u, z, d = .07) => side ? H.p(d, u, z) : H.p(u, d, z);
+      shape(H, R, [p(a, .02), p(a + 1.85, .02), p(a + 1.5, 1.2), p(a + 1.75, 2.5), p(a + 1.3, 3.68), p(a + .25, 3.68), p(a + .5, 2.65), p(a, 1.6)], 'blue', n % 3 ? .84 : .68);
+      H.line(R, [p(a + .3, 3.6, .09), p(a + .75, 2.7, .09), p(a + .5, 1.3, .09)], 'paper', 1, { tone: .3 });
+      shape(H, R, [p(a + .1, 3.68), p(a + .65, 3.68), p(a + .4, 2.6 + n % 2 * .4)], 'blue', .96);
+    }
     for (const side of [0, 1]) for (let k = 0; k < 9; k++) {
       const p = .25 + k * 1.35;
       const pts = [[p, .1, 3.65], [p + .3, .1, 2.8], [p + .02, .1, 2.5], [p + .45, .1, 1.5], [p + .25, .1, .45]].map(([i, j, z]) => side ? H.p(j, i, z) : H.p(i, j, z));
@@ -101,13 +107,29 @@ export default function enrich(room) {
     const pulley = H.p(2.45, 2.56, 3.36);
     oval(H, R, ...pulley, 11, 11, 'blue', .8);
     oval(H, R, ...pulley, 7, 7, 'sun', .65);
+    for (const i of [1.5, 5.25]) H.line(R, [H.p(i, 1.3, .1), H.p(i + (i < 3 ? .85 : -.85), 1.3, 1.12)], 'sun', 3);
+    for (const i of [1.45, 3.3]) for (const z of [.25, 2.65, 3.3]) {
+      box(H, R, i - .035, 2.42, .25, .28, z, .14, 'blue', .9);
+      H.dot(...H.p(i + .09, 2.71, z + .07), 1.7, 'sun');
+    }
     box(H, R, 3.65, 1.4, .85, .65, 1.28, .45, 'teal', .6);
+    for (const i of [3.58, 4.38]) box(H, R, i, 1.42, .13, .68, 1.3, .74, 'sun', .65);
+    const gear = H.p(4.46, 1.98, 1.81);
+    oval(H, R, ...gear, 17, 17, 'blue', .9);
+    oval(H, R, ...gear, 12, 12, 'coral', .8);
+    for (let n = 0; n < 8; n++) H.line(R, [gear, [gear[0] + Math.cos(n * TAU / 8) * 12, gear[1] + Math.sin(n * TAU / 8) * 12]], 'sun', 1.5);
+
     const [wx, wy] = H.p(4.02, 2.07, 1.82);
     oval(H, R, wx, wy, 15, 10, 'coral', .7);
     for (let k = 0; k < 6; k++) H.line(R, [[wx - 9 + k * 3, wy - 7], [wx - 9 + k * 3, wy + 7]], 'blue', .8);
     stroke(H, R, [pulley, [wx - 7, wy - 13], [wx, wy]], 'sun', 1.4);
 
     for (const [i, j, h, w, ink] of [[.6, .8, 77, 13, 'teal'], [.6, 1.7, 55, 12, 'coral'], [.7, 3.9, 72, 13, 'sun'], [.45, 5.1, 93, 17, 'teal'], [1, 4.9, 47, 11, 'coral'], [.65, 6.3, 43, 11, 'sun'], [5.7, .65, 85, 14, 'teal'], [6.4, .7, 52, 12, 'coral'], [7.1, .65, 77, 13, 'sun'], [7.6, 1, 43, 10, 'teal'], [.6, 10.6, 51, 12, 'teal'], [1.1, 10.9, 35, 10, 'coral'], [11.3, 2.1, 54, 10, 'sun'], [11.4, 3.1, 33, 9, 'coral']]) crystal(H, R, i, j, 0, h, w, ink);
+    for (const [i, j, r] of [[4.95, 5.35, 23], [5.6, 5.7, 21], [6.2, 5.7, 18]]) {
+      stone(H, R, i, j, r, 'blue');
+      crystal(H, R, i - .2, j + .15, .03, 20, 7, 'teal');
+      crystal(H, R, i + .2, j + .3, .03, 13, 5, 'coral');
+    }
     const rift = [[4.5, 4.3], [5, 5.7], [4.6, 7], [5.5, 8.8], [5.2, 11.8], [6.4, 11.8], [6.6, 8.6], [5.8, 6.9], [6.2, 5.2], [5.6, 4]].map(p => H.p(...p, .015));
     shape(H, R, rift, 'blue', .98);
     stroke(H, R, [[5.2, 4.9], [5.5, 6.1], [5.2, 7.2], [6, 8.9], [5.9, 11.7]].map(p => H.p(...p, .02)), 'teal', 3, .8);
@@ -134,6 +156,16 @@ export default function enrich(room) {
     crate(H, R, 2.45, 9.6, 0, 'teal');
     crate(H, R, 1.63, 9.53, .57, 'sun');
     table(H, R, 1.25, 5.25, 2.28, .94, .9, 'teal');
+    box(H, R, 1.35, 5.33, 2.04, .75, .17, .09, 'sun', .5);
+    box(H, R, 1.55, 5.46, .68, .5, .27, .47, 'blue', .9);
+    const motor = H.p(1.9, 5.99, .58);
+    oval(H, R, ...motor, 10, 9, 'coral', .75);
+    oval(H, R, ...motor, 5, 5, 'blue', .9);
+    stroke(H, R, [H.p(1.9, 5.99, .58), H.p(2.02, 5.95, 1.65)], 'blue', 3);
+    box(H, R, 1.38, 5.83, 1.26, .45, .98, .08, 'sun', .75);
+    shape(H, R, H.tile(1.46, 5.88, 1.1, .34, 1.07), 'blue', .85);
+    stroke(H, R, [H.p(1.35, 5.4, .75), H.p(.95, 5.4, .15), H.p(1.2, 6.4, .15)], 'coral', 1.6);
+
     box(H, R, 1.52, 5.43, .95, .59, 1.02, .24, 'coral', .68);
     const [px, py] = H.p(2.02, 5.93, 1.65);
     oval(H, R, px, py, 18, 18, 'paper', 1);
@@ -175,6 +207,8 @@ export default function enrich(room) {
       H.outline(R, ell(x, y, 12 - n * 2, 6 - n * .8), 'sun', 1.3);
     }
     box(H, R, 7.4, 9.5, 1.25, .85, 0, .48, 'coral', .7);
+    shape(H, R, H.faceI(7.4, 10.36, 1.25, .1, .42), 'teal', .65);
+    for (const i of [7.53, 8.35]) H.line(R, [H.p(i, 10.38, .08), H.p(i, 10.38, .44)], 'sun', 2);
     const map = H.tile(7.43, 9.54, 1.18, .77, .5);
     shape(H, R, map, 'paper', 1, .65);
     stroke(H, R, [[7.55, 9.68], [7.85, 9.74], [7.96, 10.03], [8.33, 10.08], [8.47, 9.8]].map(p => H.p(...p, .52)), 'teal', 1);

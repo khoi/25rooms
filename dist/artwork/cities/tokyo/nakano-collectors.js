@@ -126,8 +126,20 @@ function collectorStock(H, R) {
 
 function cabinet(H, R, i, j, w, d, h, side) {
   box(H, R, i, j, w, d, 0, .27, 'blue', .72);
+  if (side) box(H, R, i, j, .11, d, .27, h - .27, 'blue', .7);
+  else box(H, R, i, j, w, .11, .27, h - .27, 'blue', .7);
+  box(H, R, i - .04, j - .04, w + .08, d + .08, h, .14, 'coral', .65);
+  for (let n = .18; n < (side ? d : w) - .2; n += 1.77) {
+    const x = side ? i + w + .015 : i + n;
+    const y = side ? j + n : j + d + .015;
+    const face = side ? H.faceJ(x, y, 1.47, .07, .22) : H.faceI(x, y, 1.47, .07, .22);
+    shape(H, R, face, 'coral', .48, .55);
+    H.dot(...H.p(x + (side ? 0 : .73), y + (side ? .73 : 0), .16), 1.5, 'sun', 1);
+  }
   for (const z of [.29, 1.08, 1.88, 2.68]) {
     box(H, R, i, j, w, d, z, .06, 'paper', 1);
+    if (z > .3) H.line(R, [H.p(i + .08, j + d - .06, z - .05), H.p(i + w - .08, j + d - .06, z - .05)], 'sun', 1.7);
+    if (side && z > .3) H.line(R, [H.p(i + w - .06, j + .1, z - .05), H.p(i + w - .06, j + d - .1, z - .05)], 'sun', 1.7);
     if (z < 2.68) {
       const count = side ? 5 : Math.floor(w / .87);
       for (let q = 0; q < count; q++) {
@@ -152,6 +164,11 @@ function cabinet(H, R, i, j, w, d, h, side) {
     }
   }
   for (const [x, y] of [[i, j], [i + w, j], [i + w, j + d], [i, j + d]]) H.line(R, [H.p(x, y, .25), H.p(x, y, h)], 'blue', 1.5);
+  for (const a of [.34, .7]) {
+    const x = side ? i + w + .02 : i + w * a;
+    const y = side ? j + d * a : j + d + .02;
+    H.line(R, [H.p(x, y, 1.15), H.p(x, y, 1.48)], 'sun', 2.1);
+  }
   const front = side ? H.faceJ(i + w + .01, j, d, .3, h) : H.faceI(i, j + d + .01, w, .3, h);
   H.tint(front, 'teal', .06);
   H.outline(R, front, 'blue', 1);
@@ -164,9 +181,30 @@ function cabinet(H, R, i, j, w, d, h, side) {
 
 function furnishings(H, R) {
   collectorStock(H, R);
+  H.line(R, [H.p(.08, 7.25, 3.29), H.p(.08, 11.2, 3.29)], 'sun', 2);
+  for (let n = 0; n < 3; n++) {
+    const j = 7.44 + n * 1.22;
+    H.line(R, [H.p(.1, j + .42, 3.28), H.p(.1, j + .42, 2.96)], 'blue', .7);
+    shape(H, R, H.faceJ(.11, j, .97, 1.76, 2.96), 'coral', .5);
+    shape(H, R, H.faceJ(.13, j + .08, .81, 1.86, 2.86), 'paper', 1);
+    const [x, y] = H.p(.16, j + .49, 2.13);
+    if (n === 0) bird(H, R, x, y, 1.65);
+    if (n === 1) creature(H, R, x, y + 7, 1.05, 'teal');
+    if (n === 2) {
+      shape(H, R, [[x - 17, y + 7], [x - 4, y - 23], [x + 14, y + 4], [x + 2, y], [x - 2, y + 10], [x - 5, y]], 'sun', .7);
+      oval(H, R, x - 2, y - 8, 3, 5, 'teal', .65);
+    }
+    H.line(R, [H.p(.18, j + .14, 1.91), H.p(.18, j + .76, 2.75)], 'paper', 1.5);
+  }
   cabinet(H, R, .35, .34, 6.53, .98, 2.77, false);
   cabinet(H, R, .25, 1.61, 1.03, 5.29, 2.77, true);
   box(H, R, 7.53, .42, 3.81, 1.85, 0, .45, 'blue', .75);
+  box(H, R, 7.53, .42, 3.81, .14, .45, 3.26, 'teal', .6);
+  for (const i of [7.57, 11.16]) box(H, R, i, .49, .13, 1.7, .45, 3.25, 'coral', .7);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(7.88 + n * .66, 2.3, .14), H.p(7.88 + n * .66, 2.3, .34)], 'sun', 1.2);
+  box(H, R, 7.47, .36, 3.93, 2.01, 3.71, .17, 'sun', .65);
+  H.line(R, [H.p(7.74, .74, 3.65), H.p(11.12, .74, 3.65)], 'paper', 3);
+  H.glow(...H.p(9.3, 1.45, 2.24), 58, 57, 'sun', .17);
   box(H, R, 8.28, .88, 2.0, 1.13, .45, .39, 'coral', .4);
   robot(H, R, ...H.p(9.28, 1.6, .92), 1.48, 'coral');
   box(H, R, 7.53, .41, 3.81, .17, 3.74, .1, 'paper', 1);
@@ -184,7 +222,25 @@ function furnishings(H, R) {
     bird(H, R, x, y, .68);
     H.line(R, [H.p(1.31, j, 1.56), H.p(1.31, j + .5, 1.56)], 'coral', 1.5);
   }
-  table(H, R, 4.13, 5.33, 4.63, 1.57, .94, 'paper');
+  box(H, R, 4.18, 5.36, 4.51, 1.49, .06, .12, 'blue', .75);
+  box(H, R, 4.18, 5.36, 4.51, .13, .18, .72, 'blue', .68);
+  for (const i of [4.19, 6.03, 8.53]) box(H, R, i, 5.39, .13, 1.43, .18, .73, 'coral', .62);
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 4.4, 5.62, 1.44, 1.2, .22 + n * .21, .16, 'paper', 1);
+    H.line(R, [H.p(4.88, 6.85, .31 + n * .21), H.p(5.34, 6.85, .31 + n * .21)], 'sun', 1.7);
+  }
+  for (let n = 0; n < 2; n++) {
+    box(H, R, 6.3 + n * 1.05, 5.66, .88, 1.07, .22, .51, n ? 'sun' : 'teal', .58);
+    H.line(R, [H.p(6.52 + n * 1.05, 6.75, .53), H.p(6.91 + n * 1.05, 6.75, .53)], 'paper', 1.5);
+  }
+  box(H, R, 4.13, 5.33, 4.63, 1.57, .94, .12, 'paper', 1);
+  H.glow(...H.p(6.2, 6.09, 1.11), 61, 27, 'sun', .17);
+  const [toolX, toolY] = H.p(8.47, 6.48, 1.1);
+  oval(H, R, toolX, toolY, 6, 3, 'teal', .3);
+  H.line(R, [[toolX - 4, toolY], [toolX - 7, toolY - 21]], 'sun', 1.7);
+  H.line(R, [[toolX + 2, toolY], [toolX + 6, toolY - 26]], 'blue', 1.2);
+  shape(H, R, H.tile(5.71, 6.13, .41, .43, 1.1), 'sun', .3);
+  bird(H, R, ...H.p(5.91, 6.35, 1.13), .51, false);
   shape(H, R, H.tile(4.33, 5.5, 2.5, 1.2, 1.08), 'teal', .28);
   box(H, R, 4.64, 5.69, .86, .77, 1.1, .08, 'blue', .5);
   const [gx, gy] = H.p(7.62, 6.03, 1.1);
@@ -202,7 +258,11 @@ function furnishings(H, R) {
     H.line(R, [H.p(6.23 + q * .45, 5.53, 1.12), H.p(6.5 + q * .45, 5.53, 1.12)], 'coral', .7);
     oval(H, R, ...H.p(6.38 + q * .45, 5.75, 1.12), 3, 2, 'sun');
   }
-  box(H, R, 2.0, 8.75, 5.35, 1.3, 0, .85, 'blue', .62);
+  box(H, R, 2.0, 8.75, 5.35, 1.3, .08, .77, 'blue', .62);
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.faceI(2.16 + n * 1.3, 10.08, 1.04, .2, .7), 'coral', .46);
+    H.line(R, [H.p(2.46 + n * 1.3, 10.1, .58), H.p(2.87 + n * 1.3, 10.1, .58)], 'sun', 1.8);
+  }
   shape(H, R, H.tile(2.12, 8.88, 5.08, 1.02, .87), 'paper', 1);
   train(H, R, 2.29, 9.24, .9);
   train(H, R, 4.81, 9.13, .9);

@@ -126,7 +126,16 @@ export default world('tokyo-shibuya-window', 'Shibuya · A window above the cros
   });
   H.outline(R, side, 'blue', 4);
   for (const j of [2.12, 3.94]) H.line(R, [H.p(.06, j, 1.28), H.p(.06, j, 4.74)], 'paper', 3);
+  for (const i of [1.1, 3.8, 6.5, 9.8]) H.line(R, [H.p(i, .24, .65), H.p(i, 1.35, 1.1)], 'teal', 2.4);
+  box(H, R, .65, .6, 10.35, .13, 1.24, .18, 'teal', .55);
   table(H, R, .65, .62, 10.35, .88, 1.12, 'sun');
+  for (const i of [1.8, 4.8, 7.7]) {
+    box(H, R, i, .72, .29, .11, 1.25, .19, 'paper');
+    H.dot(...H.p(i + .1, .85, 1.34), 1, 'blue');
+    H.dot(...H.p(i + .2, .85, 1.34), 1, 'blue');
+  }
+  stroke(H, R, [H.p(7.87, .85, 1.37), H.p(7.54, 1.18, 1.27), H.p(8.3, 1.29, 1.27)], 'blue', .9);
+
   for (const i of [2.6, 5.4, 8.1]) {
     table(H, R, i, 2.05, .72, .72, .58, 'coral');
     H.line(R, [H.p(i + .05, 2.09, .27), H.p(i + .67, 2.09, .27)], 'blue', 1.8);
@@ -140,8 +149,32 @@ export default world('tokyo-shibuya-window', 'Shibuya · A window above the cros
   oval(H, R, hx - 9, hy, 3, 5, 'coral'); oval(H, R, hx + 9, hy, 3, 5, 'coral');
   box(H, R, 8.23, 2.29, .55, .4, .05, .57, 'teal', .5);
   stroke(H, R, [H.p(8.25, 2.4, .6), H.p(8.36, 2.4, .86), H.p(8.73, 2.4, .6)], 'blue', 1.2);
+  for (const j of [5.99, 7.24, 8.49]) {
+    box(H, R, .45, j, 1.43, 1.1, .1, .82, 'coral', .43);
+    shape(H, R, H.faceJ(1.9, j + .08, .93, .21, .77), 'blue', .68);
+    for (let k = 0; k < 3; k++) box(H, R, 1.2, j + .19, .64, .65, .24 + k * .14, .1, k % 2 ? 'teal' : 'paper', .85);
+    box(H, R, 1.93, j + .02, .07, 1.07, .12, .09, 'sun', .6);
+  }
   table(H, R, .44, 5.94, 1.52, 3.7, 1.07, 'teal');
   box(H, R, .55, 6.08, 1.13, 1.02, 1.2, .88, 'blue', .75);
+  box(H, R, .52, 6.06, 1.2, 1.08, 2.08, .07, 'paper');
+  shape(H, R, H.faceI(.65, 7.13, .93, 1.36, 1.87), 'teal', .47);
+  box(H, R, .57, 7.07, 1.09, .4, 1.22, .06, 'paper');
+  for (let k = 0; k < 8; k++) H.line(R, [H.p(.65 + k * .13, 7.13, 1.3), H.p(.65 + k * .13, 7.43, 1.3)], 'blue', .7);
+  for (const i of [.85, 1.35]) {
+    oval(H, R, ...H.p(i, 7.16, 1.81), 5, 5, 'paper');
+    stroke(H, R, [H.p(i, 7.17, 1.68), H.p(i, 7.39, 1.63), H.p(i + .14, 7.48, 1.63)], 'blue', 2.4);
+    cup(H, R, i, 6.57, 2.18);
+  }
+  stroke(H, R, [H.p(1.62, 7.13, 1.76), H.p(1.82, 7.29, 1.65), H.p(1.79, 7.48, 1.45)], 'sun', 2);
+  for (const j of [6.19, 7.52, 8.87]) {
+    box(H, R, .04, j, .5, 1.06, 2.87, .09, 'sun', .6);
+    H.line(R, [H.p(.05, j + .14, 2.51), H.p(.47, j + .14, 2.86)], 'blue', 1.6);
+    for (let k = 0; k < 3; k++) cup(H, R, .3, j + .18 + k * .3, 3.0, k === 1 ? 'coral' : 'paper');
+  }
+  box(H, R, .04, 5.95, .04, 3.75, 3.58, .17, 'teal', .6);
+  H.line(R, [H.p(.12, 6, 3.55), H.p(.12, 9.65, 3.55)], 'sun', 2);
+
   oval(H, R, ...H.p(1.16, 7.12, 1.63), 4, 4, 'sun');
   for (let k = 0; k < 3; k++) cup(H, R, .78 + k * .36, 8.1, 1.2);
   bottle(H, R, ...H.p(.9, 9, 1.2), 'teal', .65, false);

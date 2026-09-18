@@ -2,7 +2,7 @@ import { surface, timber, metal, vessel, bentTube, drape, benchFrame, pendant, s
 import { masonry, archedBay, cabinetFrame, boardFloor } from '../structure.js';
 import { cityView, taskLight } from '../joinery.js';
 import { shallowTray, foldedCloth, handTool } from '../furnishings.js';
-import { TAU, actor, cycle, oval, shape, stroke, world } from '../../worlds/common.js';
+import { TAU, actor, cycle, ell, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -157,7 +157,24 @@ const room = world(
           );
       }
     }
+    for (const j of [2.62, 8.59]) {
+      timber(H, R, 0.16, j, 0.11, 0.17, 0.08, 3.48, 'teal');
+      for (const z of [1.44, 2.4, 3.35]) bentTube(H, R, [[0.2, j, z - 0.29], [0.73, j, z], [0.2, j, z]], 1.4, 'sun');
+    }
+    cabinetFrame(H, R, 8.29, 0.47, 2.91, 0.92, 0.08, 1.24, 3, 'sun', (i, j, w, d, z, h, n) => {
+      for (let k = 0; k < 3; k++) foldedCloth(H, R, i + 0.06, j, w - 0.12, d, z + 0.1 + k * 0.17, n === 1 ? 'coral' : 'paper', 'teal');
+    });
+    for (const i of [8.5, 9.17, 9.84, 10.51]) {
+      bolt(H, R, i, 0.66, 1.36, 0.42, 0.53, 'paper', 1);
+    }
     benchFrame(H, R, 2.56, 4.07, 7.42, 2.41, 1.13, 'sun');
+    timber(H, R, 2.67, 4.21, 7.18, 2.08, 0.3, 0.08, 'sun');
+    for (const i of [2.76, 6.24, 9.61]) bentTube(H, R, [[i, 4.29, 0.14], [i, 6.25, 0.94]], 1.5, 'teal');
+    for (const i of [2.7, 8.99]) {
+      timber(H, R, i, 4.17, 0.15, 0.58, 1.13, 0.47, 'sun');
+      metal(H, R, i - 0.04, 4.35, 0.23, 0.25, 1.47, 0.1, 'teal');
+      H.dot(...H.p(i + 0.08, 4.62, 1.52), 2.5, 'sun');
+    }
     for (let n = 0; n < 7; n++) surface(H, R, H.tile(2.69 + n * 0.95, 4.22, 0.88, 2.1, 0.36), 'paper', 1, 0.4);
     drape(H, R, 3.45, 4.31, 4.71, 2.11, 1.16, 0.74, 'teal');
     roll(H, R, 3.45, 4.41, 1.52, 4.72, 'teal', true);
@@ -165,6 +182,14 @@ const room = world(
     shallowTray(H, R, 8.59, 4.31, 1.11, 0.84, 1.17, 'paper');
     for (let n = 0; n < 3; n++) vessel(H, R, 8.81 + n * 0.28, 4.7, 1.31, 4.8, 10, ['coral', 'teal', 'sun'][n], false);
     handTool(H, R, 8.98, 5.8, 1.19, 'scissors', 'coral');
+    surface(H, R, H.tile(8.55, 5.63, 0.79, 0.6, 1.19), 'sun', 0.22);
+    for (let n = 0; n < 3; n++) {
+      const [wx, wy] = H.p(8.58 + n * 0.33, 5.41, 1.23);
+      surface(H, R, ell(wx, wy, 5, 3), 'blue', 0.8);
+      surface(H, R, ell(wx, wy - 3, 5, 3), 'sun', 0.57);
+    }
+    surface(H, R, H.tile(2.75, 5.05, 0.49, 0.77, 1.2), 'blue', 0.8);
+    for (let n = 0; n < 9; n++) surface(H, R, H.tile(2.81 + n % 3 * 0.12, 5.23 + Math.floor(n / 3) * 0.17, 0.08, 0.1, 1.22), 'paper', 1);
     taskLight(H, R, 9.53, 4.32, 1.16, 'teal', -0.66);
     benchFrame(H, R, 9.35, 8.32, 2.06, 2.08, 1.05, 'teal');
     metal(H, R, 9.69, 8.64, 1.36, 1.15, 1.08, 0.1, 'blue');
@@ -201,6 +226,23 @@ const room = world(
       for (let q = 0; q < 3; q++)
         foldedCloth(H, R, i + 0.1, j + 0.07, w - 0.16, d - 0.15, z + 0.11 + q * 0.15, ['paper', 'sun', 'coral'][(q + n) % 3], 'teal');
     });
+    shallowTray(H, R, 1.72, 9.77, 1.63, 1.27, 0.87, 'teal');
+    for (let n = 0; n < 8; n++) {
+      const [x, y] = H.p(1.98 + n % 4 * 0.32, 10.06 + Math.floor(n / 4) * 0.48, 1.04);
+      surface(H, R, ell(x, y, 4.3, 3), n === 3 ? 'paper' : 'sun', 0.85);
+      for (const dx of [-1, 1]) H.dot(x + dx, y, 0.7, 'blue');
+    }
+    shallowTray(H, R, 3.56, 9.77, 1.77, 1.27, 0.87, 'paper');
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = H.p(3.9 + n % 2 * 0.79, 10.08 + Math.floor(n / 2) * 0.53, 1.09);
+      surface(H, R, ell(x, y, 7, 3), 'sun', 0.5);
+      surface(H, R, [[x - 4, y], [x + 4, y], [x + 4, y - 10], [x - 4, y - 10]], n % 2 ? 'coral' : 'teal', 0.64);
+      surface(H, R, ell(x, y - 10, 7, 3), 'sun', 0.5);
+      H.dot(x, y - 10, 1.5, 'blue');
+    }
+    bentTube(H, R, [[10.2, 9.14, 1.32], [10.2, 9.14, 0.43], [10.75, 9.7, 0.22]], 1.3, 'teal');
+    metal(H, R, 10.25, 9.58, 0.61, 0.51, 0.08, 0.08, 'teal');
+    for (let n = 0; n < 4; n++) H.line(R, [H.p(10.32, 9.64 + n * 0.1, 0.18), H.p(10.78, 9.64 + n * 0.1, 0.18)], 'paper', 0.7);
     roll(H, R, 1.51, 8.79, 1.01, 1.39, 'coral');
     for (const i of [3.26, 7.48]) pendant(H, R, i, 3.51, 4.53, 3.32, 'paper', 0.9);
   },

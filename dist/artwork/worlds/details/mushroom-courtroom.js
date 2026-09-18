@@ -112,6 +112,21 @@ function scales(H, R, i, j, z, t) {
 
 export default function enrich(room) {
   const detailed = world(room.id, room.title, { floor: 'teal', tone: .2, wall: false }, (H, R) => {
+    for (const [i,j,h] of [[.25,.25,2.7],[4,.18,2.5],[8.9,.18,2.6],[11.5,.18,2.4],[.16,5.3,2.1]]) {
+      const [x,y]=H.p(i,j);
+      shape(H,R,[[x-11,y],[x-9,y-h*27],[x-3,y-h*32],[x+7,y-h*31],[x+12,y]],'coral',.65);
+      for(let n=0;n<3;n++) stroke(H,R,[[x-5+n*5,y-4],[x-8+n*5,y-h*13],[x-4+n*5,y-h*27]],'sun',.9);
+      for(const side of [-1,1]) stroke(H,R,[[x,y-7],[x+side*16,y+1],[x+side*24,y+3]],'coral',3);
+    }
+    for(const [a,b] of [[.4,3.8],[4.1,8.8],[9,11.5]]) {
+      stroke(H,R,[H.p(a,.18,2.12),H.p((a+b)/2,.18,2.4),H.p(b,.18,2.14)],'teal',8);
+      stroke(H,R,[H.p(a,.18,2.12),H.p((a+b)/2,.18,2.4),H.p(b,.18,2.14)],'sun',1.6);
+      for(let n=0;n<5;n++) {
+        const i=a+(b-a)*(n+.5)/5;
+        const [x,y]=H.p(i,.19,2.35);
+        shape(H,R,[[x,y],[x-7,y-8],[x-4,y-16],[x+4,y-10]],'teal',.65);
+      }
+    }
     for (const [i, j, s, ink] of [[.5,.6,.7,'sun'],[3.1,.5,.8,'coral'],[7.8,.5,.7,'sun'],[11.4,.7,.9,'coral'],[.4,10.8,.65,'coral'],[2.6,11.4,.55,'sun'],[8.4,11.3,.65,'coral'],[11.5,10.3,.9,'sun']]) mushroom(H, R, ...H.p(i, j), s, ink);
     for (const j of [.6, 1.4, 2.2, 3]) {
       const [x, y] = H.p(.3, j);
@@ -124,7 +139,17 @@ export default function enrich(room) {
     const [mx, my] = H.p(6.2, 2, .35);
     for (let k = 0; k < 12; k++) stroke(H, R, [[mx - 53 + k * 9, my - 67], [mx - 37 + k * 6, my - 57]], 'blue', .7, .6);
 
-    box(H, R, 5.05, 2.85, 2.95, .9, .35, 1, 'blue', .72);
+    box(H,R,5.05,2.85,2.95,.9,.35,.18,'coral',.75);
+    shape(H,R,H.faceI(5.12,3.75,2.8,.52,1.29),'teal',.72);
+    for(const i of [5.06,6.01,6.98,7.87]) {
+      box(H,R,i,3.66,.14,.2,.52,.84,'sun',.73);
+      box(H,R,i-.04,3.63,.22,.25,.51,.09,'coral',.8);
+    }
+    for(const i of [5.27,6.24,7.21]) {
+      shape(H,R,H.faceI(i,3.76,.56,.64,1.16),'coral',.65);
+      const [x,y]=H.p(i+.28,3.78,.91);
+      shape(H,R,[[x,y-8],[x+6,y],[x,y+8],[x-6,y]],'sun',.8);
+    }
     box(H, R, 4.94, 2.78, 3.17, 1.06, 1.35, .13, 'sun', .8);
 
     for (const i of [5.28, 7.67]) {
@@ -137,8 +162,19 @@ export default function enrich(room) {
     sheet(H, R, 6.5, 3.03, 1.49, .54, .6, true);
     quill(H, R, ...H.p(7.63, 3, 1.52));
     oval(H, R, ...H.p(7.12, 3.57, 1.5), 9, 4, 'coral', .8);
+    for (const side of [-1,1]) {
+      const [x,y]=H.p(6.2,2,.35);
+      stroke(H,R,[[x+side*10,y-49],[x+side*27,y-61],[x+side*49,y-67]],'sun',2.5);
+      for(let n=0;n<4;n++) stroke(H,R,[[x+side*(17+n*8),y-57-n*2],[x+side*(24+n*9),y-71]],'paper',.8);
+    }
     table(H, R, .65, 1.05, 2.85, 1.05, .88, 'teal');
-    for (const i of [.68, 3.3]) box(H, R, i, 1.05, .1, .12, .88, 1.1, 'blue', .6);
+    shape(H,R,H.faceI(.69,1.09,2.58,1.01,2.65),'blue',.56);
+    for(const z of [1.71,2.55]) box(H,R,.64,1.05,2.86,.74,z,.11,'sun',.7);
+    for(let n=0;n<4;n++) {
+      box(H,R,.73+n*.68,1.15,.62,.58,2.66,.28,'coral',.6);
+      H.dot(...H.p(1.04+n*.68,1.74,2.81),1.8,'sun');
+    }
+    for (const i of [.68, 3.3]) box(H, R, i, 1.05, .1, .12, .88, 2.12, 'blue', .6);
     box(H, R, .6, 1.06, 2.98, .72, 1.75, .12, 'sun', .6);
     for (let k = 0; k < 6; k++) jar(H, R, .94 + k % 3 * .9, k < 3 ? 1.78 : 1.49, k < 3 ? 1.01 : 1.88, k);
 
@@ -151,6 +187,8 @@ export default function enrich(room) {
       box(H, R, 9.3, .7, 1.9, .75, z, .1, 'teal', .65);
       for (let k = 0; k < 5; k++) scroll(H, R, ...H.p(9.48 + k * .32, 1.16, z + .2), .52);
     }
+    for (const z of [.65,1.32,2.02]) for(const i of [9.27,9.91,10.55,11.15]) box(H,R,i,.71,.07,.71,z,.75,'coral',.65);
+    box(H,R,9.18,.66,2.1,.87,2.45,.15,'sun',.75);
     for (const i of [9.25, 11.1]) box(H, R, i, .68, .13, .18, .55, 1.85, 'blue', .7);
 
     for (let k = 0; k < 5; k++) book(H, R, 10.45, 2.15, k * .13, palette[k % 4], .6, .82);
@@ -159,6 +197,14 @@ export default function enrich(room) {
     box(H, R, 1.05, 4.3, .13, 1.6, .25, .68, 'coral', .6);
     book(H, R, 1.13, 5.15, .98, 'blue', .46, .43);
 
+    for(let n=0;n<5;n++) {
+      const j=4.4+n*.28;
+      H.line(R,[H.p(1.2,j,.28),H.p(2.82,j,.28)],'coral',.8);
+    }
+    for(const i of [1.02,2.83]) {
+      box(H,R,i,5.72,.16,.2,.25,.87,'sun',.8);
+      acorn(H,R,...H.p(i+.08,5.81,1.23),.9);
+    }
     table(H, R, 4.05, 4.85, 1.85, 1.08, .67, 'sun');
     box(H, R, 4.45, 5.18, 1.02, .6, .8, .2, 'blue', .9);
     box(H, R, 4.53, 5.03, .85, .16, 1, .2, 'teal', .8);
@@ -168,6 +214,9 @@ export default function enrich(room) {
     for (let k = 0; k < 6; k++) H.line(R, [H.p(4.74, 5.02, 1.16 + k * .1), H.p(5.11, 5.02, 1.16 + k * .1)], 'blue', .45);
     scroll(H, R, ...H.p(5.63, 5.4, .81), .55);
 
+    for(const i of [4.07,5.67]) H.line(R,[H.p(i,4.98,.13),H.p(i,5.78,.65)],'teal',1.5);
+    box(H,R,4.14,4.97,1.55,.7,.16,.09,'coral',.65);
+    for(let n=0;n<3;n++) scroll(H,R,...H.p(4.42+n*.44,5.31,.37),.55);
     table(H, R, 7.15, 4.8, 2.05, 1.22, .85, 'coral');
     sheet(H, R, 7.32, 5.1, .99, .64, .7, true);
     for (let k = 0; k < 3; k++) book(H, R, 8.35, 5.17, .98 + k * .12, palette[k], .55, .7);

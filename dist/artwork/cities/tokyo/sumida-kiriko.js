@@ -27,8 +27,28 @@ function basin(H, R, i, j, z, w = 1.4) {
 }
 
 function wheelBench(H, R) {
-  table(H, R, 1, 3.7, 4.3, 1.6, 1.05, 'paper');
-  box(H, R, 2.05, 3.95, 1.08, .87, 1.18, .55, 'teal', .75);
+  for (const i of [1.08, 5.05]) for (const j of [3.8, 5.08]) {
+    box(H, R, i, j, .15, .15, .06, .94, 'teal', .8);
+    box(H, R, i - .04, j - .04, .23, .23, .02, .05, 'blue', .8);
+  }
+  box(H, R, 1.05, 3.76, 4.14, 1.46, .25, .08, 'blue', .6);
+  box(H, R, 1, 3.7, 4.3, 1.6, 1.01, .16, 'paper', 1);
+  for (const i of [1.16, 4.86]) H.line(R, [H.p(i, 3.83, .3), H.p(i, 5.13, .98)], 'teal', 1.7);
+  box(H, R, 2.21, 4.02, 1.65, .94, .34, .42, 'paper', 1);
+  shape(H, R, H.faceI(2.42, 4.98, 1.24, .41, .67), 'teal', .25, .5);
+  stroke(H, R, [H.p(3.95, 4.55, 1.16), H.p(3.95, 4.55, .62), H.p(3.37, 4.55, .58)], 'teal', 2.3);
+  for (const i of [1.3, 4.54]) {
+    const [x, y] = H.p(i, 4.64, .35);
+    oval(H, R, x, y - 9, 10, 12, 'blue', .7);
+    oval(H, R, x, y - 9, 4, 5, 'paper', 1);
+  }
+  box(H, R, 1.94, 3.87, 1.32, 1.03, 1.18, .11, 'blue', .75);
+  box(H, R, 2.05, 3.95, 1.08, .87, 1.29, .44, 'teal', .75);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(2.15 + k * .16, 4.83, 1.37), H.p(2.15 + k * .16, 4.83, 1.64)], 'paper', .8);
+  for (const i of [2.01, 3.13]) for (const j of [3.94, 4.8]) oval(H, R, ...H.p(i, j, 1.3), 2.5, 1.5, 'sun', .8);
+  box(H, R, 1.24, 4.58, .47, .41, 1.18, .16, 'blue', .7);
+  oval(H, R, ...H.p(1.47, 4.82, 1.36), 4, 2, 'coral', .85);
+  stroke(H, R, [H.p(1.23, 4.77, 1.26), H.p(.93, 4.9, .74), H.p(.86, 4.35, .09), H.p(.15, 3.47, .09), H.p(.15, 3.47, 1.42)], 'blue', 1.2);
   basin(H, R, 3.02, 4.02, 1.18, 1.6);
   const [x, y] = H.p(3.1, 4.53, 1.68);
   oval(H, R, x, y - 11, 7, 23, 'blue', .8);
@@ -85,6 +105,11 @@ function finishingRoom(H, R) {
     } else oval(H, R, x, y + 14, 6, 7, 'coral', .4);
   }
   box(H, R, .65, 6.34, 1.3, 2.13, 0, .94, 'teal', .6);
+  shape(H, R, H.faceJ(1.96, 6.49, 1.8, .12, .78), 'paper', 1, .7);
+  for (const j of [6.61, 7.45]) {
+    shape(H, R, H.faceJ(1.97, j, .66, .24, .65), 'teal', .25, .5);
+    H.line(R, [H.p(1.98, j + .22, .53), H.p(1.98, j + .46, .53)], 'blue', 1.5);
+  }
   basin(H, R, .63, 6.36, .95, 1.34);
   basin(H, R, .63, 7.4, .95, 1.34);
   const [fx, fy] = H.p(.84, 7.41, 1.13);
@@ -126,9 +151,17 @@ function finishingRoom(H, R) {
 }
 
 const room = world('tokyo-sumida-kiriko', 'Light through cut glass — Sumida Edo kiriko workshop', { floor: 'paper', tone: 1, wall: 'paper', wallTone: 1, pattern: 'tiles', accent: 'teal', height: 4.2, head: 20 }, (H, R) => {
+  for (const j of [.5, 6.28, 11.5]) box(H, R, .03, j, .23, .2, .02, 4.11, 'teal', .7);
+  box(H, R, .02, .06, .32, 11.62, 3.96, .17, 'teal', .65);
+  for (const z of [1.47, 3.78]) box(H, R, .03, .64, .36, 5.72, z, .13, 'teal', .6);
+  box(H, R, .03, .63, .71, 5.74, 1.36, .13, 'sun', .45);
+  shape(H, R, H.faceJ(.17, 3.21, .44, 1.22, 1.61), 'paper', 1, .6);
+  for (const j of [3.32, 3.5]) H.line(R, [H.p(.19, j, 1.33), H.p(.19, j, 1.44)], 'blue', 1);
   windowOn(H, R, 'nw', 3.45, 1.6, 5.5, 2.15, { sky: 'sun', skyTone: .16, frameInk: 'teal' });
   for (const j of [1.5, 3.4, 5.3]) H.line(R, [H.p(.03, j, 1.62), H.p(.03, j, 3.73)], 'teal', 1.7);
   H.tint([H.p(.1, 1, .02), H.p(.1, 5.8, .02), H.p(6, 8.1, .02), H.p(7.1, 4.6, .02)], 'sun', .11);
+  box(H, R, 1.13, .14, 10.18, .91, .06, 3.65, 'blue', .5);
+  box(H, R, 1.07, .14, 10.3, 1.01, 3.69, .15, 'sun', .55);
   for (const z of [.55, 1.65, 2.75]) {
     box(H, R, 1.2, .32, 10.1, .83, z, .12, 'sun', .4);
     for (let k = 0; k < 10; k++) glass(H, R, ...H.p(1.7 + k * .97, .8, z + .13), k % 2 ? 'blue' : 'coral', .63 + k % 3 * .05, z > 2 ? 0 : k % 3);
@@ -154,7 +187,13 @@ const room = world('tokyo-sumida-kiriko', 'Light through cut glass — Sumida Ed
   const [ax, ay] = H.p(.15, 7.4, 2.15);
   shape(H, R, [[ax - 7, ay], [ax + 7, ay], [ax + 14, ay + 42], [ax - 14, ay + 42]], 'coral', .5);
   H.line(R, arcPts(ax, ay, 6, 9, Math.PI, Math.PI * 2, 10), 'blue', 1);
-  table(H, R, 1.05, 9.2, 5.2, 1.45, .63, 'teal');
+  for (const i of [1.1, 3.56, 6.0]) box(H, R, i, 9.27, .18, 1.22, .04, .61, 'teal', .7);
+  box(H, R, 1.05, 9.2, 5.2, 1.45, .6, .16, 'teal', .65);
+  box(H, R, 1.15, 9.32, 5.02, 1.2, .12, .08, 'sun', .5);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 1.35 + k * 1.55, 9.43, 1.25, .94, .22, .26, 'paper', 1);
+    H.line(R, [H.p(1.98 + k * 1.55, 9.43, .5), H.p(1.98 + k * 1.55, 10.37, .5)], 'coral', 2);
+  }
   for (let k = 0; k < 6; k++) {
     box(H, R, 1.2 + k * .83, 9.35, .67, .9, .77, .06, 'paper', 1);
     glass(H, R, ...H.p(1.53 + k * .83, 9.8, .84), k % 2 ? 'coral' : 'blue', .68, 2);

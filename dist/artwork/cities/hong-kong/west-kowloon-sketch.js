@@ -1,6 +1,6 @@
-import { surface, timber, metal, vessel, bentTube, slattedSeat, branchSpray } from '../materials.js';
+import { surface, timber, metal, vessel, bentTube, slattedSeat, branchSpray, benchFrame } from '../materials.js';
 
-import { shallowTray, coiledLine, handTool, boundBook, slattedCrate } from '../furnishings.js';
+import { shallowTray, coiledLine, handTool, boundBook, slattedCrate, foldedCloth } from '../furnishings.js';
 import { TAU, actor, cycle, shape, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -115,11 +115,19 @@ const room = world(
       metal(H, R, i, j, 0.17, 0.17, 0.02, 3.78, 'teal');
       metal(H, R, i - 0.12, j - 0.12, 0.41, 0.41, 0.02, 0.12, 'blue');
     }
+    for (const [i,j] of [[2.39,2.39],[2.39,8.83],[7.35,2.39]]) {
+      for(const [di,dj] of [[-0.09,-0.09],[0.19,0.19]]) H.dot(...H.p(i+di,j+dj,0.16),1.6,'sun');
+      bentTube(H,R,[[i,j,2.65],[i+(i>7?-0.68:0.68),j,3.72]],2.5,'teal');
+    }
     surface(H, R, [H.p(2.32, 2.3, 3.77), H.p(7.55, 2.3, 3.77), H.p(6.29, 6.3, 3.25), H.p(2.32, 8.98, 3.77)], 'paper', 1, 1.5);
     H.line(R, [H.p(7.54, 2.31, 3.78), H.p(6.29, 6.3, 3.27), H.p(2.33, 8.97, 3.78)], 'sun', 2);
     for (let n = 0; n < 7; n++)
       H.line(R, [H.p(2.44 + n * 0.65, 2.34, 3.76), H.p(2.44 + n * 0.52, 8.5 - n * 0.53, 3.71 - n * 0.07)], 'teal', 0.65, { tone: 0.5 });
     H.tint([H.p(3.04, 3.24, 0.03), H.p(8.26, 3.24, 0.03), H.p(7, 7.24, 0.03), H.p(3.04, 9.92, 0.03)], 'teal', 0.1);
+    for(let n=0;n<5;n++) metal(H,R,2.51+n*0.91,2.4,0.18,0.29,3.62,0.11,'teal');
+    bentTube(H,R,[[2.33,8.97,3.73],[2.33,9.02,3.65],[2.33,9.02,0.14],[1.81,9.02,0.14]],2,'teal');
+    surface(H,R,H.tile(2.12,9.3,0.51,1.57,0.03),'blue',0.48);
+    for(let n=0;n<8;n++) H.line(R,[H.p(2.15,9.4+n*0.18,0.04),H.p(2.59,9.4+n*0.18,0.04)],'paper',0.9);
     slattedSeat(H, R, 8.18, 1.73, 3.17, 0.03, 'sun', 0.58);
     foldingChair(H, R, 4.79, 6.38, 'coral');
     for (const i of [3.37, 5.08])
@@ -149,6 +157,14 @@ const room = world(
       'teal',
       0.9
     );
+    for(const i of [3.4,5.1]) {
+      metal(H,R,i,5.59,0.19,0.19,1.45,0.065,'teal');
+      bentTube(H,R,[[i,5.58,1.49],[i,5.72,1.47]],1.5,'blue');
+      bentTube(H,R,[[i,5.56,1.03],[i,5.56,1.37],[i,6.22,1.03]],1.6,'teal');
+    }
+    timber(H,R,3.25,6.45,2.22,0.12,1.07,0.13,'teal');
+    metal(H,R,4.02,5.38,0.46,0.18,0.98,0.16,'blue');
+    for(const i of [3.38,5.08]) bentTube(H,R,[[i,5.66,0.42],[i,6.43,0.42]],1.5,'sun');
     shallowTray(H, R, 3.41, 6.56, 1.24, 0.41, 1.06, 'sun');
     for (let n = 0; n < 5; n++) vessel(H, R, 3.55 + n * 0.21, 6.76, 1.08, 2.9, 2, ['teal', 'coral', 'sun'][n % 3]);
     vessel(H, R, 5.27, 5.49, 1.1, 5, 10, 'paper');
@@ -162,6 +178,21 @@ const room = world(
     }
     H.line(R, [H.p(8.38, 6.08, 1.4), H.p(10.06, 6.08, 1.4)], 'teal', 1);
     for (let n = 0; n < 3; n++) surface(H, R, H.faceI(8.43 + n * 0.53, 6.12, 0.43, 0.82, 1.33), 'paper', 1, 0.5);
+    benchFrame(H,R,7.4,9.38,2.74,1.43,0.82,'teal');
+    timber(H,R,7.52,9.54,2.45,1.15,0.27,0.07,'sun');
+    for(let n=0;n<3;n++) boundBook(H,R,7.64+n*0.06,9.62,1.4,0.87,0.36+n*0.08,n===1?'coral':'paper');
+    shallowTray(H,R,7.59,9.57,1.11,0.87,0.87,'paper');
+    for(let n=0;n<6;n++) vessel(H,R,7.8+n%3*0.3,9.81+Math.floor(n/3)*0.37,0.9,3.6,2,['teal','sun','coral','blue','paper','teal'][n]);
+    boundBook(H,R,8.99,9.54,0.85,0.99,0.88,'sun');
+    handTool(H,R,9.39,10.36,0.93,'brush','teal');
+    foldedCloth(H,R,10.05,2.04,0.77,0.92,0.64,'coral','paper');
+    surface(H,R,H.faceI(7.73,7.76,2.14,0.88,2.37),'sun',0.55);
+    surface(H,R,H.faceI(7.88,7.79,1.84,1.07,2.22),'paper',1);
+    for(const i of [7.94,9.43]) bentTube(H,R,[[i,8.02,0.03],[i,7.71,2.49]],2,'sun');
+    bentTube(H,R,[[8.64,7.73,2.13],[8.64,6.91,0.03]],2,'teal');
+    timber(H,R,7.67,7.76,2.3,0.25,0.85,0.1,'teal');
+    cloud(H,R,...H.p(8.68,7.81,1.77),0.63);
+    H.line(R,[H.p(8.01,7.83,1.35),H.p(8.67,7.83,1.45),H.p(9.58,7.83,1.34)],'teal',1.1);
     vessel(H, R, 10.73, 8.42, 0.04, 11, 24, 'teal');
     for (let n = 0; n < 5; n++)
       bentTube(

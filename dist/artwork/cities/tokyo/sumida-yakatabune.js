@@ -33,7 +33,15 @@ function meal(H, R, i, j) {
 function cabinWindows(H, R) {
   for (let k = 0; k < 4; k++) {
     const i = 1.28 + k * 2.15;
+    box(H, R, i - .08, 1.79, 2.09, .28, 1.32, .1, 'coral', .55);
     shape(H, R, H.faceI(i, 1.92, 1.93, 1.43, 3.11), 'blue', .8);
+    for (const off of [0, 1.85]) box(H, R, i + off, 1.93, .08, .17, 1.42, 1.73, 'sun', .62);
+    box(H, R, i - .08, 1.91, 2.09, .22, 3.1, .09, 'coral', .5);
+    box(H, R, i - .08, 1.91, 2.09, .42, 1.3, .11, 'sun', .6);
+    for (const z of [.63, 1.19]) box(H, R, i, 1.91, 1.93, .14, z, .065, 'coral', .52);
+    shape(H, R, H.faceI(i + .09, 2.07, 1.75, .72, 1.16), 'teal', .55);
+    for (let n = 0; n < 7; n++) H.line(R, [H.p(i + .16 + n * .25, 2.08, .74), H.p(i + .16 + n * .25, 2.08, 1.12)], 'sun', 1);
+    H.line(R, [H.p(i + 1.01, 2.12, 2.06), H.p(i + 1.01, 2.12, 2.33)], 'paper', 2);
     H.tint(H.faceI(i, 1.93, 1.93, 1.43, 2.08), 'teal', .32);
     H.line(R, [H.p(i + .93, 1.94, 1.43), H.p(i + .93, 1.94, 3.11)], 'sun', 2);
     for (let n = 0; n < 6; n++) H.line(R, [H.p(i, 1.97, 3.16 - n * .048), H.p(i + 1.93, 1.97, 3.16 - n * .048)], 'sun', 1, { tone: .65 });
@@ -113,6 +121,10 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
   cabinWindows(H, R);
   for (const i of [1.03, 3.16, 5.31, 7.46, 9.72]) box(H, R, i, 1.73, .15, .2, .47, 2.98, 'coral', .46);
   box(H, R, .89, 1.53, 9.28, .63, 3.47, .15, 'teal', .6);
+  for (const i of [1.15, 5.32, 9.65]) {
+    shape(H, R, [H.p(i, 1.93, 3.43), H.p(i, 2.88, 3.25), H.p(i, 2.88, 3.42), H.p(i, 1.93, 3.62)], 'sun', .55);
+    H.line(R, [H.p(i, 1.95, 2.96), H.p(i, 2.58, 3.36)], 'coral', 3);
+  }
   shape(H, R, H.tile(1.48, 2.35, 7.68, 7.2, .44), 'sun', .24);
   for (let col = 0; col < 3; col++) for (let row = 0; row < 2; row++) {
     const i = 1.48 + col * 2.56, j = 2.35 + row * 3.6;
@@ -128,7 +140,14 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
     box(H, R, i, j, 1.05, .9, .47, .13, ink, .56);
     H.outline(R, H.tile(i + .1, j + .1, .85, .7, .61), 'paper', .6, { tone: .7 });
   }
-  table(H, R, 9.57, 3.18, 1.3, 2.5, 1.08, 'sun');
+  for (const j of [3.25, 5.43]) box(H, R, 9.63, j, 1.16, .14, .44, .66, 'teal', .62);
+  box(H, R, 9.6, 3.24, 1.21, 2.38, .62, .08, 'sun', .5);
+  for (let k = 0; k < 4; k++) {
+    const j = 3.4 + k * .49;
+    box(H, R, 9.67, j, 1.06, .38, .72, .19, 'paper', 1);
+    for (let n = 0; n < 3; n++) H.line(R, [H.p(10.75, j + .04, .75 + n * .05), H.p(10.75, j + .33, .75 + n * .05)], 'teal', .6);
+  }
+  box(H, R, 9.57, 3.18, 1.3, 2.5, 1.08, .12, 'sun', .6);
   for (let k = 0; k < 4; k++) {
     bowl(H, R, 10, 3.55 + k * .45, 1.29, 'paper', .58);
     box(H, R, 10.44, 3.45 + k * .47, .31, .28, 1.22, .1, 'paper', 1);
@@ -216,6 +235,12 @@ export default world('tokyo-sumida-yakatabune', 'Sumida · Lanterns on the river
   }
   const hull = [H.p(.7, 9.7, .43), H.p(1.45, 10.9, .43), H.p(10.35, 10.9, .43), H.p(11.6, 8.8, .43), H.p(11.4, 9.48, -.1), H.p(10.2, 11.03, -.17), H.p(1.55, 11.03, -.17), H.p(.9, 10.09, -.1)];
   shape(H, R, hull, 'blue', .78);
+  for (const z of [.01, .19, .36]) stroke(H, R, [H.p(1.1, 10.15, z), H.p(1.57, 10.97, z), H.p(10.25, 10.97, z), H.p(11.51, 9.14, z)], z === .19 ? 'sun' : 'teal', 1.1, .6);
+  for (let k = 0; k < 9; k++) {
+    const i = 1.84 + k * .97;
+    H.line(R, [H.p(i, 11.01, -.1), H.p(i + .08, 10.96, .39)], 'teal', 1.7);
+    for (const z of [.06, .32]) H.dot(...H.p(i + .045, 11.02, z), 1.3, 'sun', .7);
+  }
   stroke(H, R, [H.p(.7, 9.7, .43), H.p(1.45, 10.9, .43), H.p(10.35, 10.9, .43), H.p(11.6, 8.8, .43)], 'coral', 3);
   for (const i of [2.2, 5.6, 9]) oval(H, R, ...H.p(i, 11.04, .15), 3.7, 7, 'paper', 1);
   for (const i of [3.55, 7.32]) {

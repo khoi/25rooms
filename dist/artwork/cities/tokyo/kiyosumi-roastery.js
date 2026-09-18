@@ -31,9 +31,21 @@ function sack(H, R, i, j, s = 1, open = false) {
 }
 
 function brewCounter(H, R) {
-  box(H, R, 7.8, 5.55, 3.4, 2.05, 0, 1.02, 'coral', .38);
+  box(H, R, 7.83, 5.59, 3.34, 1.96, .08, .12, 'blue', .7);
+  box(H, R, 7.83, 5.59, 3.34, .11, .2, .8, 'blue', .65);
+  for (const i of [7.84, 9.42, 11.06]) box(H, R, i, 5.6, .1, 1.98, .2, .8, 'coral', .55);
+  box(H, R, 7.94, 5.83, 1.32, 1.66, .5, .08, 'sun', .6);
+  for (let n = 0; n < 4; n++) mug(H, R, ...H.p(8.14 + n * .29, 7.24, .6), 'paper', .68);
+  for (let n = 0; n < 3; n++) {
+    box(H, R, 9.58, 5.87, 1.38, 1.69, .23 + n * .25, .2, 'coral', .45);
+    H.line(R, [H.p(10.02, 7.59, .35 + n * .25), H.p(10.5, 7.59, .35 + n * .25)], 'blue', 2);
+  }
   box(H, R, 7.7, 5.5, 3.65, 2.2, 1.02, .15, 'paper', 1);
-  for (let k = 0; k < 7; k++) H.line(R, [H.p(7.92 + k * .48, 7.61, .08), H.p(7.92 + k * .48, 7.61, .95)], 'sun', 1.1, { tone: .5 });
+  H.line(R, [H.p(7.97, 7.67, .09), H.p(11.12, 7.67, .09)], 'sun', 2);
+  shape(H, R, [H.p(8.53, 7.36, 1.18), H.p(9.05, 7.36, 1.18), H.p(9.07, 7.75, .72), H.p(8.57, 7.75, .77)], 'paper', 1);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(8.63 + n * .12, 7.4, 1.17), H.p(8.67 + n * .12, 7.76, .8)], 'coral', .7);
+  box(H, R, 10.72, 5.57, .5, .09, 1.17, .2, 'teal', .6);
+  stroke(H, R, [H.p(8.2, 5.74, 1.2), H.p(7.79, 5.63, 1.2), H.p(7.76, 5.63, .27), H.p(7.43, 5.31, .03)], 'blue', 1);
   box(H, R, 8.05, 5.76, .64, .58, 1.18, .78, 'blue', .7);
   const [gx, gy] = H.p(8.38, 6.04, 1.98);
   shape(H, R, [[gx - 10, gy - 21], [gx + 10, gy - 21], [gx + 5, gy], [gx - 5, gy]], 'paper', .85);
@@ -71,10 +83,19 @@ function coffeeDetails(H, R) {
     stroke(H, R, [wallPt(H, 'nw', 1.48, 2.88), wallPt(H, 'nw', 2.05, 2.97), wallPt(H, 'nw', 2.68, 3.65), wallPt(H, 'nw', 3.55, 3.81)], 'coral', 2);
     stroke(H, R, [wallPt(H, 'nw', 1.48, 3.4), wallPt(H, 'nw', 2.05, 3.18), wallPt(H, 'nw', 2.68, 3.3), wallPt(H, 'nw', 3.55, 3.57)], 'teal', 1.6);
   });
+  for (const j of [5.78, 7.35, 9.26]) {
+    H.line(R, [H.p(.08, j, .63), H.p(.08, j, 2.11)], 'blue', 1.6);
+    for (const z of [1.1, 2]) H.line(R, [H.p(.08, j, z - .31), H.p(.73, j, z), H.p(.08, j, z)], 'blue', 1.2);
+  }
   for (const z of [1.1, 2]) {
     box(H, R, .25, 5.7, .69, 3.7, z, .08, 'sun', .5);
     for (let k = 0; k < 7; k++) coffeeBag(H, R, .57, 5.96 + k * .49, z + .09, k % 2 ? 'sun' : 'paper', .59);
   }
+  H.line(R, [H.p(.12, 10.08, 2.61), H.p(.36, 10.08, 2.61)], 'blue', 1.7);
+  const [apx, apy] = H.p(.38, 10.08, 2.55);
+  H.line(R, [[apx - 6, apy + 12], [apx - 4, apy], [apx + 4, apy], [apx + 7, apy + 12]], 'blue', .8);
+  shape(H, R, [[apx - 7, apy + 11], [apx + 7, apy + 11], [apx + 15, apy + 46], [apx - 15, apy + 46]], 'coral', .55);
+  H.line(R, [[apx - 8, apy + 30], [apx + 8, apy + 30], [apx + 7, apy + 40], [apx - 7, apy + 40], [apx - 8, apy + 30]], 'sun', 1);
   const [clockX, clockY] = H.p(.07, 4.74, 3.2);
   oval(H, R, clockX, clockY, 16, 16, 'paper', 1);
   H.line(R, [[clockX, clockY - 10], [clockX, clockY], [clockX + 8, clockY + 4]], 'blue', 1.2);
@@ -144,7 +165,15 @@ const room = world('tokyo-kiyosumi-roastery', 'The first roast — Kiyosumi-Shir
   box(H, R, .12, .14, 11.62, .3, 4.43, .26, 'blue', .75);
   box(H, R, .12, .18, .3, 11.45, 4.43, .26, 'blue', .75);
   H.tint(H.tile(2.2, 1.2, 6.7, 4.8, .012), 'sun', .1);
-  box(H, R, 1.55, 1.6, 3.2, 2.2, 0, .48, 'blue', .75);
+  box(H, R, 1.55, 1.6, 3.2, 2.2, .13, .26, 'blue', .75);
+  for (const i of [1.7, 4.43]) for (const j of [1.72, 3.56]) {
+    box(H, R, i, j, .25, .25, .02, .58, 'blue', .8);
+    H.dot(...H.p(i + .12, j + .13, .6), 2.2, 'paper', 1);
+  }
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(1.81 + n * .43, 3.83, .22), H.p(1.81 + n * .43, 3.83, .36)], 'paper', 1.2);
+  box(H, R, 1.65, 1.69, .83, 1.18, .4, .57, 'teal', .55);
+  for (let n = 0; n < 6; n++) H.line(R, [H.p(1.8 + n * .1, 2.89, .5), H.p(1.8 + n * .1, 2.89, .87)], 'blue', .8);
+  H.line(R, [H.p(1.93, 2.82, .99), H.p(2.24, 3.27, 1.05)], 'blue', 5);
   const [rx, ry] = H.p(3.25, 2.6, 1.12);
   shape(H, R, [[rx - 40, ry - 35], [rx + 21, ry - 52], [rx + 45, ry - 27], [rx + 45, ry + 6], [rx - 28, ry + 26]], 'coral', .7);
   oval(H, R, rx + 9, ry - 7, 34, 36, 'sun', .55);
@@ -160,7 +189,18 @@ const room = world('tokyo-kiyosumi-roastery', 'The first roast — Kiyosumi-Shir
   oval(H, R, hx, hy - 31, 19, 6, 'blue', .5);
   box(H, R, 4.66, 2.14, .53, .8, .72, 1.02, 'teal', .5);
   for (let k = 0; k < 6; k++) H.dot(...H.p(5.2, 2.32 + k % 2 * .3, 1.5 - Math.floor(k / 2) * .23), 2, k === 0 ? 'coral' : 'sun', .8);
-  box(H, R, 1.1, 4.6, 1, 1, 0, .83, 'blue', .45);
+  for (let n = 0; n < 3; n++) {
+    const a = H.p(2.5, 1.8, 2.05 + n * .47);
+    H.line(R, [[a[0] - 7, a[1]], [a[0] + 7, a[1]]], 'sun', 2);
+  }
+  const [vx, vy] = H.p(1.4, 4.97, .05);
+  shape(H, R, [[vx - 20, vy - 4], [vx + 20, vy - 4], [vx + 18, vy - 42], [vx - 18, vy - 42]], 'blue', .65);
+  oval(H, R, vx, vy - 42, 18, 7, 'paper', 1);
+  H.line(R, [[vx - 12, vy - 46], [vx - 12, vy - 53], [vx + 12, vy - 53], [vx + 12, vy - 46]], 'blue', 2);
+  stroke(H, R, [H.p(2.18, 2.18, 1.7), H.p(1.07, 3.3, 1.6), H.p(1.4, 4.97, 1.4)], 'teal', 8);
+  H.line(R, [[vx - 14, vy - 16], [vx + 14, vy - 16]], 'sun', 1.3);
+  for (const i of [2.75, 4.21]) box(H, R, i, 4.03, .14, .22, .05, .72, 'blue', .65);
+  box(H, R, 2.73, 4.05, 1.6, .2, .23, .12, 'teal', .6);
   const [cx, cy] = H.p(3.55, 4.14, .8);
   oval(H, R, cx, cy + 8, 38, 17, 'blue', .7);
   oval(H, R, cx, cy, 38, 17, 'paper', 1);
@@ -172,7 +212,16 @@ const room = world('tokyo-kiyosumi-roastery', 'The first roast — Kiyosumi-Shir
   const [sx, sy] = H.p(2.3, 7.4, 1.08);
   oval(H, R, sx, sy, 7, 3, 'paper', 1);
   H.line(R, [[sx + 5, sy], [sx + 15, sy - 8]], 'blue', 2);
-  table(H, R, 7.7, 1.15, 3.5, 1.6, .94, 'sun');
+  box(H, R, 7.72, 1.18, 3.45, 1.52, .08, .82, 'teal', .48);
+  for (let n = 0; n < 3; n++) {
+    shape(H, R, H.faceI(7.89 + n * 1.06, 2.73, .88, .2, .77), 'paper', 1);
+    H.line(R, [H.p(8.11 + n * 1.06, 2.75, .64), H.p(8.51 + n * 1.06, 2.75, .64)], 'blue', 1.5);
+  }
+  box(H, R, 7.7, 1.15, 3.5, 1.6, .94, .12, 'sun', .7);
+  for (const i of [7.77, 11.05]) box(H, R, i, 1.2, .09, .09, 1.06, 1.1, 'blue', .6);
+  box(H, R, 7.77, 1.2, 3.37, .65, 2.16, .08, 'paper', 1);
+  for (let n = 0; n < 4; n++) coffeeBag(H, R, 8.13 + n * .8, 1.51, 2.25, n % 2 ? 'sun' : 'paper', .65);
+  H.line(R, [H.p(8.01, 2.06, 1.33), H.p(8.01, 2.35, 1.73), H.p(9.13, 2.35, 1.73), H.p(9.13, 2.06, 1.33)], 'blue', 2.5);
   for (let k = 0; k < 4; k++) {
     box(H, R, 7.9 + k * .77, 1.3, .62, .49, 1.08, .65, 'paper', 1);
     H.line(R, [H.p(7.95 + k * .77, 1.55, 1.73), H.p(8.46 + k * .77, 1.55, 1.73)], 'coral', 2);

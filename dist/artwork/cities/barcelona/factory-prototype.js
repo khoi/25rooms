@@ -2,7 +2,7 @@ import { world, shape, oval, stroke, actor, ell, wallPt } from '../../worlds/com
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, bentTube, benchFrame, drape, cushion } from '../materials.js';
 import { masonry, rackFrame } from '../structure.js';
-import { windowBay, caster, taskLight } from '../joinery.js';
+import { windowBay, caster, taskLight, hangingRail } from '../joinery.js';
 
 const rest = { ...FIGURES.clips.idle.keys[0][1] };
 const rig = { ...rest, head: 12, al: 24, el: 40 };
@@ -35,6 +35,13 @@ const room = world('barcelona-factory-prototype', 'The lamp folds flat', { wall:
     metal(H, R, .14, j, .24, .24, 0, 4.9, 'blue');
     bentTube(H, R, [[.35, j, 4.55], [2, j, 4.2], [4, j, 4.75]], 3.1, 'blue');
   }
+  for(const j of[.45,10.9]){
+    bentTube(H,R,[[.34,j,4.77],[3.86,j,4.77]],3.2,'teal');
+    for(const i of[1.14,2.4,3.62])bentTube(H,R,[[i,j,4.75],[i-.72,j,4.32]],1.6,'blue');
+    for(const i of[.5,3.52]){const p=H.p(i,j,4.77);shape(H,R,[[p[0]-6,p[1]-4],[p[0]+6,p[1]-4],[p[0]+6,p[1]+7],[p[0]-6,p[1]+7]],'sun',.55);H.dot(p[0],p[1],1.5,'blue');}
+  }
+  metal(H,R,6.4,.16,1.14,.39,3.2,1.32,'teal');for(let z=3.33;z<4.4;z+=.15)H.line(R,[H.p(6.51,.58,z),H.p(7.42,.58,z)],'blue',1.3);metal(H,R,6.43,.09,.18,.14,2.62,.45,'paper');bentTube(H,R,[[6.51,.17,2.65],[6.51,.17,2.35],[5.98,.17,2.35]],1.5,'blue');
+  const pulley=H.p(2.1,10.9,4.13);H.line(R,[H.p(2.1,10.9,4.75),pulley],'blue',2);oval(H,R,...pulley,10,10,'sun');oval(H,R,...pulley,6.6,6.6,'blue');oval(H,R,...pulley,3.2,3.2,'paper',1);stroke(H,R,[[pulley[0]-8,pulley[1]],[pulley[0]-8,pulley[1]+35],[pulley[0]+6,pulley[1]+41],[pulley[0]+9,pulley[1]+31]],'teal',1.2);
   bentTube(H, R, [[.29, .45, 3.12], [.29, 10.6, 3.12], [.29, 10.6, .6]], 2.1, 'teal');
   for (const j of [1, 3.3, 5.5, 8.3, 10.6]) metal(H, R, .21, j, .17, .13, 3.04, .17, 'sun');
   shape(H, R, H.tile(.5, 3.1, 8.7, 3.3, .02), 'sun', .18, .1);
@@ -63,11 +70,24 @@ const room = world('barcelona-factory-prototype', 'The lamp folds flat', { wall:
   timber(H,R,.4,6.6,.58,3.2,1.35,.13,'teal');
   for(let n=0;n<4;n++){const p=H.p(.65,6.9+n*.7,1.5);oval(H,R,...p,9,5,n===1?'coral':'paper');H.dot(...p,3,'blue');bentTube(H,R,[[.65,6.9+n*.7,1.5],[.65,6.9+n*.7,2+n*.1]],2,'sun');}
   benchFrame(H, R, 2.6, 3.9, 5.3, 2.5, 1.07, 'sun');
+  timber(H,R,3.12,6.31,1.59,.72,.61,.07,'sun');shape(H,R,H.tile(3.24,6.43,1.35,.52,.69),'blue',.64);
+  for(const i of[3.3,3.72,4.16])metal(H,R,i,6.5,.31,.32,.72,.07,'paper');
+  for(const i of[3.48,4.28]){const p=H.p(i,6.65,.82);oval(H,R,...p,4,2,'sun');oval(H,R,...p,1.8,.9,'blue');}
+  shape(H,R,H.faceI(3.09,7.06,1.67,.59,.86),'teal',.55);H.line(R,[H.p(3.61,7.09,.75),H.p(4.22,7.09,.75)],'sun',2.4);
+  for(const i of[3.07,4.85,6.91])for(const j of[4.15,6.18]){const p=H.p(i,j,1.09);oval(H,R,...p,2.2,1.2,'blue');}
+  for(const i of[2.86,7.57])bentTube(H,R,[[i,4.12,.14],[i,5.89,.86]],2.1,'teal');
+  metal(H,R,7.12,4.14,.51,.75,1.08,.18,'teal');
+  metal(H,R,7.12,4.18,.18,.54,1.27,.29,'blue');metal(H,R,7.53,4.18,.16,.54,1.27,.29,'blue');
+  bentTube(H,R,[[7.28,4.47,1.38],[7.89,4.47,1.38]],2.3,'sun');const vice=H.p(7.97,4.47,1.38);H.line(R,[[vice[0]-4,vice[1]-11],[vice[0]+4,vice[1]+10]],'blue',2);for(const y of[-12,11])H.dot(vice[0]+(y<0?-4:4),vice[1]+y,2,'coral');
+  const measure=H.p(6.64,5.99,1.12);stroke(H,R,[[measure[0]-13,measure[1]-5],[measure[0]+13,measure[1]+5]],'blue',2.3);for(const dx of[-7,6])H.line(R,[[measure[0]+dx,measure[1]+dx*.38],[measure[0]+dx-4,measure[1]+dx*.38+8]],'teal',2);
+  taskLight(H,R,7.46,6.05,1.1,'coral',.34);
   timber(H, R, 3.1, 4.35, 4.3, 1.5, .35, .09, 'teal');
   smallLamp(H, R, 3.3, 4.95, .44);
   for (let n = 0; n < 3; n++) metal(H, R, 6.1 + n * .33, 4.83, .25, .7, .45, .15 + .06 * n, 'paper');
   shape(H, R, H.tile(5.5, 4.3, 1.8, 1.6, 1.081), 'paper', 1);
-  for (let n = 0; n < 3; n++) H.line(R, [H.p(5.8 + n * .17, 4.6, 1.1), H.p(6.1 + n * .2, 4.6, 1.7), H.p(6.6 + n * .14, 4.6, 1.3)], 'blue', .75, { tone: .45 });
+  for(let n=0;n<3;n++){H.line(R,[H.p(5.69+n*.23,5.62,1.11),H.p(5.84+n*.24,4.95,1.11),H.p(6.44+n*.19,4.61,1.11),H.p(6.77+n*.15,5.21,1.11)],n===1?'coral':'teal',.85);}
+  for(const [i,j]of[[5.98,5.39],[6.4,4.8]])oval(H,R,...H.p(i,j,1.12),4,2,'sun');
+  for(let j=4.49;j<5.72;j+=.16)H.line(R,[H.p(7.02,j,1.11),H.p(7.19,j,1.11)],'blue',.55);
   metal(H, R, 7.15, 5.66, .56, .47, 1.08, .08, 'coral');
   for (const [i,j] of [[7.3,5.84],[7.52,5.96]]) { oval(H,R,...H.p(i,j,1.18),4,2,'sun'); H.dot(...H.p(i,j,1.18),1.2,'blue'); }
   bentTube(H, R, [[2.75, 5.8, 1.1], [2.75, 5.8, .86], [2.52, 5.8, .84], [2.52, 5.8, 1.21]], 2, 'blue');
@@ -77,11 +97,21 @@ const room = world('barcelona-factory-prototype', 'The lamp folds flat', { wall:
   shade(H, R, H.p(8.8, 8.95, .86), 20, true);
   drape(H, R, 9.27, 8.39, .77, 1.36, .69, .35, 'coral');
   for (let n = 0; n < 3; n++) shape(H, R, H.tile(9.5 + n * .06, 6.1 + n * .04, 1.4, 1.3, .08 + n * .05), 'sun', .45);
-  metal(H, R, 1.25, 8.9, 2.8, 1.7, .1, .07, 'blue');
-  shape(H, R, H.tile(1.42, 9.02, 2.4, 1.36, .19), 'paper', 1);
-  const g = H.p(2.1, 9.6, .21); H.line(R, [[g[0]-14,g[1]+5],[g[0],g[1]-14],[g[0]+14,g[1]+5],[g[0]-14,g[1]+5]], 'teal', 2);
-  oval(H, R, ...H.p(3.3, 9.7, .21), 8, 3, 'sun');
-  H.line(R, [H.p(1.5, 10.3, .25), H.p(3.6, 10.3, .25)], 'coral', 2.2);
+  for(const i of[1.39,3.83])for(const j of[9.02,10.36])metal(H,R,i,j,.12,.14,.04,.47,'teal');
+  metal(H,R,1.34,9.18,2.54,1.04,.17,.06,'sun');
+  for(const n of[0,1,2]){const p=H.p(1.85+n*.69,9.68,.25);oval(H,R,...p,9,4,n===1?'coral':'paper');oval(H,R,...p,3,1.5,'blue');}
+  metal(H, R, 1.25, 8.9, 2.8, 1.7, .51, .07, 'blue');
+  shape(H, R, H.tile(1.42, 9.02, 2.4, 1.36, .6), 'paper', 1);
+  const g = H.p(2.1, 9.6, .62); H.line(R, [[g[0]-14,g[1]+5],[g[0],g[1]-14],[g[0]+14,g[1]+5],[g[0]-14,g[1]+5]], 'teal', 2);
+  oval(H, R, ...H.p(3.3, 9.7, .62), 8, 3, 'sun');
+  H.line(R, [H.p(1.5, 10.3, .65), H.p(3.6, 10.3, .65)], 'coral', 2.2);
+  const cut=H.p(2.79,9.46,.65);oval(H,R,...cut,8,4,'teal');oval(H,R,cut[0],cut[1]-5,7,3,'sun');oval(H,R,cut[0],cut[1]-10,7,3,'paper',1);H.line(R,[[cut[0],cut[1]-15],[cut[0],cut[1]+2]],'blue',2);H.line(R,[[cut[0]-4,cut[1]-15],[cut[0]+4,cut[1]-15]],'coral',2);
+  const shadowCard=[H.p(1.39,9.07,.63),H.p(3.63,9.07,.63),H.p(3.63,8.68,1.91),H.p(1.39,8.68,1.91)];shape(H,R,shadowCard,'paper',1);
+  for(const offset of[0,.21,.42])H.line(R,[H.p(1.6+offset,9.03,.71),H.p(1.95+offset,8.85,1.31),H.p(2.54+offset,8.78,1.61),H.p(3.11+offset,8.9,1.09)],offset===.21?'coral':'teal',1,{tone:.62});
+  for(const i of[1.57,3.35])bentTube(H,R,[[i,8.99,.62],[i,8.52,.59],[i,8.74,1.47]],1.4,'teal');
+  shape(H,R,H.tile(8.13,8.41,.51,.85,.67),'sun',.7);const grip=H.p(8.34,8.86,.71);stroke(H,R,[[grip[0]-8,grip[1]+3],[grip[0]-4,grip[1]-7],[grip[0]+6,grip[1]-5],[grip[0]+8,grip[1]+2]],'teal',3);
+  shape(H,R,H.faceI(8.1,9.93,1.42,.12,.43),'teal',.45);H.line(R,[H.p(8.57,9.96,.31),H.p(9.03,9.96,.31)],'sun',2.5);
+  hangingRail(H,R,'ne',1.14,4.7,.84,4,(P,u,n)=>{const p=P(u,-.19);if(n===3){stroke(H,R,[P(u,-.14),P(u-.15,-.47),P(u+.24,-.48)],'sun',2.5);}else{H.line(R,[P(u,-.12),P(u,-.59)],'blue',1.8);H.line(R,[P(u-.16,-.22),P(u+.16,-.22)],n===1?'coral':'sun',3);}});
 }, (H, R, time) => {
   const t = ((time % 20) + 20) % 20, f = foldAt(t), base = H.p(4.1, 4.22, 1.16), hinge = H.p(4.75, 4.22, 3.0), tip = H.p(4.75 + Math.sin(.63 + f * 1.35) * 2.25, 4.22, 3.0 + Math.cos(.63 + f * 1.35) * 2.25);
   const sh = [H.p(.12,6.2,.3),H.p(.12,5.2,2.7),H.p(.12,5.2-Math.sin(.63+f*1.35)*2.25,2.7+Math.cos(.63+f*1.35)*2.25)];
@@ -93,6 +123,7 @@ const room = world('barcelona-factory-prototype', 'The lamp folds flat', { wall:
   for(const offset of [-4,4]) { const a=[base[0]+offset,base[1]],b=[hinge[0]+offset,hinge[1]],c=[tip[0]+offset,tip[1]]; stroke(H,R,[a,b,c],'blue',5); stroke(H,R,[[a[0]-1,a[1]],[b[0]-1,b[1]],[c[0]-1,c[1]]],'paper',1.1); }
   stroke(H,R,[[base[0]-7,base[1]+1],[hinge[0]-9,hinge[1]+8],[hinge[0]+5,hinge[1]+10],[tip[0]+3,tip[1]+3]],'coral',1.6);
   for(const p of [base,hinge,tip]) { oval(H,R,...p,6,5,'sun'); oval(H,R,...p,3.8,3.2,'paper'); H.dot(...p,1.6,'blue'); }
+  const springStart=[base[0]+10,base[1]-7],springEnd=[hinge[0]+10,hinge[1]+18];const coil=[];for(let n=0;n<=18;n++){const u=n/18;coil.push([springStart[0]+(springEnd[0]-springStart[0])*u+(n%2?3:-3),springStart[1]+(springEnd[1]-springStart[1])*u]);}H.line(R,coil,'sun',1.4);stroke(H,R,[springStart,[base[0]+9,base[1]-2]],'blue',1.1);
   H.line(R, [[hinge[0]-8,hinge[1]],[hinge[0]+8,hinge[1]]], 'coral',2.2);
   shade(H,R,tip,41);
   stroke(H,R,[[hinge[0]+5,hinge[1]+5],[tip[0]-6,tip[1]+5]],'teal',3.5);

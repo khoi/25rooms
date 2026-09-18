@@ -1,7 +1,7 @@
 import { world, shape, oval, stroke, box, ell, cycle, mix } from '../../worlds/common.js';
 import { surface, timber, metal, bentTube, benchFrame, cushion, vessel, drape } from '../materials.js';
 import { cabinetFrame, masonry } from '../structure.js';
-import { recessedFrame, floorShadow } from '../joinery.js';
+import { recessedFrame, floorShadow, taskLight, caster } from '../joinery.js';
 
 const ease = (a, b, t) => { const p = Math.max(0, Math.min(1, (t - a) / (b - a))); return p * p * (3 - 2 * p); };
 function wheel(H, R, x, y, r = 4, ink = 'blue', angle = 0) {
@@ -33,6 +33,42 @@ const room = world('mexico-city-park-skates', 'The wheel returns to the line', {
   timber(H,R,.05,.1,11.7,.36,3.83,.22,'sun');
   for (let i = .5; i < 12; i += 1.45) timber(H,R,i,.04,.14,2.1,3.87,.12,'sun');
   bentTube(H,R,[[.18,1.9,3.9],[11.65,1.9,3.9],[11.65,1.9,.25],[11.65,2.9,.1]],2.4,'teal');
+  for(const j of [.45,5.65,11.65]){
+    timber(H,R,.09,j,.28,.24,.03,2.66,'sun');
+    bentTube(H,R,[[.34,j,2.43],[1.02,j,1.9]],2.6,'blue');
+  }
+  timber(H,R,.1,.15,.24,11.7,2.65,.16,'sun');
+  for(const j of [1.2,3.15,5.1]){
+    surface(H,R,H.faceJ(.36,j,1.52,.13,.69),'teal',.37,.9);
+    surface(H,R,H.faceJ(.39,j+.09,1.33,.22,.57),'blue',.45,.6);
+    H.line(R,[H.p(.42,j+.48,.47),H.p(.42,j+.98,.47)],'sun',2.1);
+  }
+  for(const x of [.45,1.65])for(const j of [.9,5.28])timber(H,R,x,j,.15,.18,.07,.95,'sun');
+  timber(H,R,.43,.86,1.48,4.54,.33,.08,'teal');
+  for(const j of [1.16,2.32,3.48,4.63]){
+    const q=H.p(1.07,j,.43);helmet(H,R,...q,j<3?'coral':'teal',.58);
+  }
+  timber(H,R,.35,.8,1.65,4.72,.96,.16,'sun');
+  for(const j of [1.3,2.9])skate(H,R,...H.p(.97,j,1.13),.78,0,j<2);
+  const tray=H.p(1.06,4.25,1.14);
+  surface(H,R,H.tile(.61,3.84,.95,.85,1.13),'blue',.6,.8);
+  for(const d of [-1,1])wheel(H,R,tray[0]+d*8,tray[1],5,d<0?'coral':'sun');
+  H.line(R,[[tray[0]-5,tray[1]+8],[tray[0]+13,tray[1]+14]],'paper',2);
+  drape(H,R,.42,4.85,1.46,.46,1.14,.48,'paper');
+  for(const j of [1.65,4.55])bentTube(H,R,[[.2,j,1.08],[.2,j,1.7],[.6,j,1.7]],1.4,'blue');
+  const brush=H.p(.63,5.2,1.17);H.line(R,[[brush[0]-7,brush[1]-6],[brush[0]+7,brush[1]+2]],'coral',4);for(let n=0;n<6;n++)H.line(R,[[brush[0]-6+n*2,brush[1]-5+n],[brush[0]-8+n*2,brush[1]+1+n]],'blue',.7);
+  for(const x of [1.2,4.4]){
+    metal(H,R,x,.24,.16,.42,.03,2.88,'teal');
+    bentTube(H,R,[[x,.55,2.71],[x,1.02,2.22]],2,'sun');
+  }
+  metal(H,R,1.12,.22,3.55,.56,2.82,.14,'teal');
+  for(let n=0;n<5;n++){
+    const x=1.4+n*.62,p=H.p(x,.66,2.64);H.outline(R,ell(...p,3,4),'sun',1.4);
+    if(n<3){surface(H,R,[[p[0]-8,p[1]+5],[p[0]+7,p[1]+5],[p[0]+10,p[1]+32],[p[0]-10,p[1]+34]],n===1?'coral':'paper',.8,.7);H.line(R,[[p[0]-5,p[1]+9],[p[0]-3,p[1]+28]],'blue',.8);H.line(R,[[p[0]+4,p[1]+9],[p[0]+5,p[1]+29]],'teal',1.1);}
+    else helmet(H,R,p[0],p[1]+25,n===3?'sun':'teal',.82);
+  }
+  timber(H,R,1.02,.37,3.7,1.1,.29,.1,'sun');
+  for(const x of [1.18,2.47,3.69]){metal(H,R,x,.46,.92,.67,.4,.25,'blue');const p=H.p(x+.45,1.16,.52);H.outline(R,ell(...p,6,2.8),'sun',1.2);}
   surface(H,R,H.tile(4.15,3.45,3.7,6.7,.022),'teal',.11,.7);
   for (const i of [4.22,7.72]) H.line(R,[H.p(i,3.55,.03),H.p(i,10,.03)],'paper',2.5);
   surface(H,R,H.tile(4.25,7.9,3.45,.15,.035),'coral',.75,.4);
@@ -70,18 +106,42 @@ const room = world('mexico-city-park-skates', 'The wheel returns to the line', {
   surface(H,R,ramp,'coral',.63,.8);
   H.line(R,[H.p(.3,7.8,2.19),H.p(.8,7.8,1.87)],'paper',2.3);
   bentTube(H,R,[[.3,9,1.84],[.7,9,2.13],[.7,9.65,2.13]],2,'blue');
-  benchFrame(H,R,1.05,7.8,2.35,1.35,.66,'sun');
-  skate(H,R,...H.p(1.68,8.37,.67),.95,.3,true);
-  const q=H.p(2.9,8.4,.7); oval(H,R,...q,11,7,'teal',.5); wheel(H,R,q[0],q[1]-1,4,'blue');
-  H.line(R,[H.p(2.3,8.78,.7),H.p(2.85,8.78,.7)],'blue',2.1);
-  H.line(R,[H.p(2.78,8.66,.7),H.p(2.78,8.9,.7)],'sun',2);
-  surface(H,R,H.tile(1.4,7.98,.6,.2,.7),'coral',.35,.6);
-  helmet(H,R,...H.p(2.3,9.2,0),'sun',.8);
+  floorShadow(H,.78,7.45,2.7,2.3,.2);
+  for(const x of [.94,3.12])for(const j of [7.6,9.25])timber(H,R,x,j,.19,.19,.04,.88,'sun');
+  timber(H,R,.9,7.55,2.5,1.95,.26,.1,'teal');
+  for(const j of [7.64,9.23])bentTube(H,R,[[1.04,j,.26],[3.2,j,.8]],2,'blue');
+  for(let n=0;n<3;n++)box(H,R,1.15+n*.57,7.79,.47,1.28,.38,.35,['coral','paper','teal'][n],.65);
+  timber(H,R,.78,7.42,2.7,2.18,.92,.15,'sun');
+  surface(H,R,H.tile(.93,7.6,1.26,1.72,1.076),'teal',.3,.6);
+  skate(H,R,...H.p(1.57,8.17,1.1),1.2,.3,true);
+  metal(H,R,2.65,7.58,.43,.46,1.07,.21,'blue');
+  bentTube(H,R,[[2.72,7.69,1.15],[2.72,7.69,.65],[2.45,7.69,.65]],2.8,'blue');
+  H.line(R,[H.p(2.36,7.69,.65),H.p(2.63,7.69,.65)],'coral',3);
+  const q=H.p(2.66,8.57,1.09);oval(H,R,...q,14,8,'paper',1);wheel(H,R,q[0]-4,q[1],5,'blue');oval(H,R,q[0]+7,q[1]+1,3,2.7,'sun',.8);H.dot(q[0]+7,q[1]+1,1,'blue');
+  H.line(R,[H.p(2.25,9.1,1.1),H.p(3.04,9.1,1.1)],'blue',2.5);
+  H.line(R,[H.p(2.84,8.88,1.1),H.p(2.84,9.25,1.1)],'sun',2.5);
+  drape(H,R,1.02,8.9,.76,.65,1.08,.39,'paper');
+  taskLight(H,R,.95,7.51,1.08,'coral',.65);
+  metal(H,R,2.78,9.43,.5,.2,.66,.2,'teal');
+  for(const x of [2.83,3.04])H.line(R,[H.p(x,9.56,.73),H.p(x,9.56,.91)],'blue',1);
+  helmet(H,R,...H.p(1.5,10.18,.04),'sun',.95);
+  surface(H,R,H.tile(2.4,10.18,1.3,.95,.035),'blue',.38,.7);
+  for(let n=0;n<3;n++)wheel(H,R,...H.p(2.59+n*.34,10.58,.06),4,n===2?'coral':'teal');
+  const roll=H.p(3.27,10.36,.09);oval(H,R,...roll,6,3,'paper',1);oval(H,R,...roll,3,1.5,'blue',.6);
   benchFrame(H,R,9.12,5.35,1.7,3.65,.6,'teal');
+  for(const j of [5.38,8.72])timber(H,R,10.68,j,.14,.14,.05,1.67,'teal');
+  for(const z of [.96,1.31,1.64])timber(H,R,10.65,5.33,.15,3.55,z,.18,'teal');
   cushion(H,R,9.15,5.4,1.6,1.25,.61,.13,'coral');
   drape(H,R,9.5,7,1,1,.65,.35,'paper');
   vessel(H,R,10.3,8.35,.66,7,20,'teal',false);
   box(H,R,9.38,8.5,.54,.35,.66,.2,'sun',.65);
+  for(const j of [5.65,7.12]){const p=H.p(9.92,j,.22);surface(H,R,ell(...p,11,5),'paper',1,.8);H.line(R,[[p[0]-7,p[1]],[p[0]+7,p[1]]],'coral',1.8);}
+  for(const x of [8.65,10.25])for(const j of [10.12,11.1])caster(H,R,x,j);
+  timber(H,R,8.48,9.95,2.02,1.37,.24,.1,'teal');
+  for(const x of [8.57,10.3])bentTube(H,R,[[x,10.1,.33],[x,10.1,1.12],[x,11.1,1.12],[x,11.1,.33]],2.3,'blue');
+  for(const j of [10.13,11.08])bentTube(H,R,[[8.57,j,1.12],[10.3,j,1.12]],2.3,'blue');
+  for(const x of [8.94,9.58]){const p=H.p(x,10.63,.37);helmet(H,R,...p,x<9?'coral':'sun',.75);}
+  const pad=H.p(9.25,10.22,.8);surface(H,R,ell(...pad,9,13),'blue',.7,.8);H.line(R,[[pad[0]-7,pad[1]-5],[pad[0]+7,pad[1]-5]],'paper',1.6);
   for(const x of [5.3,6.35]){
     metal(H,R,x,.28,.07,.55,.25,2.76,'teal');
     for(const z of [.56,1.1,1.64,2.18,2.72])metal(H,R,5.24,.27,1.25,.55,z,.055,'teal');

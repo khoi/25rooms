@@ -92,14 +92,40 @@ function walker(H, R, i, j) {
 
 function details(H, R) {
   for (const side of ['ne', 'nw']) {
+    shape(H, R, wallRect(H, side, .05, 11.95, .08, .9, -.07), 'paper', .8);
+    for (let k = .25; k < 12; k += 1.25) {
+      shape(H, R, wallRect(H, side, k, Math.min(k + 1.03, 11.9), .18, .73, -.1), 'teal', .35);
+      H.line(R, [wallPt(H, side, k, .84, -.15), wallPt(H, side, Math.min(k + 1.03, 11.9), .84, -.15)], 'sun', 1);
+    }
+    box(H, R, side === 'ne' ? 0 : .03, side === 'ne' ? .03 : 0, side === 'ne' ? 12 : .16, side === 'ne' ? .16 : 12, 3.05, .14, 'sun', .6);
+  }
+  shape(H, R, wallRect(H, 'ne', .55, 3.8, 1.6, 2.83, -.04), 'blue', .8);
+  for (const z of [1.57, 2.18, 2.8]) box(H, R, .5, .07, 3.4, .47, z, .1, 'sun', .7);
+  for (const i of [.5, 2.15, 3.8]) box(H, R, i, .06, .11, .48, 1.6, 1.3, 'coral', .6);
+  for (let k = 0; k < 6; k++) {
+    cup(H, R, .85 + k * .48, .4, 1.72, k === 4 ? 'coral' : 'paper', .7);
+    const [x, y] = H.p(.85 + k * .48, .35, 2.32);
+    oval(H, R, x, y - 8, 8, 11, 'paper');
+    oval(H, R, x, y - 8, 5, 8, 'teal', .25);
+  }
+
+  for (const side of ['ne', 'nw']) {
     H.line(R, [wallPt(H, side, 0, .65), wallPt(H, side, 12, .65)], 'coral', 2);
     for (let k = .3; k < 12; k += .7) H.line(R, [wallPt(H, side, k, .05), wallPt(H, side, k, .62)], 'blue', .6, { tone: .35 });
   }
   windowOn(H, R, 'ne', 9.1, 1.55, 4.2, 1.35, { sky: 'sun', skyTone: .25 });
+  box(H, R, 6.9, .02, 4.55, .35, 1.5, .13, 'sun', .7);
+  for (const i of [7.85, 9.05, 10.25]) box(H, R, i, .035, .08, .1, 1.64, 1.24, 'paper', 1);
+  H.line(R, [H.p(7, .13, 2.28), H.p(11.25, .13, 2.28)], 'paper', 2);
   for (const i of [6.9, 11.35]) shape(H, R, wallRect(H, 'ne', i, i + .45, 1.45, 3.05), 'coral', .45);
 
   shape(H, R, wallRect(H, 'nw', 4.25, 6.4, 1.65, 2.85), 'sun', .6);
   shape(H, R, wallRect(H, 'nw', 4.4, 6.25, 1.8, 2.7), 'paper', 1);
+  for (let k = 0; k < 3; k++) {
+    const [x, y] = wallPt(H, 'nw', 4.75 + k * .53, 2.18, -.05);
+    oval(H, R, x, y - 8, 6, 7, k % 2 ? 'blue' : 'coral');
+    shape(H, R, [[x - 9, y + 9], [x - 5, y - 1], [x + 5, y - 1], [x + 9, y + 9]], 'teal', .8);
+  }
 
   const [cx, cy] = H.p(.02, 7.45, 2.35);
   oval(H, R, cx, cy, 19, 19, 'sun', .75);
@@ -172,6 +198,14 @@ function details(H, R) {
   chair(H, R, 3.35, 4.22, 'teal');
   chair(H, R, 7.35, 5.15, 'sun');
   table(H, R, 4.45, 4.25, 2.55, 2.25, .95, 'coral');
+  for (const i of [4.53, 6.75]) {
+    H.line(R, [H.p(i, 4.4, .18), H.p(i, 6.37, .18)], 'sun', 3);
+    H.line(R, [H.p(i, 4.4, .18), H.p(i, 6.3, .82)], 'blue', 1);
+  }
+  box(H, R, 4.65, 6.38, 1.15, .4, .55, .27, 'sun', .6);
+  box(H, R, 4.73, 6.48, .98, .34, .84, .04, 'blue', .6);
+  cards(H, R, ...H.p(5.2, 6.64, .91), 3);
+  H.line(R, [H.p(5.07, 6.8, .68), H.p(5.4, 6.8, .68)], 'blue', 2);
   shape(H, R, H.tile(4.62, 4.44, 2.21, 1.86, 1.09), 'teal', .62);
   for (const [i, j, suit] of [[4.9, 4.85, '♠'], [5.5, 5.14, '♥'], [6.05, 5, '♦'], [5.85, 5.7, '♣']]) {
     shape(H, R, H.tile(i, j, .35, .52, 1.12), 'paper', 1, .5);
@@ -194,6 +228,8 @@ function details(H, R) {
   cup(H, R, 3.2, 9.75, .84, 'paper', .8);
   for (let k = 0; k < 3; k++) box(H, R, 2.98, 9.42, .5, .48, .84 + k * .06, .04, palette[k], .75);
   box(H, R, .4, 10.4, 1.05, .75, .05, .38, 'coral', .55);
+  for (const j of [10.38, 11.1]) H.line(R, [H.p(.4, j, .43), H.p(.4, j, .88), H.p(1.45, j, .88), H.p(1.45, j, .43)], 'blue', 1.7);
+  for (const i of [.46, 1.34]) for (const j of [10.45, 11.05]) oval(H, R, ...H.p(i, j, .05), 3, 4, 'blue');
   for (let k = 0; k < 5; k++) {
     const [x, y] = H.p(.53 + k * .17, 10.74, .42);
     shape(H, R, [[x - 3, y - 18], [x + 6, y - 18], [x + 5, y], [x - 4, y]], 'paper', 1, .5);

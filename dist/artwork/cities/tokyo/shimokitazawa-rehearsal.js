@@ -30,7 +30,11 @@ function drum(H, R, i, j, z, rx, ry, height, ink = 'coral') {
   oval(H, R, x, y + height, rx, ry, ink, .6);
   oval(H, R, x, y, rx, ry, 'paper', 1);
   oval(H, R, x, y, rx - 3, ry - 2, 'paper', .85);
-  for (const side of [-1, 1]) H.line(R, [[x + side * (rx - 3), y + 3], [x + side * (rx - 3), y + height - 2]], 'blue', 1.6);
+  for (const f of [-.85, -.42, 0, .42, .85]) {
+    H.line(R, [[x + f * rx, y + 4], [x + f * rx, y + height - 2]], 'paper', 1.6);
+    H.line(R, [[x + f * rx - 2, y + 5], [x + f * rx + 2, y + 5]], 'blue', 2);
+  }
+  H.line(R, [[x - rx + 2, y + height - 3], [x + rx - 2, y + height - 3]], 'sun', 1.2);
 }
 
 function cymbal(H, R, i, j, z, s, angle = 0) {
@@ -129,17 +133,28 @@ function colorsForCase(q) {
 }
 
 function furnishings(H, R) {
-  rehearsalEquipment(H, R);
-  for (let row = 0; row < 2; row++) for (let col = 0; col < 4; col++) {
-    const panel = H.faceI(.35 + col * 1.76, .06, 1.58, .9 + row * 1.07, 1.83 + row * 1.07);
-    shape(H, R, panel, 'coral', .37 + col % 2 * .12);
-    H.hatch(R, panel, 'blue', 7, 1.05, .65, { tone: .42 });
+  for (let col = 0; col < 4; col++) {
+    const i = .35 + col * 1.76;
+    box(H, R, i, .06, 1.58, .28, .72, 2.15, 'sun', .47);
+    shape(H, R, H.faceI(i + .11, .35, 1.36, .85, 2.74), 'blue', .88);
+    for (let n = 0; n < 6; n++) box(H, R, i + .14 + n * .21, .34, .12, .13 + n % 3 * .045, .88, 1.81, col % 2 ? 'teal' : 'coral', .63);
+    box(H, R, i + .07, .35, 1.44, .15, 1.75, .065, 'sun', .62);
   }
   for (let q = 0; q < 5; q++) {
-    const panel = H.faceJ(.07, .45 + q * 1.83, 1.55, .8, 2.65);
-    shape(H, R, panel, q % 2 ? 'teal' : 'coral', .35);
-    H.hatch(R, panel, 'blue', 7, -.5, .6, { tone: .48 });
+    const j = .45 + q * 1.83;
+    box(H, R, .07, j, .28, 1.55, .8, 1.85, 'sun', .47);
+    shape(H, R, H.faceJ(.36, j + .1, 1.35, .91, 2.53), q % 2 ? 'teal' : 'coral', .5);
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(.38, j + .15 + n * .26, .96), H.p(.38, j + .15 + n * .26, 2.48)], 'blue', 2);
+    for (const z of [.96, 2.47]) for (const off of [.12, 1.39]) H.dot(...H.p(.39, j + off, z), 1.6, 'paper');
   }
+  box(H, R, .39, .38, .53, 10.24, 2.78, .39, 'paper', .8);
+  for (let j = .6; j < 10.7; j += 1.4) {
+    H.outline(R, H.faceJ(.94, j, .13, 2.75, 3.2), 'blue', 1.4);
+    H.line(R, [H.p(.42, j, 3.18), H.p(.94, j, 3.18)], 'blue', 1.2);
+  }
+  box(H, R, .96, 9.33, .12, 1.13, 2.79, .32, 'blue', .7);
+  for (let k = 0; k < 7; k++) H.line(R, [H.p(1.09, 9.43 + k * .14, 2.84), H.p(1.09, 9.43 + k * .14, 3.06)], 'paper', 1.2);
+  rehearsalEquipment(H, R);
   shape(H, R, H.faceI(2.48, .09, .59, 2.02, 2.42), 'paper', 1);
   H.line(R, [H.p(2.5, .11, 2.08), H.p(3.03, .11, 2.35)], 'teal', 1.8);
   box(H, R, .05, .08, 11.68, .31, 3.09, .25, 'blue', .82);
@@ -164,6 +179,14 @@ function furnishings(H, R) {
   oval(H, R, bx + 9, by + 11, 8, 8, 'blue', .86);
   H.line(R, [[bx - 25, by + 24], [bx - 37, by + 40]], 'blue', 2);
   H.line(R, [[bx + 26, by + 24], [bx + 38, by + 40]], 'blue', 2);
+  for (let n = 0; n < 10; n++) {
+    const a = n * TAU / 10;
+    H.line(R, [[bx + Math.cos(a) * 33, by + Math.sin(a) * 30], [bx + Math.cos(a) * 39, by + Math.sin(a) * 35]], 'blue', 2);
+    H.dot(bx + Math.cos(a) * 39, by + Math.sin(a) * 35, 1.7, 'sun');
+  }
+  shape(H, R, H.tile(5.07, 4.84, .38, .67, .08), 'blue', .8);
+  H.line(R, [H.p(5.26, 5.31, .14), H.p(5.26, 4.72, .3), H.p(5.26, 4.62, .78)], 'paper', 2);
+  for (const i of [4.62, 5.82]) H.line(R, [H.p(5.26, 4.22, .8), H.p(5.26, 3.85, 1.12), H.p(i, 3.69, 1.3)], 'blue', 2.4);
   drum(H, R, 4.62, 3.69, 1.36, 23, 10, 24);
   drum(H, R, 5.82, 3.72, 1.42, 24, 11, 24);
   drum(H, R, 6.71, 4.2, .9, 25, 12, 30);
@@ -188,7 +211,16 @@ function furnishings(H, R) {
     H.line(R, [[x - 26, y - 9], [x - 35, y - 12]], 'blue', 4);
     stroke(H, R, [[x - 34, y - 10], [x - 19, y + 14], [g[0] + 5, g[1]]], 'blue', .8);
   }
-  table(H, R, 3.98, 10.2, 3.1, 1.1, .84, 'teal');
+  for (const i of [4.02, 6.85]) {
+    box(H, R, i, 10.22, .14, 1.0, .04, .91, 'sun', .58);
+    H.line(R, [H.p(i, 10.24, .16), H.p(i, 11.22, .79)], 'blue', 2.2);
+  }
+  box(H, R, 4.06, 10.24, 2.87, .91, .24, .08, 'teal', .6);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 4.25 + k * .79, 10.41, .67, .64, .33, .24, k ? 'blue' : 'coral', .63);
+    H.line(R, [H.p(4.34 + k * .79, 11.07, .45), H.p(4.7 + k * .79, 11.07, .45)], 'paper', 1.5);
+  }
+  box(H, R, 3.98, 10.2, 3.1, 1.1, .84, .12, 'teal', .6);
   box(H, R, 4.15, 10.32, 2.49, .8, .98, .11, 'blue', .77);
   for (let q = 0; q < 8; q++) {
     for (let n = 0; n < 2; n++) H.dot(...H.p(4.31 + q * .28, 10.43 + n * .18, 1.11), 1.6, n ? 'sun' : 'paper');

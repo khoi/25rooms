@@ -67,6 +67,12 @@ function screen(H, R, lift) {
       });
     }
   });
+  for (let n = 0; n < 9; n++) {
+    const f = n / 8;
+    H.dot(...H.p(3.99 + f * 3.4, j1 - 0.05, z1 + 0.02), 1.3, 'blue');
+  }
+  H.line(R, [H.p(3.9, j1, z1), H.p(7.5, j1, z1)], 'blue', 4);
+  H.line(R, [H.p(3.9, j1, z1 + 0.06), H.p(7.5, j1, z1 + 0.06)], 'sun', 2.3);
   for (const i of [4.18, 7.02]) box(H, R, i, j0 - 0.13, 0.24, 0.33, 1.24, 0.16, 'blue', 0.7);
 }
 
@@ -81,7 +87,22 @@ function studioWalls(H, R) {
         if (u < 11.9) H.line(R, [wallPt(H, side, u, z, -0.03), wallPt(H, side, Math.min(11.9, u + 0.91), z, -0.03)], 'teal', 0.5, { tone: 0.32 });
       }
   for (const side of ['nw', 'ne']) H.line(R, [wallPt(H, side, 0.15, 4.29, -0.16), wallPt(H, side, 11.8, 4.29, -0.16)], 'sun', 2.1);
-  windowBay(H, R, 'nw', 0.86, 6.48, 2.03, 2.05, {
+  for (const j of [1.12, 5.63]) {
+    timber(H, R, 0.23, j, 1.36, 0.17, 0.08, 1.67, 'teal');
+    timber(H, R, 0.23, j, 1.36, 0.17, 1.74, 0.13, 'sun');
+  }
+  for (let n = 0; n < 6; n++) {
+    const z = 0.18 + n * 0.24;
+    metal(H, R, 0.29, 1.31, 1.18, 4.29, z, 0.2, 'teal');
+    for (const j of [2.22, 4.52]) bentTube(H, R, [[1.49, j - 0.22, z + 0.08], [1.63, j - 0.22, z + 0.08], [1.63, j + 0.22, z + 0.08], [1.49, j + 0.22, z + 0.08]], 1.4, 'sun');
+  }
+  timber(H, R, 0.23, 1.13, 1.45, 4.62, 1.69, 0.14, 'sun');
+  for (let n = 0; n < 3; n++) {
+    surface(H, R, H.tile(0.53 + n * 0.025, 2.02 + n * 0.025, 0.98, 1.72, 1.87 + n * 0.07), n === 2 ? 'coral' : 'paper', 0.8);
+    H.line(R, [H.p(0.58, 2.09, 2.04), H.p(1.45, 2.09, 2.04)], 'blue', 2);
+  }
+  vessel(H, R, 0.81, 4.91, 1.85, 7, 16, 'paper');
+  windowBay(H, R, 'nw' , 0.86, 6.48, 2.03, 2.05, {
     night: true,
     divisions: 5,
     ink: 'teal',
@@ -171,6 +192,11 @@ function studioWalls(H, R) {
 }
 
 function printingBench(H, R) {
+  for (const i of [3.55, 7.61]) {
+    metal(H, R, i, 3.52, 0.22, 3.32, 0.04, 0.17, 'teal');
+    bentTube(H, R, [[i + 0.1, 3.71, 0.25], [i + 0.1, 6.75, 0.98]], 3, 'teal');
+  }
+
   benchFrame(H, R, 3.45, 3.35, 4.55, 3.72, 1.14, 'sun');
   metal(H, R, 3.71, 4.01, 3.9, 2.51, 0.3, 0.13, 'teal');
   for (let n = 0; n < 5; n++) {
@@ -326,6 +352,9 @@ function wetWork(H, R) {
     2,
     'teal'
   );
+  metal(H, R, 9.12, 3.9, 2.07, 1.75, 0.34, 0.08, 'teal');
+  foldedCloth(H, R, 9.24, 4.08, 0.73, 1.2, 0.44, 'paper', 'teal');
+  for (let n = 0; n < 3; n++) vessel(H, R, 10.57, 4.19 + n * 0.52, 0.45, 7, 15, 'paper', false);
   benchFrame(H, R, 8.98, 3.76, 2.4, 2.16, 1.02, 'sun');
   for (let n = 0; n < 6; n++) {
     const i = 9.3 + (n % 3) * 0.7,
@@ -346,6 +375,8 @@ function wetWork(H, R) {
   for (let n = 0; n < 4; n++) handTool(H, R, 9.37 + n * 0.48, 5.66, 1.05, n % 2 ? 'brush' : 'trowel', n % 2 ? 'sun' : 'coral');
   vessel(H, R, 10.88, 7.39, 0.05, 17, 30, 'teal');
   foldedCloth(H, R, 9.04, 7.71, 0.88, 0.69, 0.03, 'paper', 'coral');
+  surface(H, R, H.tile(9.05, 5.02, 0.73, 0.65, 1.08), 'paper', 1);
+  for (let n = 0; n < 3; n++) oval(H, R, ...H.p(9.22 + n * 0.17, 5.31, 1.1), 4, 2, ['teal', 'coral', 'sun'][n], 0.8);
   coiledLine(H, R, 7.07, 10.69, 0.035, 16, 'coral');
 }
 

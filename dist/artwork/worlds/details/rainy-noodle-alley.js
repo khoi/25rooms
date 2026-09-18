@@ -135,7 +135,19 @@ export default function enrich(room) {
         const [x, y] = H.p(i, j, 1.35);
         for (let n = 0; n < 5; n++) H.line(R, [[x - 3 + n, y - 8], [x - 5 + n * 2, y - 22]], 'sun', .9);
       }
+      for (const j of [4.7, 6.8]) box(H, R, .12, j, .17, .16, .1, 3.1, 'coral', .6);
+      box(H, R, .1, 4.6, .55, 2.35, 2.9, .12, 'sun', .65);
+      for (let n = 0; n < 5; n++) {
+        const [x, y] = H.p(.43, 4.9 + n * .39, 2.87);
+        stroke(H, R, [[x, y], [x, y + 13], [x + 3, y + 17]], 'blue', 1);
+        oval(H, R, x + 3, y + 23, 5, 7, n % 2 ? 'paper' : 'coral', .8);
+      }
       table(H, R, .8, 5.6, 2.5, 1.2, .85, 'teal');
+      box(H, R, .95, 5.72, 2.17, .93, .18, .09, 'coral', .65);
+      plates(H, R, 1.35, 6.35, .31, 7);
+      plates(H, R, 2.2, 6.3, .31, 4);
+      shape(H, R, [H.p(2.7, 6.68, .91), H.p(3.18, 6.68, .91), H.p(3.18, 6.85, .4), H.p(2.7, 6.85, .47)], 'paper', .9);
+
       shape(H, R, H.tile(1.2, 5.9, 1.1, .65, 1), 'sun', .72);
       for (let n = 0; n < 8; n++) {
         const [x, y] = H.p(1.5 + n % 4 * .14, 6.05 + Math.floor(n / 4) * .18, 1.025);
@@ -163,7 +175,12 @@ export default function enrich(room) {
 
       box(H, R, 4.8, 5.1, .7, .6, 0, .48, 'paper', .9);
 
-      box(H, R, 10, 4.4, 1.4, 2.0, 0, .88, 'teal', .65);
+      for (const i of [10, 11.25]) for (const j of [4.45, 6.2]) box(H, R, i, j, .13, .13, .05, .78, 'blue', .8);
+      box(H, R, 10, 4.4, 1.4, 2.0, .79, .09, 'teal', .65);
+      stroke(H, R, [H.p(10.65, 5.25, .8), H.p(10.65, 5.25, .45), H.p(10.95, 5.25, .3), H.p(10.95, 6.5, .12)], 'coral', 3);
+      box(H, R, 10.1, 5.8, 1.12, .55, .18, .08, 'sun', .6);
+      plates(H, R, 10.55, 6, .29, 3);
+
       shape(H, R, H.tile(10.17, 4.7, .96, 1.08, .9), 'blue', .7);
       shape(H, R, H.tile(10.27, 4.8, .76, .88, .91), 'paper', .65);
       stroke(H, R, [H.p(10.2, 4.55, .9), H.p(10.2, 4.55, 1.6), H.p(10.5, 4.75, 1.6), H.p(10.5, 4.75, 1.3)], 'blue', 2.5);
@@ -196,8 +213,10 @@ export default function enrich(room) {
       lantern(H, R, .4, 9.7, 2.3, 'coral');
     },
     live(H, R, t) {
-      cook(H, R, 2.5, 2.4, t, 'wok');
-      cook(H, R, 8.2, 2.45, t + 1.2, 'wok', 'coral');
+      for (const [i, phase, ink] of [[2.5, 0, 'paper'], [8.2, 1.2, 'coral']]) {
+        const left = H.p(i - 2, 1.5, 1.15), right = H.p(i + 2, 1.5, 1.15);
+        H.clip([[left[0], left[1]], [right[0], right[1]], [right[0], right[1] - 220], [left[0], left[1] - 220]], () => cook(H, R, i, 1.15, t + phase, 'wok', ink));
+      }
       cook(H, R, 1.85, 5.5, t, 'chop', 'sun');
       cook(H, R, 5.6, 4.6, t, 'pull', 'teal');
       cook(H, R, 10.6, 4.1, t, 'wash', 'coral');

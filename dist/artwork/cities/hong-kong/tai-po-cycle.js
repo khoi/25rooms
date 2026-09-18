@@ -90,6 +90,9 @@ function bicycle(H, R, i, j, ink = 'coral', size = 1, basket = true) {
   ]) {
     H.line(R, [p(a, b - 3), p(c, d - 3)], 'paper', 0.6);
   }
+  H.line(R, [p(-49, -25), p(-48, -39), p(-33, -44), p(-21, -37)], 'sun', 1.5);
+  H.line(R, [p(27, -37), p(39, -44), p(51, -34), p(55, -24)], 'sun', 1.5);
+  surface(H, R, [p(11, -30), p(16, -32), p(20, -42), p(15, -44)], 'sun', 0.7, 0.5);
   const chain = [p(-36, -23), p(0, -29), p(8, -24), p(5, -16), p(-36, -19)];
   H.line(R, chain, 'blue', 0.8);
   H.line(R, [p(23, -54), p(30, -49), p(34, -34)], 'blue', 0.65);
@@ -215,12 +218,49 @@ const room = world(
         2,
         'teal'
       );
-    rackFrame(H, R, 0.39, 5.69, 1.51, 4.96, 0.04, [0.14, 1.02, 1.91], 'sun', (i, j, w, d, z, row) => {
-      for (let n = 0; n < 4; n++) {
-        const [x, y] = H.p(i + w * 0.5, j + 0.53 + n * 1.07, z + 0.24);
-        wheel(H, R, x, y, 12 + row, 0.8);
-      }
+    surface(H, R, H.faceJ(0.16, 2.25, 8.95, 1.15, 3.65), 'teal', 0.58);
+    for (const j of [2.25, 6.65, 11.2]) timber(H, R, 0.12, j, 0.22, 0.14, 0.04, 3.72, 'sun');
+    for (const z of [1.12, 3.66]) timber(H, R, 0.12, 2.22, 0.22, 9.06, z, 0.13, 'sun');
+    for (let n = 0; n < 8; n++) {
+      const j = 2.6 + n * 0.62;
+      bentTube(H, R, [[0.37, j, 3.3], [0.57, j, 3.3], [0.57, j, 3.4]], 1.2, 'sun');
+      const [x, y] = H.p(0.57, j, 3.22);
+      H.line(R, [[x, y], [x + 4, y + 25 + n % 3 * 5]], 'paper', 3);
+      H.outline(R, ell(x, y - 2, 4, 5), 'blue', 1.4);
+      H.line(R, [[x + 1, y + 19], [x + 7, y + 23]], n % 2 ? 'coral' : 'sun', 4);
+    }
+    for (const j of [8.35, 9.85]) {
+      const [x, y] = H.p(0.43, j, 2.78);
+      for (let n = 0; n < 3; n++) H.outline(R, ell(x + n * 2, y + n, 17, 26), 'blue', 2);
+      H.line(R, [H.p(0.25, j, 3.56), [x, y - 24]], 'sun', 2);
+    }
+    for (let n = 0; n < 3; n++) {
+      const j = 3.3 + n * 1.73;
+      metal(H, R, 0.56, j, 1.55, 1.48, 0.25, 0.52, 'teal');
+      surface(H, R, H.faceJ(2.12, j + 0.11, 1.23, 0.33, 0.68), 'paper', 0.7);
+      bentTube(H, R, [[2.14, j + 0.44, 0.55], [2.24, j + 0.44, 0.55], [2.24, j + 0.92, 0.55], [2.14, j + 0.92, 0.55]], 1.3, 'blue');
+    }
+    benchFrame(H, R, 0.42, 3.03, 1.85, 7.95, 1.13, 'sun');
+    shallowTray(H, R, 0.67, 7.95, 1.29, 1.72, 1.15, 'paper');
+    for (let n = 0; n < 5; n++) surface(H, R, ell(...H.p(0.95 + n % 2 * 0.48, 8.24 + Math.floor(n / 2) * 0.4, 1.33), 5, 3), n === 4 ? 'coral' : 'blue', 0.76);
+    foldedCloth(H, R, 0.6, 9.97, 1.35, 0.72, 1.17, 'paper', 'coral');
+    metal(H, R, 0.77, 4.35, 0.8, 0.8, 1.15, 0.4, 'blue');
+    metal(H, R, 1.39, 4.22, 0.29, 1.02, 1.58, 0.19, 'teal');
+    bentTube(H, R, [[1.74, 4.71, 1.43], [2.09, 4.71, 1.43]], 2, 'sun');
+    bentTube(H, R, [[2.09, 4.71, 1.17], [2.09, 4.71, 1.72]], 1.8, 'blue');
+    for (const j of [5.8, 6.6]) bottle(H, R, 1.25, j, 1.18, j < 6 ? 'coral' : 'sun');
+    const [bellX, bellY] = H.p(1.34, 7.37, 1.2);
+    oval(H, R, bellX, bellY, 7, 4, 'sun', 0.9);
+    H.line(R, [[bellX + 5, bellY], [bellX + 11, bellY + 3]], 'blue', 1.5);
+    cabinetFrame(H, R, 2.61, 9.73, 1.68, 1.53, 0.04, 0.69, 2, 'teal', (i, j, w, d, z) => {
+      coiledLine(H, R, i + w / 2, j + d / 2, z + 0.12, 8, 'blue');
     });
+    shallowTray(H, R, 2.72, 9.86, 1.44, 1.27, 0.76, 'sun');
+    handTool(H, R, 3.21, 10.38, 0.9, 'spanner', 'coral');
+    metal(H, R, 10.01, 0.62, 1.01, 0.37, 1.42, 1.12, 'paper');
+    surface(H, R, H.faceI(10.39, 1.0, 0.24, 1.62, 2.31), 'coral', 0.85);
+    surface(H, R, H.faceI(10.17, 1.01, 0.67, 1.85, 2.08), 'coral', 0.85);
+    bentTube(H, R, [[11.51, 0.58, 3.92], [11.51, 2.29, 3.82], [11.51, 2.29, 0.15]], 2.2, 'teal');
     for (const j of [4.78, 9.69])
       bentTube(
         H,

@@ -27,6 +27,16 @@ const room=world('mexico-city-community-stage','A cloth becomes a backdrop',{wal
     const p=P(2.67,.76);oval(H,R,...p,6,6,'sun',.65);
     for(let n=0;n<4;n++)surface(H,R,[P(.2+n*.3,.05),P(.44+n*.3,.05),P(.44+n*.3,.2),P(.2+n*.3,.2)],['coral','sun','teal','blue'][n],.75,.35);
   });
+  timber(H,R,.17,8.4,.8,3.12,2.67,.14,'sun');
+  for(const j of [8.62,11.3])bentTube(H,R,[[.27,j,2.64],[.77,j,2.09]],2,'blue');
+  timber(H,R,.2,8.35,.14,3.24,.18,.12,'sun');
+  for(const j of [8.48,11.48])timber(H,R,.21,j,.16,.16,.18,2.5,'sun');
+  bentTube(H,R,[[.53,8.58,2.35],[.53,11.21,2.35]],2.4,'blue');
+  for(let n=0;n<3;n++){
+    const j=8.88+n*.84,p=H.p(.58,j,2.22);stroke(H,R,[[p[0],p[1]-4],[p[0]+3,p[1]-8],[p[0]+5,p[1]-4],[p[0],p[1]]],'blue',1);
+    surface(H,R,[[p[0]-13,p[1]+6],[p[0]-5,p[1]],[p[0]+5,p[1]],[p[0]+13,p[1]+6],[p[0]+9,p[1]+15],[p[0]+7,p[1]+48],[p[0]-8,p[1]+48],[p[0]-10,p[1]+15]],['coral','sun','teal'][n],.68,.8);
+    H.line(R,[[p[0],p[1]+5],[p[0],p[1]+43]],'paper',1);H.line(R,[[p[0]-7,p[1]+30],[p[0]+7,p[1]+30]],'blue',.8);
+  }
   timber(H,R,.17,8.8,.6,2.1,2.0,.1,'sun');
   const puppet=H.p(.45,9.42,2.12);oval(H,R,puppet[0],puppet[1]-16,5,6,'paper',1);shape(H,R,[[puppet[0]-6,puppet[1]-10],[puppet[0]+6,puppet[1]-10],[puppet[0]+9,puppet[1]],[puppet[0]-8,puppet[1]]],'coral',.7,.6);for(const dx of [-4,4])H.line(R,[[puppet[0]+dx,puppet[1]-22],[puppet[0]+dx,puppet[1]-34]],'blue',.5);H.line(R,[[puppet[0]-8,puppet[1]-34],[puppet[0]+8,puppet[1]-34]],'blue',1.1);
   bentTube(H,R,[[.12,10.7,.1],[.12,10.7,3.66],[.12,6.8,3.66]],1.7,'blue');
@@ -38,6 +48,21 @@ const room=world('mexico-city-community-stage','A cloth becomes a backdrop',{wal
   timber(H,R,1.1,6.15,1.4,.55,.04,.15,'sun');timber(H,R,1.1,6.13,1.4,.32,.2,.12,'sun');
   for(const x of [1.25,7.6]){metal(H,R,x,2,.12,.25,.04,4.45,'blue');metal(H,R,x-.23,1.82,.58,.65,.025,.12,'blue');bentTube(H,R,[[x,2.1,1.3],[x+.4,2.75,.05]],2,'blue');pulley(H,R,x,2.13,4.4);}
   metal(H,R,1.16,2.01,6.65,.2,4.41,.13,'blue');
+  for(const x of [1.25,7.6]){
+    const side=x<2?1:-1;
+    timber(H,R,x-.14,2.14,.3,.58,.12,4.12,'sun');
+    for(const z of [.28,2.05,3.7])metal(H,R,x-.2,2.17,.44,.2,z,.12,'blue');
+    const folds=[H.p(x,2.36,.45),H.p(x+side*.65,2.36,.45),H.p(x+side*.36,2.36,1.92),H.p(x+side*.74,2.36,4.08),H.p(x,2.36,4.08)];surface(H,R,folds,'coral',.61,.8);
+    for(const q of [.1,.24,.4])H.line(R,[H.p(x+side*q,2.38,.52),H.p(x+side*q*.75,2.38,1.91),H.p(x+side*q,2.38,4.02)],'sun',1.1);
+    bentTube(H,R,[[x,2.54,1.85],[x+side*.35,2.54,1.82],[x+side*.47,2.54,1.9]],1.6,'blue');
+  }
+  surface(H,R,[H.p(1.27,2.19,4.21),H.p(7.59,2.19,4.21),H.p(7.59,2.19,3.94),H.p(6.4,2.19,3.82),H.p(4.4,2.19,3.93),H.p(2.4,2.19,3.82),H.p(1.27,2.19,3.94)],'coral',.73,.9);
+  for(const x of [2.0,3.2,5.5,6.7]){
+    bentTube(H,R,[[x,.39,4.15],[x,1.15,4.15],[x,1.15,3.91]],2,'blue');
+    const p=H.p(x,1.15,3.87);surface(H,R,[[p[0]-8,p[1]-7],[p[0]+8,p[1]-7],[p[0]+12,p[1]+7],[p[0]-10,p[1]+7]],'blue',.7,.8);oval(H,R,p[0]+1,p[1]+7,10,4,'sun',.7);
+  }
+  H.tint([H.p(2.0,3,.41),H.p(6.8,3,.41),H.p(7,5.8,.41),H.p(2.0,5.8,.41)],'sun',.1);
+
   for(const x of [1.65,7.2]){H.line(R,[H.p(x,2.06,4.35),H.p(x,2.06,3.2)],'blue',1);metal(H,R,x-.07,2.04,.14,.18,3.78,.16,'coral');}
   cabinetFrame(H,R,8.5,.32,3.04,1.35,.14,3.72,2,'teal',(x,y,w,d,z,h,n)=>{
     if(n===0){for(const h of [.65,1.7,2.75])timber(H,R,x,y,w,d,z+h,.09,'sun');
@@ -48,7 +73,12 @@ const room=world('mexico-city-community-stage','A cloth becomes a backdrop',{wal
     }else {for(let k=0;k<3;k++){const b=H.faceI(x+.05+k*.24,y+.19+k*.13,.4,z+.1,z+2.08-k*.13);surface(H,R,b,['sun','paper','coral'][k],.66,.6);}timber(H,R,x,y,w,d,z+2.4,.09,'sun');drape(H,R,x+.07,y+.07,w-.13,d-.12,z+2.58,.25,'coral');}
   });
   const mini=H.p(9.12,1.1,3.95);shape(H,R,[[mini[0]-17,mini[1]],[mini[0]+17,mini[1]],[mini[0]+17,mini[1]-20],[mini[0]-17,mini[1]-20]],'sun',.7,.8);shape(H,R,[[mini[0]-13,mini[1]-3],[mini[0]+13,mini[1]-3],[mini[0]+13,mini[1]-16],[mini[0]-13,mini[1]-16]],'blue',.65,.5);for(const s of [-1,1])shape(H,R,[[mini[0]+s*13,mini[1]-16],[mini[0]+s*7,mini[1]-16],[mini[0]+s*10,mini[1]-3],[mini[0]+s*13,mini[1]-3]],s===1?'coral':'paper',.8,.4);
+  for(const z of [.56,1.6,2.95]){const p=H.p(11.6,1.49,z);H.line(R,[[p[0]-5,p[1]-3],[p[0]+5,p[1]+3]],'sun',2);}
   chair(H,R,5.5,3.5,.4);
+  surface(H,R,H.faceI(2.87,6.12,2.2,.11,.31),'blue',.63,.6);
+  for(const x of [3.04,4.73])H.dot(...H.p(x,6.13,.2),1.4,'sun');
+  for(const [i,j]of [[1.45,2.57],[7.14,2.78]]){const p=H.p(i,j,.24);surface(H,R,ell(...p,13,7),'blue',.7,.8);H.line(R,[[p[0]-8,p[1]],[p[0]+8,p[1]]],'coral',2);}
+
   floorShadow(H,9.1,4.2,1.9,1.5,.15);
   metal(H,R,9.15,4.3,1.8,1.25,.19,.69,'coral');for(const [x,y]of [[9.3,4.4],[10.7,4.4],[9.3,5.4],[10.7,5.4]])caster(H,R,x,y);
   H.line(R,[H.p(9.8,5.57,.65),H.p(10.35,5.57,.65)],'blue',2.5);
@@ -56,9 +86,27 @@ const room=world('mexico-city-community-stage','A cloth becomes a backdrop',{wal
   for(const x of [.95,1.85])bentTube(H,R,[[x,8.7,.05],[x,8.3,1.9],[x,8.0,.05]],2.3,'teal');
   surface(H,R,H.faceI(.9,8.35,1,.5,1.9),'blue',.48,.8);surface(H,R,H.faceI(1,8.37,.8,.61,1.8),'paper',.8,.5);
   for(const [a,z]of [[.94,.54],[1.73,1.7]])surface(H,R,H.faceI(a,8.4,.19,z,z+.18),'coral',.7,.5);
+  for(const x of [9.08,10.65])bentTube(H,R,[[x,6.46,.07],[x,6.32,2.99],[x,5.81,.07]],2.5,'sun');
+  const arch=[];for(let n=0;n<=20;n++){const a=n*Math.PI/20;arch.push(H.p(9.85+Math.cos(a)*.82,6.37,2.08+Math.sin(a)*.83));}
+  const flat=[H.p(9.03,6.37,.15),H.p(10.68,6.37,.15),...arch];surface(H,R,flat,'teal',.3,.8);
+  const inner=[];for(let n=0;n<=20;n++){const a=n*Math.PI/20;inner.push(H.p(9.85+Math.cos(a)*.61,6.39,2.08+Math.sin(a)*.62));}
+  surface(H,R,[H.p(9.24,6.39,.15),H.p(10.46,6.39,.15),...inner],'paper',1,.8);
+  for(const z of [.45,1.27])H.line(R,[H.p(9.04,6.41,z),H.p(9.26,6.41,z)],'coral',2);
+  bentTube(H,R,[[9.05,6.47,.13],[10.67,6.47,2.9]],1.2,'blue');
   benchFrame(H,R,8.4,8.7,2.8,1.35,.66,'teal');cushion(H,R,8.45,8.76,1.1,1.15,.67,.13,'sun');
   const tool=H.tile(9.8,8.9,1.06,.85,.69);surface(H,R,tool,'coral',.55,.7);for(let n=0;n<4;n++)H.line(R,[H.p(9.93+n*.21,9.02,.7),H.p(9.93+n*.21,9.58,.7)],'blue',1.7);
   box(H,R,10.4,8.82,.36,.35,.7,.22,'teal',.6);
+  timber(H,R,8.45,8.8,2.59,1.07,.24,.1,'sun');
+  for(let n=0;n<3;n++)drape(H,R,8.64+n*.7,8.97,.54,.69,.36,.21,['paper','coral','teal'][n]);
+  const torch=H.p(9.65,9.28,.77);oval(H,R,...torch,5,3,'sun',.8);H.outline(R,ell(torch[0]-4,torch[1],8,5),'blue',1.5);
+  for(const x of [1.72,3.17])for(const j of [10.44,11.45])caster(H,R,x,j);
+  metal(H,R,1.54,10.29,1.87,1.34,.21,.61,'coral');
+  surface(H,R,H.tile(1.68,10.43,1.6,1.04,.84),'blue',.65,.8);
+  for(const x of [1.58,3.18])metal(H,R,x,10.28,.19,1.36,.22,.61,'blue');
+  surface(H,R,H.faceI(1.55,10.31,1.86,.86,1.8),'coral',.6,.9);
+  surface(H,R,H.faceI(1.7,10.34,1.56,1.0,1.66),'paper',1,.6);
+  const cap=H.p(2.21,10.78,.89);surface(H,R,ell(...cap,12,6),'sun',.7,.7);surface(H,R,[[cap[0]-7,cap[1]],[cap[0]-5,cap[1]-14],[cap[0]+7,cap[1]-12],[cap[0]+8,cap[1]]],'sun',.8,.6);drape(H,R,2.61,10.81,.67,.69,.85,.31,'teal');
+  H.line(R,[H.p(2.15,11.65,.58),H.p(2.79,11.65,.58)],'sun',2.7);
   surface(H,R,H.tile(3.15,8,3,2.5,.02),'coral',.17,.6);
   for(const [i,j]of [[3.7,8.7],[5.35,9.65],[4.9,6.8]])H.line(R,[H.p(i-.17,j,.035),H.p(i+.17,j,.035),H.p(i,j,.035),H.p(i,j+.24,.035)],'sun',2.1);
   const mask=H.p(3.7,10.6,.9);bentTube(H,R,[[3.7,10.6,.02],[3.7,10.6,.9]],2,'blue');oval(H,R,...mask,11,14,'paper',1);for(const s of [-1,1])oval(H,R,mask[0]+s*4,mask[1]-3,2.1,1.5,'blue',.8);stroke(H,R,[[mask[0]-4,mask[1]+5],[mask[0],mask[1]+8],[mask[0]+4,mask[1]+5]],'coral',1);

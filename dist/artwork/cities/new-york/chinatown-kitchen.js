@@ -1,4 +1,4 @@
-import { benchFrame, drape, metal, pendant, surface, timber, vessel } from '../materials.js';
+import { benchFrame, bentTube, drape, metal, pendant, surface, timber, vessel } from '../materials.js';
 import { masonry, archedBay, cabinetFrame, rackFrame, basin as washBasin } from '../structure.js';
 import { caster } from '../joinery.js';
 import { foldedCloth, handTool, shallowTray } from '../furnishings.js';
@@ -148,8 +148,28 @@ const room = world(
       for (let n = 0; n < 5; n++) bowl(H, R, i + w * 0.52, j + 0.5 + n * 0.85, z + 0.17, 0.63, 'paper', 'teal');
     });
     washBasin(H, R, 0.52, 1.58, 1.49, 2.11, 1.29, 'paper');
+    metal(H, R, 0.28, 1.33, 0.67, 3.46, 2.77, 0.075, 'teal');
+    for (const j of [1.55, 4.53]) bentTube(H, R, [[0.28, j, 2.28], [0.89, j, 2.77], [0.28, j, 2.77]], 1.8, 'blue');
+    for (let n = 0; n < 6; n++) {
+      const j = 1.65 + n * 0.44;
+      const [x, y] = H.p(0.63, j, 2.86);
+      oval(H, R, x, y - 7, 8, 11, 'paper', 1);
+      oval(H, R, x, y - 7, 5, 7, 'teal', 0.22);
+    }
+    bentTube(H, R, [[1.14, 2.58, 1.28], [1.14, 2.58, 0.75], [1.57, 2.58, 0.62], [1.57, 2.58, 0.27], [0.34, 2.58, 0.27]], 3.4, 'paper');
+    metal(H, R, 0.27, 5.28, 0.1, 1.95, 2.52, 0.08, 'sun');
+    for (const j of [5.62, 6.27, 6.89]) {
+      bentTube(H, R, [[0.4, j, 2.56], [0.4, j, 2.28]], 1.3, 'blue');
+      const [x, y] = H.p(0.42, j, 2.07);
+      oval(H, R, x, y, 7, 9, j > 6.5 ? 'paper' : 'teal', 0.7);
+      for (let n = 0; n < 3; n++) H.line(R, [[x - 4, y - 3 + n * 3], [x + 4, y - 3 + n * 3]], 'blue', 0.65);
+    }
     shallowTray(H, R, 0.56, 4.16, 1.4, 0.96, 1.32, 'teal');
     for (let n = 0; n < 3; n++) bowl(H, R, 1.26, 4.44, 1.43 + n * 0.11, 0.61);
+    surface(H, R, H.faceI(3.04, 0.2, 3.64, 3.41, 4.02), 'blue', 0.69);
+    metal(H, R, 2.94, 0.21, 3.85, 0.4, 3.38, 0.1, 'paper');
+    for (let n = 0; n < 4; n++) metal(H, R, 3.08, 0.27, 3.57, 0.05, 3.83 + n * 0.047, 0.023, 'teal');
+    bentTube(H, R, [[6.86, 0.26, 3.98], [6.86, 0.26, 3.49], [6.71, 0.26, 3.44]], 1.1, 'sun');
     cabinetFrame(H, R, 2.51, 0.35, 4.86, 1.15, 0.05, 3.29, 3, 'sun', (i, j, w, d, z, h, col) => {
       for (let row = 0; row < 4; row++) {
         timber(H, R, i, j, w, d, z + row * 0.77, 0.075, 'sun');
@@ -158,7 +178,14 @@ const room = world(
         else for (let n = 0; n < 3; n++) bowl(H, R, i + w * 0.5, j + 0.48, z + 0.16 + row * 0.77 + n * 0.1, 0.74);
       }
     });
-    metal(H, R, 8.69, 0.38, 2.81, 1.66, 0.08, 1.36, 'teal');
+    for (const i of [8.75, 11.27]) for (const j of [0.47, 1.79]) metal(H, R, i, j, 0.16, 0.16, 0.05, 1.17, 'teal');
+    metal(H, R, 8.69, 0.38, 2.81, 1.66, 1.17, 0.27, 'paper');
+    metal(H, R, 8.81, 0.52, 2.49, 1.32, 0.3, 0.075, 'teal');
+    for (const i of [9.33, 10.67]) {
+      bowl(H, R, i, 1.14, 0.44, 0.86, 'paper', 'blue');
+      H.dot(...H.p(i, 2.06, 1.31), 3.4, 'coral');
+    }
+    bentTube(H, R, [[11.47, 0.59, 1.22], [11.61, 0.59, 0.43], [11.61, 0.2, 0.43]], 2.3, 'sun');
     for (const i of [9.58, 10.73]) {
       surface(H, R, ell(...H.p(i, 1.06, 1.48), 16, 7), 'blue', 0.8);
       steamer(H, R, i, 1.06, 1.47, 1.15);
@@ -186,6 +213,12 @@ const room = world(
     benchFrame(H, R, 3.12, 4.58, 1.33, 3.52, 1.09, 'teal');
     timber(H, R, 3.08, 3.25, 5.25, 1.37, 1.08, 0.17, 'sun');
     timber(H, R, 3.08, 4.62, 1.42, 3.54, 1.08, 0.17, 'sun');
+    timber(H, R, 3.31, 3.51, 4.76, 0.86, 0.27, 0.075, 'sun');
+    shallowTray(H, R, 5.8, 3.54, 1.75, 0.76, 0.38, 'paper');
+    foldedCloth(H, R, 3.53, 3.61, 1.34, 0.66, 0.38, 'paper', 'coral');
+    timber(H, R, 3.3, 4.78, 0.97, 3.06, 0.28, 0.075, 'sun');
+    bowl(H, R, 3.81, 7.23, 0.43, 1.06, 'teal', 'paper');
+    for (const j of [5.01, 7.83]) bentTube(H, R, [[3.27, j, 0.31], [4.28, j, 1.01]], 1.4, 'blue');
     surface(H, R, H.tile(3.27, 5.24, 1.01, 1.73, 1.26), 'paper', 1);
     bowl(H, R, 3.79, 4.08, 1.28, 0.83, 'paper', 'teal');
     bowl(H, R, 3.78, 7.56, 1.28, 0.66);
@@ -204,6 +237,17 @@ const room = world(
     steamer(H, R, 10.53, 9.91, 1.07, 0.7);
     foldedCloth(H, R, 9.01, 10.38, 1.91, 0.37, 0.99, 'paper', 'coral');
     for (let n = 0; n < 20; n++) H.line(R, [H.p(3.44 + n * 0.27, 10.89, 0.04), H.p(3.44 + n * 0.27, 11.32, 0.04)], 'blue', 1);
+    timber(H, R, 8.78, 9.42, 2.4, 1.22, 0.2, 0.075, 'sun');
+    for (let n = 0; n < 3; n++) shallowTray(H, R, 9.09, 9.64, 1.58, 0.74, 0.34 + n * 0.15, 'teal');
+    const [lx, ly] = H.p(10.93, 9.56, 1.35);
+    oval(H, R, lx, ly, 13, 15, 'sun', 0.56);
+    oval(H, R, lx, ly, 9, 11, 'paper', 0.8);
+    for (let n = -2; n <= 2; n++) H.line(R, [[lx - 8, ly + n * 3], [lx + 8, ly + n * 3]], 'coral', 0.65);
+    H.line(R, [[lx - 4, ly], [lx - 4, ly - 4], [lx + 4, ly - 4], [lx + 4, ly]], 'teal', 1.7);
+    metal(H, R, 7.73, 0.39, 0.69, 0.34, 2.27, 0.91, 'paper');
+    oval(H, R, ...H.p(8.09, 0.75, 2.74), 7, 7, 'sun', 0.4);
+    H.line(R, [H.p(8.09, 0.77, 2.74), H.p(8.19, 0.77, 2.85)], 'coral', 1.5);
+    foldedCloth(H, R, 6.23, 3.54, 1.31, 0.5, 1.48, 'paper', 'teal');
     pendant(H, R, 6.19, 6.43, 4.29, 3.01, 'paper', 1.03);
   },
   (H, R, t) => {

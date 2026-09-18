@@ -2,7 +2,7 @@ import { world, shape, oval, stroke, actor, cycle, ell } from '../../worlds/comm
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, bentTube, cushion, benchFrame, drape, floorLight, vessel } from '../materials.js';
 import { masonry, cabinetFrame, boardFloor } from '../structure.js';
-import { recessedFrame, windowBay, hangingRail, taskLight } from '../joinery.js';
+import { recessedFrame, windowBay, hangingRail, taskLight, panelFront, wallRack } from '../joinery.js';
 
 const rest=FIGURES.clips.idle.keys[0][1],pose={...rest,al:60,el:55,ar:18,er:15,head:-3};
 FIGURES.clips.hanoiOperaRise={dur:20,keys:[[0,pose],[1,pose]]};
@@ -22,8 +22,35 @@ const room=world('hanoi-opera-shoes','Before the next entrance',{wall:false,floo
   shape(H,R,H.tile(i,j,.96,.9,.03),'teal',.2);
   shape(H,R,[H.p(i+.18,j+.45,.035),H.p(i+.48,j+.17,.035),H.p(i+.8,j+.45,.035),H.p(i+.48,j+.72,.035)],'coral',.26,.5);
  }
+ for(const side of ['nw','ne']){
+  const P=(u,z)=>side==='nw'?H.p(.17,u,z):H.p(u,.17,z);
+  H.line(R,[P(.15,3.56),P(11.6,3.56)],'blue',4);
+  H.line(R,[P(.15,3.61),P(11.6,3.61)],'sun',1.7);
+  for(let u=.35;u<11.2;u+=1.25){
+   shape(H,R,[P(u,.12),P(u+1.02,.12),P(u+1.02,.78),P(u,.78)],'teal',.21,.6);
+   H.line(R,[P(u+.11,.22),P(u+.9,.22),P(u+.9,.66)],'paper',1);
+  }
+ }
+ for(const j of [6.55,10.9]){
+  timber(H,R,.16,j,.31,.23,.08,3.41,'sun');
+  metal(H,R,.12,j-.04,.4,.32,.08,.19,'teal');
+ }
+ wallRack(H,R,'nw',.68,4.85,1.21,.9,1,'sun',(P,z)=>{
+  for(const [u,w] of [[.25,.85],[1.44,.55],[2.33,.85]]){
+   shape(H,R,[P(u,z+.09),P(u+w,z+.09),P(u+w,z+.49),P(u,z+.49)],'paper',.8);
+   H.line(R,[P(u+.12,z+.18),P(u+w-.08,z+.4)],'coral',2.4);
+  }
+  const q=P(4.13,z+.26);oval(H,R,...q,8,6,'sun',.65);H.line(R,[[q[0]-6,q[1]],[q[0]+6,q[1]]],'blue',.9);
+ });
  boardFloor(H,R,1.25,2.2,7.45,6.7,.16,'sun',.55);
  timber(H,R,1.2,8.87,7.58,.18,.02,.16,'teal');
+ for(const j of [2.32,8.57])timber(H,R,1.28,j,7.35,.15,.06,.09,'teal');
+ for(const i of [1.38,8.54])for(const j of [2.45,4.45,6.45,8.54]){
+  metal(H,R,i,j,.12,.14,.165,.018,'teal');
+  H.dot(...H.p(i+.05,j+.07,.188),.8,'sun');
+ }
+ timber(H,R,3.25,9.05,3.25,.75,.015,.09,'sun');
+ H.line(R,[H.p(3.32,9.77,.11),H.p(6.42,9.77,.11)],'paper',1.4);
  H.tint(H.tile(1.35,2.4,7.4,6.45,.175),'sun',.1);
  floorLight(H,5.4,4.5,143,.4);
  recessedFrame(H,R,'ne',1.05,7.35,.5,2.35,'sun',P=>{
@@ -32,12 +59,21 @@ const room=world('hanoi-opera-shoes','Before the next entrance',{wall:false,floo
   oval(H,R,...P(3.86,1.85),6,7,'coral',.16);
   for(const u of [.4,2.8,5.3])H.line(R,[P(u,.2),P(u+.9,2.17)],'paper',2.2,{tone:.65});
  });
+ for(const i of [1.21,3.63,6.05,8.21]){
+  metal(H,R,i,.24,.075,.16,.64,2.05,'sun');
+  for(const z of [.7,2.63])H.dot(...H.p(i+.04,.41,z),1.3,'blue');
+ }
+ H.line(R,[H.p(1.23,.32,.65),H.p(8.24,.32,.65)],'blue',2.2);
  windowBay(H,R,'nw',.75,5.4,2.62,.8,{ink:'teal',night:true,divisions:4});
  for(const i of [1.5,3.65,6,8.25]){
   metal(H,R,i-.1,2.9,.23,.25,.18,.045,'teal');
   bentTube(H,R,[[i,2.99,.2],[i,2.99,1.03],[i,3.15,1.08]],2.5,'teal');
   H.line(R,[H.p(i,2.99,.48),H.p(i,2.99,.61)],'paper',1.2);
   H.dot(...H.p(i,2.99,.65),1.5,'sun');
+  metal(H,R,i-.085,2.89,.18,.22,.71,.17,'paper');
+  H.line(R,[H.p(i-.13,3.02,.8),H.p(i+.19,3.02,.8)],'sun',2);
+  for(const z of [.38,.49,.59])H.dot(...H.p(i,3.025,z),.8,'blue');
+  bentTube(H,R,[[i,2.99,.91],[i,.49,.91]],1.5,'teal');
  }
  bentTube(H,R,[[1.34,3.15,.92],[1.34,3.15,1.08],[8.44,3.15,1.08],[8.44,3.15,.92]],4.3,'sun');
  H.line(R,[H.p(1.5,3.29,.2),H.p(8.4,3.29,.2)],'blue',1,{tone:.26});
@@ -52,7 +88,9 @@ const room=world('hanoi-opera-shoes','Before the next entrance',{wall:false,floo
  cabinetFrame(H,R,9,.35,2.43,2.03,.08,3.58,2,'teal',(i,j,w,d,z,h,n)=>{
   for(let row=0;row<5;row++){
    const zz=z+row*.59;
-   timber(H,R,i,j+.85,w,d-.85,zz,.09,'sun');
+   shape(H,R,[H.p(i,j+.79,zz+.19),H.p(i+w,j+.79,zz+.19),H.p(i+w,j+d,zz),H.p(i,j+d,zz)],'sun',.5);
+   timber(H,R,i,j+d-.11,w,.1,zz,.12,'sun');
+   for(const ii of [i+.22,i+w-.22])H.line(R,[H.p(ii,j+.98,zz+.15),H.p(ii,j+1.52,zz+.06)],'paper',1.4);
    const p=H.p(i+.48,j+d-.25,zz+.16);
    H.line(R,[[p[0]-13,p[1]+5],[p[0]+12,p[1]+5]],'blue',3.5);
    shoe(H,R,i+.35,j+d-.42,zz+.16,row%2?'paper':'coral',.57);
@@ -87,12 +125,38 @@ const room=world('hanoi-opera-shoes','Before the next entrance',{wall:false,floo
  vessel(H,R,9.8,8.97,.04,22,10,'paper',true);
  shape(H,R,H.tile(10.27,7.46,.47,.6,.65),'coral',.6);
  stroke(H,R,[H.p(10.3,7.7,.66),H.p(10.6,7.4,.66),H.p(10.8,7.6,.66)],'sun',1.4);
- timber(H,R,9.16,4.2,1.5,1.2,.08,.65,'teal');
- metal(H,R,9.52,4.43,.63,.53,.74,.56,'blue');
- for(const x of [9.67,9.95])oval(H,R,...H.p(x,4.98,1.0),4,5,'teal',.5);
+ cabinetFrame(H,R,9.18,3.45,2.07,2.4,.07,1.19,2,'teal',(i,j,w,d,z,h,n)=>{
+  if(n===0)panelFront(H,R,i,j+d,w,z,.87,1,'teal');
+  else for(let k=0;k<3;k++){
+   shape(H,R,H.faceI(i,j+d,w,z+k*.32,z+.27+k*.32),'sun',.52);
+   H.line(R,[H.p(i+.27,j+d+.02,z+.13+k*.32),H.p(i+.53,j+d+.02,z+.13+k*.32)],'blue',1.8);
+  }
+ });
+ timber(H,R,9.1,3.38,2.24,2.53,1.26,.13,'sun');
+ recessedFrame(H,R,'ne',9.31,1.81,1.55,1.7,'sun',P=>{
+  shape(H,R,[P(.14,.15),P(1.67,.15),P(1.67,1.55),P(.14,1.55)],'paper',.68);
+  H.line(R,[P(.31,.26),P(.94,1.39)],'paper',2.5);
+ });
+ metal(H,R,9.36,3.78,.72,.54,1.4,.53,'blue');
+ for(const x of [9.51,9.82])oval(H,R,...H.p(x,4.34,1.65),4,5,'teal',.5);
+ metal(H,R,10.35,4.22,.61,.92,1.4,.05,'teal');
+ for(let n=0;n<3;n++){const q=H.p(10.48+n*.14,4.7,1.47);oval(H,R,...q,3.4,4,'coral',.65);H.line(R,[[q[0],q[1]-4],[q[0],q[1]-10]],'paper',1);}
+ const comb=H.p(9.74,5.37,1.42);
+ H.line(R,[[comb[0]-11,comb[1]-4],[comb[0]+11,comb[1]+4]],'sun',3);
+ for(let n=-9;n<11;n+=3)H.line(R,[[comb[0]+n,comb[1]+n*.35],[comb[0]+n-3,comb[1]+n*.35+5]],'blue',.8);
+ drape(H,R,10.57,5.23,.57,.54,1.42,.65,'coral');
+ H.line(R,[H.p(9.4,3.76,1.4),H.p(9.03,3.76,1.35),H.p(9.03,3.76,.09),H.p(8.86,3.76,.09)],'blue',.9);
  taskLight(H,R,8.95,1.8,3.76,'coral',.5);
  const worn=H.p(5.87,4.65,.18);oval(H,R,...worn,5,2.2,'paper',.65);H.line(R,[[worn[0]-7,worn[1]+1],[worn[0]+8,worn[1]+5]],'blue',.55,{tone:.35});
  H.line(R,[H.p(4.83,3.15,1.11),H.p(6.32,3.15,1.11)],'paper',2.2);
+ timber(H,R,4.49,10.05,2.1,1.1,.04,.51,'teal');
+ shape(H,R,H.tile(4.64,10.2,1.8,.82,.57),'blue',.56);
+ drape(H,R,4.71,10.26,1.18,.7,.62,.3,'paper');
+ for(let n=0;n<5;n++)H.line(R,[H.p(4.75+n*.21,10.3,.64),H.p(4.86+n*.21,10.88,.64)],'coral',1.2);
+ shape(H,R,H.faceI(4.49,10.05,2.1,.61,1.37),'teal',.54);
+ shape(H,R,H.faceI(4.7,10.07,1.67,.78,1.21),'paper',.67);
+ for(const i of [4.7,6.19])metal(H,R,i,11.17,.18,.04,.19,.21,'sun');
+ const spool=H.p(6.16,10.6,.67);oval(H,R,...spool,6,3,'sun',.75);H.line(R,[[spool[0]-4,spool[1]-1],[spool[0]-4,spool[1]-10],[spool[0]+4,spool[1]-10],[spool[0]+4,spool[1]-1]],'coral',2.1);oval(H,R,spool[0],spool[1]-10,6,3,'sun',.75);
  const repair=H.p(7.7,9.73,.04);shape(H,R,[[repair[0]-9,repair[1]-9],[repair[0]-4,repair[1]-11],[repair[0]-2,repair[1]-5],[repair[0]-7,repair[1]-4]],'coral',.7,.4);
  for(let n=0;n<3;n++)H.line(R,[[repair[0]-8+n*2,repair[1]-8],[repair[0]-7+n*2,repair[1]-5]],'paper',.6);
  shoe(H,R,7.7,9.73,.04,'paper',.8);shoe(H,R,8.25,9.82,.04,'paper',.8);

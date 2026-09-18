@@ -92,8 +92,20 @@ function stand(H, R, i, j) {
 
 function piano(H, R) {
   for (const [i, j] of [[8.2, 1.7], [10.3, 1.7], [8.2, 3.2], [10.3, 3.2]]) box(H, R, i, j, .14, .14, 0, 1, 'blue', .8);
-  box(H, R, 8.05, 1.55, 2.7, 1.7, .92, .42, 'blue', .9);
-  shape(H, R, [H.p(8.05, 1.55, 1.4), H.p(10.75, 1.55, 2.12), H.p(10.75, 3.25, 2.12), H.p(8.05, 3.25, 1.4)], 'blue', .8);
+  const rim = [[8.05, 1.55], [9.5, 1.4], [10.6, 1.8], [10.75, 2.4], [10.75, 3.25], [8.05, 3.25]];
+  shape(H, R, rim.map(([i, j]) => H.p(i, j, 1.25)), 'sun', .7);
+  for (let k = 0; k < rim.length; k++) {
+    const a = rim[k], b = rim[(k + 1) % rim.length];
+    shape(H, R, [H.p(...a, .92), H.p(...b, .92), H.p(...b, 1.3), H.p(...a, 1.3)], 'blue', .86);
+  }
+  shape(H, R, [[8.22, 1.77], [9.4, 1.63], [10.36, 1.95], [10.49, 3.05], [8.22, 3.05]].map(([i, j]) => H.p(i, j, 1.32)), 'coral', .55);
+  for (let n = 0; n < 15; n++) H.line(R, [H.p(8.32 + n * .14, 3.02, 1.34), H.p(8.32 + n * .12, 1.83 + n * .02, 1.34)], 'sun', .7);
+  for (const i of [8.6, 9.3, 10]) H.line(R, [H.p(i, 1.95, 1.35), H.p(i + .12, 2.97, 1.35)], 'blue', 2);
+  for (const i of [8.95, 9.25, 9.55]) {
+    H.line(R, [H.p(i, 3.38, .91), H.p(i, 3.45, .18), H.p(i, 3.78, .14)], 'sun', 2);
+    oval(H, R, ...H.p(i, 3.78, .14), 4, 2, 'sun', .9);
+  }
+  shape(H, R, [H.p(8.05, 1.55, 1.4), H.p(10.75, 1.55, 2.35), H.p(10.75, 2.05, 2.35), H.p(8.05, 2.05, 1.4)], 'blue', .8);
   H.line(R, [H.p(10.45, 3.05, 1.32), H.p(10.45, 3.05, 2.02)], 'sun', 1.5);
   box(H, R, 8.05, 3.25, 2.7, .52, .92, .15, 'sun', .8);
   for (let k = 0; k < 18; k++) {
@@ -133,6 +145,12 @@ function buffet(H, R) {
       for (let k = 0; k < 3; k++) oval(H, R, x, y - k * 2, 8, 3.5, 'paper', 1);
     }
   }
+  for (const j of [6.72, 8.48, 10.18]) {
+    box(H, R, .95, j, 1.15, .28, .25, .12, 'sun', .6);
+    H.line(R, [H.p(1, j, .23), H.p(2.05, j, 1.0)], 'blue', 2);
+  }
+  box(H, R, .96, 9.13, .92, .7, .38, .2, 'blue', .8);
+  for (let n = 0; n < 4; n++) oval(H, R, ...H.p(1.4, 9.45, .62 + n * .05), 13, 5, 'paper', 1);
   const [x, y] = H.p(1.52, 10.57, .86);
 }
 
@@ -141,6 +159,13 @@ export default function enrich(room) {
     ...room,
     under(H, R) {
       room.under.call(this, H, R);
+      for (const side of ['nw', 'ne']) {
+        for (const p of [.3, 5.1, 8.65, 11.75]) {
+          shape(H, R, wallRect(H, side, p - .17, p + .17, .1, 4.25, .16), 'paper', .65);
+          for (const q of [-.08, .08]) H.line(R, [wallPt(H, side, p + q, .42, .18), wallPt(H, side, p + q, 4.04, .18)], 'sun', 1);
+          for (const z of [.1, .33, 3.98, 4.18]) shape(H, R, wallRect(H, side, p - .28, p + .28, z, z + .13, .21), 'sun', .8);
+        }
+      }
       for (const inset of [.18, .32]) H.outline(R, H.tile(2 + inset, 4 + inset, 8.5 - inset * 2, 6.8 - inset * 2, .025), 'sun', .85, { tone: .65 });
       const [mx, my] = H.p(6.3, 7.3, .035);
       for (const r of [59, 64, 79]) H.outline(R, ell(mx, my, r, r * .48), 'sun', 1, { tone: .55 });

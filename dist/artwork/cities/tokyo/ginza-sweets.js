@@ -140,18 +140,29 @@ function sweetHallDetails(H, R) {
 }
 
 const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza department-store food hall', { floor: 'paper', tone: 1, wall: 'paper', wallTone: 1, pattern: 'tiles', accent: 'sun', height: 4.4, head: 20 }, (H, R) => {
+  for (const j of [.2, 6.27, 11.57]) box(H, R, .09, j, .29, .18, 0, 4.21, 'sun', .3);
+  box(H, R, .07, .12, .36, 11.69, 3.84, .37, 'teal', .26);
+  box(H, R, .07, .12, 11.57, .36, 3.84, .37, 'teal', .26);
+  for (let n = 0; n < 5; n++) {
+    shape(H, R, H.faceJ(.08, 6.62 + n * .94, .73, .18, 2.94), 'sun', .13);
+    H.line(R, [H.p(.12, 6.66 + n * .94, 2.9), H.p(.12, 7.28 + n * .94, 2.9)], 'sun', 1);
+  }
   for (const i of [.5, 5.6, 11.35]) box(H, R, i, .15, .27, .4, 0, 4.22, 'sun', .23);
   for (const z of [1.9, 2.85]) {
     box(H, R, .75, .35, 4.5, .74, z, .08, 'sun', .4);
     for (let k = 0; k < 3; k++) gift(H, R, 1 + k * 1.33, .49, z + .1, .93, .5, k % 2 ? 'coral' : 'paper');
   }
+  box(H, R, 6.12, .08, .18, .31, .02, 3.71, 'sun', .4);
+  box(H, R, 10.91, .08, .18, .31, .02, 3.71, 'sun', .4);
+  box(H, R, 6.12, .08, 4.97, .31, 3.7, .14, 'sun', .4);
   const opening = wallRect(H, 'ne', 6.35, 10.85, .1, 3.65);
   shape(H, R, opening, 'blue', .22);
   H.clip(opening, () => {
+    shape(H, R, [H.p(6.55, .01, .2), H.p(7.6, .01, .2), H.p(10.9, .01, 2.42), H.p(9.85, .01, 2.42)], 'teal', .28);
     for (let k = 0; k < 12; k++) {
-      const i = 6.55 + k * .32, z = .2 + k * .2;
-      H.line(R, [H.p(i, -.03, z), H.p(i + 1.05, -.03, z)], 'paper', 2);
-      H.line(R, [H.p(i, -.03, z), H.p(i, -.03, z + .18)], 'blue', .6);
+      const i = 6.55 + k * .28, z = .2 + k * .19;
+      shape(H, R, H.faceI(i, .035, 1.05, z, z + .13), 'paper', 1, .6);
+      H.line(R, [H.p(i, .05, z + .13), H.p(i + 1.05, .05, z + .13)], 'sun', 1.1);
     }
     H.line(R, [H.p(6.25, -.04, .72), H.p(10.2, -.04, 3.17)], 'blue', 5);
     H.line(R, [H.p(7.05, -.04, .27), H.p(11.05, -.04, 2.73)], 'blue', 5);
@@ -161,7 +172,22 @@ const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza depar
     H.line(R, [H.p(.15, j, 4.05), H.p(.15, j + 2.6, 4.05)], 'sun', 4, { tone: .55 });
     H.line(R, [H.p(.15, j, 4.08), H.p(.15, j + 2.6, 4.08)], 'paper', 2);
   }
-  table(H, R, 1.45, 2.2, 5.25, 1.55, 1.1, 'paper');
+  box(H, R, 1.49, 2.24, 5.15, 1.45, .12, .94, 'teal', .36);
+  for (let n = 0; n < 3; n++) {
+    shape(H, R, H.faceI(1.63 + n * 1.58, 3.72, 1.4, .21, .65), 'paper', 1);
+    H.line(R, [H.p(2.05 + n * 1.58, 3.74, .56), H.p(2.59 + n * 1.58, 3.74, .56)], 'sun', 2);
+    box(H, R, 1.65 + n * 1.59, 2.58, 1.39, 1.1, .77, .19, 'sun', .35);
+    for (let q = 0; q < 3; q++) H.line(R, [H.p(1.75 + n * 1.59, 3.71, .81 + q * .04), H.p(2.9 + n * 1.59, 3.71, .81 + q * .04)], 'paper', .9);
+  }
+  box(H, R, 1.45, 2.2, 5.25, 1.55, 1.1, .12, 'paper', 1);
+  for (const i of [1.6, 3.1]) box(H, R, i, 2.26, .09, .09, 1.23, .69, 'blue', .55);
+  H.line(R, [H.p(1.66, 2.3, 1.85), H.p(3.17, 2.3, 1.85)], 'sun', 2.3);
+  for (let n = 0; n < 3; n++) {
+    const [x, y] = H.p(1.93 + n * .43, 2.3, 1.85);
+    oval(H, R, x, y, 7, 9, n % 2 ? 'coral' : 'paper', .7);
+    oval(H, R, x, y, 2, 3, 'blue', .7);
+    stroke(H, R, [[x, y + 8], [x + 3, y + 18], [x + 14, y + 23]], 'coral', 1.3);
+  }
   for (let k = 0; k < 3; k++) {
     const [x, y] = H.p(1.85 + k * .57, 2.6, 1.24);
     oval(H, R, x, y, 7, 4, k === 1 ? 'coral' : 'sun', .65);
@@ -171,7 +197,16 @@ const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza depar
   H.line(R, [H.p(5.23, 3.3, 1.24), H.p(6.15, 3.18, 1.24)], 'sun', 3);
   gift(H, R, 1.62, 3.02, 1.24, .52, .46, 'paper');
   for (const [i, j, w, d] of [[1.35, 5.15, 8.6, 1.5], [8.45, 2.35, 1.5, 2.8]]) {
-    box(H, R, i, j, w, d, 0, .92, 'paper', 1);
+    box(H, R, i + .07, j + .07, w - .14, d - .14, .05, .16, 'blue', .5);
+    box(H, R, i, j, w, d, .21, .71, 'paper', 1);
+    for (let n = .19; n < w - .2; n += 1.38) {
+      const ww = Math.min(1.13, w - n - .13);
+      shape(H, R, H.faceI(i + n, j + d + .012, ww, .34, .79), 'sun', .16);
+      H.line(R, [H.p(i + n + .07, j + d + .03, .39), H.p(i + n + ww - .07, j + d + .03, .39)], 'sun', .9);
+    }
+    box(H, R, i + .07, j + .04, w - .14, .15, 1.03, .35, 'blue', .5);
+    H.line(R, [H.p(i + .12, j + .17, 1.84), H.p(i + w - .12, j + .17, 1.84)], 'sun', 2);
+    H.glow(...H.p(i + w / 2, j + .63, 1.12), w * 15, 25, 'sun', .16);
     box(H, R, i, j, w, d, .92, .1, 'sun', .35);
     H.line(R, [H.p(i, j + d, .16), H.p(i + w, j + d, .16)], 'sun', 2);
     for (const di of [0, w]) for (const dj of [0, d]) H.line(R, [H.p(i + di, j + dj, 1.02), H.p(i + di, j + dj, 1.91)], 'sun', 1.2);
@@ -215,13 +250,15 @@ const room = world('tokyo-ginza-sweets', 'A box for someone else — Ginza depar
   const u = cycle(t, 18), fold = Math.min(1, u / .32), present = Math.sin(Math.PI * Math.min(1, Math.max(0, (u - .55) / .4)));
   H.at(4.15, 4.1, 0, HH => {
     const [x, y] = HH.p(4.15, 4.1);
-    FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: present > .15 ? 'hold' : 'water', phase: t / 9, scale: 1.23, face: 'se', opts: { shirt: ['paper', 1], apron: ['blue', .6], hairStyle: 'bun', sleeve: ['paper', 1] } });
     const i = 3.55, j = 3.17 + present * 1.9, z = 1.24 + present * .82;
     if (present < .05) {
       const w = 1.3 - fold * .6;
       shape(HH, R, HH.tile(i - w * .45, j - w * .45, 1.2 + w, .86 + w, 1.245), 'paper', 1, .6);
     }
+    const drawMaker = () => FIGURES.draw(HH, R, { who: 'adult', x, y, t, clip: present > .15 ? 'hold' : 'water', phase: t / 9, scale: 1.23, face: 'se', opts: { shirt: ['paper', 1], apron: ['blue', .6], hairStyle: 'bun', sleeve: ['paper', 1] } });
+    if (present >= .05) drawMaker();
     gift(HH, R, i, j, z, 1.2, .86, 'paper', u > .34);
+    if (present < .05) drawMaker();
     if (u > .3 && u < .5) {
       const [bx, by] = HH.p(i + .6, j + .43, z + .36), length = (u - .3) / .2 * 20;
       HH.line(R, [[bx - length, by], [bx, by - 3], [bx + length, by]], 'coral', 1.6);

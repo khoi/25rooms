@@ -101,6 +101,13 @@ function marketStations(H, R) {
   line(H, R, [[ix + 10, iy + 4], [ix + 24, iy - 4]], 2.5, 'blue');
   for (let k = 0; k < 3; k++) box(H, R, 3.3 + k * 1.0, 7.5, .85, .72, .04, .4, k % 2 ? 'teal' : 'sun', .55);
   table(H, R, 1.65, 9.5, 2.4, 1.15, .73, 'teal');
+  box(H, R, 1.72, 9.58, 2.2, .96, .24, .08, 'paper', 1);
+  for (const i of [1.77, 3.66]) line(H, R, [H.p(i, 9.61, .31), H.p(i, 10.51, .7)], 1.4);
+  for (let k = 0; k < 4; k++) box(H, R, 1.84, 9.75, 1.35, .6, .33 + k * .055, .04, 'paper', 1);
+  for (const j of [9.72, 10.14]) {
+    box(H, R, 3.4, j, .42, .29, .33, .25, 'coral', .6);
+    line(H, R, [H.p(3.42, j + .3, .44), H.p(3.8, j + .3, .44)], 1, 'paper');
+  }
   for (let k = 0; k < 5; k++) box(H, R, 1.85, 9.65, .95, .7, .87 + k * .07, .06, 'paper', 1);
   shape(H, R, H.tile(3.05, 9.65, .75, .72, .88), 'sun', .4, .6);
   for (const i of [3.15, 3.48]) smallFish(H, R, i, 10, .98, 'coral', .55);
@@ -121,6 +128,16 @@ function marketStations(H, R) {
 export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
   floor: 'blue', tone: .2, wall: 'paper', wallTone: .82, height: 3.8, head: 20,
 }, (H, R) => {
+  for (const i of [.18, 5.8, 11.55]) {
+    box(H, R, i, .05, .26, .38, 0, 3.78, 'teal', .68);
+    box(H, R, i - .06, .02, .38, .48, .08, .2, 'blue', .7);
+  }
+  box(H, R, .12, .03, 11.6, .44, 3.48, .3, 'blue', .6);
+  box(H, R, .04, .15, .38, 11.5, 3.49, .24, 'teal', .7);
+  for (let k = 0; k < 6; k++) {
+    box(H, R, .12, .6 + k * 1.85, .54, .22, 3.16, .24, 'paper', 1);
+    line(H, R, [H.p(.62, .71 + k * 1.85, 3.2), H.p(1.2, .71 + k * 1.85, 3.53)], 2);
+  }
   for (const side of ['nw', 'ne']) {
     for (let p = 0; p < 12; p += 1.25) line(H, R, [wallPt(H, side, p, .25, .02), wallPt(H, side, p, 3.8, .02)], .75, 'blue', .42);
     shape(H, R, wallRect(H, side, .05, 11.95, .15, .65), 'blue', .5, .7);
@@ -142,6 +159,18 @@ export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
       line(H, R, [H.p(i + .1, j + .12, 3.6), H.p(i + 2.6, j + .12, 3.6)], 2.2, 'paper');
     }
   }
+  box(H, R, .3, 3.18, 1.1, 4.05, 2.97, .43, 'paper', 1);
+  for (const j of [3.94, 5.15, 6.36]) {
+    const [fx, fy] = H.p(1.41, j, 3.19);
+    oval(H, R, fx, fy, 13, 17, 'blue', .85);
+    oval(H, R, fx, fy, 10, 14, 'teal', .55);
+    for (let k = 0; k < 8; k++) {
+      const a = k * Math.PI / 4;
+      line(H, R, [[fx, fy], [fx + Math.cos(a) * 11, fy + Math.sin(a) * 15]], .8, 'paper');
+    }
+    oval(H, R, fx, fy, 3, 4, 'paper', 1);
+  }
+  line(H, R, [H.p(.5, 7.2, 3), H.p(.5, 7.35, 2.7), H.p(.5, 7.35, .14), H.p(.5, 8.3, .14)], 2.5, 'teal');
   const [cx, cy] = wallPt(H, 'nw', 2.35, 2.8, .09);
   oval(H, R, cx, cy, 16, 16, 'paper', 1);
   for (let k = 0; k < 12; k++) {
@@ -153,7 +182,16 @@ export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
     tub(H, R, .5, 3.45 + k * 1.08, 0, k === 2);
     if (k !== 2) tub(H, R, .5, 3.45 + k * 1.08, .5);
   }
-  table(H, R, .7, 7.1, 2.3, 1.45, .9, 'paper');
+  for (const i of [.74, 2.77]) for (const j of [7.14, 8.35]) {
+    box(H, R, i, j, .13, .13, .08, .82, 'teal', .8);
+    oval(H, R, ...H.p(i + .06, j + .06, .07), 4, 3, 'blue', .9);
+  }
+  box(H, R, .7, 7.1, 2.3, 1.45, .86, .17, 'paper', 1);
+  box(H, R, .83, 7.23, 2.06, 1.15, .25, .07, 'blue', .55);
+  for (const i of [.9, 2.5]) line(H, R, [H.p(i, 7.25, .28), H.p(i, 8.32, .83)], 1.4, 'teal');
+  box(H, R, 1.1, 7.55, .9, .56, .33, .3, 'sun', .5);
+  line(H, R, [H.p(1.55, 7.55, .64), H.p(1.55, 8.11, .64)], 2, 'paper');
+  box(H, R, .73, 7.08, 2.25, .08, 1.02, .16, 'teal', .5);
   box(H, R, .9, 7.25, 1.5, .9, 1.04, .17, 'blue', .5);
   box(H, R, .95, 7.3, 1.4, .8, 1.22, .07, 'paper', 1);
   line(H, R, [H.p(2.5, 7.2, 1), H.p(2.5, 7.2, 1.85)], 2.6);
@@ -202,6 +240,18 @@ export default world('tokyo-toyosu-dawn', 'Toyosu · Before the first bid', {
   const [gx, gy] = H.p(1.9, 8.2, 1.08);
   for (let k = 0; k < 4; k++) line(H, R, [[gx + k * 2.5, gy], [gx + k * 2.5 - 3, gy - 7]], 2.5, 'sun', .6);
   marketStations(H, R);
+  box(H, R, .35, 10.86, 1.65, .92, .15, .08, 'paper', 1);
+  for (const i of [.4, 1.82]) box(H, R, i, 10.9, .12, .75, .03, .13, 'teal', .7);
+  shape(H, R, H.tile(.48, 11, 1.37, .63, .24), 'blue', .7);
+  shape(H, R, H.tile(.58, 11.08, 1.17, .45, .25), 'teal', .35);
+  stroke(H, R, [H.p(.51, 11.04, .25), H.p(.51, 11.04, 1.07), H.p(.93, 11.04, 1.12), H.p(.93, 11.28, .84)], 'paper', 3);
+  box(H, R, 1.48, 10.94, .26, .19, .26, .2, 'sun', .65);
+  line(H, R, [H.p(1.62, 10.97, .49), H.p(1.62, 10.97, .62), H.p(1.78, 10.97, .62)], 1.4);
+  for (const i of [3.6, 6.3, 8.8]) {
+    const [x, y] = H.p(i, 6.1, .025);
+    line(H, R, [[x - 7, y], [x + 7, y + 3]], 1.4, 'paper', .65);
+  }
+
 }, (H, R, t) => {
   const u = cycle(t, 14), inspect = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .12) / .62))) ** 2;
   H.at(5.35, 2.85, 0, HH => {

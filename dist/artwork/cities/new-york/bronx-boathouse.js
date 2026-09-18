@@ -142,6 +142,14 @@ const room = world(
     });
     for (const i of [8.37, 11.63]) timber(H, R, i, 0.2, 0.15, 0.38, 0.03, 3.72, 'sun');
     timber(H, R, 8.35, 0.2, 3.46, 0.38, 3.65, 0.17, 'sun');
+    bentTube(H, R, [[0.18, 0.3, 3.78], [8.1, 0.3, 3.78], [8.1, 0.3, 2.85]], 1.8, 'teal');
+    for (const i of [2.8, 5.2, 7.6]) metal(H, R, i, 0.28, 0.09, 0.16, 3.7, 0.17, 'sun');
+    surface(H, R, H.faceI(8.0, 0.31, 0.34, 2.4, 2.93), 'teal', 0.7);
+    H.dot(...H.p(8.17, 0.32, 2.68), 2, 'coral');
+    const [ax, ay] = H.p(4.74, 0.31, 3.46);
+    surface(H, R, ell(ax, ay, 15, 15), 'teal', 0.6);
+    H.outline(R, ell(ax, ay, 12, 12), 'paper', 1);
+    for (let n = -2; n <= 2; n++) H.line(R, [[ax - 10, ay + n * 4], [ax + 10, ay + n * 4]], 'sun', 1);
     for (const i of [1.0, 4.44, 7.88]) {
       timber(H, R, i, 0.56, 0.16, 3.76, 3.73, 0.2, 'sun');
       for (const j of [0.61, 3.54])
@@ -173,6 +181,23 @@ const room = world(
       }
       canoe(H, R, 0.65, 1.83, z, z === 1.98 ? 'coral' : 'teal');
     }
+    for (const i of [1.83, 6.86]) {
+      for (const z of [0.88, 1.98, 3.08]) {
+        bentTube(H, R, [[i, 3.04, z - 0.5], [i, 2.14, z - 0.13]], 2.6, 'teal');
+        for (const j of [1.07, 3.04]) {
+          metal(H, R, i - 0.16, j - 0.16, 0.43, 0.43, 0.05, 0.09, 'blue');
+          H.dot(...H.p(i + 0.04, j + 0.08, z), 2, 'sun');
+        }
+      }
+    }
+    for (const z of [0.9, 2.0, 3.1]) {
+      const P = (i, h) => H.p(i, 2.05, z + h);
+      H.line(R, [P(0.96, 0.1), P(1.12, 0.24), P(1.3, 0.1)], 'sun', 1.5);
+      surface(H, R, [P(7.46, 0.02), P(7.88, 0.02), P(7.72, 0.18)], 'sun', 0.6);
+    }
+    surface(H, R, H.faceJ(0.18, 5.13, 3.45, 2.87, 3.56), 'teal', 0.75);
+    H.line(R, [H.p(0.2, 5.36, 3.03), H.p(0.2, 6.04, 3.22), H.p(0.2, 6.69, 3.06), H.p(0.2, 7.37, 3.4), H.p(0.2, 8.36, 3.26)], 'paper', 3.2);
+    for (const j of [5.44, 6.61, 7.92]) H.dot(...H.p(0.21, j, 3.22), 3, 'coral');
     for (const j of [4.96, 9.42]) metal(H, R, 0.55, j, 0.12, 0.12, 0.03, 2.78, 'teal');
     bentTube(
       H,
@@ -207,11 +232,34 @@ const room = world(
     for (let n = 0; n < 5; n++) vest(H, R, ...H.p(8.79, 3.79 + n * 0.65, 2.5), n % 2 ? 'sun' : 'coral', n % 2 ? 0.035 : -0.04);
     surface(H, R, H.tile(8.47, 4.59, 2.76, 2.21, 0.036), 'teal', 0.24);
     for (let n = 0; n < 13; n++) H.line(R, [H.p(8.69 + n * 0.17, 6.52, 0.05), H.p(8.69 + n * 0.17, 6.79, 0.05)], 'blue', 0.9);
+    timber(H, R, 6.98, 9.25, 3.75, 1.45, 0.55, 0.08, 'teal');
+    foldedCloth(H, R, 9.62, 9.45, 0.88, 0.74, 0.66, 'paper', 'coral');
     benchFrame(H, R, 6.81, 9.11, 4.1, 1.81, 1.0, 'sun');
     shallowTray(H, R, 7.03, 9.29, 1.95, 1.26, 1.04, 'teal');
     for (let n = 0; n < 5; n++) vessel(H, R, 7.29 + n * 0.34, 9.88, 1.12, 3.5, 8, 'paper');
     coiledLine(H, R, 10.15, 9.99, 1.04, 13, 'sun');
     slattedCrate(H, R, 7.19, 9.48, 2.29, 1.21, 0.04, 0.52, 'sun');
+    shallowTray(H, R, 7.18, 10.28, 1.62, 0.5, 1.07, 'sun');
+    for (let n = 0; n < 3; n++) {
+      const [x, y] = H.p(7.47 + n * 0.5, 10.51, 1.19);
+      H.line(R, [[x - 4, y - 5], [x - 6, y + 2], [x + 1, y + 6], [x + 5, y - 1], [x + 2, y - 5]], n === 1 ? 'coral' : 'teal', 2);
+    }
+    for (const j of [4.9, 5.8, 6.7]) {
+      const [x, y] = H.p(8.8, j, 2.94);
+      H.line(R, [[x, y], [x, y + 7], [x + 5, y + 11], [x + 8, y + 6]], 'blue', 1.2);
+    }
+    shallowTray(H, R, 1.02, 10.2, 3.09, 1.2, 0.05, 'teal');
+    for (const i of [1.42, 2.18]) {
+      const [x, y] = H.p(i, 10.76, 0.12);
+      surface(H, R, [[x - 8, y], [x + 12, y], [x + 13, y - 7], [x + 3, y - 10], [x + 3, y - 28], [x - 7, y - 28]], 'blue', 0.68);
+      H.line(R, [[x - 7, y - 25], [x + 2, y - 25]], 'sun', 2);
+    }
+    vessel(H, R, 3.28, 10.76, 0.16, 8, 14, 'coral');
+    bentTube(H, R, [[9.88, 0.39, 0.12], [9.88, 0.39, 1.51], [10.29, 0.39, 1.51], [10.29, 1.36, 1.51]], 2.2, 'teal');
+    const [vx, vy] = H.p(9.88, 0.4, 1.12);
+    H.outline(R, ell(vx, vy, 6, 6), 'coral', 1.8);
+    bentTube(H, R, [[10.4, 2.04, 0.85], [10.4, 2.04, 0.43], [10.75, 2.04, 0.32], [10.75, 0.42, 0.32]], 3, 'teal');
+    coiledLine(H, R, 11.29, 2.93, 0.07, 15, 'teal');
     washBasin(H, R, 9.6, 1.32, 1.59, 1.41, 0.85, 'paper');
     for (const i of [9.65, 11.05]) for (const j of [1.39, 2.54]) metal(H, R, i, j, 0.1, 0.1, 0.03, 0.82, 'teal');
     pendant(H, R, 6.4, 5.04, 4.05, 3.12, 'paper', 1.02);

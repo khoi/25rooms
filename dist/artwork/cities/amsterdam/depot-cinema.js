@@ -2,7 +2,7 @@ import { world, box, shape, oval, stroke, actor, wallPt, cycle, mix } from '../.
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, bentTube, drape, benchFrame, vessel } from '../materials.js';
 import { masonry, cabinetFrame } from '../structure.js';
-import { wallRack, recessedFrame, panelFront, taskLight, floorShadow } from '../joinery.js';
+import { wallRack, recessedFrame, panelFront, taskLight, floorShadow, caster } from '../joinery.js';
 
 const base={...FIGURES.clips.idle.keys[0][1]},volunteerPose={...base};
 FIGURES.clips['amsterdam-depot-volunteer']={dur:24,keys:[[0,volunteerPose],[1,volunteerPose]]};
@@ -21,6 +21,16 @@ function arch(H,R){
  });
  shape(H,R,inner,'blue',.68);
  shape(H,R,reveal,'paper',.88);
+ const AP=(x,z)=>H.p(x,.51,z);
+ shape(H,R,[AP(2,2.95),AP(6.86,2.95),AP(6.55,3.5),AP(2.28,3.5)],'teal',.33);
+ H.line(R,[AP(2.2,3.12),AP(6.7,3.12)],'sun',2.1);
+ for(let n=0;n<5;n++){
+  const x=2.28+n*.83;
+  shape(H,R,[AP(x,2.98),AP(x+.53,2.98),AP(x+.44,3.32),AP(x+.11,3.32)],'blue',.68);
+  H.line(R,[AP(x+.1,3.08),AP(x+.45,3.08)],'paper',1);
+ }
+ H.line(R,[AP(4.4,3.48),AP(4.4,3.88)],'blue',2.2);
+ oval(H,R,...AP(4.4,3.89),8,5,'sun',.7);
  for(let n=0;n<=18;n++){const a=n*Math.PI/18;H.line(R,[P(4.4+2.8*Math.cos(a),2.88+1.24*Math.sin(a),.2),P(4.4+3.34*Math.cos(a),2.88+1.61*Math.sin(a),.2)],'paper',1.25)}
  for(const x of [1.13,7.45]) metal(H,R,x,.1,.28,.55,2.75,.18,'blue');
  metal(H,R,1.55,.14,5.7,.24,2.7,.14,'blue');
@@ -37,12 +47,33 @@ function projector(H,R,i,j,z){
  metal(H,R,i,j,.85,.65,z,.45,'teal');
  for(const x of [i+.1,i+.68]) {const [px,py]=H.p(x,j+.2,z+.77);oval(H,R,px,py,11,10,'paper',1);for(let n=0;n<5;n++){let a=n*Math.PI*2/5;oval(H,R,px+Math.cos(a)*6,py+Math.sin(a)*5.5,2.1,2,'blue',.65)}}
  const a=H.p(i+.82,j+.44,z+.25);oval(H,R,...a,7,5,'blue',.8);oval(H,R,a[0]+3,a[1]+1,4,3,'paper',1);
+ const end=H.p(i+.87,j+.45,z+.24);
+ stroke(H,R,[[end[0]-2,end[1]+7],[end[0]+2,end[1]+18],[end[0]+15,end[1]+18]],'blue',.7);
+ oval(H,R,end[0]+16,end[1]+18,5,2.4,'blue',.75);
+ for(let n=0;n<4;n++)H.line(R,[H.p(i+.15+n*.12,j+.67,z+.08),H.p(i+.15+n*.12,j+.67,z+.26)],'paper',.7);
+ H.line(R,[H.p(i+.17,j+.2,z+.76),H.p(i+.35,j+.51,z+.38),H.p(i+.67,j+.2,z+.76)],'blue',1.4);
  for(const x of [i+.1,i+.7])H.line(R,[H.p(x,j+.15,z),H.p(x-.07,j+.16,z-.18)],'blue',1.6);
 }
 const room=world('amsterdam-depot-cinema','The arch keeps the light',{floor:'paper',tone:.3,wall:'paper',wallTone:.55,height:3.55,head:65},(H,R)=>{
  for(let x=0;x<12;x+=2)for(let j=0;j<12;j+=1.5)H.outline(R,H.tile(x,j,2,1.5,.01),'blue',.65,{tone:.2});
  masonry(H,R,'nw',.1,11.75,0,3.55,'paper',.58);
  arch(H,R);
+ const VP=(u,z)=>wallPt(H,'nw',6.02+u,z,-.17);
+ shape(H,R,[VP(0,2.12),VP(2.69,2.12),VP(2.69,3.28),VP(0,3.28)],'blue',.64);
+ for(let n=0;n<7;n++){
+  const z=2.21+n*.14;
+  shape(H,R,[VP(.14,z),VP(2.55,z),VP(2.48,z+.085),VP(.19,z+.085)],'teal',.42);
+  H.line(R,[VP(.16,z+.087),VP(2.5,z+.087)],'paper',.8);
+ }
+ for(const j of [6.03,8.62])H.dot(...wallPt(H,'nw',j,3.26,-.2),1.7,'sun');
+ const FP=(u,z)=>wallPt(H,'nw',9.2+u,z,-.19);
+ shape(H,R,[FP(0,2.55),FP(1.95,2.55),FP(1.95,3.28),FP(0,3.28)],'paper',1);
+ shape(H,R,[FP(.12,2.65),FP(.83,2.65),FP(.83,3.16),FP(.12,3.16)],'teal',.4);
+ shape(H,R,[FP(1.02,2.67),FP(1.78,2.67),FP(1.68,3.12),FP(1.15,3.02)],'coral',.4);
+ H.dot(...FP(.52,2.97),5,'sun');
+ metal(H,R,.16,5.85,.3,.72,2.86,.36,'blue');
+ for(const z of [2.95,3.1])H.dot(...H.p(.48,6.15,z),2,'sun');
+ bentTube(H,R,[[.23,6.18,2.84],[.23,6.18,1.57],[.24,8.12,1.57]],1.7,'teal');
  for(const x of [.4,8.1,11.4]){
   metal(H,R,x,.12,.14,.24,0,3.6,'teal');
   H.line(R,[H.p(x,.2,3.5),H.p(x+1.5,.2,3.8),H.p(Math.min(11.8,x+3),.2,3.5)],'blue',2.8);
@@ -55,7 +86,16 @@ const room=world('amsterdam-depot-cinema','The arch keeps the light',{floor:'pap
   if(n===0){projector(H,R,i+.42,j+.22,z+.84);film(H,R,i+.26,j+.91,z+.05,1.5,.55)}
   else {film(H,R,i+.12,j+.9,z+1.02,1.78,.77);box(H,R,i+.26,j+.35,.9,.52,z,.52,'paper',1);shape(H,R,H.faceI(i+.32,j+.88,.77,z+.11,z+.43),'blue',.6);for(let n=0;n<3;n++)box(H,R,i+.34+n*.23,j+.86,.17,.17,z+.05,.13,'coral',.6)}
  });
+ for(const x of [2.12,6.8])for(const z of [.43,2.25]){
+  metal(H,R,x,2.3,.15,.1,z,.16,'blue');
+  H.dot(...H.p(x+.08,2.42,z+.08),1.6,'sun');
+ }
+ for(const x of [2.27,4.74]){
+  metal(H,R,x,1.96,1.64,.18,.37,.045,'blue');
+  for(let n=0;n<7;n++)H.line(R,[H.p(x+.1+n*.21,2.15,.38),H.p(x+.1+n*.21,2.15,.46)],'paper',.65);
+ }
  metal(H,R,2,1.07,5,1.26,.02,.15,'blue');
+ shape(H,R,H.faceI(2.4,2.35,4.2,.05,.14),'teal',.4);
  const fixed=[H.p(4.51,2.33,.4),H.p(6.88,2.33,.4),H.p(6.88,2.33,2.48),H.p(4.51,2.33,2.48)];
  H.tint(fixed,'teal',.075);H.outline(R,fixed,'blue',2.1);
  H.line(R,[H.p(5.2,2.35,.48),H.p(5.74,2.35,2.35)],'paper',2);
@@ -77,16 +117,57 @@ const room=world('amsterdam-depot-cinema','The arch keeps the light',{floor:'pap
   if(n===0)for(let k=0;k<3;k++){let u=.45+k*1.2;stroke(H,R,[P(u,z+.08),P(u-.2,z+.34),P(u,z+.57),P(u+.3,z+.34),P(u,z+.08)],'blue',2)}
   else for(let k=0;k<3;k++)shape(H,R,[P(.28+k*1.27,z+.04),P(1.22+k*1.27,z+.04),P(1.22+k*1.27,z+.49),P(.28+k*1.27,z+.49)],['paper','sun','coral'][k],.6);
  });
+ for(const j of [7.79,9.75]){
+   metal(H,R,.56,j,.1,.1,.66,.97,'teal');
+   metal(H,R,2.35,j,.1,.1,.65,.38,'teal');
+ }
+ for(let n=0;n<5;n++)timber(H,R,.5,7.8+n*.43,.12,.31,.86,.68,'sun');
+ H.line(R,[H.p(.53,7.78,1.62),H.p(.53,9.89,1.62)],'blue',2.4);
  benchFrame(H,R,.45,7.65,2.2,2.5,.65,'sun');
  drape(H,R,.51,7.73,1.02,2.22,.68,.13,'teal');
  drape(H,R,1.53,7.73,1.02,2.22,.68,.13,'coral');
  H.line(R,[H.p(1.55,7.82,.7),H.p(1.55,9.8,.7)],'paper',1.1);
- box(H,R,.45,5.55,1.3,1.5,0,.76,'teal',.35);
+ cabinetFrame(H,R,.43,5.55,1.35,1.5,.02,.78,1,'teal',(i,j,w,d,z)=>{
+   for(let n=0;n<3;n++)drape(H,R,i+.02,j+.08,w-.04,d-.16,z+.14+n*.13,.06,n===1?'coral':'paper');
+ });
  drape(H,R,.47,5.57,1.26,1.46,.79,.18,'paper');
  H.line(R,[H.p(.45,7.18,.36),H.p(1.77,7.18,.36)],'blue',2.6);
+ const bag=H.p(1.24,8.89,.72);
+ shape(H,R,[[bag[0]-12,bag[1]],[bag[0]+13,bag[1]],[bag[0]+10,bag[1]-25],[bag[0]-9,bag[1]-26]],'paper',1);
+ stroke(H,R,[[bag[0]-7,bag[1]-25],[bag[0]-6,bag[1]-36],[bag[0]+6,bag[1]-36],[bag[0]+8,bag[1]-25]],'blue',1.3);
+ H.line(R,[[bag[0]-7,bag[1]-10],[bag[0]+8,bag[1]-10]],'coral',2.2);
+ const cane=H.p(.74,10.87,.12);
+ stroke(H,R,[[cane[0],cane[1]],[cane[0]-5,cane[1]-48],[cane[0]-11,cane[1]-53],[cane[0]-16,cane[1]-48]],'blue',2.3);
+ H.line(R,[[cane[0]-4,cane[1]-37],[cane[0]+1,cane[1]-38]],'sun',3);
  const rail=H.p(.24,9.9,2.42);H.line(R,[rail,H.p(.24,11.5,2.42)],'blue',2.5);
  for(const j of [10.25,11.03])H.line(R,[H.p(.24,j,2.42),H.p(.48,j,2.26)],'sun',2);
+ for(const x of [3.0,4.52])for(const j of [7.65,8.86]){
+  metal(H,R,x,j,.08,.08,.08,1.36,'teal');caster(H,R,x,j,.09);
+ }
+ for(const z of [.29,1.4])metal(H,R,2.94,7.59,1.72,1.42,z,.09,'paper');
+ box(H,R,3.1,7.8,1.33,.92,.39,.52,'blue',.7);
+ for(const x of [3.23,4.11])metal(H,R,x,8.73,.13,.06,.55,.17,'sun');
+ H.line(R,[H.p(3.52,8.75,.66),H.p(3.52,8.75,.77),H.p(3.98,8.75,.77),H.p(3.98,8.75,.66)],'paper',1.5);
+ const reel=H.p(3.72,8.25,1.51);
+ oval(H,R,...reel,20,9,'teal',.57);oval(H,R,...reel,13,5.7,'paper',1);oval(H,R,...reel,4,1.9,'blue',.9);
+ for(let n=0;n<4;n++){const a=n*Math.PI/2;oval(H,R,reel[0]+Math.cos(a)*14,reel[1]+Math.sin(a)*5.7,3.6,1.8,'blue',.7)}
+ bentTube(H,R,[[3,7.66,1.52],[3,7.66,1.78],[4.54,7.66,1.78],[4.54,7.66,1.52]],2,'teal');
  benchFrame(H,R,7.7,8.55,3.2,1.7,.8,'sun');
+ for(const x of [7.86,10.5])timber(H,R,x,8.7,.18,1.42,.15,.15,'teal');
+ metal(H,R,7.93,8.65,1.52,1.27,.83,.12,'blue');
+ shape(H,R,H.tile(8.04,8.76,1.28,1.05,.96),'sun',.45);
+ const Q=(x,z)=>H.p(x,8.61,z);
+ shape(H,R,[Q(7.95,.93),Q(9.5,.93),Q(9.5,1.94),Q(7.95,1.94)],'teal',.61);
+ shape(H,R,[Q(8.09,1.06),Q(9.36,1.06),Q(9.36,1.8),Q(8.09,1.8)],'paper',1);
+ shape(H,R,[Q(8.2,1.14),Q(8.79,1.67),Q(9.21,1.27),Q(9.21,1.14)],'coral',.4);
+ H.dot(...Q(9.03,1.57),5,'sun');
+ timber(H,R,7.88,8.46,1.69,.43,1.94,.1,'sun');
+ for(const x of [7.98,9.42])H.line(R,[H.p(x,8.63,1.13),H.p(x,8.91,.84)],'blue',2);
+ const lr=H.p(10.17,9.14,.86);
+ oval(H,R,...lr,14,7,'blue',.68);oval(H,R,...lr,10,4.7,'paper',1);oval(H,R,...lr,6,2.8,'teal',.3);
+ stroke(H,R,[H.p(10.3,9.03,.9),H.p(10.58,8.86,1.03),H.p(10.69,9.2,1.03)],'blue',2);
+ shape(H,R,H.tile(9.76,9.54,.88,.29,.86),'blue',.75);
+ for(let n=0;n<5;n++)shape(H,R,H.tile(9.8+n*.16,9.6,.1,.17,.88),n%2?'coral':'paper',.8);
  for(let n=0;n<3;n++)film(H,R,7.92+n*.93,10.12,.84,.77,.55);
  oval(H,R,...H.p(8.55,9.19,.85),9,5,'blue',.7);
  oval(H,R,...H.p(8.55,9.19,.86),5,2.8,'paper',.9);

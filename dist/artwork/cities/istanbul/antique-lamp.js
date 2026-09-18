@@ -1,6 +1,6 @@
 import { world, shape, oval, stroke, box, wallPt, ell } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
-import { surface, timber, bentTube, drape, vessel, pendant, floorLight } from '../materials.js';
+import { surface, timber, metal, bentTube, drape, vessel, pendant, floorLight } from '../materials.js';
 import { masonry, cabinetFrame } from '../structure.js';
 import { cornice, recessedFrame, floorShadow } from '../joinery.js';
 
@@ -46,6 +46,12 @@ function lamp(H,R,bend){
   oval(H,R,tip[0],tip[1]+17,19,4.2,'blue',.28);
   H.line(R,[[tip[0]+12,tip[1]+12],[tip[0]+18,tip[1]+14]],'teal',1);
   for(let n=0;n<3;n++)H.line(R,[[tip[0]+13+n*2,tip[1]+10],[tip[0]+14+n*2,tip[1]+15]],'coral',.65);
+  oval(H,R,base[0],base[1]-5,10,3,'teal',.7);
+  for(const x of [-5,0,5])H.line(R,[[base[0]+x,base[1]-11],[base[0]+x*1.5,base[1]-2]],'sun',.65);
+  stroke(H,R,[[base[0]+8,base[1]-9],[base[0]+12,base[1]-21],[joint[0]+7,joint[1]+1],[tip[0]+5,tip[1]-3]],'coral',1.1);
+  H.line(R,[[joint[0]-7,joint[1]-3],[joint[0]+7,joint[1]+3]],'sun',.8);
+  oval(H,R,tip[0],tip[1]-11,8,2,'teal',.6);
+  H.line(R,[[tip[0]-20,tip[1]+17],[tip[0]+20,tip[1]+17]],'paper',1.1);
   H.line(R,[[joint[0]+5,joint[1]+1],[joint[0]+10,joint[1]+5]],'blue',1.6);
   return {base,joint,tip};
 }
@@ -79,6 +85,33 @@ const room=world('istanbul-antique-lamp','The shade turns amber',{wall:'paper',w
   drape(H,R,.2,5.35,.5,1.1,4.13,.36,'coral');
   bentTube(H,R,[[.45,6.95,4.13],[.45,6.95,4.6]],2,'blue');
   const tel=H.p(.45,6.95,4.61);H.line(R,[[tel[0]-17,tel[1]+6],[tel[0]+18,tel[1]-7]],'blue',7);H.line(R,[[tel[0]-16,tel[1]+4],[tel[0]+16,tel[1]-9]],'sun',3.8);
+  floorShadow(H,.13,1.49,1.55,6.47,.16);
+  for(const j of [1.61,4.52,7.51])timber(H,R,.25,j,1.18,.16,.07,1.2,'sun');
+  timber(H,R,.18,1.56,1.32,6.2,1.23,.17,'sun');
+  for(const j of [1.72,3.13,4.68,6.2]){
+    surface(H,R,H.faceJ(1.44,j,1.27,.27,1.1),'teal',.42,.8);
+    surface(H,R,H.faceJ(1.455,j+.1,1.06,.35,.98),'sun',.24,.6);
+    const p=H.p(1.48,j+.62,.76);oval(H,R,...p,3,3,'sun',.85);
+  }
+  for(const [j,ink]of [[1.99,'coral'],[3.48,'teal'],[5.12,'paper']]){
+    const p=H.p(.75,j,1.43);
+    shape(H,R,[[p[0]-13,p[1]],[p[0]+12,p[1]],[p[0]+11,p[1]-20],[p[0]+5,p[1]-26],[p[0]+5,p[1]-37],[p[0]-4,p[1]-37],[p[0]-5,p[1]-27],[p[0]-12,p[1]-20]],ink,.6,.8);
+    oval(H,R,p[0],p[1]-36,5,2,'blue',.7);H.line(R,[[p[0]-7,p[1]-20],[p[0]-8,p[1]-5]],'paper',1.2);
+    stroke(H,R,[[p[0]+11,p[1]-20],[p[0]+19,p[1]-22],[p[0]+19,p[1]-9],[p[0]+10,p[1]-7]],'sun',1.6);
+  }
+  const clock=H.p(.76,6.71,1.43);
+  shape(H,R,[[clock[0]-19,clock[1]],[clock[0]+20,clock[1]],[clock[0]+15,clock[1]-11],[clock[0]+15,clock[1]-34],[clock[0]+8,clock[1]-43],[clock[0]-8,clock[1]-43],[clock[0]-16,clock[1]-33],[clock[0]-15,clock[1]-11]],'sun',.7,.9);
+  oval(H,R,clock[0],clock[1]-28,10,11,'paper',1);H.line(R,[[clock[0],clock[1]-34],[clock[0],clock[1]-28],[clock[0]+5,clock[1]-26]],'blue',1);
+  surface(H,R,[[clock[0]-7,clock[1]-14],[clock[0]+7,clock[1]-14],[clock[0]+7,clock[1]-3],[clock[0]-7,clock[1]-3]],'blue',.7,.5);
+  H.line(R,[[clock[0],clock[1]-14],[clock[0],clock[1]-7]],'sun',1);oval(H,R,clock[0],clock[1]-6,4,3,'sun',.8);
+  for(const j of [2.77,5.79]){
+    const p=H.p(1.04,j,1.43);oval(H,R,...p,14,5,'sun',.7);oval(H,R,p[0],p[1]-3,12,4,'teal',.35);
+  }
+  for(const z of [1.65,2.6]){
+    const p=H.p(.09,.66,z);H.line(R,[[p[0]-12,p[1]],[p[0]+12,p[1]]],'sun',2);
+    H.line(R,[[p[0]-6,p[1]],[p[0]-10,p[1]+19]],'blue',1.3);H.line(R,[[p[0]+6,p[1]],[p[0]+10,p[1]+19]],'blue',1.3);
+    oval(H,R,p[0],p[1]+20,14,6,'coral',.6);
+  }
   cabinetFrame(H,R,8.1,.35,3.55,1.68,.12,3.69,3,'sun',(i,j,w,d,z,h,n)=>{
     for(const level of [.94,1.88,2.8])timber(H,R,i,j,w,d,level,.1,'sun');
     if(n===0){
@@ -103,7 +136,16 @@ const room=world('istanbul-antique-lamp','The shade turns amber',{wall:'paper',w
   floorShadow(H,3.18,4.0,4.93,2.35,.24);
   cabinetFrame(H,R,3.1,4.08,4.97,1.87,.13,.98,3,'sun',(i,j,w,d,z,h,n)=>{
     if(n===0){drawer(H,R,i,j+d,w,.26,.3,'teal');drawer(H,R,i,j+d,w,.63,.3,'sun','door');}
-    if(n===1){drawer(H,R,i,j+d,w,.26,.65,'sun','coral');}
+    if(n===1){
+      surface(H,R,H.faceI(i,j+d,w,.26,.94),'blue',.85,.7);
+      timber(H,R,i+.05,j+.21,w-.1,d+.55,.32,.08,'sun');
+      for(const x of [i+.05,i+w-.13])timber(H,R,x,j+.21,.08,d+.55,.39,.27,'sun');
+      for(let k=0;k<3;k++){
+        const p=H.p(i+.29+k*.36,j+d+.26,.42);oval(H,R,...p,5+k,3,'teal',.65);H.dot(...p,1.3,'sun');
+      }
+      drawer(H,R,i,j+d+.57,w,.28,.39,'sun','coral');
+      H.line(R,[H.p(i+.1,j+d+.58,.63),H.p(i+w-.1,j+d+.58,.63)],'paper',1.1);
+    }
     if(n===2){timber(H,R,i,j,w,d,.63,.08,'sun');drape(H,R,i+.12,j+.21,w-.2,d-.3,.3,.1,'paper');box(H,R,i+.12,j+.21,w-.2,d-.3,.72,.12,'coral',.45);}
   });
   timber(H,R,3.03,4,5.12,2.06,1.11,.13,'sun');
@@ -121,10 +163,30 @@ const room=world('istanbul-antique-lamp','The shade turns amber',{wall:'paper',w
   const plug=H.p(6.7,6.74,.035);shape(H,R,[[plug[0]-4,plug[1]-3],[plug[0]+3,plug[1]-3],[plug[0]+5,plug[1]+3],[plug[0]-3,plug[1]+3]],'blue',.8,.65);
   for(const x of [0,3])H.line(R,[[plug[0]+x,plug[1]-3],[plug[0]+x+2,plug[1]-7]],'sun',1);
   timber(H,R,1.65,9,2.55,1.32,.66,.15,'sun');
+  timber(H,R,1.78,9.12,2.21,.95,.25,.12,'teal');
+  for(let n=0;n<3;n++){
+    surface(H,R,H.faceI(1.79+n*.72,10.24,.68,.29,.59),'sun',.65,.7);
+    const p=H.p(2.12+n*.72,10.26,.44);oval(H,R,...p,3,2,'blue',.8);
+  }
+  for(const i of [1.75,4.03])timber(H,R,i,9.04,.08,1.2,.81,.13,'sun');
+  timber(H,R,1.75,9.02,2.35,.07,.81,.22,'teal');
+  for(const i of [2.71,3.43])timber(H,R,i,9.14,.06,1.03,.81,.07,'sun');
+  const handle=H.p(3.09,9.6,.85);stroke(H,R,[[handle[0]-8,handle[1]+2],[handle[0]-5,handle[1]-8],[handle[0]+6,handle[1]-11],[handle[0]+10,handle[1]-3]],'coral',3);
+  const knob=H.p(2.02,9.89,.85);oval(H,R,...knob,5,4,'sun',.8);H.dot(knob[0],knob[1]-3,2,'paper');
   for(const i of [1.79,3.93])for(const j of [9.1,10.07])timber(H,R,i,j,.13,.13,.05,.6,'teal');
   const sample=H.p(2.3,9.54,.84);oval(H,R,...sample,18,7,'paper',1);
   for(const [x,y]of[[-6,0],[7,-1]]){oval(H,R,sample[0]+x,sample[1]+y,3,2,'sun',.8);H.line(R,[[sample[0]+x+2,sample[1]+y],[sample[0]+x+9,sample[1]+y+2]],'blue',1);}
   const stopper=H.p(3.5,9.61,.85);oval(H,R,...stopper,4,3,'teal',.3);shape(H,R,[[stopper[0]-2,stopper[1]],[stopper[0]+3,stopper[1]],[stopper[0]+5,stopper[1]-10],[stopper[0]-3,stopper[1]-9]],'paper',1,.6);
+  for(const i of [9.62,11.03])for(const j of [4.29,6.31])timber(H,R,i,j,.15,.15,.03,.51,'teal');
+  timber(H,R,9.5,4.18,1.79,2.36,.52,.16,'sun');
+  for(let n=0;n<4;n++){
+    const j=4.37+n*.32;
+    frame(H,R,(u,h)=>H.p(9.65+u,j-h*.18,.71+h),1.38,1.57-n*.19,['coral','paper','sun','teal'][n]);
+    H.line(R,[H.p(9.8,j-.22,1.99-n*.19),H.p(10.2,j-.18,1.67-n*.1)],'paper',1);
+  }
+  surface(H,R,H.faceI(9.62,6.49,1.54,.14,.47),'blue',.6,.7);
+  drape(H,R,9.67,5.99,1.08,.5,.71,.49,'coral');
+  const spool=H.p(10.85,7.81,.04);oval(H,R,...spool,10,4,'sun',.7);H.line(R,[[spool[0]-6,spool[1]],[spool[0]-6,spool[1]-13]],'coral',5);H.line(R,[[spool[0]+6,spool[1]],[spool[0]+6,spool[1]-13]],'coral',5);oval(H,R,spool[0],spool[1]-14,10,4,'sun',.7);stroke(H,R,[[spool[0]+9,spool[1]-5],[spool[0]+17,spool[1]+1],[spool[0]+12,spool[1]+10]],'coral',.8);
   vessel(H,R,10.0,9.2,.12,26,20,'sun');drape(H,R,9.43,8.83,1.1,.84,.78,.44,'paper');
   for(let n=0;n<5;n++)H.outline(R,ell(...H.p(9.57,10.39,.08),11+n*1.7,4+n*.55),'coral',.8);
   const mag=H.p(10.58,10.1,.09);oval(H,R,...mag,8,5,'paper',1);H.line(R,[[mag[0]+6,mag[1]+3],[mag[0]+16,mag[1]+10]],'blue',3);

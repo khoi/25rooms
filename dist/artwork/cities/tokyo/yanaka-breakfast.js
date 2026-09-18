@@ -170,11 +170,28 @@ const room = world('tokyo-yanaka-breakfast', 'Yanaka · Breakfast with the door 
   for (const j of [.1, 5.2, 10.95]) box(H, R, .05, j, .18, .18, .03, 3.48, 'blue', .58);
   box(H, R, .02, .05, 11.83, .18, 3.33, .24, 'blue', .64);
   box(H, R, .05, .03, .18, 11.05, 3.33, .24, 'blue', .64);
+  for (const j of [1.04, 4.64]) box(H, R, .11, j, .24, .13, 1.03, 2.03, 'coral', .6);
+  for (const z of [1.04, 3.04]) box(H, R, .1, 1.03, .31, 3.74, z, .12, 'sun', .5);
+  box(H, R, .1, 1.03, .55, 3.74, .94, .12, 'coral', .52);
   const shoji = H.faceJ(.2, 1.1, 3.55, 1.15, 3.02);
   shape(H, R, shoji, 'paper', 1, .8);
   for (let j = 1.1; j <= 4.66; j += .45) line(H, R, [H.p(.23, j, 1.15), H.p(.23, j, 3.02)], 1.1, 'coral', .65);
   for (let z = 1.15; z < 3.03; z += .36) line(H, R, [H.p(.23, 1.1, z), H.p(.23, 4.65, z)], 1.1, 'coral', .65);
-  box(H, R, .55, .65, 6.2, 1.55, .33, .85, 'paper', .85);
+  box(H, R, .55, .65, 6.2, 1.55, .33, .15, 'blue', .6);
+  box(H, R, .6, .7, 6.05, 1.43, .48, .68, 'blue', .6);
+  for (const i of [.58, 2.05, 4.3, 5.6, 6.65]) box(H, R, i, .67, .09, 1.53, .46, .73, 'paper', 1);
+  for (const i of [.7, 4.41, 5.71]) {
+    shape(H, R, H.faceI(i, 2.23, i < 1 ? 1.22 : 1.12, .52, 1.1), 'paper', 1, .7);
+    shape(H, R, H.faceI(i + .1, 2.24, i < 1 ? 1.02 : .92, .62, .98), 'sun', .17, .5);
+  }
+  box(H, R, 2.2, .85, 1.91, 1.14, .52, .07, 'paper', 1);
+  for (const i of [2.35, 2.9]) {
+    const [x, y] = H.p(i, 1.55, .62);
+    oval(H, R, x, y - 10, 7, 11, 'teal', .45);
+    oval(H, R, x, y - 21, 5, 2, 'paper', 1);
+  }
+  stroke(H, R, [H.p(3.42, 1.38, 1.2), H.p(3.42, 1.38, .73), H.p(3.77, 1.38, .65), H.p(3.77, .79, .65)], 'paper', 3);
+  shape(H, R, [H.p(3.93, 2.2, .51), H.p(4.35, 2.75, .51), H.p(4.35, 2.75, 1.12), H.p(3.93, 2.2, 1.12)], 'paper', 1, .7);
   box(H, R, .48, .6, 6.35, 1.7, 1.19, .1, 'teal', .45);
   for (const i of [.55, 2.05, 3.55, 5.05]) {
     line(H, R, [H.p(i, 2.21, .4), H.p(i, 2.21, 1.13)], .7);
@@ -206,8 +223,15 @@ const room = world('tokyo-yanaka-breakfast', 'Yanaka · Breakfast with the door 
     oval(H, R, x, y - 10, 6, 11, 'paper', 1);
     line(H, R, [[x - 8, y], [x + 8, y]], .8, 'teal');
   }
-  box(H, R, 9.2, .5, 2.15, 1.65, .02, 2.9, 'blue', .45);
-  shape(H, R, H.faceI(9.35, 2.16, 1.77, .2, 2.77), 'paper', .86, .7);
+  box(H, R, 9.2, .5, 2.15, 1.65, .02, 2.9, 'blue', .7);
+  box(H, R, 9.16, .46, .16, 1.75, .03, 2.96, 'coral', .65);
+  box(H, R, 11.22, .46, .16, 1.75, .03, 2.96, 'coral', .65);
+  for (const z of [.17, 1.64, 2.92]) box(H, R, 9.2, .44, 2.14, 1.79, z, .12, 'sun', .5);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 9.46 + k * .53, .82, .43, 1.1, 1.79, .73, ['paper', 'teal', 'coral'][k], k ? .4 : 1);
+    line(H, R, [H.p(9.51 + k * .53, 1.93, 2.17), H.p(9.81 + k * .53, 1.93, 2.17)], 2, 'sun');
+  }
+  shape(H, R, H.faceI(10.66, 2.24, .51, .2, 2.77), 'paper', .86, .7);
   for (let k = 0; k < 4; k++) box(H, R, 9.46, .85, 1.55, 1.15, .35 + k * .21, .2, k % 2 ? 'teal' : 'paper', k % 2 ? .28 : 1);
   box(H, R, 9.52, 1.18, 1.37, .65, 1.27, .22, 'paper', 1);
   box(H, R, 10.61, 2.18, .68, .08, .16, 2.62, 'sun', .25);
@@ -249,6 +273,18 @@ const room = world('tokyo-yanaka-breakfast', 'Yanaka · Breakfast with the door 
   line(H, R, [[mx, my], [mx - 7, my - 72]], 1.8, 'coral');
   for (let k = 0; k < 8; k++) line(H, R, [[mx - 3, my - 15], [mx - 11 + k * 3, my + 3]], .8, 'sun');
   homeDetails(H, R);
+  box(H, R, .25, 6.48, .74, 1.96, 2.79, .12, 'coral', .6);
+  for (const j of [6.55, 8.3]) box(H, R, .25, j, .74, .1, 1.85, .94, 'coral', .6);
+  box(H, R, .34, 6.72, .48, .61, 2.04, .3, 'paper', 1);
+  line(H, R, [H.p(.85, 6.8, 2.15), H.p(.85, 7.22, 2.15)], 2, 'coral');
+  const [nx, ny] = H.p(6.68, 10.83, .35);
+  oval(H, R, nx, ny, 14, 6, 'paper', 1);
+  oval(H, R, nx, ny - 10, 8, 6, 'teal', .55);
+  for (let k = 0; k < 5; k++) line(H, R, [[nx - 7 + k * 3, ny - 13], [nx - 5 + k * 2, ny - 5]], .7, 'paper');
+  line(H, R, [[nx, ny - 13], [nx + 10, ny - 22], [nx + 21, ny - 13]], 1.2, 'coral');
+  const [qx, qy] = H.p(5.35, 10.78, .37);
+  shape(H, R, [[qx - 17, qy], [qx + 14, qy + 6], [qx + 11, qy - 14], [qx - 10, qy - 18]], 'sun', .35, .7);
+  for (let k = 0; k < 5; k++) line(H, R, [[qx - 7 + k * 4, qy - 12], [qx - 7 + k * 4, qy - 4]], .7, 'teal');
   table(H, R);
 }, (H, R, t) => {
   const u = cycle(t, 12), pour = Math.sin(Math.PI * Math.max(0, Math.min(1, (u - .12) / .47))) ** 2;

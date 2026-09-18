@@ -87,6 +87,15 @@ export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { w
   shape(H, R, H.faceJ(.1, .1, 9.75, 0, 2.85), 'teal', .24);
   for (let j = .2; j < 9.8; j += .55) H.line(R, [H.p(.12, j, .05), H.p(.12, j, 2.8)], 'blue', .6, { tone: .34 });
   for (let z = .15; z < 2.85; z += .45) H.line(R, [H.p(.12, .1, z), H.p(.12, 9.82, z)], 'blue', .6, { tone: .34 });
+  for (const i of [.18, 2.42, 11.64]) box(H, R, i, .1, .18, .21, 1.88, 2.59, 'teal', .42);
+  box(H, R, .11, .13, 11.73, .24, 4.38, .16, 'blue', .6);
+  for (let k = 0; k < 4; k++) {
+    const j = .39 + k * 2.22;
+    shape(H, R, H.faceJ(.14, j, 1.86, 2.02, 2.76), 'blue', .55);
+    shape(H, R, H.faceJ(.19, j + .1, 1.66, 2.13, 2.66), 'paper', 1);
+    for (const off of [.64, 1.23]) H.line(R, [H.p(.22, j + off, 2.1), H.p(.22, j + off, 2.68)], 'teal', 1.5);
+    box(H, R, .12, j - .04, .31, 1.95, 1.97, .1, 'paper', 1);
+  }
   const mural = H.faceI(2.5, .13, 9.1, 1.92, 4.32);
   shape(H, R, mural, 'teal', .23);
   H.clip(mural, () => {
@@ -104,6 +113,19 @@ export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { w
   box(H, R, 3.1, 1.1, 8.4, 3.7, 0, .18, 'blue', .53);
   shape(H, R, H.tile(3.38, 1.38, 7.84, 3.15, .42), 'teal', .51);
   bathEdge(H, R);
+  box(H, R, 7.22, .27, .97, .63, .04, 1.54, 'teal', .4);
+  shape(H, R, H.faceI(7.37, .92, .67, .22, 1.41), 'paper', 1);
+  stroke(H, R, [H.p(7.71, .96, 1.32), H.p(7.71, 1.39, 1.32), H.p(7.71, 1.47, 1.06)], 'blue', 4);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(7.67 + n * .045, 1.48, 1.06), H.p(7.67 + n * .045, 1.51, .44)], 'paper', 1.2);
+  oval(H, R, ...H.p(7.71, 1.57, .44), 13, 4, 'paper', .65);
+  for (const i of [3.55, 10.91]) {
+    stroke(H, R, [H.p(i, 4.89, .06), H.p(i, 4.89, 1.16), H.p(i, 4.38, 1.16), H.p(i, 4.15, .66)], 'blue', 3);
+    for (const j of [4.24, 4.87]) oval(H, R, ...H.p(i, j, .66), 5, 2, 'paper', 1);
+  }
+  for (let n = 0; n < 16; n++) {
+    const i = 3.28 + n * .5;
+    shape(H, R, H.tile(i, 4.61, .44, .14, .66), n === 4 ? 'coral' : 'teal', n === 4 ? .35 : .25, .5);
+  }
   towel(H, R, 10.38, 1.16, .66);
   towel(H, R, 4.2, 1.15, .66, 'coral');
   const [tx, ty] = H.p(11.55, .2, 1.75);
@@ -145,14 +167,24 @@ export default world('tokyo-koto-sento', 'Koto · The neighborhood unwinds', { w
       for (let n = 0; n < 3; n++) H.line(R, [H.p(i + .17, 7.8, .81 + row * .95 - n * .075), H.p(i + .46, 7.8, .81 + row * .95 - n * .075)], 'blue', .55);
     }
   }
-  bench(H, R, 8.25, 9.18, 2.9, 'sun');
+  for (const i of [8.34, 10.93]) box(H, R, i, 9.23, .16, .66, .06, .48, 'blue', .6);
+  for (let k = 0; k < 4; k++) box(H, R, 8.25, 9.18 + k * .2, 2.9, .15, .55, .12, 'sun', .5);
+  box(H, R, 8.35, 9.2, 2.67, .64, .12, .08, 'teal', .5);
+  for (const i of [8.48, 9.38, 10.28]) {
+    box(H, R, i, 9.31, .69, .47, .22, .2, 'paper', 1);
+    H.line(R, [H.p(i + .12, 9.81, .32), H.p(i + .57, 9.81, .32)], 'coral', 1);
+  }
   for (const i of [8.37, 10.15]) {
     box(H, R, i, 10.27, .89, .78, .09, .36, 'paper', 1);
     for (let k = 0; k < 5; k++) H.line(R, [H.p(i + .08 + k * .16, 11.06, .17), H.p(i + .08 + k * .16, 11.06, .41)], 'coral', .55);
     towel(H, R, i + .05, 10.35, .45, i < 9 ? 'teal' : 'paper');
   }
   box(H, R, 10.85, 5.07, .93, 1.18, .02, 1.56, 'paper', 1);
-  shape(H, R, H.faceI(10.94, 6.26, .75, .41, 1.41), 'teal', .34);
+  shape(H, R, H.faceI(10.94, 6.26, .75, .41, 1.41), 'blue', .65);
+  for (const z of [.46, .88, 1.28]) box(H, R, 10.97, 5.71, .66, .53, z, .04, 'paper', 1);
+  for (let n = 0; n < 3; n++) bottle(H, R, ...H.p(11.06 + n * .22, 6.23, .95), n === 1 ? 'coral' : 'teal', .23);
+  H.line(R, [H.p(11.03, 6.28, .68), H.p(11.48, 6.28, 1.31)], 'paper', 1.2);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(10.98 + n * .13, 6.27, .13), H.p(10.98 + n * .13, 6.27, .3)], 'blue', .9);
   for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(11.06 + k * .24, 6.27, .5), ['sun', 'coral', 'paper'][k], .24);
   H.line(R, [H.p(11.65, 6.29, .65), H.p(11.65, 6.29, 1.19)], 'blue', 1.7);
   const [cx, cy] = H.p(1.64, .18, 3.26);

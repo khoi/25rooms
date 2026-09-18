@@ -1,7 +1,7 @@
 import { surface, timber, metal, vessel, bentTube, drape, benchFrame, pendant } from '../materials.js';
 import { masonry, cabinetFrame, boardFloor } from '../structure.js';
-import { windowBay, caster } from '../joinery.js';
-import { shallowTray, handTool } from '../furnishings.js';
+import { windowBay, caster, hangingRail } from '../joinery.js';
+import { shallowTray, handTool, foldedCloth, coiledLine, boundBook } from '../furnishings.js';
 import { TAU, actor, box, cycle, oval, shape, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -58,6 +58,9 @@ function shell(H, R, i, j, length, z, ink) {
   }
   for (const q of [0.28, 0.49, 0.7]) {
     for (const a of [-0.14, 0.14]) metal(H, R, i + a, j + q * length - 0.48, 0.045, 0.93, z + 0.075, 0.035, 'teal');
+    for (const a of [-0.15, 0.15]) {
+      oval(H, R, ...H.p(i + a, j + q * length + 0.23, z + 0.11), 2.2, 2.6, 'blue', 0.8);
+    }
     timber(H, R, i - 0.19, j + q * length + 0.2, 0.38, 0.14, z + 0.09, 0.08, 'sun');
     for (const a of [-0.11, 0.11]) {
       const p = H.p(i + a, j + q * length - 0.28, z + 0.13);
@@ -125,6 +128,24 @@ const room = world(
         for (let n = 0; n < 12; n++) H.line(R, [P(0.2 + n * 0.46, 0.4 + (n % 3) * 0.2), P(0.54 + n * 0.46, 0.4 + (n % 3) * 0.2)], 'paper', 1);
       }
     });
+    const [cx, cy] = H.p(3.97, 0.22, 3.61);
+    oval(H, R, cx, cy, 16, 17, 'teal', 0.7);
+    oval(H, R, cx, cy, 13, 14, 'paper', 1);
+    for (let n = 0; n < 12; n++) {
+      const a = n * TAU / 12;
+      H.dot(cx + Math.sin(a) * 11, cy + Math.cos(a) * 12, n % 3 ? 0.65 : 1.2, 'blue');
+    }
+    H.line(R, [[cx - 6, cy - 6], [cx, cy], [cx + 8, cy - 4]], 'blue', 1.3);
+    for (const i of [5.17, 11.51]) metal(H, R, i, 0.18, 0.16, 0.23, 0.02, 4.17, 'teal');
+    metal(H, R, 5.17, 0.19, 6.51, 0.21, 3.96, 0.19, 'teal');
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(5.26, 0.22, 3.98 - n * 0.095), H.p(11.49, 0.22, 3.98 - n * 0.095)], 'blue', 1);
+    timber(H, R, 5.35, 0.37, 6.01, 0.58, 0.04, 0.11, 'teal');
+    hangingRail(H, R, 'ne', 5.53, 5.37, 2.87, 4, (P, u, n) => {
+      const [x, y] = P(u, -0.16);
+      surface(H, R, [[x - 9, y + 4], [x + 9, y + 4], [x + 13, y + 29], [x + 8, y + 36], [x - 10, y + 34]], n === 2 ? 'coral' : 'teal', 0.65);
+      H.line(R, [[x - 7, y + 7], [x + 8, y + 7]], 'sun', 3);
+      H.line(R, [[x - 5, y + 19], [x + 6, y + 19], [x + 6, y + 29], [x - 5, y + 29], [x - 5, y + 19]], 'paper', 0.8);
+    });
     for (const j of [1.3, 5.65, 10.37]) {
       timber(H, R, 0.36, j, 0.2, 0.2, 0.08, 4.13, 'sun');
       for (const z of [0.76, 1.92, 3.08]) {
@@ -153,11 +174,28 @@ const room = world(
         for (let n = 0; n < 3; n++) vessel(H, R, i + 0.3 + n * 0.4, j + 0.6, z + 0.11 + row * 0.81, 6, 14, n % 2 ? 'paper' : 'teal');
       }
     });
+    metal(H, R, 9.62, 8.66, 1.64, 2.16, 0.2, 0.12, 'teal');
+    foldedCloth(H, R, 9.76, 8.83, 1.2, 0.7, 0.34, 'paper', 'coral');
+    coiledLine(H, R, 10.5, 10.21, 0.35, 11, 'sun');
     benchFrame(H, R, 9.52, 8.51, 1.91, 2.55, 0.91, 'teal');
     shallowTray(H, R, 9.64, 8.7, 1.65, 1.36, 0.95, 'sun');
     handTool(H, R, 10.05, 9.1, 1.14, 'spanner', 'coral');
     handTool(H, R, 10.81, 9.7, 1.14, 'brush', 'sun');
     drape(H, R, 9.8, 10.42, 0.54, 0.55, 0.95, 0.5, 'paper');
+    cabinetFrame(H, R, 9.53, 1.48, 1.79, 2.35, 0.08, 0.92, 2, 'teal', (i, j, w, d, z) => {
+      for (let n = 0; n < 3; n++) foldedCloth(H, R, i + 0.07, j + 0.17, w - 0.14, d - 0.31, z + 0.11 + n * 0.16, 'paper', n === 1 ? 'coral' : 'teal');
+    });
+    shallowTray(H, R, 9.72, 1.67, 1.38, 1.29, 1.03, 'sun');
+    for (let n = 0; n < 3; n++) {
+      const [x, y] = H.p(10.07 + (n % 2) * 0.6, 2.01 + Math.floor(n / 2) * 0.52, 1.21);
+      oval(H, R, x, y, 6, 4, n === 2 ? 'coral' : 'teal', 0.8);
+      oval(H, R, x, y, 3, 2, 'paper', 1);
+      H.line(R, [[x + 6, y - 2], [x + 12, y - 10]], 'blue', 1.6);
+    }
+    boundBook(H, R, 9.73, 3.11, 1.12, 0.51, 1.03, 'coral');
+    vessel(H, R, 8.91, 10.88, 0.04, 11, 18, 'teal');
+    bentTube(H, R, [[11.68, 1.26, 0.2], [11.68, 1.26, 2.18], [11.21, 1.26, 2.18], [11.21, 1.49, 2.03]], 2, 'teal');
+    coiledLine(H, R, 11.2, 4.11, 0.035, 13, 'coral');
     metal(H, R, 3.44, 9.89, 3.63, 1.16, 0.19, 0.12, 'teal');
     for (const i of [3.54, 6.89]) for (const j of [10.01, 10.92]) caster(H, R, i, j);
     for (let n = 0; n < 4; n++) oar(H, R, ...H.p(5.2, 10.13 + n * 0.23, 0.4), 0.46, 0, ['coral', 'sun', 'teal', 'paper'][n], 0.72);

@@ -1,6 +1,6 @@
 import { world, shape, oval, stroke, ell, wallPt } from '../../worlds/common.js';
 import { timber, metal, bentTube, benchFrame, spokedWheel, drape } from '../materials.js';
-import { windowBay, recessedFrame, hangingRail, floorShadow } from '../joinery.js';
+import { windowBay, recessedFrame, hangingRail, floorShadow, taskLight, caster } from '../joinery.js';
 import { masonry, rackFrame } from '../structure.js';
 
 const ease=(a,b,t)=>{const u=Math.max(0,Math.min(1,(t-a)/(b-a)));return u*u*(3-2*u);};
@@ -35,7 +35,51 @@ const room=world('paris-canal-bridge-study','The span folds on the desk',{floor:
     if(row===2){for(let n=0;n<5;n++)timber(H,R,x+.07+n*.73,j+.08,.3,.77,z,.36+n%2*.22,n===3?'paper':'sun');}
     if(row===3){boat(H,R,x+.86,j+.42,z+.04);truss(H,R,(a,h)=>H.p(x+1.88+a,j+.6,z+.03+h),1.85,.48);}
   });
-  floorShadow(H,2.1,3.65,7.8,3.4,.22);benchFrame(H,R,2.05,3.65,7.65,3.35,1.05,'sun');
+  recessedFrame(H,R,'nw',1.5,6.9,1.02,1.1,'teal',P=>{
+    shape(H,R,[P(.12,.12),P(6.78,.12),P(6.78,.98),P(.12,.98)],'sun',.19,.4);
+    for(let n=0;n<4;n++){
+      const u=.48+n*1.57;
+      H.line(R,[P(u,.72),P(u+.81,.72)],'blue',2);
+      for(const a of [u,u+.8]){H.line(R,[P(a,.79),P(a,.57),P(a+.05,.5)],'teal',2);H.dot(...P(a,.8),1.5,'sun');}
+      if(n===0){for(let k=0;k<4;k++)H.line(R,[P(u+.17+k*.18,.28),P(u+.17+k*.18,.66)],'sun',3);}
+      if(n===1){const q=P(u+.42,.39);spokedWheel(H,R,...q,13,'sun',.2);}
+      if(n===2){H.line(R,[P(u+.12,.2),P(u+.12,.61),P(u+.7,.61),P(u+.7,.2)],'teal',3);H.line(R,[P(u+.23,.2),P(u+.23,.38),P(u+.6,.38),P(u+.6,.2)],'blue',2);}
+      if(n===3){shape(H,R,[P(u+.06,.22),P(u+.76,.22),P(u+.76,.62)],'paper',1,.7);H.line(R,[P(u+.38,.32),P(u+.64,.32),P(u+.64,.48)],'teal',1);}
+    }
+  });
+  for(const j of [1.5,7.74]){timber(H,R,.43,j,1.36,.24,.05,.81,'teal');bentTube(H,R,[[.51,j,.24],[1.65,j,.78]],2,'sun');}
+  timber(H,R,.41,1.48,1.53,6.53,.8,.13,'sun');
+  timber(H,R,.48,1.61,1.27,6.19,.24,.1,'teal');
+  for(let n=0;n<4;n++){
+    const j=1.74+n*1.44;timber(H,R,.6,j,1.0,1.21,.35,.31,n===2?'paper':'sun');
+    shape(H,R,H.faceJ(1.62,j+.12,.96,.43,.59),'blue',.34,.55);
+    H.line(R,[H.p(1.65,j+.32,.52),H.p(1.65,j+.79,.52)],'sun',1.8);
+  }
+  const plan=(j)=>{
+    const P=(a,b)=>H.p(.62+a, j+b, .96+a*.19);
+    shape(H,R,[P(0,0),P(1.06,0),P(1.06,1.62),P(0,1.62)],'paper',1,.8);
+    for(let n=0;n<4;n++)H.line(R,[P(.13,.18+n*.36),P(.89,.31+n*.36)],'teal',.65);
+    H.line(R,[P(.2,.2),P(.73,.67),P(.31,1.12),P(.85,1.46)],'coral',1.2);
+  };plan(2.16);
+  boat(H,R,1.14,5.1,.95);
+  for(let n=0;n<3;n++)timber(H,R,.72,6.17+n*.23,.87,.17,.95,.12,n===1?'coral':'sun');
+  taskLight(H,R,.77,1.68,.95,'sun',.65);
+  floorShadow(H,2.1,3.65,7.8,3.4,.25);
+  for(const x of [2.29,8.98]){
+    for(const j of [3.9,6.61])metal(H,R,x,j,.25,.24,.02,1.0,'teal');
+    bentTube(H,R,[[x+.12,3.98,.17],[x+.12,6.59,.89],[x+.12,6.59,.17],[x+.12,3.98,.89]],2.4,'sun');
+    metal(H,R,x-.13,3.82,.51,3.0,.02,.12,'blue');
+  }
+  timber(H,R,2.35,4.01,6.91,2.44,.34,.1,'teal');
+  timber(H,R,2.05,3.65,7.65,3.35,.92,.13,'sun');
+  shape(H,R,H.faceI(2.31,6.87,7.07,.65,.9),'teal',.54,.75);
+  for(let n=0;n<3;n++){
+    const x=4.78+n*1.22;timber(H,R,x,5.89,1.1,.83,.44,.18,'sun');
+    shape(H,R,H.tile(x+.07,5.97,.94,.68,.63),'blue',.61,.6);
+    if(n===0){for(let k=0;k<3;k++)oval(H,R,...H.p(x+.26+k*.29,6.31,.65),5,3,'paper',1);}
+    if(n===1){for(let k=0;k<3;k++)H.line(R,[H.p(x+.19,6.02+k*.2,.66),H.p(x+.93,6.02+k*.2,.66)],'sun',3);}
+    if(n===2){spokedWheel(H,R,...H.p(x+.57,6.31,.66),11,'coral',.1,.42);}
+  }
   timber(H,R,2.25,3.8,7.18,3.02,1.05,.12,'teal');
   shape(H,R,H.tile(4.28,3.97,3.87,2.55,1.185),'teal',.38,.8);
   for(let n=0;n<7;n++)H.line(R,[H.p(4.5+n*.46,4.1,1.194),H.p(4.63+n*.46,6.35,1.194)],'paper',.8,{tone:.65});
@@ -44,6 +88,15 @@ const room=world('paris-canal-bridge-study','The span folds on the desk',{floor:
     for(let n=0;n<5;n++)H.line(R,[H.p(x+.04,4.08+n*.43,1.57),H.p(x+.61,4.08+n*.43,1.57)],'blue',.55);
     metal(H,R,x+.11,4.1,.22,2.27,1.56,.08,'teal');
   }
+  for(const j of [3.82,6.54]){
+    timber(H,R,4.28,j,3.78,.16,1.19,.13,'paper');
+    for(let n=0;n<5;n++){
+      metal(H,R,4.49+n*.69,j,.12,.16,1.33,.12,'teal');
+      oval(H,R,...H.p(4.55+n*.69,j+.1,1.51),3.1,2,'sun',.8);
+    }
+    bentTube(H,R,[[4.53,j+.08,1.49],[7.95,j+.08,1.49]],1.3,'blue');
+  }
+  for(let n=0;n<3;n++)timber(H,R,8.72,4.28+n*.38,.53,.41,1.19,.11+n*.1,'paper');
   for(const y of [4.15,6.13]){metal(H,R,4.01,y,.32,.3,1.3,.69,y===4.15?'teal':'coral');oval(H,R,...H.p(4.17,y+.18,1.78),5.2,4,'sun',.8);}
   bentTube(H,R,[[4.18,4.06,1.78],[4.18,6.55,1.78]],4,'blue');
   for(const x of [2.6,3.6])metal(H,R,x,4.45,.1,.1,1.2,1.83,'teal');
@@ -52,13 +105,31 @@ const room=world('paris-canal-bridge-study','The span folds on the desk',{floor:
   const crank=H.p(4.18,6.63,1.47);oval(H,R,...crank,18,16,'paper',1);oval(H,R,...crank,15,13,'teal',.5);
   for(let n=0;n<8;n++){const a=n*Math.PI/4;H.line(R,[[crank[0]+Math.cos(a)*16,crank[1]+Math.sin(a)*14],[crank[0]+Math.cos(a)*20,crank[1]+Math.sin(a)*18]],'blue',1.5);}
   bentTube(H,R,[[4.18,6.51,1.47],[4.18,6.29,1.7],[4.18,6.29,1.78]],2.5,'sun');
+  const gear=H.p(4.17,6.3,1.81);spokedWheel(H,R,...gear,12,'sun',.2,.82);
+  for(let n=0;n<12;n++){const a=n*Math.PI/6;H.line(R,[[gear[0]+Math.cos(a)*11,gear[1]+Math.sin(a)*9],[gear[0]+Math.cos(a)*14,gear[1]+Math.sin(a)*12]],'blue',2);}
+  H.line(R,[H.p(4.22,6.48,1.73),H.p(4.5,6.48,1.73),H.p(4.5,6.48,2.09),H.p(4.17,6.48,2.2)],'teal',2.7);
+  for(const x of [2.66,3.67]){metal(H,R,x,4.44,.18,.16,1.22,.13,'blue');H.dot(...H.p(x+.09,4.52,1.36),1.7,'paper');}
+  metal(H,R,9.03,5.17,.55,.84,1.18,.13,'blue');metal(H,R,9.15,5.24,.25,.61,1.31,.25,'teal');
+  bentTube(H,R,[[9.5,5.42,1.39],[9.71,5.42,1.39],[9.71,5.42,1.2]],1.8,'sun');
   boat(H,R,6.65,4.76,1.2);
+  const coil=H.p(7.62,5.51,1.23);for(let n=0;n<4;n++)H.outline(R,ell(coil[0],coil[1],4+n*2,2+n*.8),'sun',1,{amp:.1});
   benchFrame(H,R,.85,8.8,5.0,1.2,.7,'teal');
   truss(H,R,(a,z)=>H.p(1.12+a,9.15,.73+z),2.28,.54,'sun');
   metal(H,R,3.7,8.98,.43,.61,.72,.1,'blue');metal(H,R,3.8,9.15,.22,.25,.83,.32,'sun');
   const pin=H.p(4.71,9.32,.73);oval(H,R,...pin,11,5,'teal',.6);oval(H,R,...pin,4.5,2.2,'paper',1);
   benchFrame(H,R,9.65,8.75,1.68,2.4,.7,'sun');drape(H,R,9.77,8.92,1.4,1.68,.73,.38,'paper');
   for(let n=0;n<2;n++){metal(H,R,9.9,9.13+n*.66,1.04,.51,.75,.2,'teal');shape(H,R,H.tile(10.14,9.22+n*.66,.58,.31,.965),'blue',.7,.5);}
+  for(const [i,j] of [[9.77,8.86],[11.18,8.86],[9.77,11.04],[11.18,11.04]])caster(H,R,i,j,.02);
+  timber(H,R,9.72,8.87,1.48,2.09,.29,.07,'teal');
+  for(let n=0;n<3;n++)timber(H,R,9.86,9.12+n*.48,1.12,.39,.38,.11,'paper');
+  shape(H,R,[H.p(9.7,8.84,.78),H.p(11.29,8.84,.78),H.p(11.29,8.57,1.74),H.p(9.7,8.57,1.74)],'sun',.5,.8);
+  shape(H,R,[H.p(9.84,8.82,.94),H.p(11.13,8.82,.94),H.p(11.13,8.64,1.57),H.p(9.84,8.64,1.57)],'paper',.76,.6);
+  for(const x of [9.95,11.03])H.line(R,[H.p(x,8.89,.8),H.p(x,8.67,1.56)],'teal',1.7);
+  timber(H,R,6.63,9.34,1.62,1.05,.05,.1,'teal');
+  for(const x of [6.82,8.04]){timber(H,R,x,9.65,.13,.14,.16,.64,'sun');metal(H,R,x-.07,9.57,.27,.31,.1,.07,'blue');}
+  stroke(H,R,[H.p(6.86,9.72,.8),H.p(7.45,9.72,.54),H.p(8.09,9.72,.8)],'sun',2.2);
+  metal(H,R,7.28,9.53,.39,.38,.28,.18,'coral');H.line(R,[H.p(7.49,9.71,.55),H.p(7.49,9.71,.47)],'blue',1);
+  for(let n=0;n<4;n++)timber(H,R,4.96,8.91+n*.2,.61,.15,.73,.07+n*.025,['paper','teal','sun','coral'][n]);
   hangingRail(H,R,'nw',9.5,1.7,2.02,3,(P,u,n)=>{H.line(R,[P(u,-.15),P(u,-.75)],'blue',1.4);shape(H,R,[P(u-.12,-.7),P(u+.12,-.7),P(u+.16,-1.0),P(u-.16,-1.0)],n===1?'sun':'teal',.7,.6);});
 },(H,R,t)=>{
   const u=((t%18)+18)%18,rise=ease(3.6,7.2,u)*(1-ease(10.8,16,u)),angle=rise*.91;
@@ -67,6 +138,7 @@ const room=world('paris-canal-bridge-study','The span folds on the desk',{floor:
   shape(H,R,[P(0,0),P(length,0),P(length,width),P(0,width)],'sun',.7,.9);
   shape(H,R,[P(0,width),P(length,width),P(length,width,-.13),P(0,width,-.13)],'sun',.48,.7);
   for(let n=0;n<15;n++)H.line(R,[P(.12+n*.25,.04,.015),P(.12+n*.25,width-.04,.015)],'blue',.6);
+  for(let n=0;n<5;n++){const x=.25+n*.83;H.line(R,[P(x,0,-.15),P(x,width,-.15)],'teal',2.5);}
   for(const y of [0,width])truss(H,R,(a,z)=>P(a,y,z),length,.49,'teal');
   const cable=Math.hypot(1.1+.9*Math.cos(angle),1.12-.9*Math.sin(angle)),weightZ=2.42-(Math.hypot(2,1.12)-cable);
   const pulley=H.p(3.09,4.53,3.0),attached=P(.9,.31,.1),end=H.p(3.09,4.53,weightZ+.29);

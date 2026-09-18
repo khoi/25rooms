@@ -25,6 +25,8 @@ function cup(H, R, i, j, z = .18, sealed = false) {
 function bento(H, R, i, j) {
   box(H, R, i, j, 1.35, .9, .14, .16, 'blue', .65);
   shape(H, R, H.tile(i + .08, j + .08, 1.19, .74, .31), 'paper', 1);
+  shape(H, R, H.tile(i + .15, j + .98, 1.05, .62, .17), 'coral', .5);
+  H.outline(R, H.tile(i + .23, j + 1.06, .89, .46, .18), 'sun', .8);
   H.line(R, [H.p(i + .7, j + .1, .32), H.p(i + .7, j + .8, .32)], 'coral', 1.5);
   for (let k = 0; k < 3; k++) {
     const [x, y] = H.p(i + .23 + k * .1, j + .2 + k * .19, .36);
@@ -39,12 +41,22 @@ function blossom(H, R, x, y, r = 3) {
     const a = k * TAU / 5;
     H.fill(ell(x + Math.cos(a) * r * .65, y + Math.sin(a) * r * .65, r * .65, r * .6, 8), 'paper', 1);
     H.tint(ell(x + Math.cos(a) * r * .65, y + Math.sin(a) * r * .65, r * .65, r * .6, 8), 'coral', .2);
+    H.outline(R, ell(x + Math.cos(a) * r * .65, y + Math.sin(a) * r * .65, r * .65, r * .6, 8), 'coral', .45, { tone: .65 });
   }
   H.dot(x, y, .9, 'coral', .7);
 }
 
 function picnicBasket(H, R, i, j) {
   box(H, R, i, j, 1.17, .75, .08, .53, 'sun', .47);
+  shape(H, R, H.tile(i + .08, j + .08, 1.01, .59, .62), 'blue', .65);
+  shape(H, R, [H.p(i, j, .62), H.p(i + 1.17, j, .62), H.p(i + 1.17, j - .2, 1.12), H.p(i, j - .2, 1.12)], 'sun', .45);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(i + .1 + n * .23, j, .65), H.p(i + .1 + n * .23, j - .18, 1.09)], 'coral', .7);
+  shape(H, R, [H.p(i + .12, j + .14, .64), H.p(i + .67, j + .14, .64), H.p(i + .68, j + .82, .48), H.p(i + .14, j + .82, .45)], 'paper', 1);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(i + .23 + n * .14, j + .15, .66), H.p(i + .23 + n * .14, j + .8, .5)], 'teal', .8);
+  for (let n = 0; n < 2; n++) {
+    oval(H, R, ...H.p(i + .84, j + .23 + n * .25, .69), 6, 3, 'paper', 1);
+    oval(H, R, ...H.p(i + .84, j + .23 + n * .25, .71), 3.5, 1.8, 'coral', .45);
+  }
   for (let k = 0; k < 7; k++) H.line(R, [H.p(i + .08 + k * .16, j + .77, .14), H.p(i + .08 + k * .16, j + .77, .57)], 'coral', .7);
   for (const z of [.2, .35, .5]) H.line(R, [H.p(i + .06, j + .78, z), H.p(i + 1.1, j + .78, z)], 'coral', .6);
   stroke(H, R, [H.p(i + .15, j + .38, .61), H.p(i + .57, j + .38, 1.01), H.p(i + 1.03, j + .38, .61)], 'blue', 1.6);
@@ -65,7 +77,13 @@ function parkLife(H, R) {
   const [x, y] = H.p(1.3, 10.87, .03);
   shape(H, R, loop([[x - 15, y], [x - 16, y - 20], [x - 7, y - 30], [x + 8, y - 27], [x + 17, y - 16], [x + 14, y]], 1), 'blue', .57);
   stroke(H, R, [[x - 6, y - 27], [x - 7, y - 38], [x + 7, y - 38], [x + 8, y - 26]], 'coral', 1.5);
-  box(H, R, 4.15, 2.94, 2.61, 1.06, .04, .58, 'paper', 1);
+  for (const i of [4.2, 6.56]) box(H, R, i, 2.99, .13, .91, .09, .55, 'blue', .65);
+  box(H, R, 4.15, 2.94, 2.61, 1.06, .19, .1, 'teal', .6);
+  for (let k = 0; k < 3; k++) {
+    box(H, R, 4.31 + k * .74, 3.06, .61, .73, .3, .25, k ? 'paper' : 'coral', k ? 1 : .58);
+    H.line(R, [H.p(4.46 + k * .74, 3.81, .43), H.p(4.73 + k * .74, 3.81, .43)], 'blue', 1.3);
+  }
+  box(H, R, 4.15, 2.94, 2.61, 1.06, .58, .06, 'paper', 1);
   shape(H, R, H.tile(4.24, 3.03, 2.43, .88, .64), 'sun', .44);
   for (let k = 0; k < 4; k++) box(H, R, 4.36 + k * .54, 3.1, .44, .53, .67, .18, ['coral', 'teal', 'sun', 'blue'][k], .56);
   for (const i of [4.15, 6.75]) for (const j of [3.03, 3.89]) oval(H, R, ...H.p(i, j, .08), 6, 6, 'blue', .78);
@@ -107,27 +125,71 @@ export default world('tokyo-ueno-hanami', 'Ueno · A place saved under the bloss
   for (let i = .2; i < 12; i += 1.4) H.line(R, [H.p(i, .15, .03), H.p(i, 2.35, .03)], 'blue', .7, { tone: .4 });
   H.line(R, [H.p(.15, 2.35, .04), H.p(11.85, 2.35, .04)], 'blue', 1, { tone: .6 });
   box(H, R, 8.4, .2, 3.1, .32, 0, 1.38, 'paper', 1);
+  for (const i of [8.35, 11.35]) {
+    box(H, R, i, .1, .3, .55, 0, 1.62, 'coral', .35);
+    box(H, R, i - .06, .05, .42, .65, 1.62, .11, 'paper', 1);
+  }
+  box(H, R, 8.38, .14, 3.24, .47, 1.36, .15, 'sun', .38);
+  for (const j of [1.09, 1.36, 1.63]) box(H, R, 8.63, j, 2.58, .16, .7, .06, 'sun', .55);
   for (let row = 0; row < 4; row++) for (let k = 0; k < 4; k++) H.outline(R, H.faceI(8.45 + k * .72, .53, .69, .05 + row * .3, .31 + row * .3), 'blue', .5, { tone: .35 });
   bench(H, R, 8.6, 1.05, 2.65, 'sun');
   const [tx, ty] = H.p(1.65, 2.9);
   H.tint(ell(tx + 36, ty + 20, 84, 28), 'blue', .14);
   shape(H, R, loop([[tx - 19, ty + 5], [tx - 9, ty - 67], [tx - 17, ty - 137], [tx - 3, ty - 146], [tx + 7, ty - 76], [tx + 18, ty + 2]], 1), 'blue', .65);
-  const branches = [[-55, -183], [32, -182], [118, -152], [-113, -135], [83, -113]];
-  for (const [dx, dy] of branches) {
-    stroke(H, R, [[tx, ty - 65], [tx + dx * .35, ty - 130], [tx + dx, ty + dy]], 'blue', 5);
-    const cluster = blob(R, tx + dx, ty + dy, 45, 28, .1);
-    shape(H, R, cluster, 'coral', .29, .75);
-    H.clip(cluster, () => {
-      for (let k = 0; k < 5; k++) stroke(H, R, [[tx + dx, ty + dy + 14], [tx + dx - 29 + k * 14, ty + dy - 3], [tx + dx - 35 + k * 17, ty + dy - 18]], 'blue', .8, .55);
-      for (let k = 0; k < 34; k++) blossom(H, R, tx + dx + (R() - .5) * 78, ty + dy + (R() - .5) * 45, 3.2 + R() * 2.7);
-    });
-    for (let k = 0; k < 8; k++) {
-      const a = k * TAU / 8;
-      blossom(H, R, tx + dx + Math.cos(a) * 42, ty + dy + Math.sin(a) * 25, 4 + R() * 3);
+  for (const side of [-1, 1]) {
+    stroke(H, R, [[tx + side * 6, ty - 15], [tx + side * 24, ty + 2], [tx + side * 49, ty + 9]], 'blue', 7, .6);
+    stroke(H, R, [[tx + side * 5, ty - 13], [tx + side * 21, ty + 1], [tx + side * 45, ty + 6]], 'coral', 2, .5);
+  }
+  for (let k = 0; k < 6; k++) stroke(H, R, [[tx - 11 + k * 4, ty - 9], [tx - 5 + k * 2, ty - 68], [tx - 12 + k * 3, ty - 135]], 'paper', .65, .5);
+  oval(H, R, tx + 3, ty - 67, 6, 10, 'coral', .4);
+  oval(H, R, tx + 3, ty - 67, 3, 6, 'blue', .7);
+  const limbs = [
+    [[-3, -71], [-31, -119], [-74, -148], [-128, -153]],
+    [[-5, -92], [-24, -143], [-48, -183], [-79, -203]],
+    [[-5, -111], [11, -153], [24, -185], [12, -216]],
+    [[2, -85], [42, -125], [82, -163], [131, -174]],
+    [[4, -70], [45, -100], [91, -115], [140, -108]],
+  ];
+  const crown = [[-117,-157,23,16],[-89,-172,29,19],[-63,-196,26,17],[-34,-187,23,18],[-7,-208,25,18],[25,-212,25,16],[44,-188,27,20],[73,-179,26,17],[105,-180,28,18],[132,-160,27,18],[-131,-137,23,17],[-102,-130,27,16],[-63,-145,23,15],[-23,-156,23,17],[19,-166,21,15],[61,-147,25,17],[93,-130,25,17],[130,-117,23,16],[150,-98,18,13]];
+  for (let n = 0; n < crown.length; n++) {
+    const [dx, dy, rx, ry] = crown[n];
+    const q = blob(R, tx + dx, ty + dy, rx, ry, n * .53);
+    shape(H, R, q, n % 4 === 0 ? 'blue' : 'coral', n % 4 === 0 ? .24 : .39, .65);
+    H.tint(blob(R, tx + dx + 3, ty + dy + ry * .42, rx * .79, ry * .62, .2), 'coral', .35);
+  }
+  for (let n = 0; n < limbs.length; n++) {
+    const points = limbs[n].map(([dx, dy]) => [tx + dx, ty + dy]);
+    for (let k = 0; k < points.length - 1; k++) {
+      const [ax, ay] = points[k], [bx, by] = points[k + 1], w = 6.3 - k * 1.75;
+      shape(H, R, [[ax - w, ay + 2], [bx - w * .45, by], [bx + w * .45, by - 2], [ax + w, ay - 2]], 'blue', .73, .6);
+      stroke(H, R, [[ax + 1, ay], [(ax + bx) / 2 + 2, (ay + by) / 2], [bx, by]], 'coral', Math.max(.8, w * .3), .53);
+    }
+    for (let k = 1; k < 4; k++) {
+      const [ax, ay] = points[k];
+      for (const side of [-1, 1]) {
+        const ex = ax + side * (13 + k * 5), ey = ay - 16 + side * 5;
+        stroke(H, R, [[ax, ay], [ax + side * 10, ay - 5], [ex, ey]], 'blue', 1.7 - k * .23, .77);
+        stroke(H, R, [[ex - side * 8, ey + 6], [ex + side * 5, ey - 9]], 'blue', .7, .7);
+        for (const [ox, oy, r] of [[0,0,3.7],[5,-7,3],[-4,-5,2.6]]) blossom(H, R, ex + ox, ey + oy, r);
+      }
+    }
+  }
+  for (let n = 0; n < crown.length; n++) {
+    const [dx, dy, rx, ry] = crown[n];
+    for (let k = 0; k < 5; k++) {
+      const a = k * 2.37 + n * .81;
+      const px = tx + dx + Math.cos(a) * rx * .57, py = ty + dy + Math.sin(a) * ry * .64;
+      shape(H, R, blob(R, px, py, 8 + k % 3 * 3, 6 + k % 2 * 3, a), 'paper', 1, .4);
+      for (let q = 0; q < 3; q++) blossom(H, R, px + Math.cos(q * 2.1) * 5, py + Math.sin(q * 2.1) * 4, 2.6 + q * .6);
     }
   }
   shape(H, R, H.tile(3, 4.6, 6.2, 5.65, .04), 'teal', .66);
   H.outline(R, H.tile(3.13, 4.73, 5.94, 5.39, .05), 'paper', 1.2);
+  for (const [i, j, dx, dy] of [[3, 4.6, .82, .53], [9.2, 4.6, -.76, .41], [3, 10.25, .75, -.45], [9.2, 10.25, -.69, -.47]]) {
+    shape(H, R, [H.p(i, j, .06), H.p(i + dx, j, .09), H.p(i + dx * .6, j + dy, .05)], 'teal', .4);
+    H.line(R, [H.p(i + dx * .2, j + dy * .12, .08), H.p(i + dx * .9, j + dy, .065)], 'paper', .8);
+    oval(H, R, ...H.p(i + dx * .15, j + dy * .13, .1), 2.2, 1.2, 'sun', .7);
+  }
   for (let k = 0; k < 4; k++) H.line(R, [H.p(3.2 + k * 1.5, 4.72, .055), H.p(3.2 + k * 1.5, 10.12, .055)], 'blue', .6, { tone: .4 });
   for (const [i, j, ink] of [[3.4, 5.35, 'sun'], [6.1, 4.95, 'coral'], [7.65, 7.8, 'sun'], [4.3, 8.75, 'coral'], [7.8, 9.05, 'paper']]) cushion(H, R, i, j, ink);
   bento(H, R, 5.05, 6.2);
@@ -160,6 +222,10 @@ export default world('tokyo-ueno-hanami', 'Ueno · A place saved under the bloss
     stroke(H, R, [[sx + dx, sy], [sx - dx, sy - 29]], 'blue', 2);
   }
   shape(H, R, [[sx - 18, sy - 16], [sx + 17, sy - 16], [sx + 12, sy - 37], [sx - 12, sy - 37]], 'coral', .55);
+  shape(H, R, [[sx - 12, sy - 31], [sx + 12, sy - 31], [sx + 10, sy - 18], [sx - 10, sy - 18]], 'sun', .5);
+  stroke(H, R, [[sx - 8, sy - 32], [sx, sy - 21], [sx + 8, sy - 32]], 'blue', 1.5);
+  H.line(R, [[sx - 16, sy - 12], [sx + 16, sy - 12]], 'teal', 4);
+  oval(H, R, sx, sy - 23, 2, 2, 'paper');
   shape(H, R, loop([[sx - 20, sy - 36], [sx - 17, sy - 57], [sx, sy - 65], [sx + 19, sy - 50], [sx + 20, sy - 36]], 1), 'paper', 1);
   stroke(H, R, [[sx + 15, sy - 26], [sx + 25, sy - 52], [sx + 33, sy - 54]], 'blue', 2);
   const [gx, gy] = H.p(10.65, 8.75, .02);

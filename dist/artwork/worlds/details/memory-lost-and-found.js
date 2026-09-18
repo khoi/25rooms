@@ -58,6 +58,21 @@ function birthday(H, R, x, y, t, scale = 1) {
 }
 
 function archive(H, R) {
+  box(H, R, 2.85, .12, 8.8, 1.08, .08, .42, 'coral', .65);
+  box(H, R, 2.85, .12, 8.8, 1.08, 3.3, .18, 'sun', .7);
+  for (const i of [2.85, 5.05, 7.25, 9.45, 11.5]) {
+    box(H, R, i, .12, .13, 1.08, .5, 2.8, 'coral', .65);
+    box(H, R, i - .04, .1, .23, 1.15, 3.14, .15, 'sun', .65);
+  }
+  for (let n = 0; n < 4; n++) {
+    shape(H, R, H.faceI(3.08 + n * 2.15, 1.22, 1.84, .16, .4), 'teal', .7);
+    H.line(R, [H.p(3.75 + n * 2.15, 1.24, .28), H.p(4.2 + n * 2.15, 1.24, .28)], 'sun', 2);
+  }
+  for (const j of [.3, 5.2]) box(H, R, .18, j, 1, .16, .1, 3.2, 'coral', .7);
+  box(H, R, .18, .3, 1, 5.1, 3.18, .17, 'sun', .7);
+  for (const j of [6, 10.85]) box(H, R, .03, j, .14, .13, .12, 3.65, 'coral', .6);
+  box(H, R, .03, 5.9, .18, 5.1, 3.5, .13, 'sun', .6);
+
   for (let column = 0; column < 5; column++) {
     const j = .65 + column * .92;
     box(H, R, .25, j, .86, .88, .12, 2.65, column % 2 ? 'teal' : 'sun', .5);
@@ -85,7 +100,7 @@ function archive(H, R) {
     }
   }
 
-  const board = wallRect(H, 'nw', 6, 10.9, 1.03, 3.18, .07);
+  const board = wallRect(H, 'nw', 6, 10.9, 1.03, 3.18, -.07);
   shape(H, R, board, 'sun', .48, 2);
   for (let n = 0; n < 12; n++) {
     const j = 6.15 + n % 4 * 1.16;
@@ -108,7 +123,15 @@ function archive(H, R) {
 function furniture(H, R) {
   rug(H, R, 2, 6.6, 4.3, 4.6, 'teal', .16, { border: 'teal' });
   rug(H, R, 8.1, 7.7, 3.25, 3.5, 'sun', .2, { border: 'coral' });
+  box(H, R, 1.78, 7.08, 1, 1.24, .05, .93, 'coral', .62);
+  box(H, R, 4.24, 7.08, .95, 1.24, .05, .93, 'teal', .65);
   table(H, R, 1.7, 7.0, 3.6, 1.45, 1.03, 'sun');
+  for (const i of [1.85, 4.31]) for (let n = 0; n < 3; n++) {
+    shape(H, R, H.faceI(i, 8.34, .78, .13 + n * .27, .34 + n * .27), 'sun', .45);
+    H.line(R, [H.p(i + .28, 8.36, .25 + n * .27), H.p(i + .52, 8.36, .25 + n * .27)], 'blue', 1.5);
+  }
+  H.line(R, [H.p(2.9, 7.95, .14), H.p(4.12, 7.95, .14)], 'sun', 3);
+
   box(H, R, 1.77, 8.35, 3.45, .14, .25, .76, 'coral', .45);
 
   for (let k = 0; k < 6; k++) card(H, R, 1.91 + k % 3 * .63, 7.25 + Math.floor(k / 3) * .43, 1.16, 'paper', `${k + 41}`);
@@ -129,6 +152,13 @@ function furniture(H, R) {
   const [ux, uy] = H.p(5.2, 10.7, .63);
   tag(H, R, ux, uy, '41');
   table(H, R, 6.05, 4.4, 3.2, 1.45, 1.06, 'teal');
+  box(H, R, 6.15, 4.48, 2.96, 1.22, .22, .09, 'coral', .7);
+  for (let n = 0; n < 4; n++) {
+    box(H, R, 6.3 + n * .7, 5, .54, .58, .32, .36, ink[n], .6);
+    spool(H, R, ...H.p(6.57 + n * .7, 5.62, .55), 5);
+  }
+  for (const i of [6.18, 9.05]) H.line(R, [H.p(i, 4.53, .1), H.p(i, 5.63, .97)], 'sun', 1.5);
+
 
   for (let k = 0; k < 5; k++) card(H, R, 6.25 + k * .49, 5.12, 1.2, k === 2 ? 'coral' : 'paper');
   deskLamp(H, R, 6.26, 4.64, 1.21, 1);
@@ -145,6 +175,13 @@ function furniture(H, R) {
   for (let k = 0; k < 4; k++) box(H, R, 6.24 + k * .65, 4.63, .48, .37, .08, .35 + k % 2 * .14, ink[k], .5);
   table(H, R, 9.8, 6.7, 1.15, 1.02, .81, 'sun');
   box(H, R, 9.98, 6.9, .73, .52, .94, .48, 'teal', .7);
+  box(H, R, 9.87, 6.8, .96, .74, .89, .08, 'coral', .8);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(10.02 + n * .11, 7.43, 1.04), H.p(10.02 + n * .11, 7.43, 1.22)], 'blue', .7);
+  stroke(H, R, [H.p(10.15, 6.93, 1), H.p(9.75, 7.2, .05), H.p(9.35, 6.5, .05)], 'blue', 1.2);
+  const lens = H.p(10.73, 7.19, 1.2);
+  oval(H, R, lens[0] + 15, lens[1], 7, 9, 'coral', .75);
+  oval(H, R, lens[0] + 15, lens[1], 4, 6, 'sun', .8);
+
   const [px, py] = H.p(10.33, 7.18, 1.2);
   shape(H, R, [[px + 8, py - 2], [px + 19, py - 5], [px + 19, py + 5], [px + 8, py + 4]], 'blue', .8, .8);
   H.dot(px + 20, py, 4, 'sun', .9);

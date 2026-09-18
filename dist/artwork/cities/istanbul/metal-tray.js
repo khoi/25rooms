@@ -1,8 +1,8 @@
 import { world, actor, shape, oval, stroke, ell, wallPt, cycle } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
-import { timber, metal, vessel, benchFrame, drape, floorLight } from '../materials.js';
-import { cabinetFrame } from '../structure.js';
-import { windowBay, cornice, wallCourse, hangingRail, taskLight } from '../joinery.js';
+import { timber, metal, vessel, benchFrame, drape, floorLight, bentTube } from '../materials.js';
+import { cabinetFrame, basin } from '../structure.js';
+import { windowBay, cornice, wallCourse, hangingRail, taskLight, wallRack, recessedFrame } from '../joinery.js';
 
 const ease = (a, b, t) => { const q = Math.max(0, Math.min(1, (t - a) / (b - a))); return q * q * (3 - 2 * q); };
 const pose = { ...FIGURES.clips.idle.keys[0][1] };
@@ -26,6 +26,17 @@ function disk(H, R, x, y, r, aspect, ink, bright = false) {
     const a = n / 24 * Math.PI * 2;
     H.line(R, [[x + Math.cos(a) * (r - 4), y + Math.sin(a) * (r - 4) * aspect], [x + Math.cos(a) * (r - 7), y + Math.sin(a) * (r - 7) * aspect]], n % 6 ? 'coral' : 'paper', .75, { tone: .7 });
   }
+  if (r > 35) {
+    H.outline(R, ell(x, y, r * .6, r * .6 * aspect), 'sun', 1.3);
+    H.outline(R, ell(x, y, r * .54, r * .54 * aspect), 'blue', .6, { tone: .55 });
+    for (let n = 0; n < 8; n++) {
+      const a = n * Math.PI / 4, P = (rr, aa) => [x + Math.cos(aa) * rr, y + Math.sin(aa) * rr * aspect];
+      stroke(H, R, [P(7, a), P(18, a - .28), P(30, a), P(18, a + .28), P(7, a)], 'blue', 1.35, .63);
+      H.line(R, [P(12, a), P(25, a)], 'coral', .7);
+    }
+    oval(H, R, x, y, 7, 7 * aspect, 'sun', .45);
+    H.outline(R, ell(x - 14, y + 12, 8, 4 * aspect), 'coral', 1, { tone: .8 });
+  }
   if (bright) H.line(R, Array.from({ length: 20 }, (_, n) => { const a = Math.PI * (1.05 + n / 28); return [x + Math.cos(a) * (r - 11), y + Math.sin(a) * (r - 11) * aspect]; }), 'paper', 3.5, { tone: .9 });
 }
 function jug(H, R, i, j, z, scale = 1, patch = false) {
@@ -41,6 +52,31 @@ const room = world('istanbul-metal-tray', 'A circle comes clear', { floor: 'sun'
   cornice(H, R, 'ne', 0, 12, 3.72, 'sun');
   windowBay(H, R, 'nw', 2.5, 6.8, 2.3, 1.13, { divisions: 4, view(P) { H.fill([P(.1, .1), P(6.7, .1), P(6.7, .75), P(.1, .75)], 'sun', .32); } });
   H.fill(H.tile(.5, 3, 6.3, 4.8, .02), 'sun', .1);
+  for (const j of [2.35, 9.55]) timber(H, R, .06, j, .24, .2, .05, 3.56, 'teal');
+  wallRack(H, R, 'nw', 3.0, 5.8, 1.05, 1.06, 1, 'sun', (P) => {
+    for (let n = 0; n < 6; n++) {
+      const [x, y] = P(.5 + n * .86, .74);
+      H.line(R, [[x, y], [x + 1, y + 16]], n % 2 ? 'sun' : 'paper', 3);
+      if (n < 3) shape(H, R, [[x - 7, y + 13], [x + 8, y + 13], [x + 6, y + 20], [x - 6, y + 20]], n === 1 ? 'teal' : 'coral', .7, .65);
+      else { H.outline(R, ell(x, y + 17, 6, 9), 'sun', 2); H.line(R, [[x - 4, y + 19], [x + 4, y + 19]], 'blue', .7); }
+      H.dot(x, y - 1, 1.4, 'coral');
+    }
+  });
+  benchFrame(H, R, .23, 2.6, 1.34, 4.18, .88, 'teal');
+  basin(H, R, .29, 2.85, 1.16, 1.66, .9, 'paper');
+  bentTube(H, R, [[.75, 3.5, .9], [.75, 3.5, .32], [.4, 3.5, .2], [.4, 2.55, .2]], 2, 'blue');
+  metal(H, R, .28, 4.77, 1.15, 1.6, .9, .05, 'coral');
+  for (let n = 0; n < 7; n++) H.line(R, [H.p(.38, 4.88 + n * .2, .97), H.p(1.32, 4.88 + n * .2, .97)], 'paper', 1.2);
+  jug(H, R, .87, 5.45, 1, .7);
+  drape(H, R, .38, 6.13, .79, .5, .98, .4, 'paper');
+  vessel(H, R, .84, 4.75, .1, 13, 16, 'teal');
+  const [soapX, soapY] = H.p(.87, 6.05, .99);
+  oval(H, R, soapX, soapY, 9, 3.5, 'sun', .75);
+  shape(H, R, [[soapX - 5, soapY - 1], [soapX + 5, soapY - 1], [soapX + 4, soapY - 5], [soapX - 4, soapY - 5]], 'paper', 1, .6);
+  recessedFrame(H, R, 'nw', 10.0, 1.3, 1.65, 1.47, 'sun', P => {
+    shape(H, R, [P(.17, .17), P(1.13, .17), P(1.13, 1.28), P(.17, 1.28)], 'paper', 1, .5);
+    for (let n = 0; n < 3; n++) { const [x, y] = P(.4 + .25 * n, .45 + (n % 2) * .39); disk(H, R, x, y, 6, .8, n ? 'coral' : 'teal'); }
+  });
   for (let n = 0; n < 12; n++) shape(H, R, H.tile(n, 11.35, .86, .48, .03), n % 2 ? 'coral' : 'teal', .46, .55);
   cabinetFrame(H, R, 6.7, .3, 4.8, 1.2, .1, 3.25, 3, 'teal', (x, j, w, d, z, h, n) => {
     for (const level of [.68, 1.58, 2.4]) timber(H, R, x, j, w, d, level, .09, 'sun');
@@ -58,6 +94,18 @@ const room = world('istanbul-metal-tray', 'A circle comes clear', { floor: 'sun'
     if (n % 2) { H.line(R, [[x, y], [x + 2, y + 31]], 'sun', 2); oval(H, R, x + 2, y + 35, 9, 6, 'coral', .7); }
     else { H.line(R, [[x, y], [x, y + 8]], 'sun', 1.4); disk(H, R, x, y + 24, n === 2 ? 22 : 17, .86, n === 2 ? 'coral' : 'sun'); }
   });
+  timber(H, R, 2.75, 3.53, 4.77, 2.14, .33, .1, 'teal');
+  for (const i of [2.86, 4.35, 5.83]) {
+    metal(H, R, i, 3.7, 1.27, 1.37, .45, .33, 'blue');
+    drape(H, R, i + .1, 3.82, 1.08, 1.14, .8, .12, i < 4 ? 'coral' : 'paper');
+  }
+  shape(H, R, H.faceI(2.64, 6.12, 1.62, .68, 1.06), 'teal', .48, .7);
+  const [dhx, dhy] = H.p(3.42, 6.14, .87);
+  H.outline(R, ell(dhx, dhy, 8, 3), 'sun', 1.8);
+  metal(H, R, 5.05, 5.82, 1.26, .77, .71, .12, 'teal');
+  shape(H, R, H.tile(5.14, 5.88, 1.06, .6, .84), 'blue', .8, .5);
+  for (let n = 0; n < 3; n++) { const [x, y] = H.p(5.31 + n * .31, 6.11, .85); H.outline(R, ell(x, y - 3, 6, 4), 'sun', 1.5); }
+  for (const i of [2.68, 7.55]) { H.line(R, [H.p(i, 3.5, .3), H.p(i, 5.85, 1.03)], 'coral', 2.2); }
   benchFrame(H, R, 2.4, 3.3, 5.5, 2.8, 1.22, 'sun');
   const [standX, standY] = H.p(7.2, 4.4, 1.22);
   for (const dx of [-32, 32]) {
@@ -70,6 +118,13 @@ const room = world('istanbul-metal-tray', 'A circle comes clear', { floor: 'sun'
   H.line(R, [[standX - 35, standY + 6], [standX + 48, standY + 6]], 'blue', 3);
   H.line(R, [[standX - 35, standY + 5], [standX + 48, standY + 5]], 'sun', 1.3);
   for (let n = 0; n < 5; n++) H.dot(standX + 35 + n * 3, standY + 6, .8, 'paper');
+  for (const dx of [-34, 34]) {
+    H.outline(R, ell(standX + dx, standY - 41, 5, 5), 'blue', 1.4);
+    H.line(R, [[standX + dx - 8, standY - 41], [standX + dx + 8, standY - 41]], 'sun', 2.3);
+    for (let n = 0; n < 4; n++) H.line(R, [[standX + dx - 2, standY - 20 - n * 4], [standX + dx + 3, standY - 20 - n * 4]], 'blue', .8);
+  }
+  shape(H, R, [[standX - 18, standY + 4], [standX + 18, standY + 4], [standX + 14, standY - 4], [standX - 14, standY - 4]], 'teal', .8, 1);
+  H.line(R, [[standX - 12, standY], [standX + 12, standY]], 'paper', 1.3);
   metal(H, R, 3.25, 3.82, 1.3, 1.26, 1.24, .08, 'teal');
   shape(H, R, H.tile(3.38, 3.93, 1.02, .98, 1.33), 'blue', .6, .65);
   for (let n = 0; n < 3; n++) {
@@ -89,6 +144,19 @@ const room = world('istanbul-metal-tray', 'A circle comes clear', { floor: 'sun'
   metal(H, R, 1.55, 8.1, .55, .8, .7, .03, 'coral');
   for (let n = 0; n < 4; n++) H.dot(...H.p(1.65 + n * .1, 8.65, .74), 1.3, n === 2 ? 'teal' : 'sun');
   timber(H, R, 9.7, 2.7, 1.8, 1.8, .06, .18, 'sun');
+  for (const z of [.2, .34, .48]) timber(H, R, 9.3, 6.65, 1.68, 2.33, z, .11, 'sun');
+  benchFrame(H, R, 9.05, 6.4, 2.42, 3.38, .85, 'teal');
+  drape(H, R, 9.19, 6.56, 1.81, 2.74, .88, .25, 'paper');
+  const [wx, wy] = H.p(10.31, 7.28, .93);
+  oval(H, R, wx, wy, 22, 8, 'coral', .7); oval(H, R, wx, wy - 8, 22, 8, 'paper', 1); oval(H, R, wx, wy - 8, 8, 3, 'blue', .66);
+  H.line(R, [[wx - 20, wy], [wx - 20, wy - 8]], 'blue', .8);
+  for (let n = 0; n < 3; n++) { const [x, y] = H.p(9.44 + n * .49, 8.55, .91); shape(H, R, [[x - 6, y], [x + 7, y + 2], [x + 9, y - 18], [x - 3, y - 21]], n === 1 ? 'coral' : 'paper', n === 1 ? .5 : 1, .6); H.line(R, [[x, y - 17], [x - 1, y - 3]], 'teal', 1); }
+  const [tx, ty] = H.p(10.65, 9.07, .91);
+  H.outline(R, ell(tx, ty, 9, 5), 'sun', 3); H.line(R, [[tx + 4, ty + 4], [tx + 12, ty + 8], [tx + 18, ty + 4]], 'coral', 1.2);
+  metal(H, R, 3.65, 9.55, 1.95, 1.22, .05, .29, 'teal');
+  shape(H, R, H.tile(3.79, 9.67, 1.67, .94, .35), 'blue', .75, .5);
+  for (let n = 0; n < 4; n++) { const [x, y] = H.p(4.02 + n * .32, 10.1, .36); shape(H, R, [[x - 7, y], [x - 4, y - 17], [x + 8, y - 11], [x + 4, y + 3]], n % 2 ? 'sun' : 'coral', .7, .65); }
+  H.line(R, [H.p(3.97, 10.43, .39), H.p(4.35, 10.53, .45), H.p(4.95, 10.12, .67)], 'paper', 1.6);
   for (let n = 0; n < 3; n++) { metal(H, R, 9.82 + n * .08, 2.85 + n * .05, 1.32 - n * .17, 1.35 - n * .16, .24 + n * .24, .25, 'paper'); }
   drape(H, R, 10.1, 4.8, 1.1, .85, .28, .24, 'paper');
   taskLight(H, R, 2.55, 3.3, 1.25, 'coral', .8);

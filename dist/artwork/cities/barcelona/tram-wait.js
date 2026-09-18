@@ -1,6 +1,6 @@
 import { world, shape, oval, stroke, ell, actor } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
-import { surface, timber, metal, bentTube, slattedSeat, cushion } from '../materials.js';
+import { surface, timber, metal, bentTube, slattedSeat, cushion, vessel } from '../materials.js';
 import { boardFloor } from '../structure.js';
 
 const smooth=(a,b,t)=>{const x=Math.max(0,Math.min(1,(t-a)/(b-a)));return x*x*(3-2*x);};
@@ -34,6 +34,13 @@ function carriage(H,R,lift) {
     bentTube(H,R,[[x,j-.48,.28],[x,j+.25,1.08],[x,j+.5,.28]],2.4,'teal');
     bentTube(H,R,[[x,j+.48,.28],[x,j-.37,.95]],2,'teal');
   }
+  surface(H,R,[H.p(i-.33,j-.38,.3),H.p(i+.33,j-.38,.3),H.p(i+.27,j+.32,.4),H.p(i-.27,j+.32,.4)],'teal',.64,.7);
+  for(let n=0;n<5;n++)H.line(R,[H.p(i-.29+n*.14,j-.34,.31),H.p(i-.24+n*.12,j+.29,.41)],'paper',.6);
+  cushion(H,R,i-.25,j-.29,.48,.39,.34,.07,'coral');
+  for(const x of [i-.38,i+.38]) {
+    bentTube(H,R,[[x,j-.44,.4],[x,j-.5,.69],[x,j-.3,.94]],1.8,'teal');
+    H.line(R,[H.p(x,j-.43,.31),H.p(x,j-.43,.1)],'sun',2.1);
+  }
   surface(H,R,[H.p(i-.32,j-.25,.92),H.p(i+.32,j-.25,.92),H.p(i+.29,j+.33,.6),H.p(i-.29,j+.33,.6)],'sun',.48,.8);
   H.line(R,[H.p(i-.3,j-.26,.94),H.p(i+.31,j+.32,.61)],'paper',1.2);
   for(const x of [i-.31,i+.31]) H.dot(...H.p(x,j+.2,.9),2.4,'coral',1,{knock:true});
@@ -41,6 +48,12 @@ function carriage(H,R,lift) {
   for(const x of [i-.34,i+.34]) bentTube(H,R,[[x,j+.2,1.08],[x,j+.2+dy,z]],2.5,'teal');
   bentTube(H,R,[[i-.34,j+.2+dy,z],[i+.34,j+.2+dy,z]],5,'blue');
   H.line(R,[H.p(i+.28,j+.2+dy,z+.035),H.p(i+.04,j+.2+dy,z+.035)],'teal',1.2);
+  for(const x of [i-.3,i+.3]) {
+    const bow=[];for(let n=0;n<=12;n++){const a=n*Math.PI/12;bow.push(H.p(x,j-.24+Math.cos(a)*.25,.92+Math.sin(a)*.31));}
+    H.line(R,bow,'teal',1.7);
+  }
+  surface(H,R,[H.p(i-.31,j-.48,.97),H.p(i+.31,j-.48,.97),H.p(i+.31,j-.35,1.19),H.p(i-.31,j-.35,1.19)],'coral',.5,.6);
+  H.line(R,[H.p(i-.25,j-.37,1.2),H.p(i+.25,j-.37,1.2)],'paper',1.3);
   metal(H,R,i+.34,j+.16,.12,.15,.97,.22,lift>.95?'sun':'coral');
   bentTube(H,R,[[i-.22,j+.48,.26],[i+.22,j+.48,.26]],2.4,'coral');
   stroke(H,R,[H.p(i+.05,j+.13,.91),H.p(i+.18,j+.42,.77),H.p(i+.08,j+.48,.63)],'blue',2.6);
@@ -69,10 +82,29 @@ const room=world('barcelona-tram-wait','A seat in the shade',{wall:false,floor:'
     for(const a of [.08,2.36]) for(const z of [.55,2.77]) metal(H,R,x+a,1.15,.12,.13,z,.17,'blue');
   }
   surface(H,R,H.faceJ(1.24,1.15,2.2,.24,3.14),'teal',.12,.7);
-  surface(H,R,H.tile(.85,.65,8.97,2.55,3.62),'paper',1,1);
+  for(const j of [.77,2.91]) metal(H,R,1.05,j,8.6,.12,3.42,.19,'blue');
+  for(let n=0;n<7;n++) {
+    const x=.86+n*1.28;
+    surface(H,R,H.tile(x,.65,1.24,2.55,3.62),'teal',.16,.85);
+    surface(H,R,H.tile(x+.1,.76,.43,2.28,3.63),'paper',.88,.4);
+    metal(H,R,x,.68,.065,2.49,3.64,.04,'paper');
+    for(const j of [.78,2.99])H.dot(...H.p(x+.05,j,3.69),1.05,'blue');
+  }
+  metal(H,R,.81,.58,9.08,.17,3.49,.19,'teal');
+  metal(H,R,.82,3.1,9.06,.15,3.46,.14,'blue');
+  surface(H,R,H.tile(1.4,2.8,7.35,.19,3.47),'sun',.7,.6);
+  for(const i of [2,4.6,7.4])bentTube(H,R,[[i,1.03,3.13],[i,2.43,3.49],[i,2.89,3.49]],1.7,'paper');
   surface(H,R,H.faceI(.85,3.2,8.97,3.49,3.62),'teal',.7,1);
   for(let i=1;i<9.8;i+=1.35) {H.line(R,[H.p(i,.71,3.63),H.p(i,3.16,3.63)],'blue',.65);H.line(R,[H.p(i,.74,3.5),H.p(i,3.16,3.5)],'paper',1);}
   bentTube(H,R,[[9.67,3.18,3.51],[9.67,3.18,.16],[9.98,3.18,.13]],2.2,'blue');
+  surface(H,R,H.faceJ(1.27,3.19,2.22,.22,2.58),'teal',.15,.8);
+  for(const j of [3.2,5.4])metal(H,R,1.19,j,.11,.1,.08,2.56,'teal');
+  metal(H,R,1.17,3.15,.15,2.37,2.58,.14,'teal');
+  for(const j of [3.31,5.23])for(const z of [.39,2.36])metal(H,R,1.24,j,.16,.12,z,.14,'blue');
+  surface(H,R,H.faceJ(1.36,3.65,1.25,1.13,2.3),'paper',.91,.6);
+  for(const j of [3.86,4.26,4.57])H.line(R,[H.p(1.38,j,1.29),H.p(1.38,j+.17,2.1)],'teal',1.4);
+  H.line(R,[H.p(1.39,3.79,1.49),H.p(1.39,4.69,1.84)],'coral',2.2);
+  for(const j of [3.86,4.29,4.67])H.dot(...H.p(1.4,j,1.5+(j-3.86)*.39),2.1,'sun',1,{knock:true});
   slattedSeat(H,R,2.05,2.04,5.5,.05,'sun',.75);
   for(const i of [3.84,5.62]) bentTube(H,R,[[i,2.75,.76],[i,2.72,1.05],[i,2.11,1.08]],2.6,'teal');
   timber(H,R,2.05,2.36,5.5,.13,.72,.085,'paper');
@@ -82,7 +114,13 @@ const room=world('barcelona-tram-wait','A seat in the shade',{wall:false,floor:'
   H.line(R,[H.p(2.65,4.39,.84),H.p(3.24,4.39,.84)],'paper',2);
   bentTube(H,R,[[1.67,3.73,.72],[1.55,3.53,1.47],[1.63,3.4,1.57],[1.8,3.4,1.55]],2,'sun');
   H.line(R,[H.p(1.58,3.62,1.03),H.p(1.69,3.62,1.03)],'coral',3.5);
-  metal(H,R,10.23,.8,1.35,1.7,.08,3.14,'teal');
+  metal(H,R,10.17,.73,1.47,1.87,.04,.16,'blue');
+  metal(H,R,10.23,.8,1.35,1.7,.2,3.02,'teal');
+  for(const j of [.92,2.26])metal(H,R,10.24,j,1.35,.045,.21,2.97,'paper');
+  surface(H,R,H.faceJ(11.6,1.08,1.17,.49,2.82),'blue',.66,.8);
+  for(let n=0;n<8;n++)H.line(R,[H.p(11.62,1.23,.74+n*.18),H.p(11.62,2.1,.74+n*.18)],'teal',2.1);
+  metal(H,R,11.6,1.63,.05,.13,2.44,.14,'sun');
+  bentTube(H,R,[[10.23,.89,2.74],[9.9,.89,2.74],[9.9,.89,.17],[9.64,1.03,.13]],1.6,'blue');
   surface(H,R,H.faceI(10.4,2.51,1.01,1.48,2.65),'paper',1,.8);
   for(const [a,b,c,d] of [[10.5,1.68,11.2,2.48],[10.56,2.42,11.28,1.8],[10.63,1.63,11.3,2.06]]) H.line(R,[H.p(a,2.53,b),H.p(c,2.53,d)],'teal',1.4);
   for(const x of [10.61,11.03,11.25]) H.dot(...H.p(x,2.54,1.96),2,'coral');
@@ -101,6 +139,35 @@ const room=world('barcelona-tram-wait','A seat in the shade',{wall:false,floor:'
   for(let n=0;n<7;n++)H.line(R,[H.p(10+n*.19,7.26,.23),H.p(10+n*.19,7.97,.23)],'blue',1.1);
   const leaf=H.p(4.87,1.2,.34);shape(H,R,[[leaf[0],leaf[1]],[leaf[0]-6,leaf[1]-4],[leaf[0]-1,leaf[1]-11],[leaf[0]+4,leaf[1]-6]],'coral',.6,.6);
   H.line(R,[[leaf[0]-1,leaf[1]-10],[leaf[0],leaf[1]+1]],'sun',.7);
+  for(const j of [6.01,7.02]) {
+    bentTube(H,R,[[.88,j,.08],[.88,j,1.19],[1.81,j,1.19],[1.81,j,.08]],2.8,'teal');
+    metal(H,R,.73,j-.12,.34,.31,.04,.07,'blue');
+    metal(H,R,1.66,j-.12,.34,.31,.04,.07,'blue');
+  }
+  surface(H,R,H.faceJ(1.13,6.13,.72,.23,1.07),'coral',.56,.8);
+  for(const z of [.42,.81])H.line(R,[H.p(1.15,6.2,z),H.p(1.15,6.78,z)],'paper',2.1);
+  bentTube(H,R,[[1.14,6.38,1.06],[1.14,6.36,1.31],[1.14,6.66,1.31],[1.14,6.68,1.06]],1.7,'blue');
+  const bag=H.p(2.02,5.94,.06);
+  surface(H,R,[[bag[0]-11,bag[1]],[bag[0]+12,bag[1]],[bag[0]+10,bag[1]-31],[bag[0]-8,bag[1]-32]],'teal',.64,.9);
+  H.line(R,[[bag[0]-6,bag[1]-25],[bag[0]+7,bag[1]-25],[bag[0]+7,bag[1]-9],[bag[0]-6,bag[1]-9],[bag[0]-6,bag[1]-25]],'sun',.8);
+  stroke(H,R,[[bag[0]-6,bag[1]-31],[bag[0]-6,bag[1]-39],[bag[0]+6,bag[1]-39],[bag[0]+7,bag[1]-31]],'blue',2);
+  const umb=H.p(1.82,8.42,.08);
+  stroke(H,R,[[umb[0],umb[1]],[umb[0]+3,umb[1]-48],[umb[0]+8,umb[1]-49],[umb[0]+9,umb[1]-44]],'blue',1.8);
+  shape(H,R,[[umb[0],umb[1]-3],[umb[0]-6,umb[1]-14],[umb[0]+2,umb[1]-40],[umb[0]+7,umb[1]-13]],'coral',.65,.7);
+  H.line(R,[[umb[0]-3,umb[1]-19],[umb[0]+5,umb[1]-18]],'sun',2);
+  vessel(H,R,1.94,8.52,.06,13,12,'teal');
+  for(const x of [3.17,6.89]) {
+    bentTube(H,R,[[x,8.36,.05],[x,8.36,1.01],[x+.43,8.36,1.01],[x+.43,8.36,.05]],2.2,'teal');
+    metal(H,R,x-.12,8.19,.25,.36,.04,.07,'blue');
+  }
+  timber(H,R,3.04,8.22,4.51,.34,.96,.16,'sun');
+  H.line(R,[H.p(3.39,8.57,1.13),H.p(4.42,8.57,1.13)],'paper',2);
+  const pack=H.p(5.89,8.37,1.14);
+  surface(H,R,[[pack[0]-12,pack[1]],[pack[0]+10,pack[1]],[pack[0]+9,pack[1]-19],[pack[0]-10,pack[1]-21]],'sun',.6,.7);
+  stroke(H,R,[[pack[0]-8,pack[1]-20],[pack[0]-6,pack[1]-30],[pack[0]+6,pack[1]-29],[pack[0]+7,pack[1]-19]],'blue',1.2);
+  H.line(R,[[pack[0]-7,pack[1]-9],[pack[0]+7,pack[1]-9]],'coral',2);
+  surface(H,R,H.tile(9.8,8.58,1.55,.69,.085),'blue',.45,.5);
+  for(let n=0;n<5;n++)H.line(R,[H.p(9.92+n*.26,8.64,.09),H.p(9.92+n*.26,9.19,.09)],'paper',.8);
   cushion(H,R,7,4.91,1.45,1.28,.05,.035,'teal');
 },(H,R,t)=>{
   const u=((t%24)+24)%24,lift=smooth(4.8,9.6,u)*(1-smooth(14.4,22,u));

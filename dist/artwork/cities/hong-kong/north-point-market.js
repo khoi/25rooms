@@ -1,7 +1,7 @@
-import { surface, metal, bentTube, drape, benchFrame } from '../materials.js';
+import { surface, timber, vessel, metal, bentTube, drape, benchFrame } from '../materials.js';
 import { masonry, cabinetFrame, rackFrame, basin as washBasin } from '../structure.js';
 import { caster } from '../joinery.js';
-import { shallowTray, slattedCrate } from '../furnishings.js';
+import { shallowTray, slattedCrate, coiledLine, handTool } from '../furnishings.js';
 import { TAU, actor, cycle, ell, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -202,6 +202,13 @@ function crate(H, R, i, j, w, d, z, kind) {
   }
 }
 
+function foldedBags(H, R, i, j, z) {
+  for (let n = 0; n < 5; n++) {
+    surface(H, R, H.tile(i + n * 0.035, j, 0.69, 0.52, z + n * 0.025), 'paper', 1);
+    H.line(R, [H.p(i + 0.15, j + 0.3, z + n * 0.025 + 0.01), H.p(i + 0.56, j + 0.3, z + n * 0.025 + 0.01)], 'teal', 0.5);
+  }
+}
+
 function basket(H, R, x, y) {
   for (let k = 0; k < 4; k++) leafy(H, R, x - 12 + k * 8, y + 12, 0.78);
   shape(
@@ -301,6 +308,14 @@ const room = world(
         2,
         'teal'
       );
+    for (const i of [2.43, 6.36, 10.52]) {
+      bentTube(H, R, [[i, 0.7, 0.16], [i, 3.46, 0.16], [i, 0.7, 1.67]], 2.6, 'sun');
+      for (const j of [0.86, 2.81]) metal(H, R, i - 0.14, j, 0.32, 0.37, 0.04, 0.13, 'teal');
+    }
+    for (const i of [3.33, 8.21]) {
+      slattedCrate(H, R, i, 1.89, 1.28, 0.95, 0.06, 0.52, 'sun');
+      foldedBags(H, R, i + 0.14, 2.07, 0.63);
+    }
     for (let row = 0; row < 3; row++) {
       const j = 0.7 + row * 1.01,
         z = 1.67 - row * 0.47;
@@ -342,6 +357,12 @@ const room = world(
       'coral',
       1.3
     );
+    for (const i of [7.58, 8.66]) metal(H, R, i, 4.69, 0.17, 0.17, 1.42, 0.15, 'sun');
+    surface(H, R, H.tile(7.54, 4.65, 1.27, 0.68, 1.63), 'teal', 0.3);
+    metal(H, R, 8.74, 5.33, 0.11, 0.11, 1.24, 0.25, 'coral');
+    for (let n = 0; n < 3; n++) metal(H, R, 9.64 + n * 0.28, 4.42, 0.18, 0.2, 1.24, 0.16 + n * 0.05, 'teal');
+    bentTube(H, R, [[10.2, 4.41, 1.24], [10.2, 4.41, 2.34], [10.63, 4.41, 2.34]], 1.6, 'sun');
+    foldedBags(H, R, 10.21, 4.51, 1.9);
     shallowTray(H, R, 9.47, 4.59, 1.08, 0.84, 1.25, 'sun');
     for (let n = 0; n < 6; n++) H.dot(...H.p(9.65 + (n % 3) * 0.27, 4.83 + Math.floor(n / 3) * 0.31, 1.45), 2.1, 'teal');
     benchFrame(H, R, 5.01, 7.43, 2.76, 1.43, 0.83, 'sun');
@@ -361,6 +382,17 @@ const room = world(
       'teal'
     );
     washBasin(H, R, 10.33, 6.3, 1.16, 1.58, 0.69);
+    cabinetFrame(H, R, 2.19, 9.41, 2.08, 1.32, 0.05, 0.66, 2, 'teal', (i, j, w, d, z, h, n) => {
+      if (n) coiledLine(H, R, i + 0.42, j + 0.44, z + 0.11, 9, 'sun');
+      else foldedBags(H, R, i + 0.07, j + 0.18, z + 0.12);
+    });
+    shallowTray(H, R, 2.34, 9.56, 1.75, 1.01, 0.74, 'paper');
+    handTool(H, R, 2.92, 10.01, 0.9, 'scissors', 'coral');
+    coiledLine(H, R, 3.67, 10.08, 0.92, 8, 'sun');
+    vessel(H, R, 10.83, 7.01, 0.06, 12, 16, 'teal');
+    bentTube(H, R, [[10.88, 7.03, 0.78], [10.88, 7.03, 0.43], [11.12, 7.03, 0.24]], 2, 'paper');
+    bentTube(H, R, [[11.56, 7.88, 0.06], [11.56, 7.88, 1.8], [11.14, 7.88, 2.01]], 1.5, 'sun');
+    drape(H, R, 11.12, 7.84, 0.5, 0.3, 1.98, 0.56, 'paper');
     for (let n = 0; n < 18; n++) H.line(R, [H.p(0.57 + n * 0.52, 10.93, 0.02), H.p(0.57 + n * 0.52, 11.2, 0.02)], 'blue', 0.9);
     drape(H, R, 5.21, 8.46, 0.62, 0.42, 0.86, 0.45, 'paper');
   },

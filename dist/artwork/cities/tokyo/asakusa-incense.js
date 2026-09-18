@@ -30,7 +30,16 @@ function bowl(H, R, i, j, z, radius = 14) {
 }
 
 function burner(H, R) {
-  box(H, R, 4.65, 5.02, 3.2, 2.75, .02, .19, 'paper', .85);
+  box(H, R, 4.52, 4.89, 3.46, 3.01, .02, .1, 'blue', .5);
+  box(H, R, 4.65, 5.02, 3.2, 2.75, .12, .09, 'paper', .95);
+  for (const i of [4.85, 7.55]) for (const j of [5.18, 7.45]) {
+    box(H, R, i, j, .18, .15, .22, .045, 'sun', .7);
+    line(H, R, [H.p(i, j, .28), H.p(i + .18, j + .15, .28)], .6);
+  }
+  const [ux, uy] = H.p(6.25, 6.25, .5);
+  oval(H, R, ux, uy, 33, 14, 'blue', .7);
+  oval(H, R, ux, uy - 5, 29, 12, 'teal', .65);
+  for (const dx of [-26, 26]) stroke(H, R, [[ux + dx, uy], [ux + dx * 1.35, uy - 18], [ux + dx * 1.8, uy - 28]], 'teal', 5);
   for (const [i, j] of [[5.15, 5.5], [7.22, 5.5], [5.25, 7.1], [7.12, 7.1]]) {
     const [x, y] = H.p(i, j, .24);
     shape(H, R, [[x - 5, y], [x + 5, y], [x + 8, y - 25], [x - 6, y - 25]], 'teal', .65, .75);
@@ -45,6 +54,12 @@ function burner(H, R) {
     H.dot(x + dx, y + 23, 1.8, 'sun', .65);
   }
   for (const side of [-1, 1]) stroke(H, R, [[x + side * 54, y + 8], [x + side * 72, y - 4], [x + side * 75, y + 14], [x + side * 57, y + 20]], 'teal', 3.5);
+  for (const dx of [-32, 0, 32]) {
+    const seal = [[x + dx - 8, y + 16], [x + dx, y + 12], [x + dx + 8, y + 16], [x + dx + 5, y + 27], [x + dx - 5, y + 27]];
+    shape(H, R, seal, 'sun', .4, .5);
+    line(H, R, [[x + dx - 3, y + 18], [x + dx + 3, y + 24]], .7, 'teal');
+    line(H, R, [[x + dx + 3, y + 18], [x + dx - 3, y + 24]], .7, 'teal');
+  }
   for (let k = 0; k < 18; k++) {
     const dx = (k % 6) * 12 - 32, dy = Math.floor(k / 6) * 9 - 7;
     line(H, R, [[x + dx, y + dy], [x + dx + (k % 3 - 1) * 2, y + dy - 18 - k % 4 * 3]], 1.1, k % 3 ? 'coral' : 'blue', .7);
@@ -159,17 +174,27 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
     shape(H, R, H.faceI(i, .1, 2.9, .7, 3.03), 'blue', .73, .8);
     for (let x = i + .13; x < i + 2.8; x += .2) line(H, R, [H.p(x, .15, .75), H.p(x, .15, 2.97)], 1.1, 'sun', .45);
   }
+  for (let i = .9; i < 11.25; i += .47) {
+    box(H, R, i, .18, .13, 1.88, 3.42, .16, 'sun', .5);
+    box(H, R, i - .04, 1.81, .21, .25, 3.4, .2, 'coral', .7);
+  }
   box(H, R, .7, .4, 10.8, .7, 3.66, .17, 'coral', .8);
   roof(H, R, .55, .12, 10.8, 2.15, 3.65, .88);
   box(H, R, 7.1, 1.05, 2.25, 1, .44, .92, 'coral', .58);
   box(H, R, 6.99, .96, 2.46, 1.15, 1.35, .12, 'sun', .32);
   for (let i = 7.12; i < 9.35; i += .2) line(H, R, [H.p(i, 1, 1.5), H.p(i, 2.02, 1.5)], 2, 'blue');
   for (let k = 0; k < 5; k++) line(H, R, [H.p(7.3 + k * .39, 2.07, .53), H.p(7.3 + k * .39, 2.07, 1.25)], .6);
-  box(H, R, .45, 3.25, 1.05, 3.95, .04, 2.15, 'coral', .36);
+  box(H, R, .45, 3.25, 1.05, 3.95, .04, 2.15, 'blue', .65);
+  for (const j of [3.23, 7.08]) box(H, R, .44, j, 1.1, .14, .02, 2.2, 'coral', .65);
+  box(H, R, .39, 3.2, 1.17, 4.06, .02, .16, 'coral', .7);
   box(H, R, .33, 3.15, 1.29, 4.14, 2.2, .14, 'blue', .62);
   for (let row = 0; row < 5; row++) for (let col = 0; col < 6; col++) {
     const j = 3.36 + col * .62, z = .18 + row * .385;
-    shape(H, R, H.faceJ(1.515, j, .56, z, z + .33), 'sun', .23, .55);
+    if (row === 2 && col === 3) {
+      box(H, R, 1.35, j, .59, .56, z, .06, 'sun', .5);
+      box(H, R, 1.87, j, .09, .56, z, .33, 'coral', .6);
+      for (let n = 0; n < 4; n++) box(H, R, 1.42, j + .06, .37, .42, z + .07 + n * .035, .025, 'paper', 1);
+    } else shape(H, R, H.faceJ(1.515, j, .56, z, z + .33), 'sun', .23, .55);
     const [x, y] = H.p(1.53, j + .29, z + .17);
     oval(H, R, x, y, 2.2, 1.5, 'blue', .8);
   }
@@ -189,7 +214,15 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
       line(H, R, [[x - 4, y + 1], [x + 4, y + 2]], .7, 'coral', .45);
     }
   }
-  for (const [i, j] of [[4.25, 4.65], [8.2, 4.65], [4.25, 8.1], [8.2, 8.1]]) box(H, R, i, j, .2, .2, .03, 3.78, 'blue', .6);
+  for (const [i, j] of [[4.25, 4.65], [8.2, 4.65], [4.25, 8.1], [8.2, 8.1]]) {
+    box(H, R, i - .14, j - .14, .48, .48, .03, .19, 'paper', .9);
+    box(H, R, i, j, .2, .2, .22, 3.56, 'blue', .65);
+    box(H, R, i - .09, j - .09, .38, .38, 3.39, .18, 'teal', .55);
+    box(H, R, i - .16, j - .16, .52, .52, 3.58, .14, 'paper', .8);
+    for (const side of [-1, 1]) shape(H, R, [H.p(i + .1, j + .1, 3.19), H.p(i + .1 + side * .64, j + .1, 3.67), H.p(i + .1, j + .1, 3.67)], 'teal', .6, .7);
+  }
+  box(H, R, 4.18, 4.61, 4.28, .27, 3.65, .13, 'teal', .7);
+  box(H, R, 4.18, 4.61, .27, 3.69, 3.65, .13, 'teal', .7);
   for (const i of [4.2, 8.25]) {
     line(H, R, [H.p(i, 5.2, .7), H.p(i, 7.55, .7)], 1.8, 'teal');
     for (const j of [5.2, 7.55]) line(H, R, [H.p(i, j, .03), H.p(i, j, .7)], 1.8, 'teal');
@@ -258,7 +291,12 @@ const room = world('tokyo-asakusa-incense', 'Asakusa · Incense before the crowd
 });
 
 room.over = (H, R) => {
-  roof(H, R, 4.06, 4.45, 4.3, 3.9, 3.78, .37, true);
+  roof(H, R, 4.06, 4.45, 4.3, 1.88, 3.78, .37, true);
+  for (const i of [4.2, 8.25]) {
+    box(H, R, i, 6.25, .23, 2.12, 3.68, .14, 'teal', .65);
+    H.line(R, [H.p(i + .11, 8.1, 3.1), H.p(i + .11, 7.46, 3.73)], 'teal', 4);
+  }
+  box(H, R, 4.19, 8.13, 4.3, .2, 3.68, .14, 'teal', .65);
   line(H, R, [H.p(4.25, 8.1, .22), H.p(4.25, 8.1, 3.8)], 3.5, 'blue', .8);
 };
 

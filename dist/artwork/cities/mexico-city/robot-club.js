@@ -1,8 +1,8 @@
-import { world, box, shape, stroke, oval, actor } from '../../worlds/common.js';
+import { world, box, shape, stroke, oval, actor, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 import { surface, timber, metal, benchFrame, bentTube, cushion, floorLight, spokedWheel } from '../materials.js';
 import { cabinetFrame, masonry } from '../structure.js';
-import { windowBay, recessedFrame } from '../joinery.js';
+import { windowBay, recessedFrame, taskLight } from '../joinery.js';
 
 const smooth=v=>{const q=Math.max(0,Math.min(1,v));return q*q*(3-2*q);};
 const rest={...FIGURES.clips.idle.keys[0][1]};
@@ -23,12 +23,41 @@ function diagram(H,R,P,x,y,w,h){
   H.line(R,[P(x+.18,y+.14),P(x+w-.17,y+.14)],'coral',.8);
 }
 const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'paper',wallTone:.8,height:3.9,head:28,floor:'paper',tone:.25,pattern:'tiles',accent:'coral'},(H,R)=>{
+  for(const side of ['nw','ne']) {
+    H.line(R,[wallPt(H,side,.2,3.65,-.16),wallPt(H,side,11.7,3.65,-.16)],'teal',2.3);
+    for(const pos of [1,4.7,8.4,11.4]) H.line(R,[wallPt(H,side,pos,3.57,-.13),wallPt(H,side,pos,3.72,-.13)],'blue',1.4);
+  }
   masonry(H,R,'nw',.1,11.8,0,.61,'teal',.22);
   windowBay(H,R,'nw',1.1,5.1,1.84,1.68,{divisions:3,ink:'teal',view:P=>{
     for(let k=0;k<4;k++) surface(H,R,[P(.3+k*1.14,.2),P(1.08+k*1.14,.2),P(1.08+k*1.14,.66),P(.3+k*1.14,.9)],'sun',.25,.5);
   }});
   recessedFrame(H,R,'ne',1.0,5.2,1.75,1.72,'sun',P=>{diagram(H,R,P,.16,.15,2.26,1.4);diagram(H,R,P,2.68,.15,2.26,1.4);});
   metal(H,R,1.05,.15,5.25,.3,3.59,.13,'paper');
+  benchFrame(H,R,.24,1.21,1.55,5.32,1.06,'teal');
+  for(const y of [1.42,3.11,4.8]) {
+    timber(H,R,.4,y,1.16,1.39,.31,.1,'sun');
+    surface(H,R,H.faceJ(1.77,y,1.4,.37,.83),'blue',.64);
+    for(let k=0;k<2;k++) {
+      box(H,R,.5,y+.1+k*.59,1.21,.48,.43,.25,'paper',1);
+      H.line(R,[H.p(1.73,y+.25+k*.59,.58),H.p(1.73,y+.45+k*.59,.58)],'coral',1.4);
+    }
+  }
+  surface(H,R,H.tile(.4,1.41,1.2,4.88,1.085),'sun',.24,.6);
+  for(let n=0;n<3;n++) {
+    const y=1.66+n*1.14;
+    metal(H,R,.48,y,1.02,.86,1.1,.08,'blue');
+    const a=H.p(.7,y+.13,1.24),b=H.p(1.29,y+.64,1.72),c=H.p(.81,y+.62,1.9);
+    link(H,R,a,b,5,n===1?'coral':'paper');link(H,R,b,c,4,'sun');
+    pin(H,R,a,2.8);pin(H,R,b,2.8);pin(H,R,c,2.1);
+    if(n===1) surface(H,R,[[b[0]-4,b[1]-3],[b[0]+4,b[1]-3],[b[0]+3,b[1]+5],[b[0]-3,b[1]+5]],'teal',.5,.5);
+  }
+  surface(H,R,H.tile(.5,5.38,1.0,.69,1.1),'paper',1,.5);
+  for(let n=0;n<4;n++) H.line(R,[H.p(.61,5.49+n*.13,1.12),H.p(1.33,5.49+n*.13,1.12)],n===2?'coral':'teal',.7);
+  taskLight(H,R,.66,5.0,1.1,'coral',.3);
+  bentTube(H,R,[[.2,5.88,1.13],[.2,5.88,1.61],[.2,6.41,1.61]],1.5,'teal');
+  metal(H,R,.15,6.37,.24,.44,1.35,.38,'paper');
+  for(const y of [6.49,6.64]) H.dot(...H.p(.405,y,1.54),1.3,'blue');
+
   for(const i of [1.45,5.6]) metal(H,R,i,.12,.12,.33,3.36,.22,'teal');
   cabinetFrame(H,R,7.24,.44,4.09,1.44,.14,3.35,3,'teal',(i,j,w,d,z,h,n)=>{
     for(let row=0;row<3;row++) {
@@ -51,6 +80,18 @@ const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'pap
       }
     }
   });
+  benchFrame(H,R,2.38,.48,4.53,1.28,1.03,'paper');
+  for(const x of [2.57,4.02,5.47]) {
+    box(H,R,x,.64,1.11,.95,.39,.31,'teal',.4);
+    H.line(R,[H.p(x+.32,1.6,.55),H.p(x+.77,1.6,.55)],'paper',1.6);
+  }
+  surface(H,R,H.tile(2.6,.69,1.59,.82,1.05),'blue',.54,.6);
+  for(let n=0;n<3;n++) spokedWheel(H,R,...H.p(2.92+n*.46,1.16,1.08),6+n*2,n===1?'sun':'paper',.2,.52);
+  metal(H,R,4.39,.77,.97,.68,1.05,.22,'blue');
+  for(let n=0;n<3;n++) oval(H,R,...H.p(4.57+n*.25,1.23,1.31),2.7,1.8,n===1?'sun':'coral',.68);
+  stroke(H,R,[H.p(5.2,1.11,1.31),H.p(5.7,1.47,1.09),H.p(6.16,1.34,1.08),H.p(6.38,.9,1.09)],'blue',1.5);
+  box(H,R,6.32,.8,.22,.19,1.09,.09,'paper',1);
+  for(const x of [6.38,6.47]) H.line(R,[H.p(x,.8,1.19),H.p(x,.66,1.19)],'blue',1.2);
   benchFrame(H,R,3.0,4.38,5.5,3.07,.88,'sun');
   for(const y of [4.63,7.15]) metal(H,R,3.2,y,5.04,.12,.29,.12,'teal');
   surface(H,R,H.tile(3.19,4.57,5.12,2.68,.9),'teal',.2);
@@ -58,11 +99,30 @@ const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'pap
   for(const x of [3.08,8.27]) timber(H,R,x,4.5,.12,2.9,.9,.11,'sun');
   metal(H,R,3.75,5.0,1.05,1.03,.91,.13,'teal');
   for(const x of [3.88,4.61]) for(const y of [5.14,5.84]) pin(H,R,H.p(x,y,1.05),2.2);
-  box(H,R,4.11,5.2,.44,.5,1.04,.33,'blue',.66);
+  oval(H,R,...H.p(4.31,5.47,1.1),17,8,'blue',.82);
+  oval(H,R,...H.p(4.31,5.47,1.14),13,6,'paper',1);
+  for(let n=0;n<8;n++) {
+    const a=n*Math.PI/4;
+    pin(H,R,H.p(4.31+Math.cos(a)*.4,5.47+Math.sin(a)*.4,1.15),1.45);
+  }
+  box(H,R,4.11,5.2,.44,.5,1.16,.21,'blue',.66);
   for(const x of [4.05,4.53]) metal(H,R,x,5.22,.09,.4,1.29,.31,'teal');
   surface(H,R,H.tile(6.35,5.18,.74,.83,.925),'blue',.73);
   surface(H,R,H.tile(6.43,5.27,.58,.64,.93),'sun',.3,.6);
   for(const [x,y] of [[6.35,5.18],[7.04,5.18],[6.35,5.93],[7.04,5.93]]) box(H,R,x,y,.1,.11,.94,.12,'coral',.55);
+  surface(H,R,H.tile(7.16,4.72,.85,.85,.94),'paper',1,.55);
+  const wheel=H.p(7.59,5.09,.965);
+  spokedWheel(H,R,...wheel,11,'coral',.3,.5);
+  for(let k=0;k<5;k++) H.line(R,[[wheel[0]+Math.cos(k*.4)*15,wheel[1]+Math.sin(k*.4)*8],[wheel[0]+Math.cos(k*.4)*19,wheel[1]+Math.sin(k*.4)*10]],'blue',.65);
+  metal(H,R,5.15,6.44,1.74,.49,.94,.09,'teal');
+  for(let n=0;n<4;n++) {
+    const x=5.28+n*.4;
+    surface(H,R,H.tile(x,6.51,.26,.3,1.04),'paper',1,.45);
+    pin(H,R,H.p(x+.13,6.66,1.06),n===1?3:2);
+  }
+  surface(H,R,[H.p(3.34,6.37,.93),H.p(3.8,6.37,.93),H.p(3.8,6.96,.93),H.p(3.34,6.96,.93)],'paper',1,.55);
+  link(H,R,H.p(3.48,6.5,.96),H.p(3.62,6.81,.96),3,'coral');
+  for(let k=0;k<4;k++) H.line(R,[H.p(5.01+k*.5,7.26,.99),H.p(5.01+k*.5,7.26,1.065)],'blue',.75);
   metal(H,R,7.55,6.3,.38,.59,.94,.14,'blue');
   H.line(R,[H.p(7.61,6.9,.94),H.p(7.73,6.9,1.16)],'paper',1);
   benchFrame(H,R,.66,8.1,2.69,1.67,.67,'teal');
@@ -71,9 +131,17 @@ const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'pap
   for(const p of pts) pin(H,R,p,3);
   const gear=H.p(2.64,8.47,.71);spokedWheel(H,R,...gear,9,'sun',0,.52);spokedWheel(H,R,gear[0]+13,gear[1]+5,6,'teal',0,.52);
   box(H,R,1.15,9.34,.56,.31,.7,.12,'paper',1);
-  cushion(H,R,9.44,8.5,1.42,1.27,.05,.13,'coral');
-  box(H,R,9.68,8.74,.87,.68,.19,.055,'paper',1);
-  H.line(R,[H.p(9.83,9.37,.26),H.p(10.42,8.94,.26)],'sun',2.2);
+  benchFrame(H,R,9.2,8.35,1.95,1.55,.56,'teal');
+  cushion(H,R,9.44,8.5,1.42,1.27,.57,.13,'coral');
+  box(H,R,9.68,8.74,.87,.68,.71,.055,'paper',1);
+  for(const x of [9.35,10.82]) bentTube(H,R,[[x,8.38,.55],[x,8.38,1.26],[x,8.64,1.42]],2.2,'teal');
+  surface(H,R,H.faceI(9.35,8.62,1.47,1.0,1.41),'sun',.4);
+  surface(H,R,[H.p(10.71,8.73,1.42),H.p(11.13,8.73,1.42),H.p(11.26,8.95,.52),H.p(10.7,8.95,.58)],'paper',1,.7);
+  for(let n=0;n<3;n++) H.line(R,[H.p(10.78+n*.12,8.76,1.37),H.p(10.78+n*.15,8.97,.62)],'coral',.7);
+  surface(H,R,[H.p(9.5,9.6,.12),H.p(10.37,9.6,.12),H.p(10.28,9.6,.67),H.p(9.58,9.6,.67)],'sun',.4,.6);
+  bentTube(H,R,[[9.65,9.61,.64],[9.68,9.61,.86],[10.12,9.61,.86],[10.15,9.61,.64]],1.5,'blue');
+
+  H.line(R,[H.p(9.83,9.37,.78),H.p(10.42,8.94,.78)],'sun',2.2);
   box(H,R,10.76,8.85,.28,.35,.03,.54,'teal',.58);
   oval(H,R,...H.p(10.9,9.02,.61),4,1.7,'blue',.8);
   recessedFrame(H,R,'nw',7.35,3.36,1.81,1.38,'coral',P=>{
@@ -84,6 +152,14 @@ const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'pap
   timber(H,R,.24,10.25,1.1,1.18,.09,.15,'sun');
   const b=H.p(.78,10.77,.25),a=H.p(.78,10.77,.91),c=H.p(1.35,10.77,1.2);
   link(H,R,b,a,6,'paper');link(H,R,a,c,5,'paper');surface(H,R,[[a[0]-4,a[1]-4],[a[0]+4,a[1]-4],[a[0]+4,a[1]+4],[a[0]-4,a[1]+4]],'coral',.5);
+  for(let n=0;n<3;n++) {
+    const x=1.01+n*.66;
+    box(H,R,x,8.13,.53,.23,.71,.11,'paper',1);
+    pin(H,R,H.p(x+.25,8.25,.83),2.1);
+  }
+  timber(H,R,.89,8.3,2.16,1.16,.23,.1,'sun');
+  for(let n=0;n<2;n++) box(H,R,1.0+n*1.04,8.4,.91,.91,.34,.2,n?'coral':'paper',.5);
+  const gauge=H.p(2.7,9.36,.73);oval(H,R,...gauge,7,4,'paper',1);H.line(R,[[gauge[0]-5,gauge[1]+1],[gauge[0]+4,gauge[1]-2]],'teal',1);
   floorLight(H,5.7,5.4,120,.4);
 },(H,R,t)=>{
   const u=((t%18)+18)%18;
@@ -96,7 +172,16 @@ const room=world('mexico-city-robot-club','The arm reaches the block',{wall:'pap
   const elbow=[mx-dz/d*h,5.45,mz+dx/d*h];
   const B=H.p(...b),E=H.p(...elbow),T=H.p(...end);
   H.tint(H.tile(4.5,5.65,2.41,.45,.925),'blue',.17);
+  const rear=p=>[p[0]+5,p[1]-3];
+  link(H,R,rear(B),rear(E),8,'teal');link(H,R,rear(E),rear(T),6,'teal');
+  for(const p of [B,E,T]) link(H,R,p,rear(p),4,'blue');
   link(H,R,B,E,11);link(H,R,E,T,9);
+  for(const [a,b] of [[B,E],[E,T]]) for(const f of [.23,.72]) {
+    const q=[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];
+    oval(H,R,...q,2.2,1.8,'blue',.65);oval(H,R,q[0]-.4,q[1]-.4,1.1,.8,'paper',1);
+  }
+  stroke(H,R,[[B[0]+2,B[1]+3],[E[0]+3,E[1]+6],[T[0],T[1]+5]],'blue',1.3);
+
   const back=H.p(b[0]-(elbow[0]-b[0])*.34,5.45,b[2]-(elbow[2]-b[2])*.34);
   link(H,R,B,back,7,'teal');oval(H,R,...back,7,6,'blue',.75);
   for(const p of [B,E,T]) pin(H,R,p,p===E?5:4.5);

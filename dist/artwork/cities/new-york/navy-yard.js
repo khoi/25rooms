@@ -1,5 +1,5 @@
 import { taskLight } from '../joinery.js';
-import { shallowTray, handTool } from '../furnishings.js';
+import { shallowTray, handTool, foldedCloth, boundBook, satchel } from '../furnishings.js';
 import { world, shape, stroke, actor, bottle, cycle, wallPt, ell } from '../../worlds/common.js';
 import { surface, timber, metal, vessel, bentTube, drape, benchFrame, pendant, floorLight } from '../materials.js';
 import { FIGURES } from '../../drawings.js';
@@ -232,6 +232,14 @@ function workshopArchitecture(H, R) {
 }
 
 function timberStorage(H, R) {
+  bentTube(H,R,[[0.43,0.43,4.15],[3.61,0.43,4.15],[3.61,0.43,1.41]],1.7,'blue');
+  metal(H,R,3.4,0.4,0.43,0.22,1.39,0.5,'paper');
+  H.dot(...H.p(3.62,0.64,1.65),2,'coral');
+  for(const i of [0.37,3.8,11.65]) {
+    surface(H,R,H.faceI(i,0.31,0.24,3.93,4.32),'blue',0.7);
+    for(const z of [4.01,4.21]) H.dot(...H.p(i+0.12,0.32,z),1.7,'paper');
+  }
+
   for (const j of [5.17, 9.78]) {
     metal(H, R, 0.32, j, 0.15, 0.17, 0.08, 3.93, 'blue');
     for (const z of [0.64, 1.58, 2.52, 3.35]) {
@@ -328,6 +336,15 @@ function cabinetmakersBench(H, R) {
     'coral'
   );
   for (const z of [0.8, 1.48]) surface(H, R, ell(...H.p(7.24, 7.11, z), 3, 3), 'sun', 0.8, 0.65);
+  for (const i of [3.38,7.73]) {
+    timber(H,R,i,4.21,0.16,2.33,0.43,0.13,'sun');
+    for(const j of [4.36,6.45]) H.dot(...H.p(i+0.16,j,0.55),1.8,'blue');
+  }
+  shallowTray(H,R,4.87,4.96,1.01,0.79,0.55,'teal');
+  foldedCloth(H,R,3.74,4.9,0.78,0.9,0.58,'paper','coral');
+  for(let n=0;n<5;n++) timber(H,R,5.87+n*0.17,4.96,0.11,0.81,0.56,0.14,'sun');
+  surface(H,R,H.faceI(4.33,6.7,1.2,1.0,1.22),'teal',0.5);
+  bentTube(H,R,[[4.66,6.72,1.12],[4.66,6.86,1.12],[5.18,6.86,1.12],[5.18,6.72,1.12]],1.2,'blue');
   chair(H, R, 7.29, 4.71, 0.49, 'sun', 1.04);
   clamp(H, R, 7.01, 6.1, 1.44, 0.67);
   surface(H, R, H.tile(4.03, 5.13, 1.4, 0.77, 1.365), 'paper', 1);
@@ -341,6 +358,13 @@ function cabinetmakersBench(H, R) {
 }
 
 function finishingCorner(H, R) {
+  for(let n=0;n<4;n++) {
+    const i=0.66+n*0.69;
+    const [x,y]=H.p(i,0.43,1.65);
+    H.line(R,[H.p(i,0.31,1.93),[x,y]],'blue',0.8);
+    surface(H,R,[H.p(i-0.19,0.43,1.8),H.p(i+0.22,0.43,1.8),H.p(i+0.22,0.43,1.16),H.p(i-0.19,0.43,1.16)],n===2?'coral':'sun',0.3+n*0.17);
+    H.line(R,[H.p(i-0.12,0.45,1.31),H.p(i+0.15,0.45,1.36)],'paper',0.6);
+  }
   benchFrame(H, R, 10.06, 3.22, 1.58, 4.21, 1.02, 'teal');
   surface(H, R, H.tile(10.21, 3.5, 1.21, 2.07, 1.04), 'paper', 1);
   for (let n = 0; n < 3; n++) vessel(H, R, 10.7, 3.78 + n * 0.78, 1.05, 9, 16, ['sun', 'coral', 'teal'][n], n !== 1);
@@ -349,6 +373,13 @@ function finishingCorner(H, R) {
     timber(H, R, 10.21, j, 1.18, 0.77, 0.26, 0.12, 'sun');
     for (let n = 0; n < 3; n++) timber(H, R, 10.33 + n * 0.34, j + 0.09, 0.26, 0.59, 0.39, 0.1, 'sun');
   }
+  const [ex,ey]=H.p(10.8,6.21,1.08);
+  for(const dx of [-5,5]) H.outline(R,ell(ex+dx,ey,4,2.7),'blue',0.9);
+  H.line(R,[[ex-1,ey],[ex+1,ey],[ex+9,ey],[ex+13,ey-5]],'blue',0.9);
+  foldedCloth(H,R,10.28,6.7,0.94,0.47,1.08,'coral','paper');
+  boundBook(H,R,10.24,5.54,0.65,0.61,1.08,'paper');
+  timber(H,R,4.39,1.3,0.61,0.13,0.03,0.1,'sun');
+  surface(H,R,[H.p(0.46,3.9,0.03),H.p(1.11,3.9,0.03),H.p(1.11,4.11,0.03),H.p(0.46,4.11,0.23)],'sun',0.7);
   surface(H, R, H.tile(2.61, 8.67, 2.39, 2.37, 0.035), 'coral', 0.15);
   chair(H, R, 3.08, 8.93, 0.05, 'teal', 1.1);
   for (let n = 0; n < 7; n++) H.line(R, [H.p(2.67 + n * 0.32, 10.99, 0.04), H.p(2.67 + n * 0.32, 11.18, 0.04)], 'coral', 1.1);
@@ -393,6 +424,15 @@ function finishingCorner(H, R) {
       0.45
     );
   }
+  for(const i of [4.91,6.41]) for(const j of [9.83,11.03]) timber(H,R,i,j,0.13,0.13,0.04,0.87,'teal');
+  timber(H,R,4.91,9.83,1.63,1.33,0.08,0.12,'sun');
+  for(const z of [0.28,0.61]) {
+    timber(H,R,4.91,11.02,1.63,0.14,z,0.18,'sun');
+    timber(H,R,6.41,9.83,0.14,1.32,z,0.18,'sun');
+  }
+  bentTube(H,R,[[4.99,11.17,0.24],[6.46,11.17,0.85]],1.4,'teal');
+  for(let n=0;n<5;n++) timber(H,R,5.09+n*0.25,10.07+(n%2)*0.34,0.16,0.57,0.22,0.72+(n%3)*0.3,'sun');
+  satchel(H,R,3.9,9.72,0.03,'coral',0.65);
   bentTube(
     H,
     R,

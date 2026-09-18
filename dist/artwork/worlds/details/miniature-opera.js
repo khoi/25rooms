@@ -42,6 +42,11 @@ function violin(H, R, x, y, t, large = false) {
 function balcony(H, R, i, j, d, z) {
   box(H, R, i, j, 1.45, d, z, .2, 'sun', .7);
   for (let n = 0; n < 2; n++) seat(H, R, i + .24, j + .45 + n * 1.28, z + .2, 'teal');
+  box(H,R,i,j,1.45,.12,z+.2,.17,'coral',.73);
+  for(const y of [j+.5,j+d-.5]) {
+    shape(H,R,[H.p(i+.2,y,z-.03),H.p(i+1.3,y,z-.03),H.p(i+.2,y,z-.88)],'teal',.7);
+    H.line(R,[H.p(i+.35,y,z-.15),H.p(i+.35,y,z-.61)],'sun',1.1);
+  }
   for (let p = j + .14; p < j + d; p += .38) {
     H.line(R, [H.p(i + 1.42, p, z + .2), H.p(i + 1.42, p, z + .88)], 'sun', 2);
     const [x, y] = H.p(i + 1.42, p, z + .52);
@@ -81,9 +86,38 @@ function scenery(H, R) {
 }
 
 function architecture(H, R) {
+  for(const j of [.35,2.9,5.8,8.3,11.6]) {
+    box(H,R,.03,j,.24,.2,0,4.12,'coral',.7);
+    for(const z of [.2,1.15,3.75]) box(H,R,.02,j-.07,.35,.35,z,.14,'sun',.83);
+  }
+  box(H,R,.04,.08,.22,11.74,4.02,.16,'sun',.83);
+  box(H,R,.04,.08,11.76,.22,4.02,.16,'sun',.83);
+  for(const j of [8.4,10.55]) {
+    box(H,R,.04,j-.65,.16,1.3,.12,1.1,'coral',.58);
+    shape(H,R,H.faceJ(.22,j-.53,1.06,.27,1.05),'teal',.66);
+    H.line(R,[H.p(.24,j-.48,.93),H.p(.24,j+.48,.93)],'sun',1.1);
+  }
+  for(const i of [2.25,4.65,7.05,9.45]) {
+    box(H,R,i,.16,.15,.18,3.45,.52,'coral',.7);
+    const [x,y]=H.p(i,.4,3.5);
+    oval(H,R,x,y,7,8,'blue',.85);
+    oval(H,R,x,y+2,5,5,'sun',.95);
+    H.glow(x,y+22,28,19,'sun',.2);
+  }
+
   box(H, R, 1.65, .9, 8.65, 3.65, 0, .56, 'coral', .58);
   for (let j = 1.3; j < 4.5; j += .45) H.line(R, [H.p(1.8, j, .57), H.p(10.1, j, .57)], 'sun', .7, { tone: .65 });
+  for(let n=0;n<7;n++) {
+    const i=2+n*1.13;
+    shape(H,R,H.faceI(i,4.56,.89,.12,.43),'blue',.73);
+    H.line(R,[H.p(i+.12,4.57,.2),H.p(i+.76,4.57,.2)],'sun',.8);
+  }
   scenery(H, R);
+  for(const i of [2.1,9.65]) {
+    box(H,R,i,1.12,.1,.1,.55,3.45,'coral',.8);
+    H.line(R,[H.p(i,1.2,1.1),H.p(i+.12,2.15,.6)],'sun',1.6);
+  }
+  box(H,R,2.05,1.1,7.7,.12,3.94,.12,'blue',.85);
   stageCurtain(H, R, true); stageCurtain(H, R, false);
   for (const i of [1.55, 9.95]) {
     box(H, R, i, 4.25, .35, .36, .55, 3.55, 'sun', .77);
@@ -92,6 +126,11 @@ function architecture(H, R) {
     for (let n = 0; n < 3; n++) H.line(R, [H.p(i + .05 + n * .1, 4.62, .9), H.p(i + .05 + n * .1, 4.62, 3.85)], 'coral', .8);
   }
   box(H, R, 1.52, 4.2, 8.81, .22, 4.08, .25, 'sun', .85);
+  box(H,R,1.41,4.12,9.03,.4,4.31,.11,'coral',.8);
+  for(let n=0;n<9;n++) {
+    const [x,y]=H.p(1.98+n*.96,4.47,4.2);
+    shape(H,R,[[x-5,y],[x,y-5],[x+5,y],[x,y+5]],'paper',.95,.6);
+  }
   for (let n = 0; n < 6; n++) {
     const a = 1.9 + n * 1.3;
     shape(H, R, [H.p(a, 4.43, 4.15), H.p(a + 1.25, 4.43, 4.15), H.p(a + .97, 4.43, 3.83), H.p(a + .5, 4.43, 3.72), H.p(a + .14, 4.43, 3.91)], 'coral', .88);
@@ -129,6 +168,11 @@ function furnishings(H, R) {
   box(H, R, 1.8, 7.2, 8, .16, 0, .3, 'sun', .64);
   for (let n = 0; n < 12; n++) H.line(R, [H.p(2.05 + n * .63, 7.36, .08), H.p(2.05 + n * .63, 7.36, .26)], 'coral', 1);
   for (const [i, j] of [[2.6, 5.8], [4, 5.5], [5.35, 5.85], [6.9, 5.6]]) { seat(H, R, i - .28, j - .14, 0, 'blue'); stand(H, R, i + .38, j + .48); }
+  for(const i of [8.15,9.28]) for(const j of [5.3,6.01]) {
+    box(H,R,i,j,.09,.09,0,.48,'blue',.85);
+    oval(H,R,...H.p(i,j,.035),3,3,'sun',.8);
+  }
+  for(const i of [8.47,8.74,9]) H.line(R,[H.p(i,6.49,.07),H.p(i,6.32,.2)],'sun',2);
   const [hx, hy] = H.p(2.4, 5.85, .18);
   stroke(H, R, [[hx - 17, hy], [hx - 18, hy - 53], [hx + 11, hy - 42], [hx + 11, hy + 2]], 'sun', 4);
   stroke(H, R, [[hx - 18, hy - 53], [hx - 11, hy - 59], [hx + 12, hy - 44]], 'coral', 2);
@@ -172,6 +216,21 @@ function furnishings(H, R) {
   H.line(R, [[tx, ty], [tx, ty - 43]], 'coral', 4);
   for (const [dx, dy, r] of [[-15, -38, 14], [5, -49, 18], [20, -34, 14]]) oval(H, R, tx + dx, ty + dy, r, r * .8, 'teal', .77);
   box(H, R, 8.5, 2, .95, .9, .56, .55, 'sun', .55);
+  box(H,R,8.53,2.91,.89,.09,.67,.34,'coral',.7);
+  for(const i of [8.62,9.22]) H.line(R,[H.p(i,2.94,.68),H.p(i,2.94,1)],'blue',1.4);
+  H.line(R,[H.p(8.85,2.99,.82),H.p(9.1,2.99,.82)],'sun',1.5);
+  for(let n=0;n<3;n++) {
+    const i=10.45+n*.44;
+    const [x,y]=H.p(i,.46,2.9);
+    oval(H,R,x,y,5,5,'sun',.8);
+    oval(H,R,x,y,2,2,'blue',.8);
+    H.line(R,[H.p(i,.45,3.9),[x-4,y],[x-4,y+48]],'paper',.85);
+  }
+  const [caseX,caseY]=H.p(10.75,11.1,.06);
+  shape(H,R,[[caseX-22,caseY],[caseX-17,caseY-12],[caseX+18,caseY-9],[caseX+25,caseY+4],[caseX+11,caseY+10],[caseX-16,caseY+7]],'coral',.75);
+  shape(H,R,[[caseX-19,caseY-2],[caseX-15,caseY-9],[caseX+16,caseY-6],[caseX+20,caseY+3],[caseX+10,caseY+6],[caseX-14,caseY+4]],'blue',.85);
+  violin(H,R,caseX,caseY+3,0,false);
+  for(const dx of [-13,12]) H.line(R,[[caseX+dx,caseY+7],[caseX+dx+2,caseY+10]],'sun',1.5);
 }
 
 function performers(H, R, t) {

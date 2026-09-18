@@ -98,7 +98,11 @@ function compostBay(H, R, j, filled, open) {
     shape(H, R, [H.p(i, j, 1.14), H.p(i + 0.22, j, 2.17), H.p(i + 0.22, j + d, 2.17), H.p(i, j + d, 1.14)], 'sun', 0.35, 1);
     for (let k = 0; k < 6; k++) H.line(R, [H.p(i + 0.03, j + k * 0.42, 1.2), H.p(i + 0.2, j + k * 0.42, 2.1)], 'blue', 0.65);
     H.line(R, [H.p(i + 0.16, j + d - 0.3, 1.87), H.p(i + 0.93, j + d - 0.3, 0.99)], 'blue', 1.5);
-  } else shape(H, R, H.tile(i, j, w, d, 1.17), 'paper', 0.9, 0.8);
+  } else {
+    for(let n=0;n<7;n++) timber(H,R,i,j+n*0.36,w,0.34,1.12,0.08,'sun');
+    for(const y of [j+0.2,j+d-0.32]) metal(H,R,i+0.22,y,w-0.44,0.09,1.21,0.04,'teal');
+    bentTube(H,R,[[i+w-0.32,j+1,1.22],[i+w-0.32,j+1,1.34],[i+w-0.32,j+1.48,1.34],[i+w-0.32,j+1.48,1.22]],1.5,'blue');
+  }
   for (const y of [j + 0.18, j + d - 0.34]) {
     metal(H, R, i - 0.01, y, 0.22, 0.17, 1.08, 0.11, 'teal');
     H.line(R, [H.p(i - 0.035, y + 0.085, 1.14), H.p(i + 0.245, y + 0.085, 1.14)], 'sun', 1.2);
@@ -177,6 +181,17 @@ const room = world(
     for (const i of [4.57, 8.19]) timber(H, R, i, 0.24, 0.18, 0.24, 0.04, 3.24, 'teal');
     timber(H, R, 4.51, 0.23, 3.93, 0.29, 3.28, 0.16, 'sun');
     for (let n = 0; n < 6; n++) timber(H, R, 4.5 + n * 0.73, 0.15, 0.12, 2.31, 3.4, 0.11, 'sun');
+    for(const j of [0.7,1.5,2.3]) bentTube(H,R,[[4.68,j,0.05],[4.68,j,2.88],[8.22,j,2.88]],1.1,'teal');
+    for(let n=0;n<9;n++) {
+      const i=4.68+n*0.4;
+      H.line(R,[H.p(i,0.39,0.6),H.p(i,0.39,3.14)],'sun',0.8);
+      if(n%2===0) branchSpray(H,R,...H.p(i,0.46,1.48+n%3*0.42),0.65,'teal');
+    }
+    timber(H,R,8.89,0.2,2.45,0.21,2.64,0.17,'sun');
+    for(const i of [9.59,10.09,10.59]) {
+      bentTube(H,R,[[i,0.27,2.69],[i,0.58,2.69],[i,0.58,2.49]],1.4,'blue');
+      oval(H,R,...H.p(i,0.47,2.72),4,6,'sun',0.6);
+    }
     compostBay(H, R, 1.02, 1, false);
     compostBay(H, R, 4.02, 2, true);
     compostBay(H, R, 7.02, 0, false);
@@ -184,6 +199,16 @@ const room = world(
       surface(H, R, H.faceJ(3.13, j, 0.53, 0.46, 0.78), 'paper', 1, 0.4);
       for (let n = 0; n < 3; n++) H.line(R, [H.p(3.14, j + 0.08, 0.53 + n * 0.065), H.p(3.14, j + 0.43, 0.53 + n * 0.065)], 'teal', 0.55);
     }
+    benchFrame(H,R,0.66,10.08,2.57,1.29,0.88,'sun');
+    shallowTray(H,R,0.85,10.21,2.18,1.02,0.35,'teal');
+    surface(H,R,H.tile(0.89,10.24,2.1,0.94,0.47),'blue',0.6);
+    shallowTray(H,R,0.72,10.13,2.44,1.18,0.93,'sun');
+    for(let n=0;n<12;n++) H.line(R,[H.p(0.85+n*0.19,10.24,1.05),H.p(0.85+n*0.19,11.18,1.05)],'teal',0.6);
+    for(let n=0;n<6;n++) H.line(R,[H.p(0.85,10.25+n*0.17,1.05),H.p(3.05,10.25+n*0.17,1.05)],'teal',0.6);
+    leaf(H,R,...H.p(1.08,10.4,1.08),7,'coral');
+    handTool(H,R,2.86,10.97,1.13,'trowel','teal');
+    slattedCrate(H,R,0.6,8.52,2.51,1.13,1.22,0.59,'sun');
+    for(let n=0;n<8;n++) leaf(H,R,...H.p(0.85+n%4*0.59,8.78+Math.floor(n/4)*0.48,1.72),7,n%2?'sun':'coral');
     benchFrame(H, R, 6.27, 3.24, 2.43, 1.79, 1.02, 'sun');
     shallowTray(H, R, 6.45, 3.43, 1.34, 1.2, 1.06, 'teal');
     for (let n = 0; n < 10; n++) leaf(H, R, ...H.p(6.69 + (n % 3) * 0.37, 3.69 + Math.floor(n / 3) * 0.25, 1.13), 4.5, n % 2 ? 'coral' : 'sun');
@@ -195,7 +220,21 @@ const room = world(
     });
     surface(H, R, H.tile(9.13, 1.44, 1.89, 2.19, 1.1), 'blue', 0.6);
     for (let n = 0; n < 10; n++) branchSpray(H, R, ...H.p(9.37 + (n % 3) * 0.56, 1.72 + Math.floor(n / 3) * 0.52, 1.11), 0.28, 'teal');
+    for(const x of [9.14,10.85]) {
+      bentTube(H,R,[[x,1.45,1.11],[x,1.62,2.03],[x,3.25,2.03],[x,3.5,1.11]],1.5,'sun');
+    }
+    H.tint([H.p(9.12,1.64,2.01),H.p(10.87,1.64,2.01),H.p(10.87,3.25,2.01),H.p(9.12,3.25,2.01)],'paper',0.12);
+    for(const j of [1.65,2.4,3.23]) H.line(R,[H.p(9.14,j,2.03),H.p(10.85,j,2.03)],'paper',1.5);
     barrel(H, R, 5.51, 1.37);
+    shallowTray(H,R,5.9,0.78,1.01,1.01,0.06,'teal');
+    vessel(H,R,6.44,1.3,0.2,11,19,'sun');
+    bentTube(H,R,[[6.6,1.31,0.38],[7.05,1.45,0.82],[7.24,1.45,0.82]],3,'sun');
+    oval(H,R,...H.p(7.24,1.45,0.82),4,3,'teal',0.7);
+    const [tx,ty]=H.p(2.65,4.38,1.04);
+    H.line(R,[[tx,ty+13],[tx,ty-10]],'paper',1.7);
+    oval(H,R,tx,ty-13,6,6,'paper',1);
+    H.line(R,[[tx,ty-13],[tx+3,ty-16]],'coral',0.9);
+
     bentTube(
       H,
       R,
@@ -213,6 +252,14 @@ const room = world(
     surface(H, R, H.tile(7.49, 7.01, 3.18, 1.91, 0.23), 'blue', 0.42);
     for (let n = 0; n < 15; n++)
       branchSpray(H, R, ...H.p(7.76 + (n % 5) * 0.62, 7.3 + Math.floor(n / 5) * 0.56, 0.25), 0.32 + (n % 3) * 0.04, 'teal');
+    for(const [i,j] of [[7.55,7.09],[10.63,7.09],[7.55,8.86],[10.63,8.86]]) timber(H,R,i,j,0.12,0.12,0.02,0.52,'sun');
+    for(const j of [7.05,8.87]) timber(H,R,7.5,j,3.2,0.1,0.24,0.24,'sun');
+    bentTube(H,R,[[7.68,7.23,0.47],[7.68,8.7,0.47],[10.45,8.7,0.47],[10.45,7.23,0.47]],1.2,'teal');
+    for(let n=0;n<9;n++) {
+      const i=7.76+n%3*1.19,j=7.31+Math.floor(n/3)*0.65;
+      branchSpray(H,R,...H.p(i,j,0.46),0.42+(n%2)*0.17,'teal');
+      if(n%3===1) leaf(H,R,...H.p(i+0.12,j,0.79),7,'sun');
+    }
     for (const i of [9.59, 10.09, 10.59])
       bentTube(
         H,

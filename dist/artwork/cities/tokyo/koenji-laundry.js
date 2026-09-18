@@ -26,9 +26,21 @@ function basket(H, R, i, j, ink, loaded = false) {
 
 function machine(H, R, i, j, z, tall = false) {
   box(H, R, i, j, 2.14, 1.64, z, 1.76, 'paper', .96);
+  shape(H, R, H.faceI(i + .08, j + 1.655, 1.98, z + .22, z + 1.34), 'teal', .17);
+  H.outline(R, H.faceI(i + .08, j + 1.66, 1.98, z + .06, z + 1.69), 'blue', .7);
+  shape(H, R, H.faceI(i + .35, j + 1.68, 1.05, z + 1.44, z + 1.68), 'blue', .71);
+  shape(H, R, H.faceI(i + .95, j + 1.7, .3, z + 1.51, z + 1.61), 'sun', .62);
+  for (const x of [i + .14, i + 2.0]) for (const h of [.12, 1.31]) H.dot(...H.p(x, j + 1.69, z + h), 1.1, 'blue');
+  for (let k = 0; k < 4; k++) H.line(R, [H.p(i + 2.16, j + .26 + k * .25, z + .31), H.p(i + 2.16, j + .26 + k * .25, z + 1.22)], 'teal', .8);
+
   H.line(R, [H.p(i + .11, j + 1.67, z + 1.41), H.p(i + 2.04, j + 1.67, z + 1.41)], 'blue', .8);
   const [x, y] = H.p(i + 1.06, j + 1.68, z + .84);
+  oval(H, R, x, y, tall ? 28 : 26, tall ? 30 : 27, 'blue', .65);
+  oval(H, R, x, y, tall ? 26 : 24, tall ? 28 : 25, 'paper', .85);
   oval(H, R, x, y, tall ? 25 : 23, tall ? 27 : 24, 'teal', .65);
+  for (const dy of [-11, 11]) shape(H, R, [[x - 29, y + dy - 3], [x - 23, y + dy - 3], [x - 23, y + dy + 3], [x - 29, y + dy + 3]], 'paper', .9);
+  stroke(H, R, [[x + 24, y - 9], [x + 29, y - 7], [x + 29, y + 7], [x + 24, y + 9]], 'blue', 2.1);
+
   oval(H, R, x, y, tall ? 21 : 19, tall ? 23 : 20, 'blue', .83);
   for (let k = 0; k < 4; k++) H.line(R, [H.p(i + .19 + k * .43, j + 1.69, z + .13), H.p(i + .4 + k * .43, j + 1.69, z + .13)], 'blue', .65);
   H.line(R, [H.p(i + .54, j + 1.69, z + 1.57), H.p(i + .83, j + 1.69, z + 1.57)], 'blue', 2.2);
@@ -109,7 +121,13 @@ function laundryDetails(H, R) {
 }
 
 export default world('tokyo-koenji-laundry', 'Koenji · Until the last dryer stops', { floor: 'paper', tone: .8, wall: 'teal', wallTone: .26, height: 4.2, head: 20, pattern: 'tiles' }, (H, R) => {
-  for (const i of dryerColumns) for (const z of [0, 1.8]) machine(H, R, i, .48, z, true);
+  box(H, R, .23, .1, 9.53, .24, 3.6, .19, 'blue', .56);
+  for (const i of dryerColumns) {
+    stroke(H, R, [H.p(i + 1.07, .35, 3.56), H.p(i + 1.07, .18, 4.01), H.p(i + 1.87, .18, 4.01)], 'teal', 7);
+    for (let k = 0; k < 4; k++) H.line(R, [H.p(i + .91, .31, 3.65 + k * .09), H.p(i + 1.22, .31, 3.65 + k * .09)], 'paper', .9);
+    for (const z of [0, 1.8]) machine(H, R, i, .48, z, true);
+  }
+
   machine(H, R, .31, 3.05, 0);
   machine(H, R, .31, 5.08, 0);
   box(H, R, 10.12, .45, 1.39, 1.1, 0, 2.39, 'coral', .55);
@@ -132,7 +150,17 @@ export default world('tokyo-koenji-laundry', 'Koenji · Until the last dryer sto
     box(H, R, .06, 3.01, .65, 3.34, z, .08, 'paper');
     for (let k = 0; k < 7; k++) bottle(H, R, ...H.p(.41, 3.24 + k * .43, z + .09), ['teal', 'sun', 'coral'][k % 3], .38);
   }
+  for (const i of [4.21, 7.99]) {
+    H.line(R, [H.p(i, 5.76, .13), H.p(i, 7.16, .93)], 'teal', 2);
+    H.line(R, [H.p(i, 7.16, .13), H.p(i, 5.76, .93)], 'teal', 2);
+  }
+  box(H, R, 4.19, 5.75, 4.04, 1.44, .27, .09, 'teal', .42);
+  for (let k = 0; k < 3; k++) towel(H, R, 4.54, 6.12, .38 + k * .1, k % 2 ? 'coral' : 'paper', 1.08, .84);
+  box(H, R, 6.29, 5.98, 1.31, .92, .37, .4, 'sun', .3);
+  for (let k = 0; k < 5; k++) H.line(R, [H.p(6.4 + k * .23, 6.92, .41), H.p(6.4 + k * .23, 6.92, .72)], 'teal', .8);
   table(H, R, 4.04, 5.57, 4.43, 1.83, 1.02, 'paper');
+  H.line(R, [H.p(4.1, 7.42, 1.1), H.p(8.39, 7.42, 1.1)], 'teal', 1.5);
+
   for (let k = 0; k < 6; k++) towel(H, R, 4.23 + k % 2 * .85, 5.81, 1.16 + Math.floor(k / 2) * .095, k % 2 ? 'teal' : 'paper');
   shape(H, R, H.tile(6.5, 5.89, 1.3, 1.19, 1.17), 'teal', .17);
   H.hatch(R, H.tile(6.5, 5.89, 1.3, 1.19, 1.17), 'blue', 4, Math.PI / 4, .45, { tone: .4 });

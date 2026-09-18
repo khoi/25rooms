@@ -147,6 +147,14 @@ export default function enrich(room) {
       jug(H, R, 10.6, 4, 0, 'teal', .8);
       for (const i of [5.1, 6.95]) box(H, R, i, 5.18, .12, .12, .05, 1.72, 'sun', .62);
       box(H, R, 5.02, 5.18, 2.15, .14, 1.77, .14, 'coral', .65);
+      for (const i of [5.1, 6.95]) {
+        H.line(R, [H.p(i, 5.23, 1.45), H.p(i, 4.75, .43)], 'blue', 3);
+        H.line(R, [H.p(i, 5.23, 1.45), H.p(i, 6.25, .43)], 'sun', 3);
+        for (const z of [.55, 1.58]) H.dot(...H.p(i + .06, 5.31, z), 1.6, 'blue');
+      }
+      H.line(R, [H.p(5.03, 5.25, 1.52), H.p(7.28, 5.25, 1.52)], 'blue', 4);
+      for (let n = 0; n < 9; n++) H.line(R, [H.p(5.68 + n * .075, 5.18, 1.61), H.p(5.68 + n * .075, 5.35, 1.44)], 'coral', 1.4);
+      stroke(H, R, [H.p(7.28, 5.25, 1.52), H.p(7.28, 5.25, 1.23), H.p(7.55, 5.25, 1.23)], 'sun', 3);
       const [wx, wy] = H.p(6.05, 5.28, 1.78);
       oval(H, R, wx, wy + 1, 6, 6, 'sun', .78);
       H.outline(R, ell(wx, wy + 1, 3, 3), 'blue', .75);
@@ -195,6 +203,18 @@ export default function enrich(room) {
       for (const [i, j] of [[5.9, 10.95], [8.2, 8.75]]) {
         const [x, y] = H.p(i, j, .02);
         for (const dx of [-3, 4]) oval(H, R, x + dx, y, 2.2, 4.5, 'coral', .77);
+      }
+      box(H, R, 4.18, 10.55, 1.28, .84, .05, .5, 'coral', .75);
+      shape(H, R, H.tile(4.27, 10.63, 1.1, .65, .56), 'blue', .85);
+      shape(H, R, [H.p(4.18, 10.55, .55), H.p(5.46, 10.55, .55), H.p(5.46, 10.27, 1.1), H.p(4.18, 10.27, 1.1)], 'sun', .7);
+      for (const i of [4.4, 5.12]) H.line(R, [H.p(i, 10.28, 1.1), H.p(i, 10.55, .55), H.p(i, 11.39, .55), H.p(i, 11.39, .12)], 'blue', 2);
+      for (let n = 0; n < 4; n++) bedroll(H, R, 4.36 + n * .2, 10.96, colors[n], .2, .58);
+      const [ax, ay] = H.p(5.65, 11.1, .06);
+      stroke(H, R, [[ax - 9, ay], [ax - 10, ay - 18], [ax + 1, ay - 25], [ax + 10, ay - 17], [ax + 8, ay]], 'teal', 5);
+      H.line(R, [[ax - 12, ay - 3], [ax + 13, ay - 3]], 'coral', 2);
+      for (const j of [1.55, 2.3]) {
+        box(H, R, .48, j, .55, .56, .05, .35, 'sun', .62);
+        bowl(H, R, .73, j + .25, .41, 'coral', 11, true);
       }
       lantern(H, R, 6.15, .7, 2.4, 'teal');
     },

@@ -154,6 +154,20 @@ const room = world(
     taskLight(H, R, 6.33, 1.47, 1.0, 'coral', -0.54);
     cup(H, R, ...H.p(6.18, 2.31, 1.0));
     caneChair(H, R, 2.1, 3.1, 'teal');
+    for (const z of [1.94, 2.23]) timber(H, R, 0.67, 0.29, 5.79, 0.59, z, 0.08, 'teal');
+    for (let n = 0; n < 9; n++) {
+      const i = 0.88 + n * 0.52;
+      surface(H, R, H.faceI(i, 0.87, 0.39, 2.02, 2.2), ['paper', 'sun', 'coral'][n % 3], 0.8);
+      H.line(R, [H.p(i + 0.07, 0.88, 2.08), H.p(i + 0.31, 0.88, 2.08)], 'blue', 0.6);
+    }
+    for (const i of [1.03, 5.18]) {
+      timber(H, R, i, 1.37, 0.73, 1.03, 0.18, 0.08, 'teal');
+      surface(H, R, H.faceI(i, 2.41, 0.73, 0.3, 0.8), 'sun', 0.52);
+      H.line(R, [H.p(i + 0.19, 2.43, 0.63), H.p(i + 0.5, 2.43, 0.63)], 'teal', 2);
+    }
+    bentTube(H, R, [[3.5, 1.35, 1.01], [4.36, 1.24, 1.01], [4.36, 0.29, 0.21], [5.37, 0.29, 0.21]], 0.9, 'blue');
+    metal(H, R, 5.25, 0.22, 0.41, 0.12, 0.26, 0.38, 'paper');
+    for (const i of [5.35, 5.5]) H.dot(...H.p(i, 0.35, 0.47), 1, 'blue');
     for (const i of [0.46, 5.57])
       for (const j of [0.54, 5.21]) {
         timber(H, R, i, j, 0.2, 0.2, 0.03, 3.93, 'teal');
@@ -192,6 +206,24 @@ const room = world(
         'teal'
       );
     }
+    for (const i of [0.51, 5.64]) {
+      bentTube(H, R, [[i, 0.78, 1.52], [i, 1.57, 2.29]], 3, 'teal');
+      bentTube(H, R, [[i, 4.27, 2.29], [i, 5.2, 1.55]], 3, 'teal');
+      for (const j of [0.67, 5.31]) for (const z of [2.28, 3.2]) {
+        const [x, y] = H.p(i, j, z);
+        surface(H, R, [[x - 4, y - 5], [x + 4, y - 5], [x + 4, y + 5], [x - 4, y + 5]], 'sun', 0.68);
+        H.dot(x, y, 1.5, 'blue');
+      }
+    }
+    surface(H, R, H.faceJ(0.33, 1.03, 3.78, 3.27, 4.2), 'teal', 0.59);
+    for (let n = 0; n < 8; n++) H.line(R, [H.p(0.35, 1.2 + n * 0.45, 3.34), H.p(0.35, 1.2 + n * 0.45, 4.1)], 'sun', 1);
+    timber(H, R, 0.68, 3.43, 0.72, 1.2, 3.0, 0.1, 'sun');
+    boundBook(H, R, 0.73, 3.54, 0.61, 0.72, 3.13, 'coral');
+    taskLight(H, R, 0.98, 4.38, 3.12, 'sun', 0.31);
+    shallowTray(H, R, 4.16, 1.07, 0.8, 0.65, 3.06, 'teal');
+    for (const i of [4.4, 4.66]) oval(H, R, ...H.p(i, 1.38, 3.2), 2, 2, 'sun', 0.8);
+    surface(H, R, H.tile(2.0, 3.58, 2.6, 0.72, 2.91), 'coral', 0.48);
+    for (let n = 0; n < 7; n++) H.line(R, [H.p(2.14 + n * 0.34, 3.61, 2.93), H.p(2.14 + n * 0.34, 4.26, 2.93)], 'paper', 1.1);
     garmentRail(H, R);
     slattedCrate(H, R, 2.83, 8.95, 1.48, 1.5, 0.07, 0.91, 'sun');
     foldedCloth(H, R, 2.96, 9.08, 1.2, 1.13, 1.02, 'teal', 'paper');
@@ -210,6 +242,20 @@ const room = world(
     boundBook(H, R, 5.3, 10.43, 1.09, 0.69, 0.72, 'paper');
     vessel(H, R, 10.77, 6.25, 0.03, 13, 21, 'coral');
     branchSpray(H, R, ...H.p(10.77, 6.25, 0.66), 1.0, 'teal');
+    for (const [j, z, ink] of [[7.38, 3.2, 'coral'], [9.86, 3.02, 'teal']]) {
+      surface(H, R, H.faceJ(0.23, j, 1.55, z, z + 1.05), 'sun', 0.61);
+      surface(H, R, H.faceJ(0.25, j + 0.12, 1.31, z + 0.12, z + 0.93), 'paper', 1);
+      surface(H, R, [H.p(0.27, j + 0.2, z + 0.2), H.p(0.27, j + 0.73, z + 0.82), H.p(0.27, j + 1.34, z + 0.25)], ink, 0.57);
+    }
+    shallowTray(H, R, 5.2, 10.4, 1.31, 0.79, 0.78, 'sun');
+    for (const i of [5.52, 5.87]) {
+      const [x, y] = H.p(i, 10.82, 0.9);
+      oval(H, R, x, y, 4, 2.5, 'paper', 1);
+      H.line(R, [[x - 4, y], [x - 8, y - 5]], 'blue', 0.8);
+    }
+    foldedCloth(H, R, 9.45, 9.24, 1.3, 0.83, 0.86, 'paper', 'teal');
+    metal(H, R, 8.86, 9.26, 0.4, 0.7, 0.84, 0.05, 'blue');
+    bentTube(H, R, [[9.04, 9.85, 0.88], [9.29, 10.61, 0.12], [10.74, 10.8, 0.12]], 0.75, 'teal');
     pendant(H, R, 7.17, 6.13, 4.4, 3.15, 'paper', 0.98);
   },
   (H, R, t) => {

@@ -2,7 +2,7 @@ import { world, shape, oval, stroke, actor, cycle, ell } from '../../worlds/comm
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, benchFrame, bentTube, drape, cushion, vessel, floorLight } from '../materials.js';
 import { masonry, cabinetFrame } from '../structure.js';
-import { windowBay, hangingRail, taskLight, caster } from '../joinery.js';
+import { windowBay, hangingRail, taskLight, caster, wallRack, panelFront } from '../joinery.js';
 
 const base=FIGURES.clips.idle.keys[0][1],tech={...base,al:28,el:45,ar:80,er:20,head:12};
 FIGURES.clips.hanoiPuppetTech={dur:18,keys:[[0,tech],[1,tech]]};
@@ -32,6 +32,14 @@ function puppet(H,R,x,y,s=1,angle=0,ink='teal',repair=false){
  for(const a of [-6,0,6])H.dot(...P(a,-24),1.2,'sun');
  poly([[-10,-8],[-7,-10],[-6,-6],[-11,-5]],'sun',.9);
  if(repair){ovalAt(7,-3,3.8,2.4,'paper',1);H.line(R,[P(4,-3),P(10,-3)],'coral',.6);}
+ poly([[-11,-38],[-7,-33],[0,-35],[7,-33],[11,-38],[7,-42],[-7,-42]],'paper',.9);
+ for(const a of [-1,1]){
+  H.line(R,[P(a*7,-30),P(a*9,-16),P(a*12,-9)],'sun',1.2);
+  for(const yy of [-30,-18])H.dot(...P(a*10,yy),1.2,'paper');
+  poly([[a*12,-47],[a*18,-47],[a*20,-52],[a*16,-55]],'sun',.65);
+ }
+ for(const a of [-8,-3,3,8])H.line(R,[P(a,-64),P(a+1,-68)],'paper',.7);
+ H.line(R,[P(-8,-19),P(7,-19)],'blue',.8);
  ovalAt(0,0,4.4,2.1,'blue',.88);
 }
 const room=world('hanoi-puppet-balance','The character rests',{wall:false,floor:'blue',tone:.12,head:80},(H,R)=>{
@@ -46,6 +54,29 @@ const room=world('hanoi-puppet-balance','The character rests',{wall:false,floor:
   for(const j of [2.1,4.1,6.2])bentTube(H,R,[[i,j,4.04],[i,j+(j<4?1:-1),4.57]],1.2,'teal');
  }
  bentTube(H,R,[[.2,.2,3.05],[11.4,.2,3.05],[11.4,.2,.1]],1.5,'blue');
+ for(const j of [1.8,4.1,6.4]){
+  metal(H,R,.15,j,.13,.16,3.72,.28,'sun');
+  H.line(R,[H.p(.21,j,3.74),H.p(.21,j,3.98)],'paper',1.1);
+ }
+ wallRack(H,R,'nw',8.17,3.05,2.28,1.54,2,'teal',(P,z,row)=>{
+  if(row===0){for(let n=0;n<4;n++){const q=P(.34+n*.7,z+.2);oval(H,R,...q,6,5,n%2?'paper':'sun',.8);oval(H,R,...q,2,2,'blue',.7);H.line(R,[P(.34+n*.7,z+.25),P(.34+n*.7,z+.51)],'coral',1.2);}}
+  else {for(let n=0;n<3;n++){const u=.31+n*.86;shape(H,R,[P(u,z+.1),P(u+.6,z+.1),P(u+.62,z+.49),P(u+.09,z+.55)],n===1?'coral':'paper',.8);H.line(R,[P(u+.13,z+.2),P(u+.46,z+.37)],'teal',2);}}
+ });
+ cabinetFrame(H,R,.4,2.25,1.4,4.8,.08,1.1,1,'teal',(i,j,w,d,z)=>{
+  panelFront(H,R,i,j+d,w,z,.78,1,'teal');
+ });
+ timber(H,R,.34,2.18,1.52,4.92,1.19,.13,'sun');
+ for(const j of [2.65,3.75]){
+  const q=H.p(1.03,j,1.34);oval(H,R,...q,14,6,'paper',1);
+  for(let k=0;k<3;k++)H.line(R,[[q[0]-10+k*7,q[1]+2],[q[0]-8+k*7,q[1]-8]],['coral','teal','sun'][k],3);
+ }
+ const collar=H.p(1.1,5.05,1.34);
+ shape(H,R,[[collar[0]-17,collar[1]-5],[collar[0]-9,collar[1]-12],[collar[0],collar[1]-5],[collar[0]+10,collar[1]-12],[collar[0]+18,collar[1]-4],[collar[0]+2,collar[1]+8]],'coral',.65);
+ H.line(R,[[collar[0]-12,collar[1]-4],[collar[0]+2,collar[1]+4],[collar[0]+13,collar[1]-4]],'sun',1.4);
+ vessel(H,R,1.1,6.3,1.34,8,17,'paper',false);
+ bentTube(H,R,[[1.1,6.3,1.8],[1.1,6.3,2.14]],2,'sun');
+ const wig=H.p(1.1,6.3,2.24);oval(H,R,...wig,11,13,'blue',.8);
+ for(let n=-7;n<9;n+=3)stroke(H,R,[[wig[0]+n,wig[1]-8],[wig[0]+n+2,wig[1]+3],[wig[0]+n-1,wig[1]+13]],'paper',.65,.5);
  floorLight(H,5,5,130,.34);
  cabinetFrame(H,R,5.6,.45,5.55,1.55,.12,3.05,3,'teal',(i,j,w,d,z,h,n)=>{
   timber(H,R,i,j,w,d,z+.4,.1,'sun');
@@ -53,6 +84,7 @@ const room=world('hanoi-puppet-balance','The character rests',{wall:false,floor:
   const p=H.p(i+w*.5,j+.65,z+.7);
   puppet(H,R,p[0],p[1],.55,(n-1)*.08,['coral','teal','sun'][n]);
   bentTube(H,R,[[i+.15,j+.7,z+1.5],[i+w*.45,j+.76,z+1.37],[i+w-.15,j+.7,z+1.5]],2.8,'paper');
+  for(const u of [i+.17,i+w-.2]){H.line(R,[H.p(u,j+d-.12,z+1.23),H.p(u,j+d-.12,z+2.49)],'coral',2.2);metal(H,R,u-.035,j+d-.16,.11,.1,z+1.62,.16,'sun');}
   H.line(R,[H.p(i+.07,j+d,z+.4),H.p(i+w-.06,j+d,z+.4)],'sun',1.3);
   shape(H,R,H.faceI(i+.08,j+d,w-.16,z+.07,z+.33),'teal',.6);
   H.line(R,[H.p(i+w*.4,j+d+.02,z+.23),H.p(i+w*.65,j+d+.02,z+.23)],'sun',2.1);
@@ -85,13 +117,49 @@ const room=world('hanoi-puppet-balance','The character rests',{wall:false,floor:
  H.line(R,[H.p(2.1,9.44,.12),H.p(2.1,9.86,.12)],'coral',3);
  timber(H,R,3.42,5.12,.51,.79,.025,.13,'sun');
  for(const i of [4.17,6.55])for(const j of [4.35,6.15])caster(H,R,i,j,.14);
- benchFrame(H,R,3.9,4.05,3.08,2.45,.65,'sun');
+ for(const i of [4.03,6.61])for(const j of [4.16,6.11]){
+  timber(H,R,i,j,.18,.2,.12,.48,'sun');
+  metal(H,R,i-.025,j-.03,.23,.25,.46,.14,'teal');
+ }
+ for(const j of [4.18,6.12]){
+  timber(H,R,4.02,j,2.8,.18,.26,.17,'sun');
+  bentTube(H,R,[[4.2,j,.2],[6.58,j,.61]],1.6,'teal');
+  bentTube(H,R,[[6.58,j,.2],[4.2,j,.61]],1.6,'teal');
+ }
+ timber(H,R,3.9,4.05,3.08,2.45,.56,.11,'sun');
+ for(const i of [4.1,6.58]){
+  metal(H,R,i,4.29,.16,1.62,.67,.12,'teal');
+  for(const j of [4.55,5.54])H.dot(...H.p(i+.08,j,.81),1.8,'sun');
+ }
+ for(const j of [4.25,5.91]){
+  shape(H,R,[H.p(5.76,j,.69),H.p(6.3,j,.69),H.p(6.3,j,1.07)],'sun',.68);
+  H.line(R,[H.p(5.92,j,.81),H.p(6.32,j,.81)],'paper',1.4);
+ }
+ metal(H,R,6.57,5.07,.39,.39,.79,.12,'teal');
+ bentTube(H,R,[[6.74,5.25,.82],[6.74,5.25,1.18]],1.8,'sun');
+ H.line(R,[H.p(6.56,5.25,1.18),H.p(6.95,5.25,1.18)],'blue',2.6);
  for(const j of [4.12,6.08]){
   shape(H,R,[H.p(4.15,j,.67),H.p(4.38,j,1.17),H.p(4.62,j,.89),H.p(5.9,j,.89),H.p(6.4,j,1.17),H.p(6.66,j,.67)],'sun',.6);
   H.line(R,[H.p(4.4,j,1.16),H.p(4.65,j,.96),H.p(5.9,j,.96),H.p(6.36,j,1.16)],'paper',5);
  }
  for(const i of [4.26,6.45])metal(H,R,i,4.7,.16,.9,.76,.42,'teal');
- cushion(H,R,4.15,4.35,1.72,1.7,.7,.16,'paper');
+ const saddle=H.p(4.5,5.2,.84);
+ oval(H,R,saddle[0],saddle[1]+3,26,11,'sun',.58);
+ oval(H,R,...saddle,26,10,'paper',.96);
+ oval(H,R,saddle[0],saddle[1]-1,18,6,'blue',.48);
+ for(let n=0;n<12;n++){
+  const a=n*Math.PI/6;
+  H.line(R,[[saddle[0]+Math.cos(a)*21,saddle[1]+Math.sin(a)*8],[saddle[0]+Math.cos(a)*24,saddle[1]+Math.sin(a)*9]],'coral',.75);
+ }
+ for(const j of [4.44,5.71]){
+  cushion(H,R,4.4,j,1.35,.25,.72,.14,'paper');
+  H.line(R,[H.p(4.58,j+.26,.82),H.p(5.5,j+.26,.82)],'coral',.7);
+ }
+ metal(H,R,5.82,4.76,.55,.55,.69,.06,'teal');
+ oval(H,R,...H.p(6.1,5.05,.77),7,4,'sun',.72);
+ oval(H,R,...H.p(6.1,5.05,.775),3,2,'blue',.8);
+ bentTube(H,R,[[5.81,5.57,.72],[6.35,5.83,.72]],1.6,'sun');
+ metal(H,R,5.89,5.6,.19,.12,.73,.065,'coral');
  bentTube(H,R,[[4.05,6.52,.2],[4.05,6.52,.82],[6.85,6.52,.82],[6.85,6.52,.2]],2.5,'teal');
  H.line(R,[H.p(4.13,6.52,.76),H.p(6.74,6.52,.76)],'sun',1);
  taskLight(H,R,3.76,4.46,.77,'coral',.7);
@@ -107,6 +175,24 @@ const room=world('hanoi-puppet-balance','The character rests',{wall:false,floor:
  const fish=H.p(10.76,1.95,.29);
  shape(H,R,[[fish[0]-14,fish[1]],[fish[0]-4,fish[1]-6],[fish[0]+9,fish[1]],[fish[0]+15,fish[1]-5],[fish[0]+15,fish[1]+5],[fish[0]+9,fish[1]+1],[fish[0]-4,fish[1]+6]],'teal',.55);
  H.dot(fish[0]-8,fish[1]-1,1,'blue');
+ timber(H,R,5.25,9.16,3.15,1.98,.07,.2,'sun');
+ for(const i of [5.25,8.24])timber(H,R,i,9.16,.16,1.98,.27,.69,'teal');
+ timber(H,R,5.25,9.16,3.15,.15,.27,.69,'teal');
+ cushion(H,R,5.46,9.4,2.7,1.43,.28,.17,'paper');
+ for(const j of [9.66,10.51]){
+  const q=H.p(6.88,j,.5);oval(H,R,...q,23,8,'blue',.4);oval(H,R,...q,15,5,'sun',.55);
+ }
+ shape(H,R,H.faceI(5.25,9.15,3.15,.97,2.12),'teal',.55);
+ shape(H,R,H.faceI(5.48,9.17,2.68,1.15,1.93),'paper',.86);
+ for(const i of [5.56,7.99]){
+  H.line(R,[H.p(i,9.2,1.17),H.p(i,9.2,1.9)],'coral',2.4);
+  metal(H,R,i-.1,9.08,.25,.25,.91,.09,'sun');
+ }
+ timber(H,R,5.25,11.01,3.15,.15,.27,.48,'teal');
+ for(const i of [5.63,7.81])metal(H,R,i,11.19,.18,.04,.5,.18,'sun');
+ const hand=H.p(7.35,10.04,.5);
+ shape(H,R,[[hand[0]-10,hand[1]+5],[hand[0]-6,hand[1]-7],[hand[0]-7,hand[1]-15],[hand[0]-3,hand[1]-16],[hand[0],hand[1]-8],[hand[0]+4,hand[1]-16],[hand[0]+7,hand[1]-14],[hand[0]+5,hand[1]-2],[hand[0]+10,hand[1]-7],[hand[0]+12,hand[1]-3],[hand[0]+7,hand[1]+7]],'sun',.68);
+ H.line(R,[[hand[0]-7,hand[1]+5],[hand[0]+7,hand[1]+7]],'coral',2);
  metal(H,R,.3,11.4,10.6,.13,.015,.035,'blue');
 },(H,R,t)=>{
  const u=cycle(t,18)*18,tilt=ease((u-3.6)/3.6)*(1-ease((u-10.8)/5.2));

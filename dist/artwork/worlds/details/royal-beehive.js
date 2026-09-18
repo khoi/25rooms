@@ -87,6 +87,21 @@ function hiveUnder(H, R) {
     }
   }
 
+  for (const side of [0, 1]) {
+    const p = (a, z) => side ? H.p(a, .18, z) : H.p(.18, a, z);
+    for (const a of [.3, 3.8, 7.4, 11.55]) {
+      const points = [[a - .13, .15], [a + .13, .15], [a + .13, 3.7], [a + .55, 4.15], [a - .4, 4.15], [a - .13, 3.7]].map(([u, z]) => p(u, z));
+      shape(H, R, points, 'coral', .72);
+      H.line(R, [p(a, .3), p(a, 3.7)], 'sun', 2);
+    }
+    H.line(R, [p(.2, 4.18), p(11.75, 4.18)], 'sun', 5);
+    for (const a of [2, 5.6, 9.1]) {
+      const [x, y] = p(a, 3.25);
+      oval(H, R, x, y, 17, 19, 'blue', .9);
+      oval(H, R, x, y, 12, 14, 'teal', .65);
+      for (let n = -1; n <= 1; n++) H.line(R, [[x + n * 6, y - 11], [x + n * 6, y + 11]], 'sun', 1.4);
+    }
+  }
   for (const [i, j, r, z, ink] of [[5.8, 3.1, 1.85, .7, 'coral'], [2.1, 3.1, 1.45, .4, 'teal'], [9.4, 2, 1.4, .45, 'sun'], [2.4, 7.5, 1.9, .2, 'sun'], [8.7, 6.35, 1.8, .28, 'sun'], [8.7, 9.7, 1.65, .2, 'teal']]) platform(H, R, i, j, r, z, ink);
   for (const [i, j, w, d, z] of [[3.05, 2.8, 1.5, .6, .42], [6.9, 2.15, 1.35, .6, .45], [5.1, 4.2, .65, 3.1, .22], [3.2, 6.95, 4.6, .65, .2]]) {
     box(H, R, i, j, w, d, z, .12, 'paper', 1);
@@ -96,6 +111,11 @@ function hiveUnder(H, R) {
   const [tx, ty] = H.p(5.8, 2.56, 1.36);
   shape(H, R, [[tx - 27, ty + 7], [tx - 27, ty - 44], [tx - 17, ty - 64], [tx, ty - 72], [tx + 17, ty - 64], [tx + 27, ty - 44], [tx + 27, ty + 7]], 'coral', .76, 1.3);
   shape(H, R, [[tx - 19, ty + 3], [tx - 19, ty - 40], [tx, ty - 55], [tx + 19, ty - 40], [tx + 19, ty + 3]], 'paper', 1, .7);
+  for (const side of [-1, 1]) {
+    stroke(H, R, [[tx + side * 24, ty], [tx + side * 39, ty - 3], [tx + side * 39, ty - 21], [tx + side * 27, ty - 26]], 'sun', 5);
+    oval(H, R, tx + side * 36, ty - 23, 5, 6, 'teal', .8);
+  }
+  for (let n = 0; n < 3; n++) box(H, R, 4.65 - n * .15, 3.45 + n * .32, 2.35 + n * .3, .38, .46 - n * .15, .17, 'coral', .65);
   for (const i of [4.5, 7.1]) {
     box(H, R, i, 2.15, .16, .16, .7, 2, 'blue', .8);
     const [x, y] = H.p(i, 2.15, 2.8);
@@ -135,9 +155,24 @@ function hiveUnder(H, R) {
   shape(H, R, [[vx - 21, vy], [vx + 21, vy], [vx + 21, vy - 39], [vx - 21, vy - 39]], 'sun', .75, 1);
   oval(H, R, vx, vy - 39, 21, 8, 'coral', .65);
   oval(H, R, vx, vy - 40, 15, 4, 'sun', .8);
+  for (const dx of [-16, 16]) stroke(H, R, [[vx + dx, vy - 3], [vx + dx * 1.25, vy + 10], [vx + dx * 1.5, vy + 10]], 'blue', 3);
+  stroke(H, R, [[vx, vy - 36], [vx, vy - 64], [vx + 20, vy - 64], [vx + 20, vy - 56]], 'blue', 2.8);
+  oval(H, R, vx, vy - 48, 18, 5, 'paper', .6);
+  H.line(R, [[vx - 16, vy - 48], [vx + 16, vy - 48]], 'coral', 2);
+  oval(H, R, vx + 21, vy - 56, 4, 5, 'coral', .8);
+  oval(H, R, vx - 2, vy - 20, 7, 7, 'paper', 1);
+  H.line(R, [[vx - 2, vy - 20], [vx + 2, vy - 25]], 'coral', 1.2);
+
   for (const dy of [-30, -8]) H.line(R, [[vx - 21, vy + dy], [vx + 21, vy + dy]], 'coral', 2);
   stroke(H, R, [[vx + 17, vy - 20], [vx + 39, vy - 20], [vx + 39, vy + 6]], 'blue', 3.2);
 
+  for (const i of [1.05, 4.2]) {
+    const [x, y] = H.p(i, 7.3, .62);
+    oval(H, R, x, y, 10, 10, 'blue', .9);
+    oval(H, R, x, y, 7, 7, 'coral', .8);
+    for (let n = 0; n < 6; n++) H.line(R, [[x, y], [x + Math.cos(n * TAU / 6) * 7, y + Math.sin(n * TAU / 6) * 7]], 'sun', 1);
+  }
+  stroke(H, R, [H.p(1.05, 7.3, .55), H.p(1.05, 7.95, .3), H.p(4.2, 7.95, .3), H.p(4.2, 7.3, .55)], 'blue', 2);
   for (let n = 0; n < 5; n++) jar(H, R, 1.1 + n * .52, 8.6, .22, 'sun', .9);
   for (let n = 0; n < 3; n++) {
     box(H, R, .6 + n * .85, 9.2, .7, .7, .01, .45, 'coral', .5);

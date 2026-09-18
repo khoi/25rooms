@@ -40,7 +40,14 @@ function mug(H, R, i, j, z, ink = 'sun') {
 }
 
 function washer(H, R, i, k) {
-  box(H, R, i, .52, 1.6, 1.52, 0, 1.94, 'paper', 1);
+  box(H, R, i + .08, .59, 1.44, 1.42, .08, .12, 'blue', .85);
+  box(H, R, i, .52, 1.6, 1.52, .2, 1.74, 'paper', 1);
+  box(H, R, i + .06, .57, 1.48, 1.44, 1.94, .09, 'teal', .54);
+  shape(H, R, H.faceI(i + .1, 2.055, 1.4, .28, 1.56), 'sun', .16);
+  for (const a of [.14, 1.46]) for (const z of [.32, 1.51]) H.dot(...H.p(i + a, 2.065, z), 1.2, 'blue');
+  shape(H, R, H.faceI(i + .12, 2.07, .43, 1.7, 1.88), 'teal', .65);
+  H.line(R, [H.p(i + .2, 2.08, 1.77), H.p(i + .46, 2.08, 1.77)], 'paper', 1.5);
+  for (const a of [.2, .55, .9]) H.line(R, [H.p(i + 1.605, .7 + a, .45), H.p(i + 1.605, .7 + a, 1.65)], 'blue', .6, {tone:.45});
   const [x, y] = H.p(i + .8, 2.06, 1.01);
   oval(H, R, x, y, 20, 23, 'blue', .9);
   oval(H, R, x, y, 16.8, 20, 'teal', .4);
@@ -56,6 +63,27 @@ function washer(H, R, i, k) {
 }
 
 function furnishings(H, R) {
+  box(H, R, .06, .06, 11.8, .13, 3.22, .15, 'teal', .8);
+  box(H, R, .06, .06, .13, 11.8, 3.22, .15, 'teal', .8);
+  for (const i of [.25, 3.5, 7, 11.5]) box(H, R, i, .08, .14, .18, 0, 3.23, 'teal', .63);
+  shape(H, R, H.faceI(.4, .13, 8.8, 2.15, 3.05), 'paper', .9);
+  for (let i = .5; i < 9.2; i += .44) H.line(R, [H.p(i, .14, 2.16), H.p(i, .14, 3.04)], 'teal', .55);
+  H.line(R, [H.p(.4, .15, 2.62), H.p(9.2, .15, 2.62)], 'teal', .75);
+  stroke(H, R, [H.p(.8, .28, 2.36), H.p(8.85, .28, 2.36), H.p(8.85, .28, .24)], 'sun', 3.5);
+  for (let k = 0; k < 5; k++) {
+    const i = 1.3 + k * 1.78;
+    stroke(H, R, [H.p(i, .3, 2.36), H.p(i, .4, 2.1), H.p(i + .35, .7, 1.9)], 'blue', 1.8);
+    oval(H, R, ...H.p(i, .3, 2.37), 4, 4, 'coral', .8);
+    const [x,y] = H.p(i, .24, 2.82);
+    box(H, R, i - .42, .12, .84, .24, 2.83, .1, 'blue', .8);
+    H.line(R, [[x - 15,y],[x + 15,y + 15]], 'sun', 2.5);
+    H.glow(x,y + 22,34,22,'sun',.23);
+  }
+  box(H, R, 9.46, .12, 1.9, .18, 2.49, .61, 'teal', .64);
+  for (let n = 0; n < 8; n++) H.line(R, [H.p(9.6 + n * .2, .32, 2.59), H.p(9.6 + n * .2, .32, 3)], 'blue', 1);
+  for (const j of [2.6,5.4]) box(H, R, .08, j, .13, .13, 0, 2.7, 'teal', .75);
+  box(H, R, 3.57, 5.11, 2.65, 1.35, .56, .08, 'teal', .7);
+
   windowOn(H, R, 'nw', 8.6, 1.35, 3.25, 1.7, { skyTone: .98, frameInk: 'teal', inside() {
     for (let q = 0; q < 9; q++) H.dot(...H.p(-.04, 7.1 + q * .34, 1.6 + q % 3 * .39), .9, 'sun', .8);
   } });
@@ -100,6 +128,12 @@ function furnishings(H, R) {
   shape(H, R, H.tile(5.62, 5.17, .51, 1.1, 1.16), 'paper', 1, .7);
   H.line(R, [H.p(5.87, 5.17, 1.17), H.p(5.87, 6.27, 1.17)], 'coral', .7);
   box(H, R, 3.64, 5.3, 1.1, .85, .15, .47, 'teal', .35);
+  for (const i of [3.76,5.06]) {
+    box(H, R, i, 6.48, 1.04, .3, .64, .29, 'coral', .75);
+    shape(H, R, H.tile(i + .05, 6.49, .94, .24, .94), 'blue', .75);
+    for (let n = 0; n < 3; n++) towel(H, R, i + .12, 6.52, .95 + n * .055, n % 2 ? 'teal' : 'paper', .52, .18);
+    H.line(R, [H.p(i + .34, 6.8, .78), H.p(i + .7, 6.8, .78)], 'sun', 1.7);
+  }
   box(H, R, 5.0, 5.3, .98, .85, .15, .47, 'coral', .35);
 
   table(H, R, .82, 6.35, 1.8, 1.38, 1.04, 'coral');
@@ -119,6 +153,10 @@ function furnishings(H, R) {
   oval(H, R, tx - 4, ty, 2.3, 2, 'paper'); oval(H, R, tx + 3, ty, 2.3, 2, 'paper');
   H.line(R, [[tx - 4, ty], [tx + 4, ty - 10]], 'blue', .9);
   H.line(R, [[tx + 3, ty], [tx - 5, ty - 10]], 'blue', .9);
+  for (const j of [6.58,7.55]) H.line(R, [H.p(1.02,j,.15),H.p(2.35,j,.82)], 'blue', 1.2);
+  shape(H, R, H.tile(1.2,6.74,.63,.5,.13), 'teal', .7);
+  for (let n = 0; n < 5; n++) H.line(R,[H.p(1.24 + n * .11,6.78,.14),H.p(1.24 + n * .11,7.18,.14)],'sun',.8);
+  stroke(H,R,[H.p(1.5,6.9,.2),H.p(1.4,6.9,.8),H.p(1.65,6.85,1.2)],'blue',1.2);
   box(H, R, 1.06, 7.91, .65, .68, 0, .48, 'sun', .7);
   basket(H, R, 2.64, 8.25, 'sun', 5);
   for (const [i, j] of [[7.6, 4.7], [9.9, 4.7]]) {

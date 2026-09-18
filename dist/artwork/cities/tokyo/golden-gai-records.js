@@ -127,15 +127,40 @@ export default world('tokyo-golden-gai-records', 'Golden Gai · The record after
   }
   recordSleeve(H, R, 6.47, .94, 1.66, 'blue');
   for (const [i, j] of [[.42, 3.87], [10.23, .4]]) {
+    for (const x of [i + .12, i + .87]) box(H, R, x, j + .17, .12, .53, .16, 1.41, 'coral', .5);
+    H.line(R, [H.p(i + .12, j + .76, .27), H.p(i + .98, j + .76, 1.46)], 'sun', 1.1);
+    stroke(H, R, [H.p(i + .6, j + .1, 1.62), H.p(i + .6, j + .1, .15), H.p(i + .3, j + 1.1, .08)], 'sun', .9);
+
     box(H, R, i, j, 1.1, .85, 1.57, 1.26, 'blue', .92);
     const [x, y] = H.p(i + .55, j + .88, 2.15);
     oval(H, R, x, y, 13, 15, 'teal', .42);
     oval(H, R, x, y, 7.5, 9, 'blue', .88);
     H.dot(x, y - 20, 3.5, 'sun', .6, { knock: true });
   }
+  for (const i of [3.12, 5.04, 6.96]) {
+    box(H, R, i, 2.11, 1.72, 1.19, .12, .85, 'coral', .44);
+    shape(H, R, H.faceI(i + .1, 3.32, 1.52, .25, .85), 'blue', .95);
+    for (let k = 0; k < 4; k++) box(H, R, i + .18, 2.58, 1.3, .67, .27 + k * .12, .07, ['paper', 'teal', 'blue', 'coral'][k], .56);
+  }
   table(H, R, 3.07, 2.07, 5.68, 1.31, 1.09, 'blue');
+  for (const i of [4.61, 6.32]) for (const j of [2.22, 3.04]) oval(H, R, ...H.p(i, j, 1.23), 4, 2.2, 'blue', .9);
+
   box(H, R, 4.5, 2.14, 2.16, 1.09, 1.22, .16, 'coral', .55);
+  shape(H, R, H.tile(4.56, 2.2, 2.04, .97, 1.4), 'paper', .8);
+  shape(H, R, H.faceI(4.5, 2.14, 2.16, 1.42, 2.25), 'teal', .18);
+  H.outline(R, H.faceI(4.57, 2.16, 2.02, 1.49, 2.19), 'paper', 1);
+  for (const i of [4.74, 6.26]) box(H, R, i, 2.12, .19, .1, 1.38, .14, 'sun', .7);
+  box(H, R, 6.32, 2.68, .21, .27, 1.4, .13, 'blue', .8);
+  H.dot(...H.p(4.76, 3.12, 1.43), 2.2, 'sun');
+  stroke(H, R, [H.p(6.66, 2.46, 1.26), H.p(6.88, 2.56, .89), H.p(7.38, 2.56, .88), H.p(7.38, 2.32, 1.27)], 'sun', 1);
+
   box(H, R, 7.06, 2.13, 1.43, .96, 1.22, .37, 'blue', .8);
+  for (let k = 0; k < 9; k++) H.line(R, [H.p(7.18 + k * .14, 2.28, 1.61), H.p(7.18 + k * .14, 2.74, 1.61)], 'teal', .9);
+  for (const i of [7.18, 7.57]) {
+    shape(H, R, H.faceI(i, 3.12, .3, 1.46, 1.56), 'sun', .8);
+    H.line(R, [H.p(i + .05, 3.14, 1.48), H.p(i + .22, 3.14, 1.54)], 'blue', .6);
+  }
+
   for (let k = 0; k < 5; k++) {
     const [x, y] = H.p(7.22 + k * .23, 3.11, 1.39);
     H.dot(x, y, k === 4 ? 3.6 : 1.5, k === 4 ? 'paper' : 'sun', .85, { knock: true });

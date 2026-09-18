@@ -78,6 +78,15 @@ export default function enrich(room) {
       for(let j=0;j<12;j+=.6) line(H,R,[H.p(0,j,.01),H.p(12,j,.01)],.5,'coral');
       for(let i=.5;i<12;i+=2) for(let j=(i%2)*.3;j<12;j+=1.2) line(H,R,[H.p(i,j,.01),H.p(i,j+.6,.01)],.4);
       backWalls(H,R,this,2.8,{ink:'teal',tone:.23});
+      for (const side of ['ne', 'nw']) {
+        for (const u of [.1, 3.9, 7.7, 11.65]) {
+          const i = side === 'ne' ? u : .07, j = side === 'ne' ? .07 : u;
+          box(H, R, i, j, .19, .19, 0, 2.78, 'coral', .6);
+        }
+        shape(H, R, wallRect(H, side, .1, 11.8, .12, .65, -.07), 'sun', .65);
+        shape(H, R, wallRect(H, side, .1, 11.8, 2.58, 2.77, -.08), 'sun', .8);
+        for (let u = .4; u < 11.8; u += .65) line(H, R, [wallPt(H, side, u, .2, -.1), wallPt(H, side, u, .57, -.1)], .7);
+      }
       for(const [side,positions] of [['nw',[1.1,3.2,5.3,9.9]],['ne',[2,4.2,10.3]]]) for(let n=0;n<positions.length;n++) banner(H,R,side,positions[n],palette[n%3],['FOLD','PRESS','BOW','GO!'][n%4]);
 
       const board = H.p(8.65,.15,1.88);
@@ -86,9 +95,26 @@ export default function enrich(room) {
       for(const [dx,ink,number] of [[-23,'coral','02'],[23,'teal','01']]) {
         shape(H,R,[[board[0]+dx-16,board[1]-6],[board[0]+dx+16,board[1]-6],[board[0]+dx+16,board[1]+18],[board[0]+dx-16,board[1]+18]],ink,.8,.6);
       }
+      for (const [j, ink] of [[3.48, 'teal'], [5.58, 'coral'], [10.18, 'sun']]) {
+        const [x, y] = wallPt(H, 'nw', j, 1.8, -.06);
+        shape(H, R, [[x - 10, y - 8], [x, y - 20], [x + 10, y - 8], [x + 5, y + 12], [x - 6, y + 12]], ink, .8);
+        line(H, R, [[x, y - 20], [x, y + 2], [x - 10, y - 8], [x + 5, y + 12]], .7);
+      }
       for(const [i,j,ink] of [[.45,4.6,'coral'],[11.4,.5,'sun']]) lantern(H,R,i,j,2.45,ink);
       mat(H,R,.5,.65,3.25,2.05);
       table(H,R,.75,.95,2.65,1.25,.85,'paper');
+      for (const z of [.18, .45]) {
+        box(H, R, .82, 1, 2.48, 1.12, z, .07, 'sun', .65);
+        for (let k = 0; k < 4; k++) sheet(H, R, .95 + k * .57, 1.27, z + .09, palette[k], .46);
+      }
+      for (const i of [.86, 3.19]) line(H, R, [H.p(i, 1.02, .18), H.p(i, 2.02, .76)], 1.3);
+      box(H, R, .77, .94, 2.6, .11, .99, .72, 'teal', .7);
+      for (let k = 0; k < 4; k++) {
+        const [x, y] = H.p(1.1 + k * .57, 1.06, 1.43);
+        shape(H, R, [[x - 9, y + 6], [x, y - 9], [x + 9, y + 6], [x, y + 1]], palette[k], .85);
+        line(H, R, [[x, y - 9], [x, y + 1], [x - 9, y + 6]], .7);
+        H.dot(x, y - 12, 1.8, 'sun');
+      }
       for(let k=0;k<4;k++) for(let layer=0;layer<3;layer++) sheet(H,R,.9+k*.58,1.03,.99+layer*.035,palette[k],.46);
       for(let k=0;k<3;k++) sheet(H,R,1.03+k*.75,1.68,1.01,palette[k],.5,k!==0);
       const [rx,ry]=H.p(2.87,1.71,1.04);
@@ -121,7 +147,13 @@ export default function enrich(room) {
       box(H,R,.52,9.75,.5,.6,0,.5,'sun',.5);
       const [bx,by]=H.p(.8,10.01,.54);fan(H,R,bx,by,'coral',.9);
       cup(H,R,2.7,9.87,.05,'teal');
-      box(H,R,3.15,3.1,6.4,6.0,0,.48,'coral',.62);
+      for (const i of [3.18, 6.25, 9.22]) for (const j of [3.13, 6.03, 8.78]) box(H, R, i, j, .24, .24, .02, .4, 'blue', .8);
+      box(H,R,3.15,3.1,6.4,6.0,.35,.13,'coral',.72);
+      for (const j of [3.15, 9.02]) {
+        line(H, R, [H.p(3.2, j, .16), H.p(9.5, j, .16)], 2, 'sun');
+        for (let i = 3.3; i < 9.3; i += 1.2) line(H, R, [H.p(i, j, .17), H.p(i + .8, j, .34)], 1.2);
+      }
+      for (const j of [3.45, 4.55, 5.65, 6.75, 7.85]) line(H, R, [H.p(3.17, j, .16), H.p(3.17, j + .6, .34)], 1.3, 'sun');
       shape(H,R,H.tile(3.3,3.25,6.1,5.7,.5),'paper',1,.8);
       for(let k=0;k<20;k++) {
         const i=3.26+k*.305;

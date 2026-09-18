@@ -2,7 +2,7 @@ import { world, actor, shape, oval, stroke, ell, TAU } from '../../worlds/common
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, bentTube, slattedSeat, drape, cushion } from '../materials.js';
 import { masonry, cabinetFrame } from '../structure.js';
-import { hangingRail, caster } from '../joinery.js';
+import { hangingRail, caster, recessedFrame } from '../joinery.js';
 
 const T=16;
 const ease=(a,b,t)=>{const x=Math.max(0,Math.min(1,(t-a)/(b-a)));return x*x*(3-2*x);};
@@ -28,23 +28,79 @@ const room=world('amsterdam-zuidoost-football','The knot waits at the corner',{f
   for(let i=.4;i<11;i+=1.8){H.line(R,[H.p(i,.61,4.51),H.p(i+.85,.61,4.72)],'blue',1.4);H.dot(...H.p(i,.62,4.6),1.5,'sun');}
   bentTube(H,R,[[11.12,.45,4.55],[11.65,.45,4.55],[11.65,.45,.4],[11.3,.85,.2]],3,'blue');
   metal(H,R,10.5,.85,1.35,.7,.015,.045,'blue');for(let n=0;n<7;n++)H.line(R,[H.p(10.61+n*.17,.92,.064),H.p(10.61+n*.17,1.49,.064)],'paper',1);
+  for(const i of [.38,5.75])bentTube(H,R,[[i,.59,3.82],[i,.59,4.43],[i+1.0,.59,4.43]],3.1,'teal');
+  recessedFrame(H,R,'ne',.85,4.6,1.85,1.91,'sun',P=>{
+    shape(H,R,[P(.11,.12),P(4.48,.12),P(4.48,1.78),P(.11,1.78)],'blue',.67,.6);
+    for(let n=0;n<5;n++){
+      const x=.39+n*.79;
+      oval(H,R,...P(x,1.29),5,5,'paper',1);
+      shape(H,R,[P(x-.2,.53),P(x+.2,.53),P(x+.15,1.02),P(x-.15,1.02)],n%2?'coral':'sun',.75,.6);
+      H.line(R,[P(x-.12,.53),P(x-.2,.27)],'paper',1.7);H.line(R,[P(x+.12,.53),P(x+.22,.27)],'paper',1.7);
+    }
+    H.line(R,[P(.3,1.57),P(4.22,1.57)],'teal',2);
+  });
+  for(const j of [9.4,11.5]){timber(H,R,.15,j,.21,.21,.02,3.42,'sun');metal(H,R,.12,j-.03,.27,.26,.08,.25,'teal');}
+  for(const z of [.37,2.37])timber(H,R,.21,9.55,.12,1.93,z,.14,'teal');
+  for(let n=0;n<7;n++)timber(H,R,.2,9.61+n*.27,.11,.14,.15,2.53,n===4?'sun':'teal');
+  H.line(R,[H.p(.33,9.6,.56),H.p(.33,11.4,2.28)],'sun',3);
+  metal(H,R,.34,9.5,.24,.53,1.57,.09,'blue');H.dot(...H.p(.5,9.88,1.67),2.1,'sun');
   cabinetFrame(H,R,6.3,.4,4.3,1.65,.1,3.25,3,'teal',(x,j,w,d,z,h,n)=>{
     timber(H,R,x,j,w,d,z+1.08,.1,'sun');timber(H,R,x,j,w,d,z+2.18,.1,'sun');
     if(n===0){for(let k=0;k<2;k++)ball(H,R,x+.38+k*.6,j+.58,z+.37,10,'paper');for(let k=0;k<3;k++)boot(H,R,x+.18+k*.36,j+.82,z+1.29,k===1?'coral':'blue');shape(H,R,[H.p(x+.2,j+.35,z+2.3),H.p(x+1.02,j+.35,z+2.3),H.p(x+.72,j+.35,z+2.98),H.p(x+.44,j+.35,z+2.98)],'sun',.7);}
     else if(n===1){for(let k=0;k<4;k++){const [cx,cy]=H.p(x+.23+k*.23,j+.66,z+.18);shape(H,R,[[cx-7,cy],[cx+7,cy],[cx+2,cy-19],[cx-2,cy-19]],k%2?'coral':'sun',.7,.5);oval(H,R,cx,cy,8,3,'coral',.8);}drape(H,R,x+.1,j+.2,w-.2,.7,z+1.33,.21,'paper');metal(H,R,x+.1,j+.2,w-.2,.9,z+2.3,.32,'coral');}
     else{for(let k=0;k<3;k++)timber(H,R,x+.1,j+.12,w-.2,.95,z+.16+k*.22,.15,'sun');for(let k=0;k<3;k++){const [px,py]=H.p(x+.3+k*.28,j+.65,z+1.3);oval(H,R,px,py,4,10,'paper',1);H.line(R,[[px,py-7],[px+2,py+5]],'coral',1);}for(let k=0;k<4;k++)H.line(R,[H.p(x+.1+k*.27,j+.4,z+2.3),H.p(x+.1+k*.27,j+.4,z+2.93)],'paper',2);}
   });
+  for(const x of [6.4,10.48]){
+    H.line(R,[H.p(x,2.08,.29),H.p(x,2.08,3.11)],'blue',2.2);
+    for(const z of [.58,2.68])metal(H,R,x-.07,2.06,.15,.1,z,.17,'sun');
+  }
+  shape(H,R,[H.p(10.58,2.08,.25),H.p(11.36,3.17,.25),H.p(11.36,3.17,3.2),H.p(10.58,2.08,3.2)],'teal',.14,.7);
+  for(let n=0;n<6;n++)H.line(R,[H.p(10.63+n*.12,2.15+n*.165,.3),H.p(10.63+n*.12,2.15+n*.165,3.14)],'teal',1.1);
+  for(let n=0;n<10;n++)H.line(R,[H.p(10.63,2.15,.36+n*.29),H.p(11.3,3.1,.36+n*.29)],'teal',.8);
+  H.line(R,[H.p(11.21,3.02,1.43),H.p(11.21,3.02,1.85)],'blue',2.4);
   timber(H,R,7.3,.5,2.1,1.2,3.4,.08,'sun');shape(H,R,H.tile(7.38,.58,1.94,1.04,3.49),'teal',.72,.5);H.outline(R,H.tile(7.5,.7,1.69,.8,3.51),'paper',.8);H.line(R,[H.p(8.34,.71,3.52),H.p(8.34,1.49,3.52)],'paper',.8);oval(H,R,...H.p(8.34,1.1,3.53),5,2.5,'teal',.6);
   hangingRail(H,R,'nw',1.15,4.5,2.75,4,(P,u,n)=>{shape(H,R,[P(u-.26,-.12),P(u-.1,-.2),P(u+.1,-.2),P(u+.26,-.12),P(u+.43,-.3),P(u+.29,-.4),P(u+.26,-.93),P(u-.26,-.93),P(u-.29,-.4),P(u-.43,-.3)],n%2?'coral':'sun',.62,.7);H.line(R,[P(u-.22,-.84),P(u+.22,-.84)],'paper',1.1);});
   for(const j of [1.4,2.8,4.1]){metal(H,R,.13,j,.3,.25,.7,.07,'teal');const [x,y]=H.p(.38,j,.85);stroke(H,R,[[x,y],[x+3,y-10],[x+8,y-13],[x+13,y-9]],'coral',2);}
+  timber(H,R,.23,5.81,1.38,1.8,.08,.9,'sun');
+  shape(H,R,H.faceJ(1.63,5.94,1.56,.2,.83),'blue',.72,.6);
+  for(const z of [.23,.63])timber(H,R,.38,5.94,1.24,1.51,z,.09,'teal');
+  ball(H,R,.94,6.39,.5,12);ball(H,R,.94,7.12,.87,11,'sun');
+  const [pumpX,pumpY]=H.p(2.11,6.2,.05);
+  oval(H,R,pumpX,pumpY,12,4,'blue',.72);H.line(R,[[pumpX,pumpY],[pumpX,pumpY-38]],'teal',6);H.line(R,[[pumpX-10,pumpY-38],[pumpX+10,pumpY-38]],'sun',4);
+  stroke(H,R,[[pumpX+3,pumpY-29],[pumpX+24,pumpY-21],[pumpX+28,pumpY+4],[pumpX+13,pumpY+9],[pumpX+4,pumpY+5]],'blue',1.6);
+  oval(H,R,pumpX+1,pumpY-16,5,5,'paper',1);H.line(R,[[pumpX+1,pumpY-16],[pumpX+4,pumpY-19]],'coral',1.1);
   slattedSeat(H,R,1.2,7.9,4.65,0,'sun',.65);cushion(H,R,4.49,8.14,.94,.52,.76,.1,'teal');
+  for(let n=0;n<4;n++){
+    const i=1.33+n*1.1;
+    timber(H,R,i,8.0,1.01,.71,.13,.08,'teal');
+    timber(H,R,i,8.0,.08,.72,.21,.4,'sun');
+    if(n===2){boot(H,R,i+.45,8.42,.3,'coral');boot(H,R,i+.76,8.43,.3);}
+    if(n===3){metal(H,R,i+.1,8.08,.79,.47,.22,.23,'paper');H.line(R,[H.p(i+.35,8.57,.37),H.p(i+.62,8.57,.37)],'coral',1.4);}
+  }
+  const [bagX,bagY]=H.p(3.9,8.23,.88);
+  shape(H,R,[[bagX-17,bagY],[bagX+18,bagY],[bagX+17,bagY-17],[bagX+7,bagY-26],[bagX-11,bagY-24],[bagX-18,bagY-15]],'teal',.68,.8);
+  stroke(H,R,[[bagX-8,bagY-21],[bagX-7,bagY-34],[bagX+10,bagY-32],[bagX+12,bagY-20]],'sun',2.1);
+  H.line(R,[[bagX-11,bagY-14],[bagX+12,bagY-14]],'paper',1.2);H.line(R,[[bagX+7,bagY-16],[bagX+7,bagY-8]],'coral',1.8);
   boot(H,R,2.1,8.84,.1);boot(H,R,2.69,8.81,.1,'coral');stroke(H,R,[H.p(2.1,8.84,.22),H.p(2.28,8.98,.32),H.p(2.47,8.94,.22),H.p(2.69,8.81,.22)],'sun',1.3);
   drape(H,R,1.7,7.96,1.15,.59,.83,.43,'coral');
   for(const i of [3.6,5.2,7.75])metal(H,R,i,4.85,.65,1.8,.05,.16,'blue');
   bentTube(H,R,[[3.8,4.97,.19],[3.8,4.97,2.85],[7.94,4.97,2.85],[7.94,4.97,.2]],6,'paper');
   bentTube(H,R,[[3.8,4.97,2.85],[3.8,3.9,.2],[7.94,3.9,.2],[7.94,4.97,2.85]],3,'teal');
+  for(const i of [3.8,7.94]){
+    const side=i===3.8?1:-1;
+    for(let n=1;n<5;n++)H.line(R,[H.p(i,4.97,2.81-n*.5),H.p(i,3.91,.22+n*.015)],'coral',.65);
+    for(const z of [.42,1.46,2.62]){
+      const [x,y]=H.p(i,4.97,z);oval(H,R,x,y,4.7,2.1,'teal',.8);H.line(R,[[x-2,y-2],[x+3,y+2]],'paper',.9);
+    }
+    metal(H,R,i-.21,4.73,.42,.47,.21,.13,'teal');
+    for(const j of [4.82,5.08])H.dot(...H.p(i+side*.12,j,.37),1.6,'sun');
+  }
   for(let n=0;n<=12;n++){const i=3.8+n*4.14/12;stroke(H,R,[H.p(i,4.97,2.81),H.p(i,4.74,1.42),H.p(i,3.91,.22)],'coral',.7,.6);}
   for(let n=0;n<=8;n++){const h=.25+n*.32,j=3.91+(h-.25)/2.56*1.04;stroke(H,R,[H.p(3.8,j,h),H.p(5.9,j-.08,h-.06),H.p(7.94,j,h)],'coral',.7,.6);}
+  for(let n=0;n<8;n++){
+    const i=4.05+n*.51;
+    stroke(H,R,[H.p(i,4.96,2.9),H.p(i-.06,4.96,2.81),H.p(i+.06,4.95,2.73),H.p(i+.13,4.96,2.87)],'sun',1.2);
+  }
   metal(H,R,3.69,4.83,.23,.29,2.65,.25,'teal');metal(H,R,7.83,4.83,.23,.29,2.65,.25,'teal');
   bentTube(H,R,[[5.17,4.98,.24],[5.17,4.98,1.89]],3.2,'paper');
   bentTube(H,R,[[5.17,5.02,1.74],[5.17,5.28,1.74],[5.17,5.3,1.84]],1.5,'blue');
@@ -52,8 +108,24 @@ const room=world('amsterdam-zuidoost-football','The knot waits at the corner',{f
   H.line(R,[H.p(.8,10.9,.018),H.p(8.7,10.9,.018),H.p(8.7,7.3,.018)],'paper',5);H.line(R,[H.p(.8,10.9,.02),H.p(8.7,10.9,.02),H.p(8.7,7.3,.02)],'teal',1);
   metal(H,R,9.0,6.5,1.6,1.55,.17,.07,'teal');for(const i of [9.1,10.4])for(const j of [6.65,7.84])caster(H,R,i,j);bentTube(H,R,[[9.0,7.95,.25],[9.0,7.95,1.45],[10.6,7.95,1.45],[10.6,7.95,.25]],2.7);ball(H,R,9.55,7.2,.68,15);ball(H,R,10.1,7.3,.48,12,'sun');
   for(let n=0;n<5;n++)H.line(R,[H.p(9.0+n*.4,6.6,.26),H.p(9.0+n*.4,6.6,.95)],'paper',1.2);
-  timber(H,R,8.88,9.17,2.2,1.16,.06,.17,'sun');shape(H,R,H.tile(9.03,9.26,1.83,.94,.24),'paper',1,.6);const [kx,ky]=H.p(9.62,9.73,.26);stroke(H,R,[[kx-22,ky],[kx-4,ky-7],[kx+8,ky+2],[kx-5,ky+6],[kx-12,ky-3],[kx+22,ky-2]],'coral',2.8);H.line(R,[[kx-3,ky-4],[kx+5,ky+2]],'sun',1.4);
-  for(let n=0;n<3;n++){const [x,y]=H.p(10.8,9.38+n*.23,.28);oval(H,R,x,y,4,2,'teal',.7);}
+  timber(H,R,8.72,9.04,2.57,1.65,.08,.39,'teal');
+  timber(H,R,8.79,9.09,2.43,1.53,.47,.1,'sun');
+  shape(H,R,H.faceI(8.91,10.7,2.12,.14,.44),'paper',1,.6);
+  H.line(R,[H.p(9.74,10.72,.32),H.p(10.2,10.72,.32)],'blue',2);
+  timber(H,R,8.81,9.07,2.41,.13,.57,1.12,'sun');
+  shape(H,R,H.faceI(8.91,9.22,2.19,.7,1.59),'paper',1,.6);
+  for(let n=0;n<3;n++){
+    const [x,y]=H.p(9.22+n*.7,9.25,1.37);
+    stroke(H,R,[[x,y],[x-7,y+8],[x+3,y+16],[x+7,y+6],[x-3,y+1],[x-2,y+23]],n===1?'sun':'coral',2.2);
+    H.dot(x,y-1,1.8,'blue');
+  }
+  timber(H,R,8.88,9.37,2.2,1.02,.58,.12,'sun');shape(H,R,H.tile(9.03,9.48,1.83,.8,.71),'paper',1,.6);const [kx,ky]=H.p(9.62,9.92,.73);stroke(H,R,[[kx-22,ky],[kx-4,ky-7],[kx+8,ky+2],[kx-5,ky+6],[kx-12,ky-3],[kx+22,ky-2]],'coral',2.8);H.line(R,[[kx-3,ky-4],[kx+5,ky+2]],'sun',1.4);
+  for(let n=0;n<3;n++){const [x,y]=H.p(10.8,9.48+n*.23,.74);oval(H,R,x,y,4,2,'teal',.7);}
+  const [sx,sy]=H.p(9.07,10.3,.73);
+  H.line(R,[[sx-7,sy-4],[sx+11,sy+5]],'blue',2);oval(H,R,sx-8,sy-5,3.5,3,'coral',.7);oval(H,R,sx-3,sy-9,3.5,3,'coral',.7);
+  metal(H,R,6.91,9.53,.85,.84,.02,.36,'sun');
+  for(const i of [7.12,7.45]){metal(H,R,i,9.76,.18,.24,.39,.38,'paper');metal(H,R,i+.025,9.8,.13,.14,.77,.07,'teal');}
+  bentTube(H,R,[[6.92,9.84,.39],[6.92,9.84,.94],[7.74,9.84,.94],[7.74,9.84,.39]],2,'teal');
 },(H,R,t)=>{
   const {reach,pull}=motion(t),hook=H.p(5.17,5.28,1.8),resting=H.p(4.97,5.66,1.41),x=resting[0]+(hook[0]-resting[0])*reach,y=resting[1]+(hook[1]-resting[1])*reach+pull*2;
   stroke(H,R,[H.p(5.7,4.86,1.72),[x+11,y+14],[x+3,y+6]],'sun',1.7);H.outline(R,ell(x,y,5.4,8), 'coral',1.7);H.outline(R,ell(x+1,y,3.3,5.8),'sun',.6);

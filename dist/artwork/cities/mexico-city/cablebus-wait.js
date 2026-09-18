@@ -39,6 +39,17 @@ const room=world('mexico-city-cablebus-wait','A window above the roofs',{wall:fa
   for(const j of [9.31,10.38])H.line(R,[H.p(.12,j,.025),H.p(11.8,j,.025)],'blue',.8);
   masonry(H,R,'ne',0,12,0,1.5,'teal',.33);
   masonry(H,R,'nw',0,11.96,0,3.5,'paper',.8);
+  shape(H,R,wallRect(H,'nw',5.27,9.79,1.66,3.14,-.12),'teal',.57,1.1);
+  shape(H,R,wallRect(H,'nw',5.4,9.65,1.8,3,-.15),'paper',1,.65);
+  const map=(u,z)=>wallPt(H,'nw',u,z,-.17);
+  H.line(R,[map(5.66,2.09),map(6.36,2.09),map(7.03,2.65),map(8.1,2.65),map(8.62,2.31),map(9.39,2.31)],'coral',3);
+  H.line(R,[map(5.69,2.73),map(6.59,2.73),map(7.02,2.24),map(8.58,2.24),map(9.33,2.76)],'teal',2);
+  for(const [u,z] of [[5.72,2.09],[6.36,2.09],[7.03,2.65],[8.1,2.65],[8.62,2.31],[9.34,2.31]]){oval(H,R,...map(u,z),3,3,'paper',1);H.dot(...map(u,z),.8,'blue');}
+  for(const u of [5.52,9.53])for(const z of [1.86,2.94])H.dot(...map(u,z),1.1,'sun');
+  shape(H,R,wallRect(H,'nw',10.35,11.64,.25,2.71,-.13),'teal',.26,.9);
+  H.line(R,[wallPt(H,'nw',10.54,1.24,-.2),wallPt(H,'nw',10.54,1.52,-.2)],'blue',2.5);
+  for(let z=1.97;z<2.53;z+=.12)H.line(R,[wallPt(H,'nw',10.54,z,-.19),wallPt(H,'nw',11.47,z,-.19)],'blue',.9);
+  for(const z of [.48,2.49])H.line(R,[wallPt(H,'nw',11.54,z,-.18),wallPt(H,'nw',11.67,z,-.18)],'sun',2.8);
   shape(H,R,wallRect(H,'ne',1.04,11.57,1.48,4.46,-.12),'paper',1,.8);
   const P=(u,z)=>wallPt(H,'ne',u,z,-.14);
   for(let n=0;n<14;n++){
@@ -52,6 +63,10 @@ const room=world('mexico-city-cablebus-wait','A window above the roofs',{wall:fa
   H.line(R,[P(1.06,4.09),P(11.54,4.09)],'blue',.6);
   pane(H,R);
   for(const i of [.45,4.2,8.1,11.65])metal(H,R,i,.02,.16,2.35,4.6,.2,'teal');
+  for(const i of [.45,4.2,8.1,11.65]){
+    bentTube(H,R,[[i,.15,3.92],[i,.15,4.67],[i,1.37,4.58]],2.1,'teal');
+    for(const z of [4.06,4.48])H.dot(...H.p(i+.04,.22,z),1.8,'sun');
+  }
   metal(H,R,.34,2.19,11.55,.17,4.45,.2,'teal');
   for(let i=.5;i<11.7;i+=.7)H.line(R,[H.p(i,.05,4.83),H.p(i,2.4,4.68)],'blue',1,{tone:.65});
   bentTube(H,R,[[.28,.4,.1],[.28,.4,4.38],[11.7,.4,4.38]],2,'blue');
@@ -66,7 +81,20 @@ const room=world('mexico-city-cablebus-wait','A window above the roofs',{wall:fa
   panelFront(H,R,.47,4.91,1.41,.7,1.13,1,'teal');
   metal(H,R,.37,4.71,1.64,.29,.03,.54,'blue');
   shape(H,R,H.tile(.6,4.79,1.13,.17,.59),'blue',.8,.6);
+  metal(H,R,2.88,.24,7.24,.58,1.31,.12,'paper');
+  for(let i=3.11;i<10;i+=.33)H.line(R,[H.p(i,.35,1.45),H.p(i,.61,1.45)],'teal',.7);
+  for(const i of [3.42,6.35,9.67]){
+    metal(H,R,i,2.4,.32,.23,.04,.16,'blue');
+    metal(H,R,i,2.93,.32,.23,.04,.16,'blue');
+    for(const j of [2.43,3.01])H.dot(...H.p(i+.14,j,.22),1.5,'paper');
+    bentTube(H,R,[[i+.14,2.65,.3],[i+.14,2.39,.74]],2.7,'teal');
+  }
   slattedSeat(H,R,3.05,2.31,6.93,.06,'sun',.8);
+  const bag=H.p(4.4,2.7,.84);
+  shape(H,R,loop([[bag[0]-14,bag[1]],[bag[0]+14,bag[1]],[bag[0]+12,bag[1]-24],[bag[0]-10,bag[1]-27]],1),'teal',.65,.8);
+  stroke(H,R,[[bag[0]-8,bag[1]-24],[bag[0]-7,bag[1]-37],[bag[0]+8,bag[1]-36],[bag[0]+10,bag[1]-23]],'coral',2);
+  H.line(R,[[bag[0]-10,bag[1]-13],[bag[0]+10,bag[1]-13]],'paper',1.2);
+  shape(H,R,[[bag[0]-7,bag[1]-11],[bag[0]+8,bag[1]-11],[bag[0]+8,bag[1]-3],[bag[0]-7,bag[1]-3]],'sun',.53,.6);
   cushion(H,R,8.33,2.5,.94,.52,.81,.08,'coral');
   bentTube(H,R,[[2.57,4.21,.02],[2.57,4.21,1.73],[2.57,7.3,1.73],[2.57,7.3,.02]],3.2,'teal');
   for(const j of [4.22,7.28])metal(H,R,2.39,j-.14,.36,.29,.02,.1,'blue');
@@ -85,6 +113,15 @@ const room=world('mexico-city-cablebus-wait','A window above the roofs',{wall:fa
   drape(H,R,.72,8.54,.73,.84,.88,.27,'paper');
   bentTube(H,R,[[1.4,9.74,.05],[1.55,9.68,2.22]],2,'sun');
   for(let k=0;k<7;k++)H.line(R,[H.p(1.09+k*.09,9.77,.08),H.p(1.09+k*.09,9.77,.34)],'blue',1);
+  for(const j of [6.19,7.12]){
+    bentTube(H,R,[[.68,j,.05],[.68,j,1.68],[1.61,j,1.68],[1.61,j,.05]],2,'coral');
+    bentTube(H,R,[[.7,j,.28],[1.56,j,1.39]],1.6,'coral');
+  }
+  shape(H,R,[H.p(.71,6.22,.77),H.p(1.57,6.22,.77),H.p(1.57,6.22,1.36),H.p(.71,6.22,1.36)],'paper',1,.6);
+  shape(H,R,[H.p(.92,6.24,.88),H.p(1.35,6.24,.88),H.p(1.14,6.24,1.23)],'sun',.6,.6);
+  bentTube(H,R,[[.65,9.4,.88],[.65,9.4,1.58],[1.81,9.4,1.58],[1.81,9.4,.88]],2.3,'teal');
+  metal(H,R,.79,8.57,.24,.32,.93,.33,'coral');
+  vessel(H,R,1.72,8.92,.91,5,12,'sun',false);
   for(let n=0;n<5;n++)metal(H,R,.43,6.4,.52,.12,.03+n*.18,.09,'coral');
   for(const j of [11.55,11.72])metal(H,R,.12,j,11.76,.08,.02,.05,'blue');
 },(H,R,t)=>{
@@ -97,12 +134,19 @@ const room=world('mexico-city-cablebus-wait','A window above the roofs',{wall:fa
   const base=H.p(6.44,6.43,.09),[x,y]=base;
   for(const a of [-26,24]){oval(H,R,x+a,y,7,8,'blue',.85);oval(H,R,x+a,y,3.2,4,'paper',1);}
   for(const s of [-1,1]){stroke(H,R,[[x+s*25,y-3],[x-s*15,y-38],[x+s*12,y-53]],'blue',3.4);stroke(H,R,[[x+s*25,y-3],[x-s*15,y-38]],'paper',1);}
+  shape(H,R,[[x-19,y-18],[x+15,y-18],[x+17,y-7],[x-15,y-7]],'blue',.48,.6);
+  for(let k=0;k<7;k++)H.line(R,[[x-17+k*5,y-18],[x-13+k*4.5,y-7]],'paper',.55);
+  H.line(R,[[x-17,y-3],[x+16,y-3]],'teal',3.1);
+  for(const dx of [-25,24]){H.line(R,[[x+dx-3,y-10],[x+dx+3,y-10],[x+dx+3,y-3]],'teal',2);H.dot(x+dx,y,1.4,'coral');}
   shape(H,R,[[x-18,y-43],[x+13,y-43],[x+22,y-19],[x-12,y-19]],'teal',.62,.8);
   shape(H,R,[[x-19,y-43],[x-12,y-64],[x+6,y-68],[x+17,y-51],[x+13,y-43]],'paper',1,.7);
+  for(const dx of [-12,-3,6])stroke(H,R,[[x+dx,y-44],[x+dx-4,y-56],[x+dx+2,y-65]],'teal',.65);
+  H.line(R,[[x-15,y-43],[x+12,y-43]],'blue',1.2);
   H.line(R,[[x-16,y-45],[x+12,y-24]],'coral',2.3);
   shape(H,R,[[x-2,y-35],[x+6,y-35],[x+6,y-29],[x-2,y-29]],'paper',1,.5);
   const a=-1.36+fold*1.82,hinge=[x+17,y-39],tip=[hinge[0]+Math.cos(a)*31,hinge[1]+Math.sin(a)*31];
   stroke(H,R,[hinge,tip,[tip[0]+14,tip[1]]],'blue',3.2);stroke(H,R,[hinge,tip],'paper',.9);
+  H.line(R,[[hinge[0]-5,hinge[1]+4],[hinge[0]+6,hinge[1]+4]],'sun',2.3);
   oval(H,R,...hinge,4,4,'coral',.8);H.dot(...hinge,1,'paper');
   person(H,R,[x+60,y+2],[[tip[0]+5,tip[1]],hinge],'sun',1.04,-fold);
   actor(H,R,7.2,2.87,u,'lookup',{shirt:['coral',.55],face:'ne'},.64,1.16,'child');

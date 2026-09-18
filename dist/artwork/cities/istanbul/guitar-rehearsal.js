@@ -40,6 +40,8 @@ function guitar(H,R,x,y,scale=1) {
   H.outline(R,ell(...P(3,-9),9*scale,10*scale),'coral',.8);
   shape(H,R,[P(-6,2),P(10,1),P(11,5),P(-5,7)],'blue',.76,.55);
   for(let n=0;n<6;n++) H.dot(...P(-3+n*2,4),.65,'paper');
+  for(const side of [-1,1])stroke(H,R,[P(side*10,11),P(side*15,3),P(side*11,-10)],'coral',.55);
+  for(let n=0;n<4;n++)H.line(R,[P(-9+n*1.1,7),P(-5+n*1.1,8)],'paper',.7);
   shape(H,R,[P(7,-3),P(12,-4),P(10,3)],'paper',1,.45);
   stroke(H,R,[P(-8,-17),P(-12,-35),P(-2,-53),P(14,-42)],'blue',2.5);
 }
@@ -51,6 +53,13 @@ function amp(H,R,i,j,w=1.75,z=.12) {
   for(let n=0;n<4;n++)H.dot(...H.p(i+.22+n*.31,j+1.12,z+1.2),2.1,n?'paper':'coral');
   bentTube(H,R,[[i+.4,j+.6,z+1.38],[i+.4,j+.6,z+1.54],[i+1.2,j+.6,z+1.54],[i+1.2,j+.6,z+1.38]],1.8,'blue');
   drape(H,R,i,j+.74,.36,.34,z+1.39,.32,'coral');
+  for(const x of [i+.05,i+w-.22])for(const h of [z+.02,z+1.15]){
+    metal(H,R,x,j+1.09,.17,.04,h,.16,'teal');
+    H.dot(...H.p(x+.085,j+1.14,h+.08),.9,'sun');
+  }
+  for(const x of [i+.2,i+w-.33])metal(H,R,x,j+.68,.16,.2,z-.1,.11,'blue');
+  const jack=H.p(i+w-.3,j+1.13,z+1.19);oval(H,R,...jack,2.7,3,'blue',.85);H.dot(...jack,.9,'sun');
+  stroke(H,R,[jack,H.p(i+w+.16,j+1.3,z+.8),H.p(i+w+.07,j+1.36,.04)],'blue',1.1);
 }
 const room=world('istanbul-guitar-rehearsal','A phrase behind the shop',{wall:'blue',wallTone:.48,height:3.85,floor:'sun',tone:.2,pattern:'boards',head:35},(H,R)=>{
   for(const side of ['nw','ne']){
@@ -63,6 +72,31 @@ const room=world('istanbul-guitar-rehearsal','A phrase behind the shop',{wall:'b
       for(const z of [1.1,3.15])H.dot(...Q(.59,z),1.5,'coral');
     }
   }
+  const A=(u,z)=>wallPt(H,'ne',2.65+u,z,-.33);
+  surface(H,R,[A(0,1.35),A(4.55,1.35),A(4.55,3.35),A(0,3.35)],'teal',.52,.8);
+  for(const u of [.1,4.4])H.line(R,[A(u,1.42),A(u,3.26)],'sun',3);
+  H.line(R,[A(.12,2.62),A(4.42,2.62)],'sun',3.2);
+  for(const [u,r,ink]of [[.56,14,'coral'],[1.5,11,'sun'],[2.33,16,'blue']]){
+    const p=A(u,2.42);H.line(R,[A(u,2.64),A(u,2.45)],'sun',2);
+    for(let n=0;n<3;n++)H.outline(R,ell(p[0],p[1]+r*.54,r-n*2,r*.82-n*1.5),ink,1.1);
+    H.line(R,[[p[0]+r-1,p[1]+r*.4],[p[0]+r+2,p[1]+r*1.5]],'blue',1.6);
+    H.line(R,[[p[0]+r+2,p[1]+r*1.5],[p[0]+r+5,p[1]+r*1.5]],'sun',2);
+  }
+  for(let n=0;n<3;n++){
+    surface(H,R,[A(3+n*.41,1.65),A(3.31+n*.41,1.65),A(3.31+n*.41,2.43),A(3+n*.41,2.43)],n%2?'paper':'sun',.65,.6);
+    H.outline(R,ell(...A(3.16+n*.41,2.01),4,7),'blue',.8);
+  }
+  timber(H,R,2.6,.22,4.72,.87,1.3,.13,'sun');
+  for(const i of [2.73,7.1])bentTube(H,R,[[i,.25,1.3],[i,.8,1.02],[i,.8,1.3]],1.5,'teal');
+  metal(H,R,3.05,.37,2.57,.61,1.45,.19,'blue');
+  for(let n=0;n<7;n++){
+    H.line(R,[H.p(3.21+n*.31,.6,1.66),H.p(3.21+n*.31,.87,1.66)],'paper',.8);
+    metal(H,R,3.16+n*.31,.64+n%3*.06,.1,.12,1.67,.035,n===4?'coral':'sun');
+    H.dot(...H.p(3.21+n*.31,.5,1.66),1.5,'teal');
+  }
+  const meter=H.p(6.43,.67,1.46);surface(H,R,[[meter[0]-12,meter[1]],[meter[0]+12,meter[1]],[meter[0]+12,meter[1]-17],[meter[0]-12,meter[1]-17]],'paper',1,.7);oval(H,R,meter[0],meter[1]-9,7,5,'sun',.3);H.line(R,[[meter[0],meter[1]-5],[meter[0]+3,meter[1]-12]],'blue',.8);
+  for(const i of [2.8,6.85])metal(H,R,i,.36,.27,.15,.65,.38,'paper');
+  stroke(H,R,[H.p(3.25,.7,1.45),H.p(3.04,.55,.76),H.p(2.96,.56,.07),H.p(2.8,3.7,.04)],'blue',1);
   recessedFrame(H,R,'nw',8.5,2.45,1.65,1.7,'sun',Q=>{
     shape(H,R,[Q(.12,.12),Q(2.3,.12),Q(2.3,1.54),Q(.12,1.54)],'blue',.9);
     for(let n=0;n<4;n++)shape(H,R,[Q(.2+n*.54,.15),Q(.5+n*.54,.15),Q(.5+n*.54,.6+n%2*.3),Q(.2+n*.54,.6+n%2*.3)],'teal',.6,.4);
@@ -84,6 +118,11 @@ const room=world('istanbul-guitar-rehearsal','A phrase behind the shop',{wall:'b
   const rug=H.tile(2.5,3.75,5.45,4.05,.03);surface(H,R,rug,'teal',.23,.7);
   H.outline(R,H.tile(2.67,3.9,5.1,3.75,.035),'sun',1.1);
   for(let n=0;n<24;n++)H.line(R,[H.p(2.65+n*.22,7.81,.03),H.p(2.65+n*.22,8.01,.03)],'coral',.75);
+  for(const i of [4.02,7.03]){
+    timber(H,R,i,4.1,.13,1.53,.06,1.13,'teal');
+    bentTube(H,R,[[i,4.16,.12],[i,5.47,.74]],1.4,'sun');
+  }
+  timber(H,R,4.1,4.12,3.02,.12,.31,.16,'teal');
   floorShadow(H,4.25,4.1,3.2,1.8,.25);
   for(const x of [4.28,6.86])for(const j of [4.3,5.25])timber(H,R,x,j,.18,.18,.05,.86,'sun');
   timber(H,R,4.16,4.2,2.97,1.32,.83,.14,'sun');
@@ -116,6 +155,16 @@ const room=world('istanbul-guitar-rehearsal','A phrase behind the shop',{wall:'b
   box(H,R,9.6,.8,1.25,.4,3.84,.13,'coral',.5);
   bentTube(H,R,[[7.5,.13,3.5],[7.5,.42,3.5],[7.5,.42,2.5]],1.8,'blue');
   drape(H,R,7.25,.3,.7,.3,3.42,1.23,'coral');
+  floorShadow(H,.85,5.3,1.65,1.47,.18);
+  for(const [i,j]of [[.8,5.47],[2.47,5.47],[1.65,6.72]])bentTube(H,R,[[i,j,.05],[1.6,5.83,.5],[1.6,5.83,1.75]],1.7,'blue');
+  const S=(u,v)=>H.p(.83+u,5.42+v*.52,1.9-v*.32);
+  surface(H,R,[S(0,0),S(1.72,0),S(1.72,1.12),S(0,1.12)],'teal',.7,.8);
+  for(const u of [.07,.86]){
+    surface(H,R,[S(u,.07),S(u+.75,.07),S(u+.75,1.02),S(u,1.02)],'paper',1,.5);
+    for(let n=0;n<4;n++)H.line(R,[S(u+.1,.23+n*.19),S(u+.63,.23+n*.19)],'blue',.5);
+    for(const [a,b]of [[.2,.25],[.35,.63],[.53,.42]])H.dot(...S(u+a,b),1.4,'coral');
+  }
+  H.line(R,[S(-.06,1.13),S(1.79,1.13)],'sun',3);
   for(const j of [8.52,9.4])for(const i of [3.65,6.3])timber(H,R,i,j,.15,.15,.05,.68,'teal');
   timber(H,R,3.55,8.4,3.02,1.27,.69,.15,'sun');
   const dish=H.p(4.02,8.82,.86);oval(H,R,...dish,13,5,'paper',1);
@@ -135,6 +184,18 @@ const room=world('istanbul-guitar-rehearsal','A phrase behind the shop',{wall:'b
   vessel(H,R,10.92,8.65,.05,10,23,'teal',false);
   oval(H,R,...H.p(9.47,9.4,.05),17,8,'blue',.55);
   oval(H,R,...H.p(9.47,9.4,.07),12,5,'coral',.6);
+  floorShadow(H,6.2,9.94,3.9,1.19,.22);
+  const C=(u,v,z=.2)=>H.p(6.1+u,9.7+v,z);
+  const outline=[[0,.38],[.28,.07],[1.32,.07],[1.74,.33],[2.1,.36],[2.18,.17],[3.84,.17],[4.01,.3],[4.01,.78],[2.18,.78],[1.99,.6],[1.64,.65],[1.25,1.03],[.27,1.03],[0,.78]];
+  surface(H,R,outline.map(([u,v])=>C(u,v,.13)),'blue',.85,1);
+  surface(H,R,outline.map(([u,v])=>C(.12+u*.94,.08+v*.85,.27)),'coral',.35,.8);
+  oval(H,R,...C(.85,.52,.3),22,9,'blue',.55);
+  surface(H,R,[C(1.45,.39,.3),C(3.76,.39,.3),C(3.76,.6,.3),C(1.45,.6,.3)],'blue',.6,.5);
+  surface(H,R,outline.map(([u,v])=>C(u,-.06-v*.58,.43+v*.65)),'blue',.65,.9);
+  H.line(R,[C(.3,-.21,.8),C(1.24,-.21,.8),C(1.75,-.26,.65),C(3.64,-.26,.65)],'coral',2.2);
+  for(const u of [.44,2.65,3.61])metal(H,R,6.1+u,9.7,.17,.1,.2,.09,'sun');
+  drape(H,R,7,10.27,.48,.28,.34,.14,'paper');
+  stroke(H,R,[C(1.91,.9,.17),C(1.91,1.19,.17),C(2.65,1.19,.17),C(2.65,.9,.17)],'sun',2);
   pendant(H,R,5.9,.6,3.9,2.87,'coral',.9);
   floorLight(H,5.4,5.3,145,.4);
 },(H,R,t)=>{

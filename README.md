@@ -24,6 +24,8 @@ Tokyo opens by default. Select a collection at the top, double-click a room to e
 
 Serve `dist/` with a static web server, such as `python3 -m http.server 4173 --directory dist`, then open `http://localhost:4173`.
 
-Run `node scripts/check-rooms.mjs` to check navigation and collection membership, room hit targets, and city drawing coordinates at sampled animation times, declared loop boundaries, and reduced-motion poses.
+Run `node scripts/check-rooms.mjs` to check navigation and collection membership, room hit targets, and authored-room drawing coordinates at sampled animation times, declared loop boundaries, and reduced-motion poses.
 
 The [completion report](docs/room-completion-2026-09-18.md) records the collection integration, audit fixes, and verification limits.
+
+The [room detail revision](docs/room-density/README.md) records the expanded architecture, furnishings, and visual reviews for all 300 authored rooms.

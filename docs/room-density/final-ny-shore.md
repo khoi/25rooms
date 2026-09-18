@@ -1,0 +1,13 @@
+# New York shoreline follow-up
+
+The second revision addresses the environment rather than adding unrelated floor objects. Changed only `jamaica-bay.js`, `coney-kites.js`, `red-hook-pier.js` and this review in the main checkout.
+
+| Room | Revision | Visual review |
+| --- | --- | --- |
+| Jamaica Bay | Replaced the large repeated-book cabinet with a low protected optics bench, open lens case, two guides and cleaning cloth. Added three irregular marsh bands, distant flight silhouettes, reed clumps, mud-edge shapes, a second wader and localized water highlights inside the viewing slit. Added shutter catches and an angled light patch. | The animated shorebird remains visible in its existing clipped position. Marsh now has near/middle/distant layers; reduced storage mass gives the opening more attention. Observer, scope and walking route remain clear. Some distant reeds deliberately merge at normal scale. |
+| Coney Island | Added a bounded amusement trestle with rail and bracing, shoreline/dune profiles and grasses, boardwalk drainage grates and bolted repair boards. Added a small maintenance rack, paint containers and broom beside the repair station, plus a scalloped canopy edge and framed kite study. | Parent/child hands and string remain clear at start, hold, return and endpoint. Moved the framed study behind the canopy in draw order after spotting a roof overlap. The canopy naturally hides some rear storage; the boardwalk route stays open. |
+| Red Hook | Replaced repeated skyline blocks with varied warehouse heights, coping and recessed windows, and added crane trusses, cable and hook. Added protected edge fenders, tidal bands, barnacle clusters and water reflections. Shelter now contains supported shelf, cloth, bottle and hung raincoat; tackle case has an upright compartment lid and paired clipped gloves nearby. | Rod, reel, float and line keep an uninterrupted water area. Corrected two reflection shapes from opaque pale fills to transparent tint. Work belongings remain attached to the shelter or tackle station. Distant industry remains subordinate to the angler. |
+
+Actually opened individual 800px normal and 1400px close images for all three rooms in `/tmp/ny-shore-final/`. Opened each `*-phases.png` sheet with individual 800px frames at 0, 8, 14 and loop endpoint (18s for Coney; 20s for Jamaica Bay/Red Hook). After reflection correction, reopened Red Hook close and phases. Individual phase PNGs are retained alongside sheets. Loop metadata and actor contact geometry are unchanged.
+
+Validation: `node scripts/check-rooms.mjs` passed: 325 unique rooms across 13 collections, valid layout and hit targets; 300 authored rooms in 4,144 sampled frames including 250 loop boundaries.

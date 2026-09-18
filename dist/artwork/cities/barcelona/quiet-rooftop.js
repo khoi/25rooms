@@ -21,6 +21,19 @@ function tube(H, R, cx, cy, angle, t) {
     H.dot(...X(x, 18), 2.1, 'blue');
   }
   H.line(R, [X(-51, -7), X(29, -7)], 'paper', 2);
+  poly([[-3, -14], [2, -14], [2, -26], [-3, -26]], 'sun', .68);
+  poly([[-6, -28], [23, -28], [23, -35], [-6, -35]], 'teal', .76);
+  for (const x of [-6, 23]) {
+    H.line(R, [X(x, -36), X(x, -27)], 'paper', 2.2);
+    H.dot(...X(x - 1, -31), 1.2, 'blue');
+  }
+  for (const x of [-20, 17]) {
+    H.line(R, [X(x - 5, -17), X(x + 5, -17)], 'blue', 2.1);
+    H.dot(...X(x, -18), 2.2, 'coral');
+  }
+  for (let n = 0; n < 7; n++) H.line(R, [X(36 + n * 1.1, -6), X(36 + n * 1.1, 6)], 'teal', .7);
+  H.line(R, [X(36, 8), X(36, 18)], 'blue', 2);
+  oval(H, R, ...X(36, 19), 5, 2.8, 'sun', .8);
   poly([[-67, -15], [-55, -15], [-55, 15], [-67, 15]], 'blue', .8);
   const lens = Array.from({ length: 28 }, (_, k) => X(-67 + Math.cos(k * Math.PI / 14) * 4.5, Math.sin(k * Math.PI / 14) * 15));
   surface(H, R, lens, 'paper', .8, 1.1);
@@ -57,12 +70,24 @@ const room = world('barcelona-quiet-rooftop', 'A skyline in a shallow tray', { w
       else timber(H, R, -.03, n, .42, .98, .98, .13, 'paper');
     }
   }
-  surface(H, R, H.tile(.6, 1.65, 3.31, 2.51, .1), 'blue', .9);
-  metal(H, R, .72, 1.77, 3.08, 2.24, .14, .2, 'teal');
-  for (const i of [.81, 3.62]) metal(H, R, i, 1.83, .12, 2.09, .36, .11, 'paper');
-  for (let n = 0; n < 5; n++) timber(H, R, .94, 1.93 + n * .37, 2.61, .27, .36, .06, 'sun');
-  bentTube(H, R, [[2.16, 2.28, .44], [2.16, 2.28, .62], [2.72, 2.28, .62], [2.72, 2.28, .44]], 2.5, 'blue');
-  metal(H, R, .73, 1.77, 3.09, .23, .36, .34, 'paper');
+  floorShadow(H, .56, 1.56, 3.57, 2.83, .26);
+  metal(H, R, .59, 1.63, 3.39, 2.66, .1, .22, 'paper');
+  surface(H, R, H.tile(.79, 1.85, 3, 2.2, .34), 'blue', .98, .9);
+  for (let n = 0; n < 4; n++) {
+    const j = 2.16 + n * .43, z = .28 - n * .03;
+    timber(H, R, .88, j, 2.71, .31, z, .05, 'sun');
+    H.line(R, [H.p(.93, j + .3, z + .05), H.p(3.55, j + .3, z + .05)], 'paper', 1);
+  }
+  for (const x of [.62, 3.76]) metal(H, R, x, 1.67, .13, 2.58, .33, .1, 'teal');
+  const hatch = (x, q) => H.p(.65 + x, 1.77 + q * .46, .45 + q * .66);
+  surface(H, R, [hatch(0, 0), hatch(3.17, 0), hatch(3.17, 2.53), hatch(0, 2.53)], 'teal', .73, 1.3);
+  surface(H, R, [hatch(.13, .13), hatch(3.04, .13), hatch(3.04, 2.39), hatch(.13, 2.39)], 'paper', .72, .85);
+  for (let n = 0; n < 4; n++) H.line(R, [hatch(.19, .36 + n * .5), hatch(2.98, .36 + n * .5)], 'blue', 1.4);
+  for (const x of [.87, 3.53]) bentTube(H, R, [[x, 3.53, .37], [x, 2.8, 1.87]], 2.5, 'sun');
+  for (const x of [1.19, 3.16]) metal(H, R, x, 1.67, .28, .29, .4, .11, 'blue');
+  H.line(R, [hatch(1.22, 2.14), hatch(1.22, 2.37), hatch(1.89, 2.37), hatch(1.89, 2.14)], 'blue', 3);
+  metal(H, R, .32, 1.81, .16, .72, .43, .26, 'coral');
+  bentTube(H, R, [[.41, 1.86, .7], [.41, .26, .7], [7.91, .26, .7]], 1.7, 'blue');
   floorShadow(H, 7.6, .5, 3.55, 1.98, .23);
   cabinetFrame(H, R, 7.66, .47, 3.4, 1.46, .23, 2.27, 2, 'teal', (x, j, w, d, z, h, n) => {
     timber(H, R, x, j, w, d, 1.3, .1, 'teal');
@@ -84,11 +109,22 @@ const room = world('barcelona-quiet-rooftop', 'A skyline in a shallow tray', { w
   bentTube(H, R, [[10.65, 1.49, 2.59], [10.66, .82, 3.13]], 2, 'sun');
   taskLight(H, R, 10.83, 1.53, 1.72, 'coral', -.39);
   floorLight(H, 8.6, 3.7, 93, .28);
-  for (const i of [2.65, 6.96]) metal(H, R, i, 3.03, .1, .1, .06, 2.18, 'teal');
-  const screen = [H.p(2.65, 3.08, .93), H.p(6.96, 3.08, .93), H.p(6.96, 3.08, 2.14), H.p(2.65, 3.08, 2.14)];
-  surface(H, R, screen, 'teal', .25, 1.2);
-  H.line(R, [H.p(2.65, 3.08, 1.08), H.p(6.96, 3.08, 1.08)], 'paper', 1);
-  for (const i of [2.87, 6.73]) for (const z of [1.09, 1.97]) H.dot(...H.p(i, 3.09, z), 1.4, 'sun');
+  for (const [x, y] of [[2.65, 3.03], [4.71, 2.78], [6.96, 3.03]]) {
+    metal(H, R, x - .17, y - .17, .44, .44, .04, .15, 'paper');
+    metal(H, R, x, y, .1, .1, .19, 1.98, 'teal');
+    for (const z of [.31, 1.25, 2.02]) oval(H, R, ...H.p(x + .05, y + .07, z), 2.4, 3.3, 'sun', .85);
+  }
+  for (const [x0, y0, x1, y1] of [[2.7, 3.08, 4.76, 2.83], [4.76, 2.83, 7.01, 3.08]]) {
+    surface(H, R, [H.p(x0, y0, .71), H.p(x1, y1, .71), H.p(x1, y1, 2.14), H.p(x0, y0, 2.14)], 'teal', .31, 1);
+    for (const z of [.75, 2.1]) H.line(R, [H.p(x0, y0, z), H.p(x1, y1, z)], 'paper', 1.4);
+    for (let n = 1; n < 5; n++) {
+      const f = n / 5;
+      H.line(R, [H.p(x0 + (x1 - x0) * f, y0 + (y1 - y0) * f, .81), H.p(x0 + (x1 - x0) * f, y0 + (y1 - y0) * f, 2.04)], 'blue', .65, {tone:.5});
+    }
+  }
+  bentTube(H, R, [[2.7, 3.08, 1.77], [2.3, 4.01, .12]], 1.1, 'coral');
+  bentTube(H, R, [[7.01, 3.08, 1.77], [7.44, 3.91, .12]], 1.1, 'coral');
+  for (const [x, y] of [[2.25, 3.91], [7.39, 3.81]]) metal(H, R, x, y, .41, .3, .03, .1, 'blue');
   const top = H.p(5.6, 5.55, 1.72);
   const feet = [[4.05, 4.41], [7.19, 5.17], [5.1, 7.38]];
   floorShadow(H, 4.05, 4.4, 3.24, 3.01, .23);
@@ -107,19 +143,39 @@ const room = world('barcelona-quiet-rooftop', 'A skyline in a shallow tray', { w
   const axis = H.p(5.6, 5.55, 1.99);
   oval(H, R, ...axis, 13, 13, 'sun', .75);
   oval(H, R, ...axis, 7, 7, 'blue', .6);
+  for (let n = 0; n < 14; n++) {
+    const a = n * Math.PI / 7;
+    H.line(R, [[axis[0] + Math.cos(a) * 9, axis[1] + Math.sin(a) * 9], [axis[0] + Math.cos(a) * 12, axis[1] + Math.sin(a) * 12]], 'paper', .7);
+  }
+  H.line(R, [[axis[0] + 6, axis[1] + 8], [axis[0] + 17, axis[1] + 16]], 'blue', 3);
+  oval(H, R, axis[0] + 19, axis[1] + 17, 6, 4, 'coral', .7);
+  const bubble = H.p(5.4, 5.65, 1.7);
+  oval(H, R, ...bubble, 5, 2.5, 'paper', .85);
+  H.dot(bubble[0] + 1, bubble[1], 1.3, 'teal');
   stroke(H, R, [[axis[0] - 5, axis[1] + 10], [axis[0] - 31, axis[1] + 40]], 'paper', 5);
   shape(H, R, [[axis[0] - 39, axis[1] + 34], [axis[0] - 25, axis[1] + 43], [axis[0] - 34, axis[1] + 57], [axis[0] - 49, axis[1] + 48]], 'blue', .8);
+  for (const x of [2.88, 5.08]) {
+    bentTube(H, R, [[x, 10.76, .08], [x, 10.54, .46], [x, 9.51, .65]], 2.7, 'teal');
+    bentTube(H, R, [[x, 9.55, .12], [x, 10.63, .48]], 2, 'sun');
+  }
+  for (let n = 0; n < 6; n++) timber(H, R, 2.8, 9.63 + n * .19, 2.39, .15, .63 - n * .039, .07, 'paper');
+  for (const x of [2.76, 5.13]) {
+    H.line(R, [H.p(x, 9.58, .72), H.p(x, 10.77, .43)], 'blue', 2);
+    for (let n = 0; n < 3; n++) H.dot(...H.p(x, 10.09 + n * .15, .54), 1.5, 'coral');
+  }
   slattedSeat(H, R, 2.67, 8.83, 2.75, .06, 'teal', 1.05);
   cushion(H, R, 2.75, 8.95, 2.59, .59, .77, .15, 'paper');
   drape(H, R, 2.82, 8.88, .92, .68, .95, .64, 'paper');
   const star = H.p(3.12, 9.63, .47);
   surface(H, R, starPts(star[0], star[1], 5.5, 2.2, 5), 'coral', .6, .6);
+  for (const x of [5.93, 7.14]) for (const j of [9.3, 9.8]) metal(H, R, x, j, .11, .11, .04, .39, 'teal');
   timber(H, R, 5.83, 9.21, 1.59, .81, .41, .15, 'teal');
   vessel(H, R, 6.94, 9.59, .58, 6, 21, 'paper', false);
   surface(H, R, H.tile(5.97, 9.34, .7, .49, .59), 'paper', 1);
   for (const [a, b] of [[.1, .1], [.31, .34], [.57, .19]]) H.dot(...H.p(6 + a, 9.36 + b, .6), 1.4, 'blue');
   for (const x of [4.79, 5.09]) vessel(H, R, x, 9.35, .94, 5, 12, 'blue', false);
   stroke(H, R, [H.p(4.75, 9.3, .93), H.p(4.41, 9.59, .83), H.p(4.57, 9.71, .59)], 'coral', 1.4);
+  for (const j of [7.02, 9.6]) bentTube(H, R, [[.31, j, .49], [1.17, j, 1.01], [.3, j, 1.03]], 2.6, 'teal');
   timber(H, R, .28, 6.82, .98, 3.01, 1.02, .14, 'paper');
   metal(H, R, .5, 7.1, .56, .56, 1.17, .07, 'teal');
   const prism = [H.p(.53, 7.73, 1.19), H.p(1.04, 7.73, 1.19), H.p(.78, 7.73, 1.54)];
@@ -145,6 +201,17 @@ const room = world('barcelona-quiet-rooftop', 'A skyline in a shallow tray', { w
     oval(H, R, ...H.p(8.47 + k * .59, 9.33, .83 + k * .095), 4.9, 2.3, 'paper', .9);
   }
   bentTube(H, R, [[8.69, 10.05, .25], [8.73, 10.29, .25], [9.36, 10.29, .25], [9.4, 10.05, .25]], 2.2, 'coral');
+  for (const x of [8.76, 9.37]) timber(H, R, x, 8.89, .07, .99, .39, .13, 'coral');
+  metal(H, R, 8.09, 10, .28, .1, .14, .14, 'sun');
+  metal(H, R, 9.78, 10, .28, .1, .14, .14, 'sun');
+  surface(H, R, [H.p(8.34, 8.66, .72), H.p(9.86, 8.66, .72), H.p(9.86, 8.48, 1.02), H.p(8.34, 8.48, 1.02)], 'blue', .44, .65);
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(8.47 + n * .26, 8.66, .73), H.p(8.47 + n * .26, 8.52, .94)], 'sun', .9);
+  metal(H, R, 10.33, 4.74, .99, 1.34, .11, .72, 'blue');
+  metal(H, R, 10.27, 4.69, 1.11, 1.44, .84, .1, 'paper');
+  bentTube(H, R, [[10.51, 5.02, .97], [10.51, 5.02, 1.2], [11.07, 5.02, 1.2], [11.07, 5.02, .97]], 2.2, 'teal');
+  for (const x of [10.53, 10.95]) oval(H, R, ...H.p(x, 6.1, .58), 4, 3, 'coral', .7);
+  bentTube(H, R, [[10.73, 4.71, .78], [10.74, 4.35, .06], [11.35, 3.89, .06], [11.35, 1.56, .06], [10.87, 1.56, 1.73]], 1.3, 'coral');
+  drape(H, R, 10.42, 5.34, .82, .52, .96, .31, 'teal');
   const chart = H.p(7.84, 10.66, .06);
   oval(H, R, ...chart, 20, 9, 'paper', .95);
   H.outline(R, ell(chart[0], chart[1], 15, 6.5), 'teal', .8, { amp: .06 });

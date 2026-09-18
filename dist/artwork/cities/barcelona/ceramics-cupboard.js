@@ -2,7 +2,7 @@ import { world, shape, oval, stroke, ell, actor, wallPt } from '../../worlds/com
 import { FIGURES } from '../../drawings.js';
 import { surface, timber, metal, benchFrame, bentTube, cushion, caneChair, vessel, drape, floorLight, pendant } from '../materials.js';
 import { cabinetFrame } from '../structure.js';
-import { windowBay, cityView, cornice, wallCourse, hangingRail } from '../joinery.js';
+import { windowBay, cityView, cornice, wallCourse, hangingRail, recessedFrame, floorShadow } from '../joinery.js';
 
 const rest = { x: 0, y: 0, drop: 0, lean: 0, head: 8, al: 12, ar: 12, el: 18, er: 18, ll: -5, lr: 5, kl: 0, kr: 0, roll: 0 };
 FIGURES.clips.barcelonaDinnerPull = { dur: 20, keys: [[0, rest], [1, rest]] };
@@ -49,6 +49,20 @@ const room = world('barcelona-ceramics-cupboard', 'The bowl has a place', { wall
   windowBay(H, R, 'nw', 2.3, 3.1, 1.26, 2.37, { night: true, ink: 'teal', divisions: 2, view: P => cityView(H, R, P, 3.1, 2.3, true) });
   for (let n = 0; n < 6; n++) H.line(R, [wallPt(H, 'nw', 2.33, 3.38 - n * .105, -.26), wallPt(H, 'nw', 5.37, 3.38 - n * .105, -.26)], 'sun', 2.1);
   stroke(H, R, [wallPt(H, 'nw', 5.33, 3.48, -.3), wallPt(H, 'nw', 5.4, 2.43, -.3), wallPt(H, 'nw', 5.34, 2.36, -.3)], 'paper', 1.3);
+  const corner = recessedFrame(H, R, 'nw', .31, 1.43, 1.46, 2.15, 'sun', P => {
+    surface(H, R, [P(.12, .15), P(1.3, .15), P(1.3, 2.02), P(.12, 2.02)], 'teal', .3);
+    for (const h of [.21, 1.08]) {
+      H.line(R, [P(.12, h, .44), P(1.3, h, .44)], 'paper', 3.1);
+      const q = P(.66, h + .36, .36);
+      oval(H, R, ...q, 11, 8, 'coral', .55);
+      oval(H, R, q[0], q[1] - 2, 8, 3.4, 'paper', .9);
+    }
+  });
+  for (const j of [2.34, 5.32]) {
+    const p = wallPt(H, 'nw', j, 1.28, -.38);
+    H.line(R, [p, [p[0] + 2, p[1] + 17], [p[0] + 6, p[1] + 17]], 'teal', 2);
+  }
+  H.line(R, [wallPt(H, 'nw', 2.56, 1.59, -.31), wallPt(H, 'nw', 3.35, 2.77, -.31)], 'paper', 1.2, {tone:.5});
   cabinetFrame(H, R, 2.1, .28, 8.76, 1.43, .06, 3.67, 3, 'paper', (x, j, w, d, z, h, n) => {
     for (const top of [.83, 1.74, 2.72]) timber(H, R, x, j, w, d, top, .12, 'paper');
     if (n === 0) {
@@ -87,8 +101,26 @@ const room = world('barcelona-ceramics-cupboard', 'The bowl has a place', { wall
     }
   });
   timber(H, R, 1.98, .2, 9, 1.65, 3.75, .16, 'sun');
+  timber(H, R, 1.89, .17, 9.19, 1.78, 3.9, .09, 'paper');
+  for (let n = 0; n < 14; n++) {
+    const x = 2.08 + n * .62;
+    surface(H, R, [H.p(x, 1.85, 3.73), H.p(x + .52, 1.85, 3.73), H.p(x + .42, 1.85, 3.57), H.p(x + .28, 1.85, 3.51), H.p(x + .12, 1.85, 3.57)], 'paper', .92, .75);
+  }
+  for (const x of [2.16, 4.93, 7.81, 10.72]) {
+    timber(H, R, x, 1.58, .12, .17, .19, 3.36, 'paper');
+    for (const h of [.39, 2.9]) metal(H, R, x - .03, 1.69, .18, .07, h, .22, 'sun');
+    H.line(R, [H.p(x + .06, 1.77, .67), H.p(x + .06, 1.77, 2.72)], 'coral', .7);
+  }
+  const linen = [H.p(5.27, 1.74, .24), H.p(7.4, 1.74, .24), H.p(7.4, 2.13, .57), H.p(5.27, 2.13, .57)];
+  surface(H, R, linen, 'blue', .67, .75);
+  for (let n = 0; n < 3; n++) drape(H, R, 5.45 + n * .02, 1.8, 1.65, .65, .57 + n * .075, .11, n === 1 ? 'coral' : 'paper');
+  timber(H, R, 5.26, 2.4, 2.13, .1, .31, .34, 'sun');
+  H.line(R, [H.p(5.96, 2.52, .48), H.p(6.73, 2.52, .48)], 'blue', 2.3);
+  const repair = H.p(6.87, 1.23, 3.3);
+  H.line(R, [[repair[0] - 8, repair[1] - 6], [repair[0] - 3, repair[1] - 1], [repair[0] - 5, repair[1] + 6]], 'sun', 1.3);
   const door = [H.p(2.12, 1.62, 1.78), H.p(2.52, 3.09, 1.78), H.p(2.52, 3.09, 3.69), H.p(2.12, 1.62, 3.69)];
-  surface(H, R, door, 'teal', .12, 1.4);
+  H.tint(door, 'teal', .12);
+  H.outline(R, door, 'blue', 1.4);
   H.line(R, [H.p(2.32, 2.25, 1.84), H.p(2.32, 2.25, 3.62)], 'paper', 2);
   for (const h of [2.03, 3.47]) metal(H, R, 2.07, 1.49, .1, .19, h, .17, 'sun');
   const key = H.p(10.95, 1.29, 2.4);
@@ -101,7 +133,18 @@ const room = world('barcelona-ceramics-cupboard', 'The bowl has a place', { wall
       H.line(R, [[p[0] - 8, p[1] + 22], [p[0] + 8, p[1] + 22]], 'paper', 1.2);
     } else oval(H, R, p[0], p[1] + 15, 9, 12, n === 1 ? 'paper' : 'sun', .8);
   });
-  benchFrame(H, R, .8, 6.75, 1.45, 3.23, .87, 'teal');
+  floorShadow(H, .75, 6.61, 1.73, 3.5, .19);
+  for (const j of [6.77, 9.77]) timber(H, R, .85, j, 1.29, .17, .07, .77, 'teal');
+  timber(H, R, .85, 6.79, 1.28, 3.12, .17, .12, 'paper');
+  timber(H, R, .75, 6.64, 1.59, 3.46, .74, .15, 'teal');
+  for (const j of [6.87, 8.24]) {
+    surface(H, R, H.faceJ(2.23, j, 1.23, .32, .72), 'sun', .42, .8);
+    for (let n = 0; n < 6; n++) H.line(R, [H.p(2.245, j + .1 + n * .2, .35), H.p(2.245, j + .1 + n * .2, .68)], 'blue', .7);
+    H.line(R, [H.p(2.26, j + .45, .58), H.p(2.26, j + .85, .58)], 'paper', 2.2);
+  }
+  timber(H, R, .51, 6.72, .28, 3.19, .86, .27, 'paper');
+  drape(H, R, .89, 7.73, 1.34, .39, .9, .47, 'paper');
+  surface(H, R, H.tile(1.1, 7.81, .37, .2, .91), 'coral', .52, .45);
   vessel(H, R, 1.47, 7.42, .92, 12, 23, 'paper', false);
   vessel(H, R, 1.47, 8.52, .92, 10, 15, 'sun', false);
   const sieve = H.p(1.51, 9.44, .91);
@@ -111,7 +154,22 @@ const room = world('barcelona-ceramics-cupboard', 'The bowl has a place', { wall
   floorLight(H, 5.3, 5.2, 153, .4);
   pendant(H, R, 4.9, 3.7, 4.15, 3.12, 'coral', .82);
   caneChair(H, R, 3.86, 2.7, 'coral');
-  benchFrame(H, R, 3.3, 3.95, 4.72, 2.66, 1.28, 'sun');
+  floorShadow(H, 3.27, 3.94, 4.9, 2.83, .23);
+  for (const i of [3.45, 7.61]) for (const j of [4.12, 6.3]) {
+    timber(H, R, i, j, .24, .24, .06, 1.05, 'sun');
+    metal(H, R, i + .03, j + .03, .18, .18, .06, .19, 'teal');
+    surface(H, R, [H.p(i, j + .25, .7), H.p(i + .24, j + .25, .7), H.p(i + .38, j + .25, 1.04), H.p(i, j + .25, 1.04)], 'sun', .59, .75);
+  }
+  for (const j of [4.16, 6.19]) timber(H, R, 3.57, j, 4.1, .13, .3, .16, 'sun');
+  timber(H, R, 3.5, 4.1, 4.34, .17, .87, .25, 'sun');
+  timber(H, R, 3.5, 6.3, 4.34, .17, .84, .23, 'sun');
+  for (let n = 0; n < 4; n++) timber(H, R, 3.3 + n * 1.18, 3.95, 1.155, 2.66, 1.13, .15, 'sun');
+  for (const x of [3.69, 7.51]) {
+    metal(H, R, x, 5.7, .19, .72, .96, .08, 'blue');
+    for (const j of [5.77, 6.33]) H.dot(...H.p(x + .1, j, 1.06), 1.6, 'paper');
+  }
+  const trivet = H.p(4.33, 5.09, 1.34);
+  for (let n = 0; n < 5; n++) H.outline(R, ell(trivet[0], trivet[1], 12 + n * 2.7, 4.4 + n * 1.1), 'sun', 1.3);
   for (const i of [3.69, 7.41]) timber(H, R, i, 4.4, .24, 2.1, .95, .17, 'blue');
   for (const i of [3.63, 7.45]) metal(H, R, i, 6.37, .24, .23, 1.02, .11, 'coral');
   drape(H, R, 3.58, 4.14, 1.31, 2.14, 1.3, .23, 'paper');
@@ -127,13 +185,38 @@ const room = world('barcelona-ceramics-cupboard', 'The bowl has a place', { wall
   surface(H, R, H.tile(9.16, 8.73, .23, .2, .916), 'coral', .6);
   const tie = H.p(9.82, 8.47, .86);
   stroke(H, R, [[tie[0], tie[1]], [tie[0] + 3, tie[1] + 12], [tie[0] - 2, tie[1] + 18]], 'sun', 1.7);
-  benchFrame(H, R, 9.12, 10.05, 1.72, .9, .63, 'teal');
+  for (const x of [9.18, 10.65]) {
+    bentTube(H, R, [[x, 9.98, .06], [x, 10.86, .65], [x, 10.83, .06], [x, 10.03, .65]], 2.6, 'teal');
+    H.dot(...H.p(x, 10.44, .35), 2.1, 'sun');
+  }
+  timber(H, R, 9.08, 9.96, 1.82, 1.01, .6, .08, 'paper');
+  for (const j of [9.98, 10.85]) timber(H, R, 9.1, j, 1.78, .09, .69, .13, 'sun');
+  for (const x of [9.11, 10.78]) timber(H, R, x, 10.04, .1, .8, .69, .11, 'sun');
   drape(H, R, 9.26, 10.16, .74, .52, .66, .24, 'paper');
   for (let k = 0; k < 3; k++) H.line(R, [H.p(10.16 + k * .15, 10.22, .66), H.p(10.16 + k * .15, 10.69, .66)], 'blue', 1);
   vessel(H, R, 10.56, 10.39, .66, 6, 15, 'coral');
   const flower = H.p(10.56, 10.39, 1.12);
   stroke(H, R, [flower, [flower[0] - 3, flower[1] - 18]], 'teal', 1);
   oval(H, R, flower[0] - 3, flower[1] - 20, 5, 3.5, 'sun', .85);
+  floorShadow(H, 10.08, 3.23, 1.37, 2.2, .17);
+  cabinetFrame(H, R, 10.12, 3.33, 1.23, 1.89, .04, 1.37, 1, 'coral', (x, j, w, d, z, h) => {
+    timber(H, R, x, j, w, d, .66, .08, 'paper');
+    for (let n = 0; n < 3; n++) plate(H, R, x + .52, j + .9, .29 + n * .07, 15, 'paper');
+    drape(H, R, x + .06, j + .09, .8, 1.2, .77, .11, 'teal');
+  });
+  bowl(H, R, 10.73, 4.43, 1.48, 18, 'coral');
+  const cover = H.p(10.73, 4.43, 1.66);
+  shape(H, R, [[cover[0] - 19, cover[1]], [cover[0] - 12, cover[1] - 14], [cover[0], cover[1] - 21], [cover[0] + 13, cover[1] - 14], [cover[0] + 19, cover[1]]], 'paper', .68, .8);
+  for (const dx of [-11, 0, 11]) H.line(R, [[cover[0] + dx, cover[1] - 2], [cover[0] + dx * .25, cover[1] - 16]], 'sun', .9);
+  oval(H, R, cover[0], cover[1] - 23, 4, 2, 'teal', .7);
+  for (const j of [10.01, 10.55]) timber(H, R, 2.62, j, 1.14, .15, .07, .34, 'teal');
+  timber(H, R, 2.55, 9.93, 1.27, .9, .4, .1, 'paper');
+  const bread = H.p(3.15, 10.33, .49);
+  surface(H, R, [[bread[0] - 27, bread[1] - 2], [bread[0] + 24, bread[1] - 2], [bread[0] + 20, bread[1] + 13], [bread[0] - 21, bread[1] + 13]], 'sun', .6, .8);
+  oval(H, R, bread[0], bread[1] - 2, 27, 10, 'paper', .9);
+  oval(H, R, bread[0] - 4, bread[1] - 6, 18, 10, 'sun', .78);
+  for (let n = 0; n < 3; n++) H.line(R, [[bread[0] - 14 + n * 9, bread[1] - 11], [bread[0] - 10 + n * 9, bread[1] - 3]], 'paper', 1.5);
+  for (let n = 0; n < 8; n++) H.line(R, [[bread[0] - 19 + n * 5, bread[1] + 5], [bread[0] - 17 + n * 5, bread[1] + 12]], 'teal', .8);
   const drawing = [wallPt(H, 'nw', 10.52, 1.17, -.2), wallPt(H, 'nw', 11.52, 1.17, -.2), wallPt(H, 'nw', 11.52, 2.07, -.2), wallPt(H, 'nw', 10.52, 2.07, -.2)];
   surface(H, R, drawing, 'paper', 1);
   for (const [u, z, ink] of [[10.77, 1.53, 'coral'], [11.18, 1.46, 'teal'], [10.98, 1.84, 'sun']]) oval(H, R, ...wallPt(H, 'nw', u, z, -.22), 6, 5, ink, .7);

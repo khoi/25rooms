@@ -29,6 +29,10 @@ function coral(H, R, i, j, z, height, ink) {
 function train(H, R) {
   for (const j of [1.7, 3.6]) H.line(R, [H.p(.3, j, .08), H.p(11.7, j, .08)], 'sun', 2);
   for (let i = .5; i < 12; i += .65) H.line(R, [H.p(i, 1.4, .07), H.p(i, 3.9, .07)], 'teal', 3, { tone: .6 });
+  for (const i of [2, 4.15, 8.4, 10]) {
+    box(H, R, i - .4, 2.95, .85, .8, .08, .3, 'blue', .9);
+    for (let n = 0; n < 5; n++) H.line(R, [H.p(i - .32, 3.78, .13 + n * .035), H.p(i + .32, 3.78, .13 + n * .035)], 'paper', .7);
+  }
   box(H, R, 1.1, 1.35, 9.75, 2.55, .28, 1.82, 'teal', .48);
   box(H, R, 1.2, 1.45, 9.55, 2.35, 2.1, .13, 'paper', .7);
   for (const x of [2.3, 4.7, 7.2, 9.6]) {
@@ -59,6 +63,12 @@ function train(H, R) {
   shape(H, R, H.faceI(6.65, 3.95, 1.4, .34, 1.84), 'blue', .8);
   shape(H, R, H.tile(6.65, 3.96, 1.4, .66, .35), 'sun', .58);
   for (let n = 0; n < 5; n++) H.line(R, [H.p(6.75 + n * .26, 4.03, .36), H.p(6.75 + n * .26, 4.53, .36)], 'blue', .5);
+  for (const i of [1.2, 3.75, 6.35, 8.18, 10.7]) {
+    H.line(R, [H.p(i, 3.96, .45), H.p(i, 3.96, 1.94)], 'blue', .7);
+    for (const z of [.52, 1.9]) H.dot(...H.p(i + .06, 3.97, z), 1.1, 'paper');
+  }
+  for (const i of [6.5, 8.1]) H.line(R, [H.p(i, 4.02, .5), H.p(i, 4.02, 1.82)], 'sun', 2);
+  H.line(R, [H.p(6.6, 3.99, 1.92), H.p(8.1, 3.99, 1.92)], 'paper', 3);
   const [dx, dy] = H.p(10.86, 2.57, 1.7);
   shape(H, R, H.faceJ(10.87, 1.68, 1.87, 1.03, 1.81), 'blue', .72);
 
@@ -105,13 +115,28 @@ function vending(H, R) {
 function station(H, R, room) {
   slab(H, R, room, { ink: 'blue', tone: .66 });
   backWalls(H, R, room, 3.8, { ink: 'teal', tone: .4, style: 'tile' });
+  for (const i of [.6, 5.8, 11.2]) {
+    box(H, R, i, .05, .24, .32, 0, 3.7, 'blue', .65);
+    for (const z of [.32, 2.4, 3.48]) box(H, R, i - .07, .04, .38, .39, z, .15, 'sun', .7);
+    for (const z of [.75, 1.6, 2.75, 3.25]) H.dot(...H.p(i + .12, .39, z), 1.6, 'paper');
+  }
+  box(H, R, .35, .05, 11.25, .42, 3.68, .12, 'blue', .7);
+  for (const j of [1.1, 6.1, 10.7]) {
+    box(H, R, .07, j, .3, .27, .35, 3.25, 'paper', .65);
+    H.line(R, [H.p(.25, j, 2.9), H.p(1.3, j, 3.65)], 'sun', 3);
+  }
+  shape(H, R, H.faceI(3.4, .17, 6.0, 2.68, 3.35), 'blue', .82);
+  for (const i of [3.65, 4.7, 5.75, 6.8, 7.85, 8.9]) {
+    H.line(R, [H.p(i, .2, 2.99), H.p(Math.min(9.05, i + 1.05), .2, 2.99)], 'sun', 2);
+    H.outline(R, ell(...H.p(i, .21, 2.99), 4, 4), 'paper', 1.3);
+  }
   box(H, R, .25, 4.6, 11.5, 7.15, 0, .35, 'paper', .8);
   for (let j = 5.15; j < 11.7; j += .75) H.line(R, [H.p(.3, j, .36), H.p(11.7, j, .36)], 'teal', .45, { tone: .24 });
   for (let i = .45; i < 11.7; i += .75) H.line(R, [H.p(i, 4.64, .36), H.p(i, 11.7, .36)], 'teal', .45, { tone: .24 });
   shape(H, R, H.tile(.3, 4.7, 11.4, .33, .36), 'sun', .64);
   for (let i = .4; i < 11.7; i += .21) for (const j of [4.76, 4.92]) H.dot(...H.p(i, j, .37), .85, 'blue', .65);
   H.line(R, [H.p(.3, 5.07, .36), H.p(11.7, 5.07, .36)], 'blue', 1);
-  shape(H, R, H.faceI(3.3, .15, 6.2, 2.64, 3.3), 'paper', .9);
+
 
   for (let i = 1.3; i < 10.8; i += 1.5) {
     H.dot(...H.p(i, .13, 2.5), 3, 'sun', 1, { knock: true });
@@ -184,6 +209,15 @@ function station(H, R, room) {
   suitcase(H, R, 1.72, 10.32, .59, 'sun', .75);
   suitcase(H, R, 2.08, 10.64, .59, 'teal', .74);
   suitcase(H, R, 1.88, 10.48, 1.11, 'coral', .53);
+  box(H, R, 4.7, 10.9, 1.38, .65, .35, .11, 'teal', .7);
+  for (const i of [4.75, 6]) for (const j of [10.96, 11.47]) oval(H, R, ...H.p(i, j, .39), 3, 4, 'blue', .8);
+  box(H, R, 4.75, 10.95, 1.25, .52, .48, .5, 'coral', .7);
+  shape(H, R, H.tile(4.85, 11.03, 1.06, .34, .99), 'blue', .8);
+  for (let n = 0; n < 3; n++) H.line(R, [H.p(4.97 + n * .32, 11.06, 1.01), H.p(5.03 + n * .32, 11.31, 1.13)], 'sun', 2);
+  stroke(H, R, [H.p(6.08, 11.05, .5), H.p(6.35, 11.05, 1.3), H.p(6.35, 11.46, 1.3), H.p(6.08, 11.46, .5)], 'blue', 2);
+  const [hx, hy] = H.p(5.35, 11.23, 1.25);
+  H.outline(R, ell(hx, hy, 11, 6), 'sun', 2);
+  stroke(H, R, [[hx + 10, hy], [hx + 17, hy + 8], [hx + 27, hy + 7]], 'teal', 2);
   coral(H, R, 11.2, 11.25, .35, 28, 'coral');
 }
 

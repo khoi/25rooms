@@ -90,6 +90,19 @@ function station(H, R, i, j, z, top = false) {
   const width = top ? 1.35 : 1.8;
   box(H, R, i - width / 2, j - .5, width, 1, z, .15, 'blue', .3);
   for (const side of [-1, 1]) box(H, R, i + side * (width / 2 - .15), j - .26, .12, .62, z + .15, .9, 'teal');
+  for (const side of [-1, 1]) {
+    H.line(R, [H.p(i + side * (width / 2 - .15), j + .28, z + .2), H.p(i - side * (width / 2 - .15), j + .28, z + .94)], 'sun', 1.1);
+    box(H, R, i + side * (width / 2 - .15) - .08, j - .37, .29, .85, z + .12, .13, 'blue', .75);
+  }
+  const [mx, my] = H.p(i, j + .13, z + .88);
+  oval(H, R, mx, my, top ? 13 : 18, top ? 5 : 7, 'blue', .85);
+  oval(H, R, mx, my, top ? 8 : 12, top ? 3 : 4, 'sun', .85);
+  for (let n = 0; n < 6; n++) {
+    const a = n * TAU / 6;
+    H.line(R, [[mx, my], [mx + Math.cos(a) * (top ? 12 : 17), my + Math.sin(a) * (top ? 4 : 6)]], 'paper', .8);
+  }
+  box(H, R, i - .3, j - .42, .6, .47, z + .32, .37, 'coral', .85);
+  for (let n = 0; n < 4; n++) H.line(R, [H.p(i - .22 + n * .14, j + .06, z + .4), H.p(i - .22 + n * .14, j + .06, z + .62)], 'blue', .7);
   box(H, R, i - width / 2 - .13, j - .6, width + .26, 1.2, z + 1.05, .16, 'coral');
   shape(H, R, H.tile(i - width / 2 - .13, j - .6, width + .26, 1.2, z + 1.23), 'paper', 1);
   const [x, y] = H.p(i, j + .6, z + 1.08);
@@ -110,6 +123,15 @@ function lodge(H, R) {
     shape(H, R, [front(offset, .8), front(offset + .47, .8), front(offset + .47, 1.35), front(offset, 1.35)], 'sun', .85);
     H.line(R, [front(offset + .235, .8), front(offset + .235, 1.35)], 'blue', .8);
     H.line(R, [front(offset, 1.08), front(offset + .47, 1.08)], 'blue', .8);
+  }
+  for (const a of [-.05, w - .1]) box(H, R, i + a, j + d, .14, .16, .04, 1.7, 'blue', .7);
+  box(H, R, i - .17, j + d + .03, 2.72, .75, .04, .17, 'blue', .65);
+  for (let k = 0; k < 9; k++) box(H, R, i - .1 + k * .29, j + d + .07, .24, .65, .21, .08, 'coral', .5);
+  box(H, R, i + .83, j + d + .78, .88, .27, .01, .14, 'coral', .75);
+  for (const a of [.12, 2.27]) {
+    box(H, R, i + a, j + d + .68, .1, .12, .24, 1.12, 'blue', .8);
+    H.line(R, [H.p(i + a, j + d + .69, 1.27), H.p(i + a, j + d + .08, 1.63)], 'sun', 1.4);
+    H.line(R, [H.p(i + a, j + d + .69, .81), H.p(i + a + (a < 1 ? .57 : -.57), j + d + .69, .81)], 'coral', 1.8);
   }
   const roof = [H.p(i - .18, j - .2, 1.72), H.p(i + w / 2, j - .2, 2.6), H.p(i + w + .18, j - .2, 1.72), H.p(i + w + .18, j + d + .22, 1.72), H.p(i + w / 2, j + d + .22, 2.6), H.p(i - .18, j + d + .22, 1.72)];
   shape(H, R, roof, 'blue', .7);
@@ -141,6 +163,12 @@ function groomer(H, R) {
   box(H, R, i + .15, j + 1.42, 1.58, .15, .12, .65, 'sun', .78);
   for (const a of [.37, 1.18]) H.line(R, [H.p(i + a, j + 1.35, .55), H.p(i + a, j + 1.62, .37)], 'blue', 2);
   for (const a of [.23, 1.36]) H.dot(...H.p(i + a, j + 1.37, .71), 3, 'paper');
+  for (let n = 0; n < 5; n++) H.line(R, [H.p(i + 1.13, j + .19 + n * .17, .96), H.p(i + 1.46, j + .19 + n * .17, .96)], 'blue', .7);
+  H.line(R, [H.p(i + .28, j + .94, 1.46), H.p(i + .59, j + .94, 1.21)], 'blue', .9);
+  H.line(R, [H.p(i + .97, j + .95, 1.14), H.p(i + 1.25, j + 1.04, 1.3)], 'blue', 1.1);
+  oval(H, R, ...H.p(i + 1.28, j + 1.06, 1.3), 3, 4, 'paper', .9);
+  box(H, R, i + 1.28, j + .04, .13, .13, .87, .76, 'blue', .8);
+  H.line(R, [H.p(i + 1.33, j + .09, 1.64), H.p(i + 1.44, j + .09, 1.7)], 'blue', 2);
   const [x, y] = H.p(i + .9, j + .4, 1.86);
   oval(H, R, x, y, 4, 4, 'sun', .9);
   H.line(R, [[x - 5, y + 4], [x + 5, y + 4]], 'blue', 1.1);
@@ -156,6 +184,13 @@ export default function enrich(room) {
       shape(H, R, mountain, 'paper', 1);
       shape(H, R, [H.p(6, .8, 5.5), H.p(11.6, 1.1), H.p(10.9, 7.8), H.p(7.4, 5.1, 2.35)], 'teal', .18);
       shape(H, R, [H.p(6, .8, 5.5), H.p(5.3, 2.2, 3.95), H.p(6.15, 2.65, 3.5), H.p(6.55, 1.85, 3.95), H.p(7.2, 2.45, 3.22), H.p(7.2, 1.3, 3.45)], 'blue', .12);
+      for (const [i, j, z, size] of [[3.45, 2.3, 2.68, 1], [8.05, 2.55, 2.5, 1.1], [8.25, 4.1, 1.1, .75], [2.3, 5.1, 1.0, .65]]) {
+        const p = (a, b, c) => H.p(i + a * size, j + b * size, z + c * size);
+        shape(H, R, [p(-.4, 0, -.75), p(.8, .15, -.95), p(1.12, -.13, -.4), p(.69, -.23, .33), p(.03, -.12, .4)], 'blue', .52);
+        shape(H, R, [p(.03, -.12, .4), p(.69, -.23, .33), p(.53, .12, -.31), p(.1, .21, -.11)], 'teal', .4);
+        stroke(H, R, [p(-.4, 0, -.35), p(.03, -.12, .4), p(.69, -.23, .33), p(.87, -.16, .1)], 'paper', 4);
+        H.line(R, [p(.1, .21, -.12), p(.53, .12, -.31), p(.8, .15, -.95)], 'paper', .8);
+      }
       for (const [a, b, c] of [[3.5, 1.7, 1.35], [8.3, 2.3, 1.8], [1.6, 5.7, .6]]) {
         stroke(H, R, [H.p(a, b, c), H.p(a + .6, b + .55, c - .2), H.p(a + 1.15, b + .6, c - .18)], 'teal', .8, .32);
       }
@@ -168,6 +203,15 @@ export default function enrich(room) {
         H.line(R, [H.p(i, j, Math.max(0, z - 1.8)), H.p(i, j, z)], 'blue', 3);
         H.line(R, [H.p(i - .38, j - .14, z), H.p(i + .38, j + .14, z)], 'coral', 3);
         for (const d of [-.32, .32]) oval(H, R, ...H.p(i + d, j, z), 4, 2, 'blue', .7);
+      }
+      for (const [i, j, z] of [[4.3, 4.3, 3.6], [2.7, 8.1, 2.4]]) {
+        box(H, R, i - .21, j - .22, .43, .44, Math.max(0, z - 1.84), .18, 'teal', .65);
+        for (const d of [-.24, .24]) {
+          H.line(R, [H.p(i + d, j, z - 1.55), H.p(i + d, j, z - .08)], 'coral', .8);
+        }
+        for (let k = 0; k < 7; k++) H.line(R, [H.p(i - .24, j, z - 1.5 + k * .2), H.p(i + .24, j, z - 1.5 + k * .2)], 'sun', .7);
+        H.line(R, [H.p(i, j, z - .4), H.p(i - .48, j, z)], 'blue', 1.3);
+        H.line(R, [H.p(i, j, z - .4), H.p(i + .48, j, z)], 'blue', 1.3);
       }
       station(H, R, 5.6, 1.15, 4.65, true);
       station(H, R, 2.5, 9, .75);
@@ -194,6 +238,15 @@ export default function enrich(room) {
       }
       box(H, R, 8.12, 4.1, .22, 1.7, 0, .35, 'blue', .3);
       sign(H, R, 10.5, 6.65, 0, 'HOT COCOA', 'paper', 61);
+      box(H, R, .45, 8.9, 1.74, .35, .03, 1.35, 'blue', .8);
+      for (let k = 0; k < 4; k++) {
+        const i = .59 + k * .4;
+        H.line(R, [H.p(i, 9.27, .18), H.p(i, 9.27, 1.2)], 'coral', 2);
+        for (const z of [.47, .9]) {
+          box(H, R, i - .05, 9.29, .16, .3, z, .16, 'sun', .75);
+          box(H, R, i - .05, 9.26, .16, .15, z + .16, .17, 'coral', .85);
+        }
+      }
       table(H, R, .85, 9.4, 1.35, .9, .63, 'sun');
       for (let k = 0; k < 5; k++) {
         const [x, y] = H.p(.85 + k * .25, 9.5, .85);
@@ -210,6 +263,11 @@ export default function enrich(room) {
         box(H, R, 1 + n * .32, 9.95, .18, .3, .78, .22, 'blue', .8);
         box(H, R, 1 + n * .32, 10.1, .18, .21, .78, .1, 'coral', .8);
       }
+      box(H, R, .84, 9.47, 1.34, .65, .12, .1, 'blue', .7);
+      for (let k = 0; k < 4; k++) box(H, R, .93 + k * .28, 9.56, .22, .45, .23, .15, 'paper', .9);
+      const [waxX, waxY] = H.p(1.85, 9.5, .81);
+      shape(H, R, [[waxX - 7, waxY], [waxX + 7, waxY], [waxX + 4, waxY - 7], [waxX - 5, waxY - 7]], 'coral', .9);
+      stroke(H, R, [[waxX - 4, waxY - 7], [waxX - 4, waxY - 12], [waxX + 3, waxY - 12], [waxX + 3, waxY - 7]], 'blue', 1);
       sign(H, R, .65, 9.25, .75, 'SKI RENTAL', 'sun', 62);
       for (let k = 0; k < 5; k++) {
         const i = 4.6 + k * .6, j = 9.65;
@@ -235,6 +293,15 @@ export default function enrich(room) {
         H.line(R, [H.p(9.55, j, .02), H.p(10.02, j, .02)], 'teal', .7, { tone: .38 });
         H.line(R, [H.p(10.57, j, .02), H.p(11.02, j, .02)], 'teal', .7, { tone: .38 });
       }
+      for (let k = 0; k < 5; k++) {
+        const [x, y] = H.p(11.15, 8.94 + k * .28, .1);
+        oval(H, R, x, y, 5, 3, 'blue', .8);
+        oval(H, R, x, y, 2.5, 1.4, 'sun', .85);
+      }
+      box(H, R, 10.63, 9.2, .65, .75, .04, .19, 'coral', .85);
+      const [toolX, toolY] = H.p(10.92, 9.6, .26);
+      H.line(R, [[toolX - 7, toolY + 2], [toolX + 7, toolY - 7]], 'paper', 2);
+      H.line(R, [[toolX + 4, toolY - 10], [toolX + 10, toolY - 4]], 'sun', 3);
       groomer(H, R);
       for (let n = 0; n < 5; n++) {
         const p = H.p(7.4 + n * .35, 6.8 + n * .2, .05);

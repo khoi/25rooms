@@ -1,8 +1,9 @@
-import { surface, timber, metal, bentTube, drape, benchFrame, pendant, cushion } from '../materials.js';
+import { surface, timber, metal, bentTube, drape, benchFrame, pendant, cushion, vessel } from '../materials.js';
 import { masonry, cabinetFrame, rackFrame, basin as washBasin } from '../structure.js';
 import { windowBay, cityView, taskLight } from '../joinery.js';
 
 import { TAU, actor, cycle, ell, oval, shape, world } from '../../worlds/common.js';
+import { shallowTray } from '../furnishings.js';
 import { FIGURES } from '../../drawings.js';
 
 const rest = FIGURES.clips.idle.keys[0][1];
@@ -149,7 +150,11 @@ const room = world(
     for (let j = 0; j < 12; j += 0.77) for (let i = 0; i < 12; i += 1.5) surface(H, R, H.tile(i, j, 1.47, 0.74, 0.02), 'paper', 1, 0.35);
     masonry(H, R, 'nw', 0, 12, 0, 4.58, 'teal', 0.14);
     masonry(H, R, 'ne', 0, 12, 0, 4.58, 'paper');
-    windowBay(H, R, 'nw', 0.77, 5.61, 2.46, 1.73, { ink: 'teal', divisions: 4, view: (P) => cityView(H, R, P, 5.61, 1.73) });
+    for (const j of [1.08, 5.83]) timber(H, R, 0.18, j, 1.01, 0.15, 0.16, 1.7, 'teal');
+    for (const z of [0.37, 1.18, 1.85]) timber(H, R, 0.19, 1.08, 1.02, 4.89, z, 0.11, 'sun');
+    for (let n = 0; n < 7; n++) cup(H, R, 0.68, 1.4 + n * 0.63, 1.34, ['teal', 'coral', 'paper'][n % 3], n === 6);
+    for (let n = 0; n < 3; n++) plate(H, R, ...H.p(0.73, 1.75 + n * 1.51, 2.01), 15, n !== 0, false, 0, n === 2);
+    windowBay(H, R, 'nw' , 0.77, 5.61, 2.46, 1.73, { ink: 'teal', divisions: 4, view: (P) => cityView(H, R, P, 5.61, 1.73) });
     cabinetFrame(H, R, 1.4, 0.35, 6.53, 1.26, 0.09, 4.11, 4, 'teal', (i, j, w, d, z, h, n) => {
       for (let row = 0; row < 3; row++) {
         timber(H, R, i, j, w, d, z + row * 1.25, 0.09, 'sun');
@@ -172,9 +177,18 @@ const room = world(
     washBasin(H, R, 0.58, 7.67, 1.55, 1.8, 1.19);
     drape(H, R, 0.67, 10.28, 0.62, 0.7, 1.23, 0.68, 'paper');
     for (let n = 0; n < 4; n++) cup(H, R, 1.19, 9.8 + n * 0.27, 1.21, 'paper', n === 0);
+    for (const z of [0.32, 0.6]) {
+      metal(H, R, 2.98, 3.66, 3.74, 1.56, z, 0.18, 'teal');
+      for (const i of [3.79, 5.77]) bentTube(H, R, [[i - 0.22, 5.25, z + 0.08], [i - 0.22, 5.37, z + 0.08], [i + 0.22, 5.37, z + 0.08], [i + 0.22, 5.25, z + 0.08]], 1.4, 'sun');
+    }
     benchFrame(H, R, 2.75, 3.39, 4.31, 2.4, 1.07, 'sun');
     drape(H, R, 2.84, 3.49, 1.23, 2.23, 1.09, 0.49, 'paper');
-    surface(H, R, ell(...H.p(5.14, 5.26, 1.12), 34, 20), 'teal', 0.5);
+    surface(H, R, ell(...H.p(5.14, 5.26, 1.12), 35, 21), 'teal', 0.65);
+    surface(H, R, ell(...H.p(5.14, 5.26, 1.16), 30, 17), 'sun', 0.45);
+    for (let n = 0; n < 12; n++) {
+      const a = n * TAU / 12;
+      H.dot(...H.p(5.14 + Math.cos(a) * 0.78, 5.26 + Math.sin(a) * 0.51, 1.18), 1.2, 'paper');
+    }
     for (const i of [4.08, 6.51]) cup(H, R, i, 3.87, 1.12, 'teal', true);
     for (let n = 0; n < 6; n++) {
       const [x, y] = H.p(4.03 + n * 0.43, 4.19, 1.13);
@@ -184,69 +198,31 @@ const room = world(
     for (let n = 0; n < 4; n++) plate(H, R, ...H.p(3.56, 4.74, 1.12 + n * 0.075), 19, false);
     cushion(H, R, 5.09, 6.13, 1.07, 1.04, 0.62, 0.16, 'coral');
     for (const i of [5.2, 5.91]) for (const j of [6.24, 6.94]) timber(H, R, i, j, 0.12, 0.12, 0.03, 0.59, 'sun');
-    const outline = [
-      [9.14, 0.77],
-      [11.38, 0.77],
-      [11.64, 1.28],
-      [11.64, 2.42],
-      [11.21, 2.83],
-      [9.18, 2.83],
-      [8.85, 2.39],
-      [8.85, 1.21]
-    ];
-    surface(
-      H,
-      R,
-      outline.map(([i, j]) => H.p(i, j, 0.2)),
-      'teal',
-      0.65
-    );
-    for (let n = 0; n < outline.length; n++) {
-      const [i, j] = outline[n],
-        [a, b] = outline[(n + 1) % outline.length];
-      surface(H, R, [H.p(i, j, 0.2), H.p(a, b, 0.2), H.p(a, b, 1.76), H.p(i, j, 1.76)], 'paper', 1);
+    cabinetFrame(H, R, 8.62, 0.49, 2.77, 2.02, 0.08, 2.18, 2, 'teal', (i, j, w, d, z, h, n) => {
+      timber(H, R, i, j, w, d, z + 0.88, 0.08, 'sun');
+      for (let q = 0; q < 3; q++) {
+        surface(H, R, H.tile(i + 0.1, j + 0.12, w - 0.2, d - 0.24, z + 0.16 + q * 0.16), 'paper', 1);
+        H.line(R, [H.p(i + 0.1, j + d - 0.1, z + 0.16 + q * 0.16), H.p(i + w - 0.1, j + d - 0.1, z + 0.16 + q * 0.16)], 'coral', 0.7);
+      }
+      vessel(H, R, i + w / 2, j + d / 2, z + 1.04, 12, 21, n ? 'sun' : 'paper', false);
+    });
+    for (let n = 0; n < 2; n++) {
+      const i = 8.86 + n * 1.29;
+      surface(H, R, H.faceI(i, 0.35, 1.1, 2.69, 3.77), 'sun', 0.45);
+      surface(H, R, H.faceI(i + 0.09, 0.37, 0.92, 2.78, 3.67), 'paper', 1);
+      blossom(H, R, ...H.p(i + 0.55, 0.39, 3.22), 0.9, n === 1);
     }
-    surface(
-      H,
-      R,
-      outline.map(([i, j]) => H.p(i, j, 1.81)),
-      'sun',
-      0.2
-    );
-    for (const z of [0.53, 1.41])
-      bentTube(
-        H,
-        R,
-        [
-          [8.88, 1.24, z],
-          [8.88, 2.37, z],
-          [9.22, 2.81, z],
-          [11.19, 2.81, z]
-        ],
-        2,
-        'teal'
-      );
-    metal(H, R, 10.08, 2.82, 0.65, 0.12, 0.85, 0.54, 'teal');
-    surface(H, R, H.faceI(10.19, 2.95, 0.42, 1.12, 1.31), 'blue', 0.72);
-    for (const i of [9.35, 11.17])
-      bentTube(
-        H,
-        R,
-        [
-          [i, 1.08, 1.83],
-          [i, 1.08, 2.01],
-          [i, 1.5, 2.01],
-          [i, 1.5, 1.83]
-        ],
-        2,
-        'teal'
-      );
     rackFrame(H, R, 9.24, 4.1, 2.08, 2.53, 0.14, [0.13, 0.82, 1.57], 'teal', (i, j, w, d, z, row) => {
       for (let n = 0; n < 3; n++) plate(H, R, ...H.p(i + w * 0.5, j + 0.39 + n * 0.65, z + 0.08), 15, row === 2, false, n * 0.2);
     });
     cabinetFrame(H, R, 2.97, 9.06, 3.6, 2.01, 0.04, 0.68, 3, 'sun', (i, j, w, d, z, h, n) => {
       for (let k = 0; k < 4; k++) plate(H, R, ...H.p(i + w * 0.5, j + d * 0.5, z + 0.1 + k * 0.08), 14, n === 2);
     });
+    benchFrame(H, R, 8.01, 8.8, 3.25, 2.2, 0.84, 'teal');
+    shallowTray(H, R, 8.2, 8.97, 1.8, 1.64, 0.87, 'sun');
+    plate(H, R, ...H.p(8.91, 9.61, 1.04), 21, true, false, 0, true);
+    cup(H, R, 10.54, 9.25, 0.87, 'coral');
+    drape(H, R, 10.14, 10.04, 0.79, 0.81, 0.87, 0.48, 'paper');
     for (let n = 0; n < 3; n++) {
       surface(H, R, H.tile(7.79 + n * 0.1, 9.58 + n * 0.08, 1.67, 1.04, 0.04 + n * 0.025), 'paper', 1, 0.4);
     }

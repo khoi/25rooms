@@ -53,6 +53,13 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
     for(let n=0;n<4;n++){H.line(R,[Q(.3+n,.27),Q(.6+n,1.89)],'paper',1);H.line(R,[Q(1+n,.1),Q(1+n,2.15)],'teal',2);}
     H.line(R,[Q(.1,.95),Q(4.3,.95)],'teal',2);
   });
+  const V=(u,z)=>wallPt(H,'ne',5.43+u,z,-.24);
+  surface(H,R,[V(0,1.06),V(1.64,1.06),V(1.64,3.54),V(0,3.54)],'teal',.5,.8);
+  for(let n=0;n<7;n++)H.line(R,[V(.2,2.4+n*.14),V(1.46,2.4+n*.14)],'blue',1.4);
+  surface(H,R,[V(.19,1.36),V(1.43,1.36),V(1.43,2.15),V(.19,2.15)],'blue',.7,.7);
+  for(let n=0;n<3;n++){H.line(R,[V(.31+n*.38,1.51),V(.31+n*.38,1.97)],'paper',.8);H.dot(...V(.31+n*.38,1.76+n%2*.1),2,'coral');}
+  bentTube(H,R,[[6.25,.26,3.65],[6.25,.25,3.89],[10.73,.25,3.89],[10.73,.25,3.64]],1.4,'sun');
+  for(const i of [6.5,8.2,9.9])metal(H,R,i,.24,.09,.06,3.82,.17,'teal');
   for(const j of [.85,7.5]){
     const Q=(u,v)=>wallPt(H,'nw',j+u,v,-.44);
     for(let k=0;k<5;k++){
@@ -64,6 +71,11 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
   metal(H,R,.15,1.32,.38,6.3,3.55,.21,'teal');
   for(const j of [1.5,4.4,7.25])bentTube(H,R,[[.04,j,3.83],[.55,j,3.83],[.55,j,3.6]],2,'blue');
   for(let j=1.48;j<7.5;j+=.5){const p=H.p(.51,j,3.6);H.outline(R,ell(...p,3,4),'sun',.8);}
+  for(const j of [.44,8.51]){
+    metal(H,R,.13,j,.69,.61,2.44,.79,'blue');
+    const p=H.p(.83,j+.31,2.83);oval(H,R,...p,8,12,'paper',.55);oval(H,R,...p,4,7,'blue',.8);
+    bentTube(H,R,[[.18,j+.2,2.44],[.67,j+.2,2.31],[.76,j+.2,2.44]],1.6,'teal');
+  }
   screen(H,R,0);
   bentTube(H,R,[[.12,8.58,3.82],[.12,8.58,.7],[.3,8.58,.62]],1.3,'sun');
   const tie=H.p(.24,8.58,.65);oval(H,R,...tie,4,6,'coral',.7);
@@ -93,6 +105,17 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
     }
   });
   for(let k=0;k<11;k++)H.line(R,[H.p(7.84+k*.31,1.76,.28),H.p(7.84+k*.31,1.76,.67)],'paper',.8);
+  timber(H,R,7.55,.19,4.18,1.6,3.63,.12,'sun');
+  for(const i of [7.72,9.12,10.5]){
+    metal(H,R,i,.61,.88,.71,3.76,.17,'teal');
+    const p=H.p(i+.44,.97,3.95);oval(H,R,...p,11,4,'paper',.9);H.dot(...p,2,'blue');
+    H.line(R,[[p[0]-6,p[1]],[p[0]+6,p[1]]],'coral',.7);
+  }
+  surface(H,R,H.faceJ(11.67,.27,1.5,.27,3.48),'teal',.45,.9);
+  for(const z of [.55,1.26,2.0]){
+    const p=H.p(11.68,.95,z);H.line(R,[[p[0]-10,p[1]],[p[0]+10,p[1]]],'sun',1.2);
+    H.outline(R,ell(p[0],p[1]+12,12,11),'blue',1.5);H.outline(R,ell(p[0],p[1]+12,9,8),'blue',1.2);
+  }
   for(const i of [2.45,4.55])for(const j of [5.2,7.7])seat(H,R,i,j,(i+j)%2?'coral':'teal',i===2.45&&j===7.7);
   cushion(H,R,4.7,5.32,.79,.7,.92,.24,'sun');
   drape(H,R,4.63,7.79,.63,.64,.92,.57,'paper');
@@ -106,6 +129,12 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
   for(let k=0;k<6;k++)H.line(R,[H.p(8.15+k*.16,5.9,.73),H.p(8.15+k*.16,5.9,.93)],'paper',.6);
   for(const i of [7.86,9.12])for(const j of [4.82,5.82])metal(H,R,i,j,.19,.18,1.64,.13,'blue');
   metal(H,R,7.73,4.67,1.68,1.4,1.78,.7,'paper');
+  surface(H,R,H.faceJ(9.415,4.81,1.09,1.85,2.41),'blue',.75,.7);
+  const fan=H.p(9.43,5.36,2.13);oval(H,R,...fan,12,13,'teal',.55);
+  for(let n=0;n<8;n++){const a=n*Math.PI/4;H.line(R,[[fan[0]+Math.cos(a)*4,fan[1]+Math.sin(a)*4],[fan[0]+Math.cos(a+.3)*11,fan[1]+Math.sin(a+.3)*12]],'paper',.7);}
+  H.dot(...fan,3,'blue');
+  for(const j of [4.82,5.88])for(const z of [1.88,2.39])H.dot(...H.p(9.44,j,z),1.3,'sun');
+  surface(H,R,H.tile(7.79,4.72,1.53,.12,2.51),'teal',.6,.6);
   for(let n=0;n<9;n++)H.line(R,[H.p(8.06+n*.13,6.08,1.91),H.p(8.06+n*.13,6.08,2.29)],'blue',.85);
   for(let n=0;n<4;n++)H.dot(...H.p(8.79+n*.13,5.07,2.5),1.3,n?'teal':'coral');
   surface(H,R,H.tile(7.91,4.9,.71,.71,2.5),'blue',.6,.7);
@@ -115,6 +144,8 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
   oval(H,R,lens[0]-27,lens[1]+3,7,9,'paper',1);
   oval(H,R,lens[0]-28,lens[1]+3,4.6,6.7,'blue',.72);
   H.line(R,[[lens[0]-30,lens[1]-2],[lens[0]-30,lens[1]+5]],'paper',1.5);
+  for(const a of [0,6,12])H.outline(R,ell(lens[0]-9-a,lens[1]+1+a*.08,9.5,12),'sun',.7,{tone:.65});
+  H.line(R,[[lens[0]-10,lens[1]-12],[lens[0]-22,lens[1]-8]],'sun',2);
   metal(H,R,9.5,5.0,.44,.9,1.65,.08,'teal');
   for(let n=0;n<4;n++)H.dot(...H.p(9.7,5.17+n*.16,1.74),1.15,'paper');
   const cap=H.p(9.61,6.25,1.65);oval(H,R,...cap,10,3.7,'blue',.8);
@@ -128,6 +159,30 @@ const room=world('istanbul-cinema-corner','The lens finds the wall',{wall:'blue'
   surface(H,R,H.tile(.38,10.36,.45,.37,.73),'teal',.2,.5);
   H.line(R,[H.p(.32,11.08,.76),H.p(.77,11.08,.76)],'blue',2);
   for(let n=0;n<4;n++)H.line(R,[H.p(.34,11.07+n*.03,.78),H.p(.53,11.07+n*.03,.78)],'sun',.8);
+  for(const i of [7.34,10.01]){
+    metal(H,R,i,6.59,.12,.12,.2,1.21,'teal');
+    H.line(R,[H.p(i,6.64,.32),H.p(i,6.64,1.26)],'paper',.7);
+  }
+  surface(H,R,H.faceI(7.5,6.62,2.36,.68,1.36),'blue',.72,.8);
+  for(let n=0;n<3;n++){
+    surface(H,R,H.faceI(7.63,6.64,2.12,.77+n*.18,.89+n*.18),'teal',.42,.5);
+    H.dot(...H.p(7.77,6.66,.83+n*.18),1.7,n===1?'coral':'sun');
+    for(let k=0;k<6;k++)H.line(R,[H.p(8.4+k*.18,6.66,.8+n*.18),H.p(8.4+k*.18,6.66,.86+n*.18)],'paper',.6);
+  }
+  floorShadow(H,8.04,8.62,3.17,1.83,.25);
+  for(const i of [8.1,10.97])for(const j of [8.69,10.27]){
+    const p=H.p(i,j,.1);oval(H,R,...p,4,5,'blue',.85);H.line(R,[[p[0],p[1]-3],[p[0],p[1]-10]],'teal',2);
+  }
+  metal(H,R,8.03,8.6,3.16,1.81,.29,.2,'blue');
+  surface(H,R,H.tile(8.2,8.74,2.8,1.51,.5),'coral',.36,.8);
+  surface(H,R,H.tile(8.41,9.01,2.35,1.01,.52),'blue',.84,.8);
+  for(const [i,j,w,d]of [[8.52,9.11,1.26,.76],[9.91,9.13,.71,.76]])surface(H,R,H.tile(i,j,w,d,.54),'teal',.48,.7);
+  surface(H,R,[H.p(8.03,8.58,.45),H.p(11.19,8.58,.45),H.p(11.19,8.16,1.61),H.p(8.03,8.16,1.61)],'blue',.73,1);
+  surface(H,R,[H.p(8.18,8.54,.6),H.p(11.02,8.54,.6),H.p(11.02,8.21,1.44),H.p(8.18,8.21,1.44)],'teal',.3,.7);
+  for(const i of [8.54,10.51])metal(H,R,i,10.42,.26,.07,.34,.18,'sun');
+  bentTube(H,R,[[9.17,10.44,.38],[9.17,10.7,.38],[10,10.7,.38],[10,10.44,.38]],2.1,'sun');
+  drape(H,R,10.11,9.18,.51,.67,.55,.12,'paper');
+  const pouch=H.p(1.2,8.86,.08);oval(H,R,...pouch,15,7,'blue',.7);H.outline(R,ell(pouch[0],pouch[1]-5,11,11),'teal',2);H.line(R,[[pouch[0]-10,pouch[1]-5],[pouch[0]-10,pouch[1]+1]],'coral',3);H.line(R,[[pouch[0]+10,pouch[1]-5],[pouch[0]+10,pouch[1]+1]],'coral',3);
   floorLight(H,3.7,6.4,135,.25);
 },(H,R,t)=>{
   const u=((t%20)+20)%20, turn=smooth(4,8,u)*(1-smooth(12,17,u));

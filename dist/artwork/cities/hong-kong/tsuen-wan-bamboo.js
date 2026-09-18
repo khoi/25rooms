@@ -1,6 +1,6 @@
-import { surface, timber, vessel, benchFrame, pendant } from '../materials.js';
+import { surface, timber, vessel, benchFrame, pendant, metal, bentTube, drape } from '../materials.js';
 
-import { shallowTray, handTool } from '../furnishings.js';
+import { shallowTray, handTool, foldedCloth } from '../furnishings.js';
 import { TAU, actor, cycle, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -140,8 +140,8 @@ function binding(H, R, i, j, z, ink = 'blue') {
   );
 }
 
-function coil(H, R, i, j, ink = 'blue', size = 1) {
-  const [x, y] = H.p(i, j, 0.035);
+function coil(H, R, i, j, ink = 'blue', size = 1, z = 0.035) {
+  const [x, y] = H.p(i, j, z);
   for (let q = 0; q < 5; q++)
     H.outline(
       R,
@@ -220,6 +220,24 @@ const room = world(
           'sun'
         );
     }
+    for (const i of [4.31, 7.78]) {
+      timber(H, R, i, 0.46, 0.19, 1.45, 0.05, 2.97, 'teal');
+      bentTube(H, R, [[i, 0.51, 0.3], [i, 1.78, 2.61]], 1.8, 'sun');
+    }
+    for (const z of [0.3, 1.23, 2.27]) {
+      timber(H, R, 4.31, 0.45, 3.65, 1.46, z, 0.12, 'teal');
+      timber(H, R, 4.31, 1.83, 3.65, 0.08, z + 0.12, 0.19, 'sun');
+    }
+    for (let n = 0; n < 4; n++) {
+      const [x, y] = H.p(4.82 + n * 0.83, 1.2, 2.48);
+      for (let q = 0; q < 4; q++) oval(H, R, x, y - q * 2, 10, 4, n % 2 ? 'coral' : 'sun', 0.7);
+      H.line(R, [[x - 7, y + 1], [x + 7, y - 8]], 'blue', 1.4);
+    }
+    foldedCloth(H, R, 4.56, 0.64, 1.26, 1.03, 1.39, 'paper', 'coral');
+    shallowTray(H, R, 6.19, 0.66, 1.49, 0.99, 1.38, 'sun');
+    handTool(H, R, 6.55, 1.02, 1.55, 'hammer', 'coral');
+    handTool(H, R, 7.15, 1.31, 1.55, 'brush', 'sun');
+    for (let n = 0; n < 4; n++) timber(H, R, 4.63 + n * 0.63, 0.74, 0.47, 0.82, 0.44, 0.38, n === 2 ? 'coral' : 'sun');
     for (const i of [4.25, 7.56]) {
       for (const j of [4.77, 6.1]) pole(H, R, [i, j, 0.05], [i, 5.47, 1.02], 3.6, 'coral');
       pole(H, R, [i, 4.97, 0.33], [i, 5.92, 0.33], 2.5, 'sun');
@@ -227,17 +245,34 @@ const room = world(
     }
     pole(H, R, [3.79, 5.45, 1.18], [8.15, 5.45, 1.18], 5, 'sun');
     pole(H, R, [6.04, 4.22, 1.39], [6.04, 6.52, 1.39], 4.6, 'sun');
+    pole(H, R, [4.25, 5.46, 0.32], [7.56, 5.46, 0.32], 3, 'teal');
+    for (const i of [4.25, 7.56]) {
+      binding(H, R, i, 5.47, 1.12, 'coral');
+      timber(H, R, i - 0.28, 4.67, 0.56, 0.29, 0.025, 0.09, 'sun');
+      timber(H, R, i - 0.28, 5.97, 0.56, 0.29, 0.025, 0.09, 'sun');
+    }
     binding(H, R, 6.04, 5.45, 1.42);
     for (let n = 0; n < 8; n++) H.line(R, [H.p(6.01 + n * 0.012, 5.4, 1.48), H.p(6.08 + n * 0.012, 5.6, 1.23)], 'paper', 0.5);
     benchFrame(H, R, 9.15, 2.85, 2.15, 2.13, 1.05, 'teal');
     shallowTray(H, R, 9.35, 3.07, 1.74, 1.05, 1.08, 'sun');
-    for (let n = 0; n < 5; n++) coil(H, R, 9.63 + (n % 2) * 0.79, 3.38 + Math.floor(n / 2) * 0.37, n % 2 ? 'coral' : 'blue', 0.42);
+    for (let n = 0; n < 5; n++) coil(H, R, 9.63 + (n % 2) * 0.79, 3.38 + Math.floor(n / 2) * 0.37, n % 2 ? 'coral' : 'blue', 0.42, 1.22);
     handTool(H, R, 10.11, 4.63, 1.09, 'scissors', 'coral');
     benchFrame(H, R, 9.36, 8.27, 1.95, 2.55, 0.71, 'sun');
     for (let n = 0; n < 8; n++) pole(H, R, [9.58 + n * 0.18, 8.39, 0.89], [9.58 + n * 0.18, 10.55, 0.89], 2.5, 'sun');
     for (const j of [8.79, 10.19]) binding(H, R, 10.16, j, 0.92, 'coral');
-    for (let n = 0; n < 4; n++) coil(H, R, 5.1 + n * 0.69, 10.42, n % 2 ? 'blue' : 'coral', 0.72);
+    benchFrame(H, R, 3.63, 9.55, 2.6, 1.66, 0.77, 'teal');
+    shallowTray(H, R, 3.82, 9.74, 2.19, 1.21, 0.79, 'sun');
+    for (let n = 0; n < 3; n++) {
+      pole(H, R, [4.12 + n * 0.6, 9.92, 0.98], [4.12 + n * 0.6, 10.8, 0.98], 3.3, 'sun');
+      pole(H, R, [3.93 + n * 0.6, 10.29, 1.05], [4.39 + n * 0.6, 10.29, 1.05], 3, 'sun');
+      binding(H, R, 4.12 + n * 0.6, 10.29, 1.08, ['blue', 'coral', 'teal'][n]);
+    }
+    for (let n = 0; n < 4; n++) coil(H, R, 6.55 + n * 0.36, 10.42, n % 2 ? 'blue' : 'coral', 0.72);
     vessel(H, R, 8.14, 10.65, 0.03, 13, 21, 'teal');
+    for (const j of [9.0, 10.94]) timber(H, R, 0.55, j, 2.02, 0.13, 0.09, 1.13, 'teal');
+    for (const z of [0.13, 0.56, 1.0]) timber(H, R, 0.56, 10.95, 2.0, 0.13, z, 0.14, 'sun');
+    for (let n = 0; n < 8; n++) pole(H, R, [0.79 + (n % 4) * 0.43, 9.33 + Math.floor(n / 4) * 0.57, 0.19], [0.89 + (n % 4) * 0.43, 9.45 + Math.floor(n / 4) * 0.57, 1.38 + (n % 3) * 0.19], 4.5, 'sun');
+    drape(H, R, 9.42, 9.9, 0.53, 0.63, 0.95, 0.44, 'paper');
     pendant(H, R, 6.27, 2.77, 4.2, 3.2, 'sun', 0.95);
   },
   (H, R, t) => {

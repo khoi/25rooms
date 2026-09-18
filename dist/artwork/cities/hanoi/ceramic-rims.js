@@ -1,6 +1,6 @@
-import { world, shape, oval, stroke, ell } from '../../worlds/common.js';
-import { surface, timber, metal, benchFrame, cushion, drape } from '../materials.js';
-import { windowBay, floorShadow, hangingRail } from '../joinery.js';
+import { world, shape, oval, stroke, ell, wallPt } from '../../worlds/common.js';
+import { surface, timber, metal, benchFrame, cushion, drape, bentTube, vessel } from '../materials.js';
+import { windowBay, floorShadow, hangingRail, recessedFrame, taskLight } from '../joinery.js';
 
 const ease = (a, b, t) => { const q = Math.max(0, Math.min(1, (t - a) / (b - a))); return q * q * (3 - 2 * q); };
 function person(H, R, i, j, hands, ink = 'teal', lean = 0) {
@@ -35,16 +35,29 @@ const room = world('hanoi-ceramic-rims', 'One rim against the light', { floor: '
   for (let j = 1.4; j < 10.8; j += 1.6) H.line(R, [H.p(.2, j), H.p(11.8, j)], 'blue', .5, { tone: .24 });
   windowBay(H, R, 'ne', 1.3, 9.9, 1.42, 2.55, { divisions: 6, ink: 'teal', view: P => { shape(H, R, [P(.1,.1),P(9.8,.1),P(9.8,1.1),P(.1,.55)], 'teal', .14); for (let x = .25; x < 9.8; x += 1.2) H.line(R,[P(x,.15),P(x+.5,1.1)],'sun',1,{tone:.4}); } });
   H.tint([H.p(2.4, .8, .02),H.p(7,.8,.02),H.p(10,7,.02),H.p(6.3,7.7,.02)],'sun',.18);
+  for(const z of [.13,4.08])timber(H,R,.12,.42,.21,11.06,z,.12,'teal');
+  for(const j of [.52,7.34,11.26])timber(H,R,.13,j,.19,.16,.16,3.92,'paper');
+  recessedFrame(H,R,'nw',7.74,3.19,1.57,2.07,'teal',P=>{
+    for(const v of [.19,1.1])H.line(R,[P(.1,v),P(3.06,v)],'sun',4);
+    for(const [u,v,r,ink]of [[.55,.25,13,'paper'],[1.49,.25,10,'teal'],[2.5,.26,13,'coral'],[.63,1.16,10,'sun'],[1.62,1.17,13,'paper']]){const [x,y]=P(u,v);oval(H,R,x,y-r*.64,r,r*.69,ink,.7);oval(H,R,x,y-r*.68,r*.65,r*.43,'paper',.9);H.line(R,[[x-r*.7,y-r*.54],[x,y-r*.3],[x+r*.7,y-r*.51]],'blue',.7);}
+    const [x,y]=P(2.57,1.23);surface(H,R,[[x-12,y],[x+12,y],[x+9,y-20],[x-7,y-21]],'paper',1);stroke(H,R,[[x-9,y-18],[x-3,y-23],[x+4,y-17],[x+9,y-20]],'coral',1.5);
+  });
+  H.tint(H.faceJ(.32,.69,6.6,.26,3.68),'blue',.19);
   timber(H, R, .4, .65, 1.7, 6.6, .1, .2, 'sun');
   for (const j of [.69, 3.8, 7.09]) for (const i of [.42, 1.94]) timber(H, R, i, j, .14, .16, .13, 3.95 - j * .14, 'sun');
   for (const [level, end] of [[.55,7.2],[1.45,7.2],[2.33,5.85],[3.24,3.77]]) {
-    timber(H,R,.43,.7,1.65,end-.7,level,.11,'sun');
+    for(let j=.7;j<end-.12;j+=.25)timber(H,R,.43,j,1.65,.21,level,.11,'sun');
+    timber(H,R,.43,.7,.12,end-.7,level-.15,.22,'sun');
+    for(const j of [.83,end-.17])bentTube(H,R,[[.56,j,level-.02],[1.91,j,level-.28]],1.5,'teal');
     for (let j = .95; j < end - .35; j += 1.04) {
       for (const i of [.76,1.48]) bowl(H,R,i,j,level+.13,8+(j%2)*2, (Math.round(j*2)+level*10)%3>1?'paper':'teal',j,9);
       if (j < end-1) timber(H,R,.5,j+.62,1.5,.065,level+.13,.34,'paper');
     }
     timber(H,R,2.02,.69,.065,end-.6,level+.08,.12,'sun');
   }
+  for(const [j,z]of [[1.03,.55],[2.14,1.45],[4.52,.55]]){const [x,y]=H.p(1.49,j,z+.13);oval(H,R,x+2,y-13,5,8,'paper',1);oval(H,R,x+2,y-13,2.9,5,'teal',.35);}
+  surface(H,R,[H.p(1.2,6.76,.2),H.p(1.9,6.76,.2),H.p(1.9,6.58,.89),H.p(1.2,6.58,.89)],'paper',.9);
+  for(let n=0;n<5;n++)H.line(R,[H.p(1.26+n*.12,6.75,.26),H.p(1.26+n*.12,6.59,.82)],'sun',1.2);
   H.line(R,[H.p(.55,.75,.34),H.p(.55,3.65,3.22)],'blue',2);
   metal(H,R,.68,5.88,1.17,.93,.29,.15,'paper');
   for(let k=0;k<4;k++) H.line(R,[H.p(.75+k*.24,5.95,.45),H.p(.78+k*.24,6.74,.45)],'sun',2);
@@ -55,7 +68,17 @@ const room = world('hanoi-ceramic-rims', 'One rim against the light', { floor: '
   surface(H,R,H.tile(4.27,3.69,4.38,1.96,1.108),'paper',.97,.5);
   cushion(H,R,5.03,4.05,1.97,1.5,1.12,.045,'teal');
   const [tx,ty]=H.p(5.96,4.81,1.17);
-  oval(H,R,tx,ty,35,17,'blue',.56); oval(H,R,tx,ty-4,30,14,'sun',.55); oval(H,R,tx,ty-8,34,16,'paper',1); oval(H,R,tx,ty-9,26,12,'teal',.25);
+  surface(H,R,H.tile(5.05,4.12,1.87,1.4,1.18),'blue',.56);
+  for(const i of [5.19,6.7])for(const j of [4.24,5.37])H.dot(...H.p(i,j,1.21),2,'sun');
+  oval(H,R,tx,ty+3,26,12,'blue',.79);oval(H,R,tx,ty,18,8,'teal',.64);oval(H,R,tx,ty-3,14,6,'blue',.7);
+  surface(H,R,[[tx-34,ty-9],[tx+34,ty-9],[tx+34,ty-1],[tx+20,ty+5],[tx-20,ty+5],[tx-34,ty-1]],'sun',.65);
+  oval(H,R,tx,ty-9,34,16,'paper',1);oval(H,R,tx,ty-10,28,12,'teal',.36);oval(H,R,tx,ty-10,18,8,'blue',.27);
+  for(let n=0;n<8;n++){const a=n*Math.PI/4;H.line(R,[[tx+Math.cos(a)*32,ty-8+Math.sin(a)*14],[tx+Math.cos(a)*32,ty-3+Math.sin(a)*14]],'blue',.65);}
+  bentTube(H,R,[[6.73,5.12,1.2],[6.73,5.12,1.49],[6.42,5.12,1.49]],2,'coral');
+  timber(H,R,4.26,4.02,4.42,.13,.39,.13,'sun');
+  surface(H,R,H.faceI(4.33,5.87,4.35,.31,.73),'blue',.54);
+  for(const i of [4.42,6.57]){timber(H,R,i,5.57,1.91,.52,.38,.13,'sun');timber(H,R,i,5.99,1.91,.09,.4,.23,'teal');bentTube(H,R,[[i+.71,6.11,.55],[i+1.15,6.11,.55]],1.6,'sun');}
+  for(const i of [4.64,5.36])bowl(H,R,i,5.77,.53,7,'paper',.2,5);
   metal(H,R,6.85,4.79,.2,.26,1.14,.12,'coral');
   for(const i of [4.4,8.42]) { const [x,y]=H.p(i,3.94,1.14); shape(H,R,[[x-10,y],[x+9,y],[x+11,y-20],[x+4,y-22],[x+4,y-12],[x-1,y-4],[x-10,y-2]],'sun',.62); }
   bowl(H,R,7.87,4.9,1.13,20,'coral',-.6,17);
@@ -67,8 +90,19 @@ const room = world('hanoi-ceramic-rims', 'One rim against the light', { floor: '
   timber(H,R,7.72,.82,1.47,.1,1.15,.52,'sun');
   for(let k=0;k<5;k++) surface(H,R,[H.p(7.9+k*.045,.94+k*.03,1.34),H.p(8.95,.94,1.34+k*.03),H.p(8.92,1.74,1.4),H.p(7.91,1.83,1.28)],'paper',1,.4);
   const [sx,sy]=H.p(9.86,1.44,1.2); oval(H,R,sx,sy,14,6,'sun',.36); oval(H,R,sx,sy,9,3.8,'blue',.3); stroke(H,R,[[sx-10,sy],[sx-4,sy+14],[sx+15,sy+12]],'coral',1.3); oval(H,R,sx+9,sy+12,3,3,'teal',.7);
+  timber(H,R,7.67,.76,3.07,.08,1.2,.69,'teal');
+  for(const i of [7.62,10.76])bentTube(H,R,[[i,.92,1.17],[i,.58,1.81]],2,'blue');
+  for(let k=0;k<5;k++)surface(H,R,[H.p(9.28+k*.19,.85,1.2),H.p(9.4+k*.19,.85,1.2),H.p(9.52+k*.15,1.23,1.88),H.p(9.38+k*.15,1.23,1.88)],k%2?'paper':'sun',.8);
+  for(const [i,j]of [[8.17,1.89],[9.61,1.87]]){const [x,y]=H.p(i,j,1.19);H.line(R,ell(x,y,11,5),'sun',3);H.line(R,ell(x,y,7,3),'blue',1);}
+  taskLight(H,R,10.54,.99,1.17,'coral',-.68);
   hangingRail(H,R,'nw',8.7,2.15,2.52,4,(P,u,n)=>{ shape(H,R,[P(u-.13,-.15),P(u+.13,-.15),P(u+.13,-.46),P(u-.13,-.46)],['sun','teal','paper','coral'][n],.7); H.dot(...P(u,-.21),.8,'blue'); });
-  benchFrame(H,R,2.35,9.18,3.45,1.26,.68,'sun');
+  benchFrame(H,R,2.35,9.18,4.55,1.26,.68,'sun');
+  surface(H,R,H.tile(2.52,9.35,4.14,.92,.7),'paper',.95);
+  timber(H,R,5.76,9.27,.95,.99,.71,.07,'teal');
+  surface(H,R,H.tile(5.87,9.36,.72,.74,.8),'blue',.63);
+  for(const [i,j]of [[5.97,9.54],[6.31,9.85]])surface(H,R,[H.p(i,j,.83),H.p(i+.23,j,.83),H.p(i+.15,j+.25,.88),H.p(i-.09,j+.13,.85)],'coral',.62);
+  const [ax,ay]=H.p(5.54,10.03,.74);H.line(R,[[ax-7,ay+4],[ax+3,ay-10],[ax+15,ay+5]],'blue',1.6);oval(H,R,ax+3,ay-10,2,2,'sun',.8);
+  drape(H,R,2.67,10.13,.57,.25,.71,.23,'teal');
   tile(H,R,2.69,9.45,.7,'teal',true);
   const [px,py]=H.p(3.58,9.83,.7); shape(H,R,[[px-13,py],[px+11,py],[px+8,py-12],[px-9,py-8]],'paper',1); stroke(H,R,[[px-7,py-3],[px-1,py-8],[px+6,py-4]],'blue',.7);
   bowl(H,R,4.74,9.75,.71,12,'paper',.2,9);
@@ -77,6 +111,14 @@ const room = world('hanoi-ceramic-rims', 'One rim against the light', { floor: '
   for(const i of [9.83,11.07]) timber(H,R,i,9.15,.1,.94,.11,.5,'sun');
   for(const j of [9.16,10]) timber(H,R,9.85,j,1.27,.08,.55,.1,'sun');
   for(let n=0;n<3;n++) surface(H,R,H.tile(9.97+n*.06,9.28,1.04,.7,.18+n*.06),'paper',1,.4);
+  timber(H,R,9.77,9.1,.12,.95,.16,.54,'sun');timber(H,R,11.06,9.1,.12,.95,.16,.54,'sun');
+  surface(H,R,[H.p(9.79,9.12,.64),H.p(11.15,9.12,.64),H.p(11.15,8.66,1.21),H.p(9.79,8.66,1.21)],'paper',1);
+  for(let n=0;n<5;n++)H.line(R,[H.p(9.9+n*.24,9.09,.66),H.p(9.9+n*.24,8.69,1.17)],'sun',.9);
+  bowl(H,R,10.46,9.62,.5,14,'paper',.3,13);
+  stroke(H,R,[H.p(10.03,9.52,.81),H.p(10.42,9.78,.76),H.p(10.94,9.57,.81)],'coral',2);
+  const [jx,jy]=H.p(8.67,9.77,.02);vessel(H,R,8.67,9.77,.02,11,13,'coral',false);oval(H,R,jx,jy-13,9,4,'sun',.61);H.dot(jx-2,jy-13,2.4,'blue',.6);
+  for(const i of [8.19,8.4,8.61]){const [x,y]=H.p(i,10.49,.02);oval(H,R,x,y,4,2,'sun',.56);}
+
 }, (H,R,t) => {
   const u=((t%24)+24)%24,q=ease(4.8,9.6,u)*(1-ease(14.4,22,u)),a=q*1.72;
   bowl(H,R,5.96,4.81,1.47,29,'paper',a,23);

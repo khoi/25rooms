@@ -77,10 +77,39 @@ function duck(H, R, i, j, t, scale = 1) {
 
 export default function enrich(room) {
   const detailed = world(room.id, room.title, { floor: 'sun', tone: .25, wall: 'coral', wallStyle: 'tile', pattern: 'tiles', height: 3.5 }, (H, R) => {
+    for (const i of [.1,3.1,8.6,11.65]) {
+      box(H,R,i,.1,.23,.3,0,3.5,'teal',.67);
+      box(H,R,i-.06,.08,.35,.36,3.18,.2,'sun',.8);
+    }
+    box(H,R,.08,.08,11.8,.3,3.39,.11,'sun',.85);
+    box(H,R,.08,.08,.3,11.7,3.39,.11,'sun',.85);
+    for (const j of [3.1,5.9,8.9,11.5]) box(H,R,.1,j,.3,.19,0,3.4,'teal',.65);
+    for (const i of [3.7,6.25,8.9]) {
+      const arch = [H.p(i,.16,1.5),H.p(i,.16,2.65),H.p(i+.3,.16,3.05),H.p(i+.8,.16,3.2),H.p(i+1.3,.16,3.05),H.p(i+1.6,.16,2.65),H.p(i+1.6,.16,1.5)];
+      shape(H,R,arch,'teal',.52);
+      H.line(R,[H.p(i+.8,.17,1.5),H.p(i+.8,.17,3.12)],'sun',2);
+      H.line(R,[H.p(i,.17,2.2),H.p(i+1.6,.17,2.2)],'sun',2);
+      box(H,R,i-.1,.1,1.8,.4,1.42,.13,'paper',1);
+    }
+    for (const [i,j,w,d] of [[3.1,3.5,5.3,4.1],[9.1,2.5,2.3,2.5],[5.7,.8,2,1.9]]) {
+      box(H,R,i-.16,j-.16,w+.32,d+.32,0,.13,'teal',.8);
+      for (const y of [j-.12,j+d-.01]) {
+        box(H,R,i-.14,y,w+.28,.15,.13,.12,'paper',1);
+        for(let x=i;x<i+w;x+=.48) H.line(R,[H.p(x,y,.26),H.p(x,y+.15,.26)],'coral',.75);
+      }
+      for (const x of [i-.14,i+w]) box(H,R,x,j,.14,d,.13,.12,'paper',1);
+    }
     pool(H, R, 3.1, 3.5, 5.3, 4.1);
     pool(H, R, 9.1, 2.5, 2.3, 2.5);
     pool(H, R, 5.7, .8, 2, 1.9);
-    shape(H, R, H.faceI(3.6, .1, 4.5, 2.85, 3.45), 'paper', 1);
+    for (let n=0;n<7;n++) {
+      const i=3.4+n*.72;
+      shape(H,R,H.tile(i,7.85,.48,.22,.025),'teal',.65);
+      H.line(R,[H.p(i+.08,7.87,.03),H.p(i+.39,8.04,.03)],'paper',.8);
+    }
+    box(H,R,.7,.08,1.8,.35,2.75,.14,'sun',.7);
+    pipe(H,R,[[1.8,1.3,2.7],[1.8,.3,3.1],[1.8,.3,3.43]],6);
+    for (let n=0;n<4;n++) oval(H,R,...H.p(1.8,.3,3.12+n*.08),8,3,'blue',.7);
 
     for (const i of [3.4, 8.15]) lantern(H, R, i, .35, 3.15, 'sun');
     pipe(H, R, [[1.6, 1.1, 2.4], [1.6, .45, 2.55], [5.2, .45, 2.55], [5.2, .45, .45], [5.2, 3.5, .45], [5.2, 3.5, .2]]);
@@ -104,6 +133,11 @@ export default function enrich(room) {
     shape(H, R, [[bx - 16, by - 32], [bx + 13, by - 32], [bx + 13, by - 9], [bx - 16, by - 9]], 'blue', .85);
     for (let k = -1; k <= 1; k++) H.line(R, [[bx + k * 8, by - 32], [bx + k * 8, by - 9]], 'sun', 1.4);
 
+    shape(H,R,[[bx+27,by-34],[bx+48,by-41],[bx+49,by-15],[bx+27,by-10]],'coral',.7);
+    for (const dy of [-32,-17]) H.line(R,[[bx+29,by+dy],[bx+44,by+dy-4]],'sun',1.2);
+    oval(H,R,bx+41,by-27,3,4,'blue',.8);
+    pipe(H,R,[[.72,1.2,.45],[.46,1.2,.45],[.46,2.6,.45],[1.25,2.6,.45]],2.5);
+    wheel(H,R,.46,2.2,.46,4);
     wheel(H, R, 2.8, 1.6, 1.15, 8);
     bucket(H, R, 3.15, 1.05, 0, 'blue', .75);
     for (let k = 0; k < 6; k++) {
@@ -139,6 +173,15 @@ export default function enrich(room) {
     table(H, R, 1.4, 7.7, 2.2, 1.3, .57, 'sun');
     shape(H, R, H.tile(1.55, 7.8, 1.9, 1.05, .72), 'paper', 1);
     for (let k = 0; k < 4; k++) H.line(R, [H.p(1.6, 7.9 + k * .22, .74), H.p(3.3, 7.9 + k * .22, .74)], 'teal', .55, { tone: .4 });
+    for (const j of [7.85,8.72]) H.line(R,[H.p(1.55,j,.13),H.p(3.38,j,.54)],'coral',2);
+    box(H,R,1.62,7.95,1.56,.65,.15,.09,'teal',.65);
+    for (let n=0;n<3;n++) towel(H,R,1.7+n*.45,8.02,.25,'paper',.38,.48);
+    box(H,R,.12,8.1,.6,.5,1.8,.08,'sun',.8);
+    soap(H,R,.42,8.3,1.9);
+    const [mirrorX,mirrorY]=H.p(.1,8.45,2.7);
+    oval(H,R,mirrorX,mirrorY,16,23,'sun',.8);
+    oval(H,R,mirrorX,mirrorY,12,19,'paper',.9);
+    H.line(R,[[mirrorX-7,mirrorY+7],[mirrorX+6,mirrorY-9]],'teal',1.1);
     table(H, R, .3, 9.3, 1.6, .85, .6, 'teal');
     for (let k = 0; k < 3; k++) bottle(H, R, ...H.p(.52 + k * .4, 9.5, .76), ['teal', 'coral', 'sun'][k], .37);
     soap(H, R, 1.5, 9.75, .74);

@@ -1,7 +1,7 @@
 import { surface, timber, metal, bentTube, drape, benchFrame, pendant } from '../materials.js';
 import { masonry, rackFrame, basin as washBasin } from '../structure.js';
 import { hangingRail } from '../joinery.js';
-import { handTool } from '../furnishings.js';
+import { handTool, shallowTray, foldedCloth, coiledLine, boundBook } from '../furnishings.js';
 import { TAU, actor, box, cycle, ell, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -151,9 +151,24 @@ const room = world(
         0.6,
         0.45
       );
+    surface(H, R, H.faceJ(0.12, 2.8, 5.95, 1.89, 3.28), 'teal', 0.47);
+    for (const j of [2.86, 5.7, 8.68]) timber(H, R, 0.11, j, 0.2, 0.2, 0.05, 3.35, 'sun');
+    timber(H, R, 0.11, 2.86, 0.23, 5.96, 3.3, 0.12, 'sun');
+    timber(H, R, 0.2, 2.99, 1.07, 5.52, 2.52, 0.11, 'sun');
+    foldedCloth(H, R, 0.35, 3.19, 0.76, 1.15, 2.67, 'paper', 'coral');
+    boundBook(H, R, 0.35, 4.6, 0.73, 0.94, 2.68, 'coral');
+    for (const j of [6.21, 7.48]) {
+      basket(H, R, 0.3, j, 0.81, 0.9, 2.65, false);
+      handTool(H, R, 0.72, j + 0.37, 3.2, 'brush', 'sun');
+    }
+    bentTube(H, R, [[0.17, 10.9, 0.04], [0.17, 10.9, 1.49], [0.17, 9.09, 1.49], [0.61, 9.09, 1.49]], 2.3, 'teal');
+    H.outline(R, ell(...H.p(0.39, 9.09, 1.67), 6, 5), 'coral', 2);
+    coiledLine(H, R, 1.5, 10.12, 0.06, 22, 'teal');
+    bentTube(H, R, [[0.61, 9.09, 1.49], [1.09, 9.37, 0.05], [1.5, 10.12, 0.06]], 1.9, 'teal');
     rackFrame(H, R, 0.43, 2.9, 1.55, 5.91, 0.12, [0.07, 0.88, 1.71], 'teal', (i, j, w, d, z, row) => {
       for (let n = 0; n < 4; n++) basket(H, R, i, j + n * 1.4, w, 1.29, z, row !== 2 || n < 2);
     });
+    for (const i of [3.62, 7.63]) basket(H, R, i, 5.19, 1.39, 1.4, 0.16, true);
     benchFrame(H, R, 3.18, 4.82, 5.25, 2.23, 1.03, 'teal');
     metal(H, R, 3.24, 4.89, 5.1, 2.07, 1.05, 0.09, 'paper');
     for (const [i, j, w, d] of [
@@ -161,14 +176,31 @@ const room = world(
       [4.92, 5.06, 1.78, 1.65],
       [6.88, 5.06, 1.2, 1.65]
     ]) {
-      surface(H, R, H.tile(i, j, w, d, 1.15), 'teal', 0.28);
+      shallowTray(H, R, i, j, w, d, 1.15, 'teal');
+      for (const a of [i + 0.09, i + w - 0.15]) metal(H, R, a, j + d - 0.09, 0.08, 0.13, 1.15, 0.2, 'sun');
       for (let n = 0; n < 7; n++)
         shell(H, R, ...H.p(i + 0.21 + (n % 3) * 0.3, j + 0.23 + Math.floor(n / 3) * 0.4, 1.19), 0.62, n * 0.83, n % 3 === 0);
     }
+    for (let n = 0; n < 10; n++) shell(H, R, ...H.p(5.19 + n % 3 * 0.44, 5.28 + Math.floor(n / 3) * 0.34, 1.38 + (n % 2) * 0.12), 0.76, n * 1.3, n % 4 === 0);
+    metal(H, R, 3.31, 6.93, 5.0, 0.19, 0.72, 0.1, 'teal');
+    bentTube(H, R, [[8.27, 6.99, 0.76], [8.65, 7.29, 0.31], [8.65, 10.99, 0.05]], 1.7, 'teal');
+    for (const i of [3.45, 8.01]) bentTube(H, R, [[i, 4.99, 0.2], [i, 6.9, 0.86]], 2, 'sun');
     drape(H, R, 4.43, 6.64, 0.66, 0.36, 1.18, 0.59, 'paper');
     handTool(H, R, 7.97, 6.71, 1.2, 'brush', 'sun');
-    for (const i of [3.62, 7.63]) basket(H, R, i, 5.19, 1.39, 1.4, 0.16, true);
+    benchFrame(H, R, 5.53, 1.04, 2.27, 1.61, 1.31, 'sun');
+    metal(H, R, 6.12, 1.37, 0.9, 0.79, 1.32, 0.24, 'teal');
+    bentTube(H, R, [[6.54, 1.76, 1.53], [6.54, 1.76, 1.95]], 3, 'teal');
+    basin(H, R, 5.89, 1.16, 1.35, 1.18, 1.61);
+    const [sx, sy] = H.p(6.57, 2.16, 1.52);
+    surface(H, R, ell(sx, sy, 13, 13), 'paper', 1);
+    for (let n = 0; n < 9; n++) {
+      const a = -2.7 + n * 0.48;
+      H.line(R, [[sx + Math.cos(a) * 9, sy + Math.sin(a) * 9], [sx + Math.cos(a) * 11, sy + Math.sin(a) * 11]], 'blue', 0.7);
+    }
+    H.line(R, [[sx, sy], [sx - 5, sy - 7]], 'coral', 1.4);
+    foldedCloth(H, R, 5.69, 2.13, 0.52, 0.35, 1.35, 'paper', 'coral');
     basin(H, R, 8.81, 1.96, 2.08, 2.18, 0.42);
+    benchFrame(H, R, 9.38, 4.96, 2.13, 2.41, 0.82, 'teal');
     washBasin(H, R, 9.45, 5.03, 1.99, 2.27, 0.85, 'paper');
     bentTube(
       H,
@@ -214,6 +246,16 @@ const room = world(
         0.7
       );
     });
+    const [fx, fy] = H.p(0.28, 1.65, 2.41);
+    surface(H, R, ell(fx, fy, 24, 24), 'paper', 0.9);
+    for (let n = 0; n < 3; n++) {
+      const a = n * TAU / 3;
+      surface(H, R, [[fx, fy], [fx + Math.cos(a) * 20, fy + Math.sin(a) * 20], [fx + Math.cos(a + 0.7) * 16, fy + Math.sin(a + 0.7) * 16]], 'teal', 0.66);
+    }
+    for (const r of [8, 15, 22]) H.outline(R, ell(fx, fy, r, r), 'blue', 0.75);
+    H.line(R, [[fx - 23, fy], [fx + 23, fy]], 'blue', 0.7);
+    H.line(R, [[fx, fy - 23], [fx, fy + 23]], 'blue', 0.7);
+    bentTube(H, R, [[0.14, 1.65, 1.76], [0.28, 1.65, 2.4]], 3, 'sun');
     pendant(H, R, 5.91, 3.53, 3.92, 2.94, 'teal', 1.04);
   },
   (H, R, t) => {

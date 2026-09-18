@@ -102,6 +102,15 @@ function bowl(H, R, i, j, z, size = 13, cover = false) {
       );
 }
 
+function boundRecipe(H, R) {
+  timber(H, R, 8.78, 9.34, 0.48, 0.67, 0.1, 0.09, 'coral');
+  surface(H, R, H.tile(8.81, 9.37, 0.42, 0.61, 0.21), 'paper', 1);
+  H.line(R, [H.p(9.02, 9.4, 0.22), H.p(9.02, 10.07, 0.22)], 'teal', 1.3);
+  const [x, y] = H.p(4.86, 7.19, 1.27);
+  H.line(R, [[x, y], [x - 11, y + 1]], 'coral', 3);
+  for (let n = 0; n < 6; n++) H.line(R, [[x - 12, y - 4 + n], [x - 21, y - 3 + n]], 'paper', 1);
+}
+
 const room = world(
   'new-york-astoria-bakery',
   'Astoria · A Twist Before Breakfast',
@@ -123,6 +132,17 @@ const room = world(
           0.4
         );
     });
+    surface(H, R, H.faceJ(0.21, 8.01, 2.67, 2.48, 3.64), 'sun', 0.25);
+    metal(H, R, 0.24, 7.82, 0.09, 3.03, 3.61, 0.08, 'teal');
+    for (const j of [8.21, 10.19]) {
+      const [x, y] = H.p(0.35, j, 3.08);
+      oval(H, R, x, y, 10, 12, 'paper', 1);
+      H.line(R, [[x, y], [x + 4, y - 5]], 'coral', 1.7);
+      for (const a of [0, 1.57, 3.14, 4.71]) H.dot(x + Math.cos(a) * 7, y + Math.sin(a) * 9, 1, 'blue');
+    }
+    for (const j of [4.18, 4.83]) H.line(R, [H.p(0.22, j, 3.49), H.p(0.22, j, 3.17)], 'teal', 1.2);
+    surface(H, R, H.faceJ(0.28, 4.13, 0.84, 2.04, 3.15), 'paper', 1);
+    H.line(R, [H.p(0.3, 4.22, 2.43), H.p(0.3, 4.89, 2.43)], 'coral', 1.4);
     metal(H, R, 0.59, 0.63, 3.4, 2.51, 0.04, 2.9, 'paper');
     metal(H, R, 0.68, 0.66, 3.22, 2.34, 2.96, 0.18, 'teal');
     for (let row = 0; row < 3; row++) {
@@ -167,6 +187,19 @@ const room = world(
       10,
       'paper'
     );
+    for (const z of [0.64, 1.44, 2.24]) {
+      const [x, y] = H.p(3.68, 3.34, z);
+      oval(H, R, x, y, 4.1, 4.1, 'paper', 1);
+      H.line(R, [[x, y], [x + 2, y - 2]], 'coral', 1.2);
+    }
+    for (let n = 0; n < 8; n++) metal(H, R, 0.8 + n * 0.38, 3.19, 0.19, 0.025, 0.16, 0.12, 'blue');
+    for (const i of [1.05, 3.48]) bentTube(H, R, [[i, 3.46, 3.2], [i, 3.05, 3.77], [i, 0.6, 3.77]], 1.2, 'paper');
+    for (const j of [5.95, 6.73]) {
+      timber(H, R, 0.26, j, 0.14, 0.12, 1.3, 1.82, 'sun');
+      surface(H, R, H.faceJ(0.45, j - 0.3, 0.74, 0.91, 1.72), 'sun', 0.61);
+      H.line(R, [H.p(0.46, j, 1.02), H.p(0.46, j, 1.63)], 'coral', 0.8);
+      H.dot(...H.p(0.44, j + 0.07, 2.96), 1.7, 'blue');
+    }
     cabinetFrame(H, R, 4.34, 0.38, 1.59, 1.35, 0.03, 3.25, 1, 'sun', (i, j, w, d, z, h) => {
       for (let row = 0; row < 3; row++) {
         timber(H, R, i, j, w, d, z + row * 0.94, 0.1, 'sun');
@@ -175,6 +208,10 @@ const room = world(
     });
     benchFrame(H, R, 4.52, 4.52, 3.1, 2.81, 1.05, 'sun');
     timber(H, R, 4.47, 4.48, 3.2, 2.89, 1.02, 0.19, 'sun');
+    timber(H, R, 4.72, 4.74, 2.63, 2.28, 0.22, 0.09, 'sun');
+    foldedCloth(H, R, 4.88, 5.02, 0.94, 1.12, 0.34, 'paper', 'coral');
+    shallowTray(H, R, 6.15, 5.13, 1.02, 1.51, 0.33, 'teal');
+    for (const j of [4.69, 7.07]) bentTube(H, R, [[4.67, j, 0.29], [7.42, j, 0.92]], 1.6, 'blue');
     surface(H, R, H.tile(5.82, 4.83, 1.58, 1.87, 1.224), 'paper', 1, 0.4);
     drape(H, R, 4.63, 5.8, 0.68, 1.49, 1.23, 0.5, 'paper');
     bowl(H, R, 5.07, 4.98, 1.24, 12);
@@ -196,6 +233,17 @@ const room = world(
       if (row) washBasin(H, R, i, j, w, d, z, 'paper');
       else for (let n = 0; n < 3; n++) vessel(H, R, i + 0.42 + n * 0.8, j + 0.58, z, 9, 19, 'teal');
     });
+    for (let n = 0; n < 4; n++) {
+      const i = 10.38 + n * 0.17;
+      surface(H, R, [H.p(i, 10.25, 0.95), H.p(i + 0.51, 10.25, 0.95), H.p(i + 0.48, 10.25, 1.84 + n * 0.03), H.p(i, 10.25, 1.74 + n * 0.03)], 'sun', 0.24);
+      H.line(R, [H.p(i + 0.07, 10.26, 1.58), H.p(i + 0.42, 10.26, 1.58)], 'coral', 0.65);
+    }
+    metal(H, R, 8.35, 0.63, 2.27, 1.08, 1.1, 0.08, 'teal');
+    for (const i of [8.48, 10.35]) bentTube(H, R, [[i, 0.28, 0.77], [i, 1.55, 1.1], [i, 0.28, 1.1]], 2, 'blue');
+    bowl(H, R, 8.92, 1.03, 1.24, 13, true);
+    metal(H, R, 9.64, 0.82, 0.65, 0.58, 1.2, 0.22, 'paper');
+    oval(H, R, ...H.p(9.98, 1.06, 1.51), 10, 4, 'sun', 0.5);
+    boundRecipe(H, R);
     pendant(H, R, 7.63, 6.12, 4.15, 3.0, 'paper', 1.1);
     for (const i of [3.65, 4.1])
       bentTube(

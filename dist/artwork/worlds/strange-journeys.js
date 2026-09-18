@@ -7,9 +7,35 @@ const caravan = world('desert-caravanserai', 'Desert caravanserai', { floor: 'su
     H.outline(R, P, 'sun', 3, { tone: .7 });
     lantern(H, R, i, .6, 2.7);
   }
+  for (const j of [.45, 3.65, 6.85]) {
+    box(H, R, .08, j, .48, .55, 0, .32, 'sun', .7);
+    box(H, R, .17, j + .08, .28, .38, .32, 2.65, 'paper', .75);
+    box(H, R, .08, j, .5, .56, 2.85, .22, 'sun', .8);
+    box(H, R, .06, j, .56, .58, 3.08, .14, 'coral', .7);
+    if (j < 6) {
+      const P = [H.p(.35, j + .45, 2.2), H.p(.35, j + .8, 2.73), H.p(.35, j + 1.7, 3.02), H.p(.35, j + 2.55, 2.73), H.p(.35, j + 3.22, 2.2)];
+      H.line(R, P, 'sun', 6);
+      H.line(R, P, 'paper', 2);
+    }
+  }
+  box(H, R, .1, .12, .42, 7.35, 3.25, .15, 'sun', .8);
+  for (const i of [1.1, 3.45, 4.8, 7.15, 8.5, 10.85]) {
+    box(H, R, i, .08, .24, .38, 0, 2.65, 'sun', .62);
+    box(H, R, i - .08, .05, .4, .45, 2.64, .18, 'paper', .85);
+  }
   rug(H, R, 1, 7.5, 5, 3.3, 'coral', .7, { border: 'sun' });
   for (let i = 1.2; i < 6; i += .4) H.line(R, [H.p(i, 7.7), H.p(i, 10.6)], 'blue', .7);
-  pool(H, R, 5, 4.5, 2, 2);
+  box(H, R, 4.8, 4.3, 2.4, 2.4, 0, .2, 'coral', .65);
+  shape(H, R, H.tile(5.12, 4.62, 1.75, 1.75, .21), 'blue', .9);
+  shape(H, R, H.tile(5.23, 4.73, 1.52, 1.52, .22), 'teal', .8);
+  for (let n = 0; n < 4; n++) {
+    const a = 4.8 + n * .6;
+    box(H, R, a, 4.3, .57, .32, .2, .22, 'paper', .7);
+    box(H, R, a, 6.38, .57, .32, .2, .22, 'sun', .75);
+    if (n > 0 && n < 3) for (const i of [4.8, 6.88]) box(H, R, i, 4.3 + n * .6, .32, .57, .2, .22, 'paper', .72);
+  }
+  box(H, R, 7.16, 6.02, 1.16, .28, 0, .12, 'coral', .7);
+  shape(H, R, H.tile(7.18, 6.08, 1.14, .12, .13), 'teal', .8);
   for (let n = 0; n < 3; n++) { box(H, R, 8.5 + n * .75, 9.5, .6, 1.1, 0, .7, inks[n]); bottle(H, R, ...H.p(1.3, 2 + n, 0), 'coral', 1.2); }
   table(H, R, 2, 8.2, 2.2, 1.4, .4, 'teal');
   for (const i of [2.4, 3.2]) bottle(H, R, ...H.p(i, 8.6, .55), 'sun', .45);

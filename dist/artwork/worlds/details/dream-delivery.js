@@ -78,6 +78,16 @@ function chute(H, R, i, ink, title) {
 }
 
 function depotUnder(H, R) {
+  for (const i of [.25, 7.8, 11.55]) {
+    box(H, R, i, .03, .2, .24, .03, 3.5, 'sun', .65);
+    H.line(R, [H.p(i, .3, 2.9), H.p(i + .55, .3, 3.48)], 'coral', 2);
+  }
+  box(H, R, .2, .03, 11.5, .25, 3.47, .16, 'sun', .75);
+  for (const j of [.3, 6.8, 11.5]) box(H, R, .03, j, .23, .18, .02, 3.45, 'coral', .6);
+  box(H, R, .03, .2, .24, 11.4, 3.45, .15, 'sun', .65);
+  for (const z of [2.9, 3.15]) H.line(R, [H.p(.2, 2, z), H.p(.2, 10.7, z)], 'paper', 3);
+  for (let j = 2.3; j < 11; j += 1.5) H.line(R, [H.p(.2, j, 2.85), H.p(.2, j, 3.24)], 'sun', 2);
+
   for (let n = 0; n < 4; n++) {
     const i = 1 + n * 1.65;
     box(H, R, i, .24, 1.48, .78, 0, 2.8, 'blue', .55);
@@ -96,6 +106,12 @@ function depotUnder(H, R) {
     H.line(R, [[bx - 51, y + 7], [bx + 51, y + 7]], 'teal', .65);
 
     H.dot(bx - 48, y, 2, row === 2 ? 'coral' : 'sun', 1);
+    for (let k = 0; k < 5; k++) {
+      const x = bx - 29 + k * 17;
+      if ((k + row) % 3 === 0) shape(H, R, starPts(x, y, 4, 2, 5), 'sun');
+      else if ((k + row) % 3 === 1) oval(H, R, x, y, 5, 3, 'paper');
+      else H.line(R, [[x - 4, y + 2], [x, y - 3], [x + 4, y + 2]], 'coral', 2);
+    }
   }
   for (let n = 0; n < 3; n++) {
     const [x, y] = H.p(.1, 7.7 + n * 1.25, 3);
@@ -118,7 +134,28 @@ function depotUnder(H, R) {
   shape(H, R, [[mugX - 5, mugY], [mugX + 5, mugY], [mugX + 6, mugY - 11], [mugX - 6, mugY - 11]], 'paper', 1, .7);
   oval(H, R, mugX, mugY - 11, 6, 2.1, 'blue', .8);
   ticket(H, R, 10.1, .55, 2.5, 'LOST & DREAMED', 'sun', 85);
-  table(H, R, 2.1, 5.0, 6.15, 1.15, .82, 'blue');
+  for (const i of [2.2, 4.9, 7.8]) {
+    for (const j of [5.1, 6]) box(H, R, i, j, .16, .16, .04, .78, 'teal', .8);
+    H.line(R, [H.p(i, 5.13, .13), H.p(i, 6.12, .67)], 'sun', 2);
+  }
+  box(H, R, 2.1, 5, 6.15, 1.15, .82, .12, 'blue', .8);
+  for (const j of [5.02, 6.15]) {
+    box(H, R, 2.1, j, 6.15, .09, .46, .12, 'teal', .6);
+    for (const i of [2.35, 8.02]) {
+      const [x, y] = H.p(i, j, .72);
+      oval(H, R, x, y, 10, 10, 'sun');
+      oval(H, R, x, y, 5, 5, 'blue');
+      H.line(R, [[x - 7, y], [x + 7, y]], 'paper', 1);
+    }
+  }
+  for (const i of [2.3, 8]) {
+    box(H, R, i, 4.92, .12, .12, .96, 1.2, 'sun', .7);
+    box(H, R, i, 6.14, .12, .12, .96, 1.2, 'sun', .7);
+    H.line(R, [H.p(i, 4.92, 2.15), H.p(i, 6.23, 2.15)], 'teal', 4);
+    const [x, y] = H.p(i, 5.58, 2.15);
+    oval(H, R, x, y, 9, 4, 'paper');
+    H.line(R, [[x, y], [x, y + 10]], 'sun', 2);
+  }
   for (let i = 2.18; i < 8.2; i += .23) H.line(R, [H.p(i, 5.09, .98), H.p(i, 6.04, .98)], 'paper', 2.2, { tone: .8 });
   for (const j of [5, 6.15]) H.line(R, [H.p(2.1, j, 1.05), H.p(8.25, j, 1.05)], 'coral', 3);
   box(H, R, 7.8, 5.25, .7, .58, .25, .42, 'teal', .6);
@@ -150,6 +187,18 @@ function depotUnder(H, R) {
   const [ax, ay] = H.p(10.4, 4.65, 2.4);
   shape(H, R, [[ax - 13, ay + 6], [ax - 6, ay - 7], [ax + 6, ay - 7], [ax + 13, ay + 6]], 'sun', .9);
   table(H, R, 5.0, 8.35, 3.15, 1.55, .8, 'coral');
+  box(H, R, 5.1, 8.42, 2.9, 1.35, .22, .08, 'teal', .55);
+  for (let k = 0; k < 4; k++) box(H, R, 5.22 + k * .02, 8.55, 1.1, .9, .32 + k * .06, .045, 'paper');
+  for (const i of [6.55, 7.78]) H.line(R, [H.p(i, 8.5, .34), H.p(i, 8.5, .67)], 'blue', 2);
+  H.line(R, [H.p(6.55, 8.5, .56), H.p(7.78, 8.5, .56)], 'sun', 6);
+  for (const i of [5.1, 8]) H.line(R, [H.p(i, 8.4, .95), H.p(i, 8.4, 1.65)], 'blue', 2);
+  H.line(R, [H.p(5.1, 8.4, 1.64), H.p(8, 8.4, 1.64)], 'blue', 2);
+  for (const i of [5.45, 5.9, 6.4]) {
+    const [x, y] = H.p(i, 8.4, 1.6);
+    oval(H, R, x, y + 5, 7, 9, 'sun');
+    oval(H, R, x, y + 5, 3, 4, 'paper');
+    H.line(R, [[x + 4, y + 12], [x + 7, y + 23]], 'coral', 1);
+  }
   for (let n = 0; n < 6; n++) {
     const i = 5.15 + n % 3 * .46, j = 8.54 + Math.floor(n / 3) * .5;
     oval(H, R, ...H.p(i + .2, j + .2, .98), 10, 5, 'paper', .85);

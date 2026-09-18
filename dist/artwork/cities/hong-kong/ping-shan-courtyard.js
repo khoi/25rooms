@@ -1,7 +1,7 @@
-import { surface, timber, vessel, benchFrame, branchSpray } from '../materials.js';
-import { masonry, archedBay } from '../structure.js';
+import { surface, timber, vessel, benchFrame, branchSpray, metal, bentTube } from '../materials.js';
+import { masonry, archedBay, cabinetFrame, basin } from '../structure.js';
 
-import { shallowTray, foldedCloth } from '../furnishings.js';
+import { shallowTray, foldedCloth, boundBook, handTool, coiledLine } from '../furnishings.js';
 import { TAU, actor, box, cycle, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -197,12 +197,35 @@ const room = world(
     archedBay(H, R, 'nw', 5.16, 2.63, 1.19, 1.68, 'teal', (P) => {
       for (let n = 0; n < 8; n++) H.line(R, [P(0.18 + n * 0.32, 0.1), P(0.18 + n * 0.32, 1.8)], 'coral', 1.3);
     });
+    for (const i of [6.47, 10.88]) {
+      timber(H, R, i, 0.12, 0.32, 0.59, 0.05, 2.85, 'paper');
+      timber(H, R, i - 0.08, 0.08, 0.48, 0.68, 2.76, 0.18, 'sun');
+      for (const z of [0.3, 0.8, 1.3, 1.8, 2.3]) H.line(R, [H.p(i, 0.72, z), H.p(i + 0.32, 0.72, z)], 'teal', 0.7);
+    }
+    cabinetFrame(H, R, 3.54, 0.42, 2.13, 1.12, 0.08, 1.18, 2, 'teal', (i,j,w,d,z,h,n) => {
+      if (n) foldedCloth(H,R,i+0.09,j+0.09,w-0.18,d-0.18,z+0.13,'paper','coral');
+      else vessel(H,R,i+w/2,j+d/2,z+0.08,8,17,'sun');
+    });
+    basin(H,R,3.6,0.5,1.89,0.94,1.3);
+    bentTube(H,R,[[4.48,0.43,1.22],[4.48,0.43,0.23],[5.78,0.43,0.23]],1.6,'teal');
+    timber(H,R,3.59,0.29,2.01,0.48,2.51,0.09,'sun');
+    vessel(H,R,3.91,0.5,2.62,5,10,'coral');
+    foldedCloth(H,R,4.54,0.32,0.8,0.37,2.62,'paper','teal');
     courtyardTree(H, R);
     for (const j of [5.13, 8.88]) timber(H, R, 0.6, j, 0.88, 0.42, 0.05, 0.48, 'paper');
     timber(H, R, 0.43, 5.02, 1.24, 4.4, 0.54, 0.2, 'paper');
+    foldedCloth(H,R,0.61,5.34,0.9,1.28,0.76,'coral','paper');
+    boundBook(H,R,0.7,7.48,0.8,1.04,0.76,'teal');
+    bentTube(H,R,[[1.5,8.2,0.06],[1.4,8.2,1.8],[1.24,8.2,1.95],[1.05,8.2,1.9]],2,'sun');
     vessel(H, R, 1.7, 10.21, 0.06, 15, 28, 'teal');
     branchSpray(H, R, ...H.p(1.7, 10.21, 1.02), 0.83, 'teal');
-    timber(H, R, 6.24, 5.56, 1.04, 1.1, 0.06, 0.6, 'paper');
+    for (const i of [5.61,7.69]) for (const j of [5.13,6.78]) {
+      timber(H,R,i,j,0.25,0.25,0.05,0.65,'paper');
+      timber(H,R,i-0.08,j-0.08,0.4,0.4,0.05,0.12,'teal');
+    }
+    for (const j of [5.16,6.78]) timber(H,R,5.72,j,2.08,0.13,0.26,0.13,'sun');
+    timber(H,R,5.59,5.02,2.37,0.16,0.48,0.19,'teal');
+    timber(H,R,5.59,6.92,2.37,0.16,0.48,0.19,'teal');
     timber(H, R, 5.37, 4.88, 2.8, 2.4, 0.67, 0.19, 'paper');
     surface(H, R, H.tile(5.62, 5.11, 2.3, 1.92, 0.875), 'sun', 0.23);
     for (let n = 0; n < 9; n++) {
@@ -220,6 +243,8 @@ const room = world(
       vessel(H, R, i, j, 0.9, 3.6, 2, ink);
       H.dot(...H.p(i, j, 0.98), 1.2, 'paper', 1);
     }
+    shallowTray(H,R,5.41,5.29,0.22,1.12,0.88,'teal');
+    for(let n=0;n<4;n++) vessel(H,R,5.52,5.45+n*0.23,0.91,3,2,n%2?'blue':'coral');
     stool(H, R, 5.4, 7.8, 'sun', true);
     stool(H, R, 8.34, 5.31, 'teal');
     benchFrame(H, R, 8.89, 8.27, 2.12, 1.23, 0.84, 'sun');
@@ -228,6 +253,18 @@ const room = world(
     cup(H, R, 10.07, 8.92, 0.9);
     vessel(H, R, 9.84, 8.54, 0.89, 8, 13, 'coral');
     foldedCloth(H, R, 9.86, 9.22, 0.85, 0.63, 0.9, 'paper', 'blue');
+    timber(H,R,9.04,8.4,0.11,0.96,0.31,0.12,'teal');
+    timber(H,R,10.68,8.4,0.11,0.96,0.31,0.12,'teal');
+    shallowTray(H,R,9.18,8.55,1.32,0.58,0.32,'sun');
+    foldedCloth(H,R,9.23,8.62,0.93,0.43,0.36,'paper','coral');
+    for(let n=0;n<4;n++) timber(H,R,8.89+n*0.04,1.16,1.25,0.92,0.06+n*0.07,0.06,n===2?'coral':'paper');
+    benchFrame(H,R,2.56,10.06,1.78,1.11,0.45,'teal');
+    shallowTray(H,R,2.67,10.17,1.51,0.86,0.47,'sun');
+    handTool(H,R,2.95,10.5,0.52,'trowel','coral');
+    coiledLine(H,R,3.76,10.54,0.52,8,'teal');
+    bentTube(H,R,[[2.73,10.09,0.48],[2.73,10.09,0.94],[4.1,10.09,0.94],[4.1,10.09,0.48]],1.8,'teal');
+    surface(H,R,H.tile(0.3,11.36,11.3,0.24,0.025),'blue',0.56);
+    for(let n=0;n<34;n++) H.line(R,[H.p(0.41+n*0.33,11.35,0.035),H.p(0.51+n*0.33,11.61,0.035)],'paper',1.1);
     for (const [i, j] of [
       [3.29, 9.42],
       [4.2, 10.68],

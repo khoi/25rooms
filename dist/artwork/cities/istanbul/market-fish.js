@@ -1,4 +1,4 @@
-import { world, actor, shape, oval, stroke, ell, cycle } from '../../worlds/common.js';
+import { world, actor, shape, oval, stroke, ell, cycle, wallPt } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 import { timber, metal, vessel, drape, benchFrame, bentTube, pendant } from '../materials.js';
 import { basin, cabinetFrame } from '../structure.js';
@@ -45,8 +45,30 @@ const room=world('istanbul-market-fish','The basket drains',{wall:'paper',wallTo
     else if(n===2){shape(H,R,[[x-8,y+6],[x+8,y+6],[x+8,y+30],[x-6,y+28],[x-12,y+15]],'sun',.65,.6);}
     else {H.line(R,[[x,y],[x-10,y+25],[x+11,y+25],[x,y]],'blue',.9);oval(H,R,x,y+26,17,5,'paper',1);}
   });
+  for(const side of ['ne','nw']){
+    H.line(R,[wallPt(H,side,.15,3.61,-.13),wallPt(H,side,11.75,3.61,-.13)],'teal',4);
+    for(const u of [1,3.5,6,8.5,11])H.line(R,[wallPt(H,side,u,3.68,-.14),wallPt(H,side,u,3.5,-.14)],'sun',3);
+  }
+  metal(H,R,.39,1.11,1.57,4.36,1.08,.12,'paper');
+  for(const j of [1.24,5.17])for(const i of [.5,1.66])metal(H,R,i,j,.12,.12,.05,1.04,'teal');
+  basin(H,R,.56,1.53,1.19,1.67,1.2,'paper');
+  metal(H,R,.57,3.4,1.18,1.7,1.2,.045,'blue');
+  for(let n=0;n<8;n++)bentTube(H,R,[[.7,3.56+n*.18,1.27],[1.6,3.56+n*.18,1.27]],1.1,'paper');
+  vessel(H,R,1.12,4.11,1.29,10,19,'teal');
+  bentTube(H,R,[[1.09,2.37,1.14],[1.09,2.37,.58],[1.27,2.37,.43],[1.27,2.71,.32],[.25,2.71,.32]],2.5,'teal');
+  metal(H,R,.73,4.7,.73,.34,.37,.39,'coral');
+  const [cx,cy]=H.p(.65,6.39,.04);vessel(H,R,.65,6.39,.04,17,26,'teal');
+  stroke(H,R,[[cx-15,cy-22],[cx-17,cy-41],[cx+16,cy-41],[cx+16,cy-22]],'blue',1.3);
+  bentTube(H,R,[[1.04,6.5,.1],[.66,6.16,1.94]],2.4,'sun');
+  const [bex,bey]=H.p(.66,6.16,1.94);shape(H,R,[[bex-15,bey],[bex+13,bey+4],[bex+11,bey+12],[bex-16,bey+8]],'paper',1,.8);for(let n=0;n<9;n++)H.line(R,[[bex-13+n*3,bey+7],[bex-14+n*3,bey+15]],'blue',.8);
+  metal(H,R,10.7,2.01,.49,.06,2.6,.35,'blue');
+  const [ctlx,ctly]=H.p(10.94,2.1,2.8);H.dot(ctlx,ctly,3,'coral');H.line(R,[[ctlx-5,ctly-8],[ctlx+6,ctly-8]],'paper',1);
   floorShadow(H,2.3,4.4,5.5,3,.18);
   for(const x of [2.7,7.25])for(const y of [4.6,6.75]){metal(H,R,x,y,.15,.15,.12,1.1,'teal');metal(H,R,x-.06,y-.07,.27,.29,.02,.13,'blue');}
+  for(const j of [4.73,6.87])bentTube(H,R,[[2.71,j,.39],[7.3,j,.39]],2.2,'teal');
+  metal(H,R,2.69,4.82,4.69,1.94,.4,.07,'teal');
+  for(let n=0;n<3;n++){metal(H,R,3.06+n*1.25,5.04,1.06,1.23,.49,.33,n===1?'paper':'blue');H.line(R,[H.p(3.28+n*1.25,6.3,.69),H.p(3.78+n*1.25,6.3,.69)],'paper',2);}
+  bentTube(H,R,[[5.4,6,1.24],[5.4,6,.9],[5.68,6,.77],[5.78,6.29,.6],[5.78,6.29,.19],[5.78,7.2,.08]],2.4,'blue');
   metal(H,R,2.5,4.4,5.15,2.7,1.15,.25,'paper');
   shape(H,R,H.tile(2.72,4.61,4.72,2.25,1.41),'blue',.77,.85);
   shape(H,R,H.tile(2.99,4.88,4.18,1.72,1.22),'teal',.27,.7);
@@ -62,6 +84,20 @@ const room=world('istanbul-market-fish','The basket drains',{wall:'paper',wallTo
   shape(H,R,H.tile(.98,7.57,5.25,2.15,1.17),'paper',1,.8);
   for(let n=0;n<24;n++){const x=1.15+n%8*.6,j=7.72+Math.floor(n/8)*.63;shape(H,R,[H.p(x,j,1.18),H.p(x+.37,j+.1,1.23),H.p(x+.19,j+.45,1.2)],'teal',.15,.4);}
   for(const [i,j,s] of [[1.75,7.99,1.03],[3.15,7.87,1.2],[4.7,8.05,1.15],[2.05,9.13,1.15],[3.75,9.07,1.1],[5.33,9.1,.9]])fish(H,R,...H.p(i,j,1.25),s);
+  for(const i of [1.05,3.55,6.12]){
+    bentTube(H,R,[[i,9.85,1.13],[i,9.85,1.71],[i,8.45,2.03]],1.8,'teal');
+    metal(H,R,i-.06,9.72,.13,.25,1.16,.09,'blue');
+  }
+  const glassGuard=[H.p(1.05,9.85,1.72),H.p(6.12,9.85,1.72),H.p(6.12,8.45,2.03),H.p(1.05,8.45,2.03)];
+  H.opacity(.13,()=>H.fill(glassGuard,'paper',1));H.outline(R,glassGuard,'teal',.8);
+  for(const i of [1.35,4.8])H.line(R,[H.p(i,9.65,1.78),H.p(i+.8,8.76,1.97)],'paper',1.3);
+  for(const i of [2.5,4.37])metal(H,R,i,7.61,.055,2.07,1.18,.13,'teal');
+  metal(H,R,8.81,2.84,2.62,1.86,.96,.12,'paper');
+  for(const i of [8.94,11.15])for(const j of [2.98,4.42])metal(H,R,i,j,.12,.12,.03,.95,'teal');
+  metal(H,R,9.38,3.24,1.03,1.06,1.09,.21,'teal');
+  const [scx,scy]=H.p(9.88,3.84,1.34);shape(H,R,[[scx-19,scy],[scx+18,scy],[scx+12,scy+8],[scx-11,scy+8]],'paper',1,.8);oval(H,R,scx,scy,19,8,'paper',1);oval(H,R,scx,scy,15,5,'teal',.15);
+  const [dix,diy]=H.p(9.88,4.33,1.16);shape(H,R,[[dix-9,diy-4],[dix+9,diy-4],[dix+9,diy+3],[dix-9,diy+3]],'blue',.8,.5);H.line(R,[[dix-5,diy],[dix+5,diy]],'sun',1);
+  vessel(H,R,10.94,3.33,1.1,8,13,'sun');
   timber(H,R,8.9,7.25,2.2,2.25,.03,.23,'sun');
   for(let n=0;n<5;n++)timber(H,R,8.9,7.28+n*.42,2.2,.24,.27,.1,'sun');
   drape(H,R,9.08,7.46,1.55,1.3,.41,.25,'paper');
@@ -69,6 +105,10 @@ const room=world('istanbul-market-fish','The basket drains',{wall:'paper',wallTo
   for(let k=0;k<5;k++)shape(H,R,H.tile(9.53+k*.025,10.1,1.5,.65,.91+k*.025),'paper',1,.5);
   shape(H,R,H.tile(7.6,7.4,1.1,3.65,.031),'blue',.65,.6);for(let n=0;n<11;n++)H.line(R,[H.p(7.71,7.6+n*.29,.04),H.p(8.61,7.6+n*.29,.04)],'teal',2);
   for(let n=0;n<8;n++)metal(H,R,5.7+n*.16,10.6,.08,.77,.025,.03,'blue');
+  for(const j of [7.37,8.26,9.19]){timber(H,R,8.92,j,2.17,.1,.38,.5,'sun');for(let n=0;n<4;n++)H.line(R,[H.p(9.05+n*.53,j+.11,.4),H.p(9.05+n*.53,j+.11,.83)],'paper',.8);}
+  timber(H,R,8.9,7.25,.14,2.12,.4,.54,'sun');timber(H,R,10.97,7.25,.14,2.12,.4,.54,'sun');
+  bentTube(H,R,[[11.19,7.41,.9],[11.26,7.59,1.67],[11.12,8.7,1.73],[11.11,9.03,.9]],1.8,'teal');
+  const [lox,loy]=H.p(10.92,7.26,1.06);stroke(H,R,[[lox,loy],[lox+14,loy-9],[lox+22,loy],[lox+9,loy+8],[lox,loy]],'coral',1.4);
   pendant(H,R,5,3.7,4.1,3.23,'paper',.8);
 },(H,R,t)=>{
   const u=cycle(t,22)*22;
