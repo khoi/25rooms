@@ -23,20 +23,12 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+      - name: Validate room collections
+        run: node scripts/check-rooms.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Version page assets and collection links
-        run: |
-          node --input-type=module <<'JS'
-          import { readFileSync, writeFileSync } from 'node:fs';
-          const entrypoint = 'dist/index.html';
-          let html = readFileSync(entrypoint, 'utf8');
-          for (const asset of ['style.css', 'main.js']) {
-            html = html.replace(`"./${asset}"`, `"./${asset}?v=${process.env.GITHUB_SHA}"`);
-          }
-          html = html.replace(/href="(\?collection=[^"]+)"/g, (_, href) => `href="${href}&amp;v=${process.env.GITHUB_SHA}"`);
-          writeFileSync(entrypoint, html);
-          JS
+        run: node scripts/version-assets.mjs
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
