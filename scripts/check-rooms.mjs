@@ -1,7 +1,15 @@
 import assert from 'node:assert/strict';
+import { readFileSync, readdirSync } from 'node:fs';
 import { COLLECTIONS } from '../dist/artwork/collections.js';
 import { collectionForRoom, createLayout } from '../dist/artwork/layout.js';
 import { mkHand, streamOf } from '../dist/artwork/drawings.js';
+
+const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
+const navigationIds = [...html.matchAll(/data-collection="([^"]+)"/g)].map(match => match[1]);
+assert.deepEqual(navigationIds, COLLECTIONS.map(collection => collection.id), 'Navigation must match the collection registry in tour order');
+for (const entry of readdirSync(new URL('../dist/artwork/cities/', import.meta.url), { withFileTypes: true })) {
+  if (entry.isDirectory()) assert(COLLECTIONS.some(collection => collection.id === entry.name), `${entry.name}: city directory missing from collection registry`);
+}
 
 const ids = new Set();
 const collectionIds = new Set();
@@ -70,6 +78,11 @@ function animationTimes(room) {
     const epsilon = Math.min(.001, duration / 1000);
     for (const time of [epsilon, duration / 4, duration / 2, duration * .75, duration - epsilon, duration, duration + epsilon, duration * 2]) times.add(time);
   }
+  if (room.stillTime !== undefined) {
+    assert(Number.isFinite(room.stillTime) && room.stillTime >= 0, `${room.id}: invalid still pose time`);
+    assert(room.loopSeconds === undefined || room.stillTime < room.loopSeconds, `${room.id}: still pose outside loop`);
+    times.add(room.stillTime);
+  }
   return [...times].sort((a, b) => a - b);
 }
 
@@ -78,6 +91,7 @@ let roomsDrawn = 0;
 let animationFrames = 0;
 let loopRooms = 0;
 for (const room of cityCollections.flatMap(collection => collection.rooms)) {
+  if (room.loopSeconds !== undefined) assert.notEqual(room.stillTime, undefined, `${room.id}: missing reduced-motion pose`);
   assert.equal(typeof room.under, 'function', `${room.id} static artwork`);
   assert.equal(typeof room.live, 'function', `${room.id} animated artwork`);
   const scope = Object.create(room);

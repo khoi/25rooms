@@ -214,4 +214,5 @@ const room = world(
   }
 );
 room.loopSeconds = 20;
+room.stillTime = 0;
 export default room;

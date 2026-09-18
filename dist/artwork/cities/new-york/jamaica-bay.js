@@ -233,7 +233,7 @@ const room = world(
   (H, R, t) => {
     const u = cycle(t, 20);
     const dip = u > 0.37 && u < 0.68 ? Math.sin(((u - 0.37) / 0.31) * Math.PI) ** 2 : 0;
-    H.clip(H.faceI(0.22, 4.22, 11.39, 1.4, 2.51), () => shorebird(H, R, ...H.p(9.8, 1.35, 0.08), dip));
+    H.clip(H.faceI(0.22, 4.22, 11.39, 1.4, 2.51), () => shorebird(H, R, ...H.p(9.8, 4.23, 1.62), dip));
     actor(
       H,
       R,
@@ -315,4 +315,5 @@ const room = world(
   }
 );
 room.loopSeconds = 20;
+room.stillTime = 8;
 export default room;

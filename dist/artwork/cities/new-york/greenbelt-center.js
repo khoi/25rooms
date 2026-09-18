@@ -101,10 +101,10 @@ const room = world(
   'Staten Island · The Leaf Table',
   { floor: 'paper', tone: 1, wall: false, head: 110 },
   (H, R) => {
-    boardFloor(H, R, 0.04, 0.04, 11.91, 11.89, 0.025, 'sun', 0.51);
-    surface(H, R, H.faceJ(0.13, 0.13, 11.73, 0, 4.03), 'sun', 0.14);
+    H.opacity(0.38, () => boardFloor(H, R, 0.04, 0.04, 11.91, 11.89, 0.025, 'sun', 0.8));
+    surface(H, R, H.faceJ(0.13, 0.13, 11.73, 0, 4.03), 'blue', 0.66);
     surface(H, R, H.faceI(0.13, 0.13, 11.73, 0, 4.03), 'paper', 1);
-    for (let n = 0; n < 22; n++) H.line(R, [H.p(0.16, 0.15 + n * 0.53, 0.1), H.p(0.16, 0.15 + n * 0.53, 3.99)], 'coral', 0.6, { tone: 0.35 });
+    for (let n = 0; n < 22; n++) H.line(R, [H.p(0.16, 0.15 + n * 0.53, 0.1), H.p(0.16, 0.15 + n * 0.53, 3.99)], 'blue', 0.6, { tone: 0.2 });
     for (const i of [0.26, 4.12, 8.03, 11.69]) {
       timber(H, R, i, 0.31, 0.18, 0.23, 0.03, 4.06, 'sun');
       bentTube(
@@ -288,4 +288,5 @@ const room = world(
   }
 );
 room.loopSeconds = 18;
+room.stillTime = 6;
 export default room;

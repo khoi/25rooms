@@ -67,9 +67,9 @@ const room = world(
   'Washington Heights · Window Wide',
   { floor: 'paper', tone: 1, wall: false, head: 100 },
   (H, R) => {
-    boardFloor(H, R, 0.05, 0.05, 11.9, 11.88, 0.025, 'sun', 0.42);
+    H.opacity(0.38, () => boardFloor(H, R, 0.05, 0.05, 11.9, 11.88, 0.025, 'sun', 0.7));
     masonry(H, R, 'ne', 0.07, 11.85, 0, 4.18, 'paper', 1);
-    masonry(H, R, 'nw', 0.07, 11.83, 0, 4.18, 'coral', 0.16);
+    masonry(H, R, 'nw', 0.07, 11.83, 0, 4.18, 'blue', 0.68);
     windowBay(H, R, 'ne', 4.85, 5.01, 1.37, 2.31, {
       ink: 'teal',
       divisions: 2,
@@ -265,4 +265,5 @@ const room = world(
 );
 
 room.loopSeconds = 14;
+room.stillTime = 6;
 export default room;

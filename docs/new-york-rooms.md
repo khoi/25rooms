@@ -6,7 +6,7 @@ These are fictional rooms and original human stories grounded in documented neig
 
 Every scene occupies an approximately 12-by-12 isometric footprint, with open front edges and equivalent boundaries for decks, courts, and gardens. A dominant shape, one readable activity, and a quieter discovery establish three levels of detail. Low foreground furniture and clear circulation keep hands visible. Landmarks stay within a window, model, or narrow background strip. The printed drawing language uses paper, blue, teal, coral, and sun. Brick, brownstone, galvanized metal, wood, and water emerge from tone and line rather than new colors. Artwork contains no lettering, real packaging, or reproduced business signs.
 
-The proposed loops below begin in a readable pose and use pauses, visible returns, or genuine occlusion. Held objects remain attached to hands. Reduced motion keeps the same scene identity at time zero. A coral thermos, a repaired blue tote, and an uneven pair of gloves recur selectively. None appears in every room.
+The proposed loops below begin in a readable pose and use pauses, visible returns, or genuine occlusion. Held objects remain attached to hands. Reduced motion keeps the same scene identity at each room’s declared still time. A coral thermos, a repaired blue tote, and an uneven pair of gloves recur selectively. None appears in every room.
 
 This revision develops the existing 25 scenes in place. Each room combines its original focal activity with additional construction, storage, supporting tools and personal possessions. The new layouts and objects are original design choices. Repeated books, containers, tiles and fasteners count as groups when assessing detail; their number alone does not establish richness.
 

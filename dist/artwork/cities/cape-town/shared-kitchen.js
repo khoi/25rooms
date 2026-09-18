@@ -1,0 +1,141 @@
+import { world, shape, oval, stroke, cycle, mix, wallPt, wallRect } from '../../worlds/common.js';
+import { timber, metal, bentTube, vessel, benchFrame, cushion, drape, pendant, floorLight } from '../materials.js';
+import { cabinetFrame, basin, masonry } from '../structure.js';
+import { windowBay, wallRack, recessedFrame, caster, cornice, panelFront } from '../joinery.js';
+import { foldedCloth, shallowTray, liddedTin, slattedCrate, handTool } from '../furnishings.js';
+
+const ease = (a, b, t) => { const u = Math.max(0, Math.min(1, (t - a) / (b - a))); return u * u * (3 - 2 * u); };
+function person(H, R, i, j, ink, seated = false, nod = 0) {
+  const [x, y] = H.p(i, j), h = seated ? 54 : 75, hip = y - (seated ? 13 : 32), sy = y - h + 23;
+  H.tint([[x - 14, y + 1], [x + 22, y + 3], [x + 30, y + 9], [x - 3, y + 8]], 'blue', .16);
+  for (const s of [-1, 1]) {
+    stroke(H, R, [[x + s * 5, hip], [x + s * 10 + (seated ? 7 : 0), y - 14], [x + s * 10 + (seated ? 9 : 0), y - 2]], 'blue', 7);
+    oval(H, R, x + s * 10 + (seated ? 12 : 3), y, 7, 3, 'blue', .8);
+  }
+  shape(H, R, [[x - 10, sy], [x + 10, sy], [x + 12, hip + 3], [x - 11, hip + 3]], ink, .68, .8);
+  shape(H,R,[[x-4,sy+7],[x+4,sy+7],[x+7,hip+1],[x-6,hip+1]],'paper',.88,.55);
+  H.line(R,[[x-5,hip-8],[x+5,hip-8]],ink,.8);
+  const hy = y - h + 10 + nod;
+  oval(H, R, x + 1, hy, 9, 10, 'coral', .36);
+  shape(H, R, [[x - 8, hy], [x - 10, hy - 7], [x - 3, hy - 12], [x + 7, hy - 10], [x + 10, hy - 4], [x + 4, hy - 5]], 'blue', .82, .6);
+  H.dot(x + 5, hy + 1, 1, 'blue'); stroke(H, R, [[x + 5, hy + 5], [x + 2, hy + 6], [x, hy + 5]], 'blue', .6);
+  return (left, right) => {
+    for (const [s, hand] of [[-1, left], [1, right]]) {
+      const target = hand || [x + s * 14, hip - 2];
+      stroke(H, R, [[x + s * 9, sy + 3], [mix(x + s * 14, target[0], .45), Math.max(sy + 12, target[1] + 8)], target], 'blue', 6.5);
+      stroke(H, R, [[x + s * 9, sy + 3], [mix(x + s * 14, target[0], .45), Math.max(sy + 12, target[1] + 8)], target], ink, 4.8);
+      oval(H, R, ...target, 3.2, 3, 'coral', .38);
+    }
+  };
+}
+
+function dish(H, R, i, j, z, size = 10, ink = 'paper') {
+  const p = H.p(i, j, z); oval(H, R, ...p, size, size * .41, ink, .94); oval(H, R, p[0], p[1] - .7, size * .71, size * .25, ink === 'paper' ? 'teal' : 'paper', .24);
+}
+function pot(H, R, i, j, z) {
+  vessel(H, R, i, j, z, 22, 27, 'blue', false);
+  const [x,y] = H.p(i,j,z); oval(H,R,x,y-28,23,8,'teal',.65); oval(H,R,x,y-32,5,3,'blue',.85);
+  H.line(R,[[x-16,y-29],[x-3,y-33],[x+13,y-29]],'paper',1.2);
+  for(let n=0;n<4;n++) H.line(R,[[x+21,y-18+n*2],[x+28,y-18+n*2]],'sun',1.1);
+}
+function ledge(H,R) {
+  benchFrame(H,R,2.35,5.15,7.1,1.53,1.37,'sun');
+  timber(H,R,2.24,5.05,.24,1.74,.2,1.25,'teal');
+  for(const i of [2.85,5.12,7.37]) {
+    foldedCloth(H,R,i,5.38,1.34,.89,1.4,'paper','teal');
+    H.line(R,[H.p(i,5.35,1.52),H.p(i+1.34,5.35,1.52)],'coral',1.1);
+  }
+  for(const i of [2.9,5.3,8.2]) {
+    timber(H,R,i,5.26,.11,1.28,.45,.08,'teal');
+    bentTube(H,R,[[i,5.3,.42],[i+.6,5.3,1.14]],1.8,'teal');
+  }
+  shallowTray(H,R,5.85,5.23,1.3,.95,.48,'teal');
+  for(let n=0;n<4;n++) dish(H,R,6.48,5.72,.68+n*.055,11);
+  foldedCloth(H,R,7.7,5.3,1.17,.86,.46,'paper','coral');
+  timber(H,R,2.35,6.69,7.1,.055,1.11,.17,'sun');
+  const p=H.p(3.03,6.77,1.2); stroke(H,R,[[p[0],p[1]],[p[0]+2,p[1]+12],[p[0]+3,p[1]+25]],'blue',2.2); oval(H,R,p[0]+3,p[1]+29,5,6,'teal',.6);
+  for(let n=0;n<5;n++) H.line(R,[[p[0]-2,p[1]+4+n*2],[p[0]+4,p[1]+4+n*2]],'paper',1.2);
+}
+function tray(H,R,i,z) {
+  const j=5.56;
+  metal(H,R,i-1.06,j-.42,2.12,.85,z,.08,'blue');
+  shape(H,R,H.tile(i-.91,j-.31,1.82,.62,z+.085),'teal',.18,.55);
+  for(const x of [i-1.12,i+1.01]) {
+    bentTube(H,R,[[x,j-.24,z+.06],[x+(x<i?-.16:.16),j-.24,z+.14],[x+(x<i?-.16:.16),j+.24,z+.14],[x,j+.24,z+.06]],2.8,'paper');
+    for(let n=0;n<5;n++) H.line(R,[H.p(x+(x<i?-.18:.18),j-.15+n*.07,z+.14),H.p(x+(x<i?-.09:.09),j-.12+n*.07,z+.14)],x<i?'sun':'coral',1.4);
+  }
+  H.line(R,[H.p(i-.9,j+.43,z+.1),H.p(i+.56,j+.43,z+.1)],'paper',1.5);
+  shape(H,R,H.tile(i+.81,j+.19,.22,.22,z+.1),'sun',.7,.5);
+  for(const a of [.85,.99]) H.dot(...H.p(i+a,j+.26,z+.12),.8,'blue');
+}
+const room = world('cape-town-shared-kitchen','A tray wide enough for three',{floor:'paper',tone:.9,wall:'paper',wallTone:.8,height:3.7,pattern:'tiles',accent:'teal',head:40},(H,R)=>{
+  for(const side of ['ne','nw']) {
+    shape(H,R,wallRect(H,side,0,12,.04,.69,-.08),'teal',.3,.6);
+    cornice(H,R,side,0,12,3.58,'paper');
+  }
+  windowBay(H,R,'nw',1.0,2.45,1.05,2.17,{divisions:2,view:P=>{shape(H,R,[P(.14,.13),P(2.31,.13),P(2.31,.72),P(1.8,.92),P(1.25,.58),P(.14,.72)],'coral',.23,.4);}});
+  recessedFrame(H,R,'nw',5.1,4.7,1.1,1.85,'sun',P=>{
+    shape(H,R,[P(.14,.14),P(4.56,.14),P(4.56,1.7),P(.14,1.7)],'blue',.56,.5);
+    for(let n=0;n<3;n++) {shape(H,R,[P(.4+n*1.28,.3),P(1.38+n*1.28,.3),P(1.38+n*1.28,1.3),P(.4+n*1.28,1.3)],'sun',.14,.4);}
+  });
+  timber(H,R,.09,5.02,.86,4.91,1.03,.16,'sun');
+  for(const j of [5.35,9.5]) bentTube(H,R,[[.7,j,1.0],[.13,j,.6]],2.8,'teal');
+  cabinetFrame(H,R,6.9,.18,4.7,1.45,.12,3.37,3,'teal',(i,j,w,d,z,h,col)=>{
+    for(const level of [.73,1.54,2.3]) timber(H,R,i,j,w,d,z+level,.085,'sun');
+    if(col===0) {
+      for(let n=0;n<5;n++) {const x=i+.15+n*.2; metal(H,R,x,j+.12,.07,.86,z+1.64,.56,'blue'); H.line(R,[H.p(x,j+.98,z+1.7),H.p(x,j+.98,z+2.15)],'paper',1);}
+      for(let n=0;n<3;n++) dish(H,R,i+.65,j+.5,z+.83+n*.07,13);
+      vessel(H,R,i+.68,j+.5,z+.5,15,16,'coral');
+      dish(H,R,i+.68,j+.5,z+2.6,9,'sun');
+    } else if(col===1) {
+      for(let n=0;n<2;n++) liddedTin(H,R,i+.35+n*.65,j+.6,z+1.62,9,17,n?'sun':'teal');
+      slattedCrate(H,R,i+.08,j+.12,w-.13,.95,z+.81,.44,'sun');
+      for(let n=0;n<4;n++) {const p=H.p(i+.23+n*.24,j+.55,z+1.32);oval(H,R,p[0],p[1],5,3,'paper',.9);H.line(R,[[p[0]-2,p[1]-1],[p[0]+1,p[1]+2]],'coral',.7);}
+      panelFront(H,R,i,j+d,w,z,.68,1,'teal');
+    } else {
+      foldedCloth(H,R,i+.07,j+.12,w-.17,.9,z+1.63,'paper','coral');
+      metal(H,R,i+.08,j+.08,w-.16,.97,z,.53,'teal'); for(const x of [i+.18,i+w-.22]) caster(H,R,x,j+.88,z-.05);
+      bentTube(H,R,[[i+.12,j+.9,z+.52],[i+.12,j+.9,z+1.0],[i+w-.13,j+.9,z+1.0],[i+w-.13,j+.9,z+.52]],1.8,'blue');
+      vessel(H,R,i+.6,j+.53,z+2.54,10,13,'paper');
+    }
+  });
+  benchFrame(H,R,1.58,1.58,4.72,1.8,1.22,'teal'); basin(H,R,4.43,1.69,1.65,1.43,1.23);
+  metal(H,R,1.78,1.78,2.26,1.44,1.25,.12,'blue');
+  for(const x of [2.35,3.4]) oval(H,R,...H.p(x,2.44,1.38),15,7,'blue',.8);
+  pot(H,R,2.88,2.37,1.4); liddedTin(H,R,1.95,2.6,1.4,8,12,'coral');
+  bentTube(H,R,[[2.25,1.6,.17],[2.25,1.6,1.1],[3.75,1.6,1.1]],2.2,'teal');
+  wallRack(H,R,'ne',1.1,5.1,2.39,1.12,1,'sun',(P,z)=>{
+    const [x,y]=P(.6,z+.13); oval(H,R,x,y-13,7,8,'paper',.9); stroke(H,R,[[x+6,y-17],[x+12,y-18],[x+12,y-8],[x+6,y-8]],'coral',1.6);
+    H.line(R,[[x-6,y-14],[x+5,y-7]],'sun',1.2);
+    const q=P(2.05,z+.24);oval(H,R,q[0],q[1],9,10,'paper',.95);H.line(R,[[q[0],q[1]-6],[q[0],q[1]],[q[0]+4,q[1]+2]],'blue',.8);
+    shape(H,R,[P(3.0,z+.07),P(4.22,z+.07),P(4.22,z+.77),P(3,z+.77)],'paper',1,.6);
+    for(let n=0;n<3;n++){const p=P(3.3+n*.32,z+.39);oval(H,R,p[0],p[1]-3,2.6,3,'coral',.6);H.line(R,[[p[0],p[1]],[p[0],p[1]+9]],n===1?'teal':'sun',4);}
+  });
+  benchFrame(H,R,1.0,8.25,2.65,1.88,.91,'sun');
+  timber(H,R,1.23,8.57,1.04,.94,.92,.08,'sun'); handTool(H,R,1.6,9.0,1.02,'brush','teal',.45);
+  vessel(H,R,2.88,9.2,.95,15,9,'paper',false); oval(H,R,...H.p(2.88,9.2,1.25),3,2,'coral',.75);
+  vessel(H,R,2.83,8.6,.97,7,10,'teal');
+  vessel(H,R,1.83,9.62,.96,13,8,'paper');for(const [dx,dy,ink]of[[-6,-5,'teal'],[1,-7,'coral'],[7,-4,'sun']]){const p=H.p(1.83,9.62,1.2);oval(H,R,p[0]+dx,p[1]+dy,5,4,ink,.67);H.line(R,[[p[0]+dx,p[1]+dy-3],[p[0]+dx+2,p[1]+dy-7]],'teal',.9);}
+  shallowTray(H,R,9.73,6.75,1.7,2.19,.27,'teal'); cushion(H,R,9.85,6.88,1.45,1.83,.45,.1,'paper');
+  shape(H,R,H.tile(10.01,7.03,1.03,1.07,.57),'blue',.34,.55); shape(H,R,H.tile(10.95,7.95,.23,.6,.57),'blue',.4,.45);
+  foldedCloth(H,R,9.98,8.14,.86,.43,.59,'paper','coral');
+  drape(H,R,10.0,9.3,1.28,.72,.66,.47,'coral'); slattedCrate(H,R,9.85,9.25,1.6,1.01,.03,.53,'sun');
+  metal(H,R,4.22,11.0,3.97,.65,.015,.08,'paper'); floorLight(H,5.6,5.7,177,.53);
+  pendant(H,R,5.7,5.3,4.2,2.95,'sun',.8);
+},(H,R,time)=>{
+  const t=cycle(time,16)*16;
+  const travel=ease(3.2,6.4,t)*(1-ease(9.6,13.1,t));
+  const i=3.72+travel*4.02,z=1.53+.24*ease(.8,2.7,t)*(1-ease(13.1,14,t));
+  const arms=[];
+  for(const [n,x] of [3.6,5.83,8.04].entries()) arms.push(person(H,R,x,4.83,['coral','teal','sun'][n],false,n===2?Math.sin(Math.PI*ease(7.2,8.8,t))*2:0));
+  ledge(H,R); tray(H,R,i,z);
+  for(const [n,x] of [3.6,5.83,8.04].entries()) {
+    const d=x-i,near=1-ease(1.18,2.14,Math.abs(d)),both=1-ease(.45,.92,Math.abs(d));
+    const a=H.p(x-.16,5.08,1.31),b=H.p(x+.35,5.08,1.31),left=H.p(i-1.19+both*.94,5.51-both*.07,z+.12-both*.08),right=H.p(i+1.19,5.64,z+.12);
+    const wl=near*Math.max(both,1-ease(-.1,.5,d)),wr=near*Math.max(both,ease(-.5,.1,d));
+    arms[n](a.map((v,k)=>mix(v,left[k],wl)),b.map((v,k)=>mix(v,right[k],wr)));
+  }
+});
+room.loopSeconds=16;
+room.stillTime=4.3;
+export default room;

@@ -1,0 +1,130 @@
+import { world, shape, oval, stroke, ell, wallPt } from '../../worlds/common.js';
+import { surface, timber, metal, benchFrame, bentTube } from '../materials.js';
+import { masonry, cabinetFrame } from '../structure.js';
+import { windowBay, taskLight, floorShadow } from '../joinery.js';
+
+const smooth = (a, b, t) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
+const clock = t => ((t % 20) + 20) % 20;
+function person(H, R, i, j, hands, ink, lean = 0) {
+  const [x, y] = H.p(i, j, 0), neck = [x + lean, y - 62];
+  H.tint(ell(x + 2, y + 2, 13, 4), 'blue', .18);
+  for (const side of [-1, 1]) {
+    stroke(H, R, [[x + side * 4, y - 31], [x + side * 5, y - 15], [x + side * 6, y]], 'blue', 7);
+    oval(H, R, x + side * 6 + 2, y, 5.2, 2.2, 'blue', .85);
+  }
+  shape(H, R, [[x - 8 + lean, y - 61], [x + 8 + lean, y - 61], [x + 7, y - 31], [x - 7, y - 31]], ink, .7, .8);
+  H.line(R, [[x - 1 + lean, y - 59], [x + lean, y - 34]], 'paper', .8);
+  for (let n = 0; n < 2; n++) {
+    const s = n ? 1 : -1, a = [neck[0] + s * 7, neck[1] + 3], b = hands[n];
+    const elbow = [a[0] * .47 + b[0] * .53 + s * 4, (a[1] + b[1]) * .5 + 5];
+    stroke(H, R, [a, elbow, b], 'blue', 6.5);
+    stroke(H, R, [a, elbow, b], ink, 4.7);
+    oval(H, R, ...b, 2.7, 2.1, 'paper', 1);
+  }
+  oval(H, R, x + lean, y - 75, 7, 8, 'paper', 1);
+  surface(H, R, [[x - 7 + lean, y - 76], [x - 6 + lean, y - 83], [x + 2 + lean, y - 84], [x + 7 + lean, y - 79], [x + 4 + lean, y - 77], [x - 2 + lean, y - 80]], 'blue', .85, .5);
+  H.dot(x + lean + 3, y - 75, .9, 'blue');
+  H.line(R, [[x + lean + 2, y - 71], [x + lean + 5, y - 71]], 'coral', .8);
+}
+
+function model(H, R) {
+  timber(H, R, 3.5, 4.05, 5.7, 3.65, 1.18, .18, 'sun');
+  surface(H, R, H.tile(3.64, 4.17, 5.4, 3.38, 1.38), 'paper', 1);
+  surface(H, R, H.tile(5.05, 5.16, 2.65, 1.8, 1.4), 'sun', .15);
+  for (const x of [5.07, 7.5]) for (let j = 5.18; j < 6.9; j += .27) surface(H, R, H.tile(x, j, .17, .22, 1.405), 'coral', .4, .35);
+  for (const [i, j, w, d] of [[3.85,4.3,4.9,.23],[3.85,4.3,.22,2.92],[8.52,4.3,.23,2.92]]) {
+    timber(H, R, i, j, w, d, 1.4, .64, 'paper');
+    for (let n = 0; n < (w > d ? 6 : 4); n++) {
+      const x = i + .16 + (w > d ? n * .74 : .08), y = j + (w > d ? .26 : .2 + n * .64);
+      const pane = w > d ? H.faceI(x, y, .41, 1.54, 1.95) : H.faceJ(i + .24, y, .4, 1.54, 1.95);
+      surface(H, R, pane, 'blue', .55, .45);
+      H.line(R, [pane[0], pane[1]], 'sun', 1.3);
+    }
+  }
+  timber(H, R, 4.09, 5.03, .84, 2.17, 1.76, .08, 'paper');
+  for (let n = 0; n < 10; n++) {
+    const j = 5.07 + n * .215;
+    H.line(R, [H.p(4.92,j,1.83),H.p(4.92,j,2.11)], 'teal', .65);
+  }
+  H.line(R, [H.p(4.92,5.07,2.11),H.p(4.92,7.02,2.11)], 'teal', 1.2);
+  for (let n = 0; n < 7; n++) timber(H, R, 7.72, 6.88 - n * .22, .58, .23, 1.42, .085 + n * .083, 'paper');
+  bentTube(H, R, [[8.36,6.95,1.6],[8.36,5.48,2.16]], 1.05, 'teal');
+  timber(H, R, 7.8, 4.56, .54, .62, 1.4, .62, 'paper');
+  surface(H, R, H.faceI(7.93,5.19,.22,1.53,1.89), 'teal', .4, .4);
+  for (const [x,y] of [[4,4.5],[8.6,4.5],[4,7]]) metal(H,R,x,y,.045,.045,2.04,.13,'sun');
+  timber(H,R,5.33,6.43,.31,.29,1.41,.07,'teal');
+  timber(H,R,5.34,6.69,.29,.035,1.48,.27,'teal');
+  for (const x of [5.35,5.59]) for (const j of [6.45,6.65]) H.line(R,[H.p(x,j,1.4),H.p(x,j,1.55)],'blue',.7);
+  timber(H,R,4.28,5.54,.24,.22,1.85,.05,'sun');
+  timber(H,R,4.27,5.54,.035,.22,1.89,.2,'sun');
+  const [tx,ty]=H.p(6.35,5.77,1.42);
+  H.line(R,[[tx,ty],[tx-1,ty-17]],'sun',2);
+  oval(H,R,tx-3,ty-18,8,6,'teal',.6);
+  oval(H,R,tx+5,ty-14,6,5,'teal',.42);
+  H.line(R,[[tx-3,ty-8],[tx+2,ty-10]],'coral',2.3);
+  for(const [x,j] of [[6.8,6.2],[5.8,5.42]]) { const [a,b]=H.p(x,j,1.42); H.line(R,[[a,b],[a,b-6]],'blue',1.3); H.dot(a,b-8,1.6,'coral'); }
+}
+
+function roof(H,R,lift,side) {
+  const source=H,angle=side*.19,c=Math.cos(angle),s=Math.sin(angle),ci=6.295+side,cj=5.77-side*.48;
+  H=Object.create(source);
+  H.p=(i,j,z)=>source.p(ci+(i-ci)*c-(j-cj)*s,cj+(i-ci)*s+(j-cj)*c,z);
+  H.tile=(i,j,w,d,z)=>[H.p(i,j,z),H.p(i+w,j,z),H.p(i+w,j+d,z),H.p(i,j+d,z)];
+  H.faceI=(i,j,w,a,b)=>[H.p(i,j,a),H.p(i+w,j,a),H.p(i+w,j,b),H.p(i,j,b)];
+  H.faceJ=(i,j,d,a,b)=>[H.p(i,j,a),H.p(i,j+d,a),H.p(i,j+d,b),H.p(i,j,b)];
+  const z=2.08+lift, i=3.78+side,j=4.24-side*.48;
+  for(const [x,y,w,d] of [[0,0,5.03,.74],[0,.74,.8,1.81],[4.23,.74,.8,1.81],[0,2.55,5.03,.51]]) {
+    timber(H,R,i+x,j+y,w,d,z,.075,'paper');
+    surface(H,R,H.tile(i+x+.06,j+y+.06,w-.12,d-.12,z+.083),'teal',.14,.5);
+    for(let n=.35;n<w;n+=.65) H.line(R,[H.p(i+x+n,j+y+.07,z+.086),H.p(i+x+n,j+y+d-.07,z+.086)],'blue',.5,{tone:.4});
+  }
+  for(const [x,y] of [[.5,.35],[3.9,.7]]) { timber(H,R,i+x,j+y,.32,.35,z+.08,.29,'paper'); surface(H,R,H.tile(i+x+.06,j+y+.07,.2,.21,z+.38),'blue',.5,.35); }
+  H.line(R,[H.p(i+.3,j+3.08,z+.03),H.p(i+.74,j+3.08,z+.03)],'sun',2.3);
+}
+
+const room=world('barcelona-model-courtyard','The roof lifts away',{floor:'paper',tone:.7,pattern:'tiles',accent:'teal',wall:'paper',wallTone:.7,height:4.1,head:45},(H,R)=>{
+  masonry(H,R,'nw',0,11.9,0,.78,'teal',.25);
+  windowBay(H,R,'ne',3.1,7.8,1.3,2.48,{divisions:4,view:P=>{
+    for(let n=0;n<6;n++) { const h=.65+(n%3)*.25; surface(H,R,[P(.2+n*1.2,.15),P(1.23+n*1.2,.15),P(1.23+n*1.2,h),P(.2+n*1.2,h)],n%2?'coral':'teal',.18,.4); }
+  }});
+  bentTube(H,R,[[10.4,.34,2.25],[10.12,.85,2.29],[9.96,.34,2.48]],1.1,'sun');
+  const P=(u,z)=>wallPt(H,'nw',u,z,-.16);
+  for(let n=0;n<3;n++) {
+    const j=2.6+n*2.35;
+    surface(H,R,[P(j,2.82),P(j+1.84,2.82),P(j+1.84,3.81),P(j,3.81)],'paper',1,.8);
+    for(let k=0;k<3;k++) { const u=j+.17+k*.49; surface(H,R,[P(u,3.02),P(u+.35,3.02),P(u+.35,3.39+k*.08),P(u,3.39+k*.08)],k===1?'coral':'teal',.38,.45); }
+    H.line(R,[P(j+.12,2.96),P(j+1.64,2.96)],'blue',.7);
+  }
+  cabinetFrame(H,R,.55,1.05,2.06,6.9,.03,2.52,1,'teal',(x,j,w,d,z)=>{
+    for(let n=0;n<7;n++) { const top=.24+n*.285; timber(H,R,x,j,w,d-.1,top,.065,'sun'); surface(H,R,H.faceJ(x+w+.01,j+.12,d-.35,top+.07,top+.22),'paper',.85,.5); H.line(R,[H.p(x+w+.025,j+2.1,top+.15),H.p(x+w+.025,j+3,top+.15)],'blue',2); }
+  });
+  for(let n=0;n<4;n++) { const [x,y]=H.p(.92+n*.31,1.37,2.6); oval(H,R,x,y,3.2,2,'paper',1); stroke(H,R,[[x,y],[x+2,y-23-n*3]],n%2?'coral':'sun',5); oval(H,R,x+2,y-23-n*3,2.5,1.5,'paper',1); }
+  surface(H,R,H.tile(.9,4.4,1.2,1.7,2.62),'paper',1);
+  for(let n=0;n<4;n++) surface(H,R,H.tile(1.05,4.58+n*.3,.83,.18,2.64),n%2?'coral':'teal',.38,.4);
+  taskLight(H,R,2.1,6.9,2.59,'sun',.6);
+  floorShadow(H,3.2,3.9,6.4,4.3,.2);
+  benchFrame(H,R,3.25,3.77,6.4,4.3,1.18,'sun');
+  for(let n=0;n<5;n++) surface(H,R,H.tile(3.6+n*.035,4.1+n*.035,1.1,.72,.38+n*.055),'paper',1,.5);
+  model(H,R);
+  timber(H,R,9.98,1.4,1.43,2.5,.08,.14,'sun');
+  for(const x of [10.02,11.3]) timber(H,R,x,1.44,.1,2.38,.22,.56,'sun');
+  for(const j of [1.43,3.82]) timber(H,R,10.05,j,1.3,.1,.22,.56,'sun');
+  surface(H,R,H.tile(10.17,1.65,1.03,1.96,.24),'blue',.4,.5);
+  for(const j of [1.94,3]) surface(H,R,H.tile(10.32,j,.6,.48,.26),'paper',.85,.5);
+  for(let n=0;n<4;n++) timber(H,R,10.25,6.8+n*.22,.65,.23,.12,.09+n*.08,'paper');
+  benchFrame(H,R,1.3,9.6,4.6,1.1,.65,'teal');
+  for(let n=0;n<4;n++) { const x=1.54+n*1.06; timber(H,R,x,9.85,.73,.53,.66,.15,n%2?'paper':'sun'); if(n===1) { surface(H,R,H.tile(x+.06,9.92,.58,.38,.82),'coral',.45,.4); H.line(R,[H.p(x+.15,9.93,.83),H.p(x+.15,10.24,.83)],'paper',1.4); } else if(n===2) surface(H,R,H.faceI(x+.1,10.34,.45,.8,1.25),'teal',.17,.6); }
+  const [lx,ly]=H.p(6.5,6.4,1.42);H.glow(lx,ly,70,40,'sun',.2);
+},(H,R,t)=>{
+  const u=clock(t),a=smooth(4,8,u)*(1-smooth(12,18,u)),shift=.48*smooth(7,9,u)*(1-smooth(12,15,u));
+  const z=2.11+.28*a,angle=shift*.19,c=Math.cos(angle),s=Math.sin(angle),ci=6.295+shift,cj=5.77-shift*.48,handle=x=>H.p(ci+(x-6.295)*c-1.54*s,cj+(x-6.295)*s+1.54*c,z),handA=handle(6.12),handB=handle(6.74);
+  person(H,R,7.15,7.5,[handA,handB],'coral',-2*a);
+  roof(H,R,.28*a,shift);
+  for(const p of [handA,handB]) oval(H,R,...p,2.7,2,'paper',1);
+  const point=smooth(8.2,9.4,u)*(1-smooth(11,13,u));
+  person(H,R,9.08,6.74,[H.p(8.94,7.02,1.45),H.p(8.47+point*.08,6.65,1.86+point*.15)],'teal',-point*2);
+  const [x,y]=H.p(3.5,7.5,1.45);surface(H,R,[[x,y],[x+19,y-9],[x+23,y-1-Math.sin(u/20*Math.PI*2)*1.4],[x+3,y+10]],'paper',1,.6);
+});
+room.loopSeconds=20;
+room.stillTime=10;
+export default room;

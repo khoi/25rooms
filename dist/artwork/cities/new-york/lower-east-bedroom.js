@@ -1,7 +1,7 @@
 import { benchFrame, bentTube, branchSpray, caneChair, cushion, drape, metal, pendant, surface, timber, vessel } from '../materials.js';
-import { masonry, cabinetFrame, boardFloor } from '../structure.js';
+import { masonry, boardFloor } from '../structure.js';
 import { taskLight, windowBay } from '../joinery.js';
-import { boundBook } from '../furnishings.js';
+import { boundBook, drawerUnit, foldedCloth, satchel, shallowTray, slattedCrate } from '../furnishings.js';
 import { actor, cycle, oval, shape, stroke, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -70,6 +70,32 @@ function curtain(H, R, open) {
   }
 }
 
+function garmentRail(H, R) {
+  for (const j of [6.65, 10.83]) {
+    bentTube(H, R, [[0.64, j, 0.09], [2.25, j, 0.09]], 3, 'teal');
+    bentTube(H, R, [[1.35, j, 0.09], [1.35, j, 2.83]], 2.8, 'teal');
+  }
+  bentTube(H, R, [[1.35, 6.65, 2.83], [1.35, 10.83, 2.83]], 3, 'sun');
+  for (let n = 0; n < 3; n++) {
+    const j = 7.35 + n * 1.23;
+    const P = (u, z) => H.p(1.36, j + u, z);
+    stroke(H, R, [P(-0.08, 2.84), P(0.08, 2.89), P(0.14, 2.77), P(0, 2.63)], 'teal', 1.1);
+    stroke(H, R, [P(0, 2.63), P(-0.49, 2.41), P(0.49, 2.41), P(0, 2.63)], 'sun', 1.3);
+    surface(H, R, [P(-0.18, 2.52), P(-0.46, 2.43), P(-0.69, 2.06), P(-0.43, 1.94), P(-0.33, 2.13), P(-0.34, 1.22), P(0.35, 1.22), P(0.34, 2.13), P(0.43, 1.94), P(0.69, 2.06), P(0.46, 2.43), P(0.18, 2.52), P(0, 2.35)], ['paper', 'coral', 'teal'][n], n ? 0.61 : 1, 0.8);
+    H.line(R, [P(0, 2.34), P(0, 1.27)], 'blue', 0.65);
+    H.line(R, [P(-0.28, 1.29), P(0.28, 1.29)], 'sun', 0.7);
+    for (let k = 0; k < 4; k++) H.dot(...P(0.05, 2.19 - k * 0.22), 0.9, 'sun');
+    if (n === 2) for (let k = 0; k < 4; k++) H.line(R, [P(-0.57 + k * 0.035, 2.02), P(-0.52 + k * 0.035, 2.1)], 'paper', 0.7);
+  }
+  shallowTray(H, R, 0.68, 7.03, 1.52, 3.32, 0.06, 'teal');
+  for (const j of [7.55, 9.05]) for (const d of [0, 0.44]) {
+    const [x, y] = H.p(1.36, j + d, 0.32);
+    oval(H, R, x, y, 13, 5, 'blue', 0.74);
+    oval(H, R, x + 7, y - 3, 6, 4, 'teal', 0.65);
+    H.line(R, [[x - 9, y + 3], [x + 10, y + 3]], 'paper', 0.9);
+  }
+}
+
 const room = world(
   'new-york-lower-east-bedroom',
   'Lower East Side · The Other Morning',
@@ -120,12 +146,13 @@ const room = world(
         2.7,
         'paper'
       );
-    benchFrame(H, R, 0.79, 1.16, 4.28, 1.52, 0.95, 'sun');
+    benchFrame(H, R, 0.79, 1.16, 5.9, 1.52, 0.95, 'sun');
     boundBook(H, R, 1.04, 1.4, 1.24, 0.82, 0.99, 'paper');
     metal(H, R, 2.82, 1.38, 1.28, 0.94, 0.99, 0.055, 'teal');
     surface(H, R, H.faceI(2.84, 1.36, 1.24, 1.03, 1.87), 'blue', 0.77);
     surface(H, R, H.faceI(2.94, 1.38, 1.04, 1.14, 1.76), 'paper', 1);
-    taskLight(H, R, 4.73, 1.47, 1.0, 'coral', -0.54);
+    taskLight(H, R, 6.33, 1.47, 1.0, 'coral', -0.54);
+    cup(H, R, ...H.p(6.18, 2.31, 1.0));
     caneChair(H, R, 2.1, 3.1, 'teal');
     for (const i of [0.46, 5.57])
       for (const j of [0.54, 5.21]) {
@@ -165,13 +192,11 @@ const room = world(
         'teal'
       );
     }
-    cabinetFrame(H, R, 0.42, 6.46, 1.99, 4.56, 0.03, 2.62, 1, 'sun', (i, j, w, d, z, h) => {
-      for (let row = 0; row < 4; row++) {
-        timber(H, R, i, j, w, d, z + row * 0.59, 0.08, 'sun');
-        for (let n = 0; n < 5; n++)
-          boundBook(H, R, i + 0.13, j + 0.1 + n * 0.81, w - 0.26, 0.65, z + 0.12 + row * 0.59, ['paper', 'coral', 'teal'][(row + n) % 3]);
-      }
-    });
+    garmentRail(H, R);
+    slattedCrate(H, R, 2.83, 8.95, 1.48, 1.5, 0.07, 0.91, 'sun');
+    foldedCloth(H, R, 2.96, 9.08, 1.2, 1.13, 1.02, 'teal', 'paper');
+    foldedCloth(H, R, 3.09, 9.19, 1.01, 0.88, 1.16, 'paper', 'coral');
+    satchel(H, R, 3.74, 11.04, 0.07, 'teal', 1.1);
     caneChair(H, R, 8.53, 2.97, 'coral');
     benchFrame(H, R, 10.06, 3.73, 1.28, 1.06, 0.7, 'sun');
     vessel(H, R, 10.72, 4.22, 0.75, 6, 10, 'teal');
@@ -181,7 +206,7 @@ const room = world(
     cushion(H, R, 8.07, 8.62, 3.05, 1.84, 0.61, 0.2, 'sun');
     cushion(H, R, 8.08, 8.52, 3.02, 0.3, 0.81, 0.51, 'sun');
     cushion(H, R, 8.29, 8.88, 0.82, 0.74, 0.84, 0.18, 'coral');
-    benchFrame(H, R, 5.13, 10.27, 1.5, 1.09, 0.68, 'teal');
+    drawerUnit(H, R, 5.13, 10.27, 1.5, 1.09, 0.68, 2, 'teal');
     boundBook(H, R, 5.3, 10.43, 1.09, 0.69, 0.72, 'paper');
     vessel(H, R, 10.77, 6.25, 0.03, 13, 21, 'coral');
     branchSpray(H, R, ...H.p(10.77, 6.25, 0.66), 1.0, 'teal');
@@ -205,7 +230,6 @@ const room = world(
         hairStyle: 'short',
         face: 'ne',
         prop(HH, RR, points) {
-          cup(HH, RR, points.farHand[0], points.farHand[1] + 2);
           const anchor = HH.p(9.38, 0.2, 3.68),
             parked = HH.p(9.52, 0.3, 1.32);
           const hold = ease((u - 0.13) / 0.1) * (1 - ease((u - 0.7) / 0.13));
@@ -234,4 +258,5 @@ const room = world(
   }
 );
 room.loopSeconds = 18;
+room.stillTime = 0;
 export default room;

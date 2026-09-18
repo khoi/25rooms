@@ -1,7 +1,7 @@
 import { benchFrame, bentTube, cushion, metal, pendant, slattedSeat, surface, timber, vessel } from '../materials.js';
 import { masonry, cabinetFrame, boardFloor } from '../structure.js';
 import { caster } from '../joinery.js';
-import { boundBook, coiledLine, foldedCloth, handTool, shallowTray } from '../furnishings.js';
+import { boundBook, coiledLine, foldedCloth, handTool, liddedTin, satchel, shallowTray, shelfUnit } from '../furnishings.js';
 import { TAU, actor, cycle, ell, oval, shape, stroke, wallRect, world } from '../../worlds/common.js';
 import { FIGURES } from '../../drawings.js';
 
@@ -63,6 +63,14 @@ const room = world(
     boardFloor(H, R, 0.06, 0.06, 11.88, 11.86, 0.025, 'sun', 0.4);
     masonry(H, R, 'ne', 0.07, 11.85, 0, 4.17, 'paper', 1);
     surface(H, R, H.faceJ(0.13, 0.13, 11.74, 0, 4.17), 'coral', 0.2);
+    const [clockX, clockY] = H.p(0.14, 3.55, 3.39);
+    oval(H, R, clockX, clockY, 17, 20, 'teal', 0.68);
+    oval(H, R, clockX, clockY, 14, 17, 'paper', 1);
+    for (let n = 0; n < 12; n++) {
+      const a = n * TAU / 12;
+      H.line(R, [[clockX + Math.sin(a) * 11, clockY + Math.cos(a) * 14], [clockX + Math.sin(a) * 12.5, clockY + Math.cos(a) * 15.5]], 'blue', 0.7);
+    }
+    H.line(R, [[clockX - 7, clockY + 8], [clockX, clockY], [clockX - 8, clockY - 4]], 'blue', 1.3);
     const glass = wallRect(H, 'ne', 0.7, 7.71, 1.4, 3.14, -0.08);
     surface(H, R, glass, 'teal', 0.18);
     for (const z of [1.33, 3.21]) timber(H, R, 0.58, 0.16, 7.26, 0.17, z, 0.09, 'teal');
@@ -87,6 +95,21 @@ const room = world(
     boundBook(H, R, 4.31, 0.91, 1.13, 0.75, 1.31, 'paper');
     handTool(H, R, 6.4, 1.85, 1.32, 'brush', 'teal');
     stool(H, R, 2.88, 2.87, 'coral');
+    benchFrame(H, R, 0.59, 2.83, 2.23, 1.16, 1.13, 'sun');
+    foldedCloth(H, R, 0.77, 3.07, 0.83, 0.68, 1.17, 'paper', 'teal');
+    shallowTray(H, R, 1.79, 2.97, 0.83, 0.78, 1.17, 'teal');
+    for (let n = 0; n < 3; n++) {
+      const [x, y] = H.p(1.96 + n * 0.23, 3.29, 1.42);
+      oval(H, R, x, y + 7, 3.6, 1.7, 'sun', 0.83);
+      surface(H, R, [[x - 2.5, y - 4], [x + 2.5, y - 4], [x + 2.5, y + 7], [x - 2.5, y + 7]], ['paper', 'teal', 'coral'][n], 0.85);
+      oval(H, R, x, y - 4, 3.6, 1.7, 'sun', 0.83);
+      H.dot(x, y - 4, 1, 'blue');
+    }
+    const [scissorX, scissorY] = H.p(1.58, 3.76, 1.19);
+    for (const dy of [-3, 3]) oval(H, R, scissorX - 9, scissorY + dy, 4, 2.8, 'teal', 0.7);
+    surface(H, R, [[scissorX - 4, scissorY - 2], [scissorX + 13, scissorY], [scissorX - 4, scissorY + 2]], 'paper', 1, 0.7);
+    H.line(R, [[scissorX - 3, scissorY], [scissorX + 12, scissorY]], 'blue', 0.7);
+    H.dot(scissorX - 2, scissorY, 1.2, 'sun');
     cabinetFrame(H, R, 8.69, 0.53, 2.65, 3.46, 0.04, 3.71, 1, 'teal', (i, j, w, d, z, h) => {
       bentTube(
         H,
@@ -133,6 +156,16 @@ const room = world(
       const j = 4.37 + n * 0.44;
       surface(H, R, [H.p(0.7, j, 2.81), H.p(1.6, j, 2.81), H.p(1.91, j, 1.14), H.p(0.53, j, 1.14)], n % 2 ? 'sun' : 'coral', 0.51, 0.7);
     }
+    shelfUnit(H, R, 0.48, 8.01, 1.56, 2.7, 0.07, [0.17, 1.02, 1.86], 'teal');
+    for (const j of [8.46, 9.65]) for (const d of [0, 0.42]) {
+      const [x, y] = H.p(1.27, j + d, 0.35);
+      oval(H, R, x, y, 11, 4.4, 'blue', 0.76);
+      oval(H, R, x + 6, y - 3, 5, 3.8, 'teal', 0.7);
+      H.line(R, [[x - 8, y + 3], [x + 9, y + 3]], 'paper', 0.8);
+    }
+    boundBook(H, R, 0.68, 8.37, 1.15, 1.27, 1.14, 'paper');
+    liddedTin(H, R, 1.2, 9.28, 1.98, 19, 18, 'coral');
+    satchel(H, R, 2.06, 7.4, 0.07, 'teal', 0.9);
     slattedSeat(H, R, 6.92, 7.6, 3.67, 0.25, 'sun', 0.57);
     cushion(H, R, 7.81, 7.79, 1.35, 0.64, 0.9, 0.16, 'teal');
     metal(H, R, 2.93, 8.78, 2.39, 1.77, 0.18, 0.91, 'teal');
@@ -257,4 +290,5 @@ const room = world(
 );
 
 room.loopSeconds = 16;
+room.stillTime = 0;
 export default room;

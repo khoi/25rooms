@@ -330,4 +330,5 @@ function HHGlow(H, i, j, z, tone) {
 }
 
 room.loopSeconds = 14;
+room.stillTime = 0;
 export default room;

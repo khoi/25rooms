@@ -120,9 +120,9 @@ const room = world(
   'Midtown · Find Our Block',
   { floor: 'paper', tone: 1, wall: false, head: 110 },
   (H, R) => {
-    boardFloor(H, R, 0.06, 0.05, 11.88, 11.89, 0.025, 'sun', 0.48);
+    H.opacity(0.38, () => boardFloor(H, R, 0.06, 0.05, 11.88, 11.89, 0.025, 'sun', 0.75));
     masonry(H, R, 'ne', 0.07, 11.84, 0, 4.25, 'paper', 1);
-    masonry(H, R, 'nw', 0.07, 11.84, 0, 4.25, 'sun', 0.13);
+    masonry(H, R, 'nw', 0.07, 11.84, 0, 4.25, 'blue', 0.72);
     archedBay(H, R, 'ne', 6.32, 4.83, 1.67, 2.28, 'teal', (P) => {
       for (let n = 0; n < 6; n++)
         surface(
@@ -305,4 +305,5 @@ const room = world(
   }
 );
 room.loopSeconds = 12;
+room.stillTime = 0;
 export default room;

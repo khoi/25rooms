@@ -385,4 +385,5 @@ room.over = (H, R) => {
   foldedCloth(H, R, 7.6, 0.5, 0.95, 0.39, 3.37, 'coral', 'paper');
 };
 room.loopSeconds = 16;
+room.stillTime = 0;
 export default room;

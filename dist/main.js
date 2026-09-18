@@ -229,7 +229,8 @@ function updateArtwork(now) {
     const interval = visible.length <= 2 ? 83 : Math.max(100, visible.length * 18);
     if (entry.painted && entry.painter.outputRevision === entry.painter.revision && (reduceMotion || query.has('t') || now - entry.painter.lastPaint < interval)) continue;
     try {
-      if (entry.painter.paint(frame / 12, frame)) upload(entry);
+      const paintTime = reduceMotion && !query.has('t') ? entry.room.definition.stillTime ?? 0 : frame / 12;
+      if (entry.painter.paint(paintTime, frame)) upload(entry);
     } catch (error) { report(entry, error); }
   }
   const count = entries.filter(entry => entry.painter.active).length;

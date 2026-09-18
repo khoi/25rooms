@@ -1,5 +1,7 @@
 # Room implementation audit, 18 September 2026
 
+The [completion report](room-completion-2026-09-18.md) records the subsequent integration, fixes, and verification. The findings below describe the earlier state.
+
 The Hong Kong and New York rebuilds render, but they do not complete every item in the room plans. The largest unfinished delivery is the eight additional city collections: their 200 room modules exist locally, but the gallery does not register them.
 
 This audit reviews `184bf47`, the preceding centerpiece revision `9ae4b1f`, and the room briefs updated in `63eb8ec`. The working tree already contained eight untracked city directories, implementation notes, and edits to the README, navigation, renderer, and checker. Those changes are distinguished from committed behavior below.
